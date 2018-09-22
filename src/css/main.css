@@ -1,0 +1,135 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Now apply relevant style */
+
+body {
+    font-size: 18px;
+    font-family: sans-serif;
+    line-height: 1.3em;
+    color: #222
+}
+
+.top {
+    background: linear-gradient(to left, #e66465, #9198e5);
+}
+
+.title {
+    color: white;
+}
+
+.top-under {
+    height: 2px;
+    margin-top: 2px;
+    margin-bottom: 48px;
+    background: linear-gradient(to left, #e66465, #9198e5);
+}
+
+.content-wrapper {
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+ol, ul {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 45px;
+}
+
+p {
+    margin-left: 20px;
+}
+
+a {
+    color: #2674d3;
+}
+
+code, pre.codeblock {
+    font-family: 'Inconsolata', monospace;
+}
+
+pre {
+    margin: 15px;
+}
+
+h1, h2, h3 {
+    margin-left: 8px;
+    margin-right: 8px;
+    font-family: 'Dosis', sans-serif;
+    color: #111;
+}
+
+h1 {
+    font-size: 3rem;
+    padding-top: 36px;
+    padding-bottom: 32px;
+}
+
+h2 {
+    font-size: 2rem;
+    padding-top: 32px;
+    padding-bottom: 24px;
+}
+
+h3 {
+    color: #333;
+    font-size: 1.6rem;
+    padding-top: 18px;
+    padding-bottom: 16px;
+}
+
+hr {
+    height: 2px;
+    background: linear-gradient(to left, #e66465, #9198e5);
+    border: none;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+footer {
+    margin: 32px auto;
+    text-align: center;
+}
+

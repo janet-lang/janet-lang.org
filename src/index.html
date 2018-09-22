@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Janet Programming Language</title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis|Inconsolata|Open+Sans">
+  </head>
+  <body>
+    <div class="top">
+      <div class="content-wrapper">
+        <h1 class="title">Janet Language</h1>
+      </div>
+    </div>
+    <div class="top-under"></div>
+    <div class="content-wrapper">
+
+      <p>Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, and should run on other systems with some porting. The entire language (core library,
+      interpreter, compiler, assembler) is about 200-300 kB and should run on many constrained systems.</p>
+
+      <h2>Features</h2>
+      <ul>
+        <li>Garbage Collection</li>
+        <li>Self contained compiler, interpreter, core library, and bytecode assembler</li>
+        <li>First class closures</li>
+        <li>First class green threads (continuations)</li>
+        <li>Mutable and immutable arrays (array/tuple)</li>
+        <li>Mutable and immutable hashtables (table/struct)</li>
+        <li>Mutable and immutable strings (buffer/string)</li>
+        <li>Lisp Macros</li>
+        <li>Direct interop with C via abstract types and C functions</li>
+        <li>Dynamically load C libraries</li>
+        <li>Functional and imperative standard library</li>
+        <li>Lexical scoping</li>
+        <li>REPL</li>
+        <li>Interactive environment with detailed stack traces</li>
+      </ul>
+
+      <h2>Example</h2>
+
+      <pre class="codeblock"># Fizbuzz
+(defn fizz-buzz
+  "Do fizz-buzz for 1-n"
+  [n]
+  (loop [i :range [1 n]]
+    (print (cond
+      (zero? (% i 15)) "fizz buzz"
+      (zero? (% i 5)) "fizz"
+      (zero? (% i 3)) "buzz"
+      i))))</pre>
+
+      <h2>Usage</h2>
+
+      <p>To use janet, you will need to build the project from source. The intended way to configure
+      your build of janet is to modify the header file in the source code <code>src/include/janet/janet.h</code>. Standard
+      configurable options are at the top of <code>janet.h</code> and are commented out by default.</p>
+
+      <h3>Linux and macOS Steps</h3>
+      <p>On Linux and macOS systems, Janet is build with a plain Makefile (No autotools, Cmake, gyp, premake, scons, etc).</p>
+      <ol>
+        <li>Clone the repository from <a href="https://github.com/bakpakin/janet.git">GitHub</a> on to your local machine.</li>
+        <li>From the repository, run <code>make</code> to build the janet executable program.</li>
+        <li>Run <code>make test</code> to verify everything is working correctly. All tests should pass and make test
+          should return with an exit code of 0.</li>
+        <li>To install globally, run <code>sudo make install</code>. You can change the install location
+          by setting the PREFIX option when installing, such as <code>sudo make PREFIX=/usr/ install</code>.</li>
+      </ol>
+
+      <h3>Windows Steps</h3>
+      <p>On Windows, Janet can be built with Visual Studio or with the Windows Build tools. The Windows
+      build script is a batch file <code>build_win.bat</code> that must be run from a Visual Studio developer
+      console.</p>
+      <ol>
+        <li>As with Linux or macOS, clone the repository from <a href="https://github.com/bakpakin/janet.git">GitHub</a> on to your local machine.</li>
+        <li>Open a Visual Studio Developer console on your local machine. This can usually be found under the Visual Studio folder if Visual Studio is
+          installed on the machine.</li>
+        <li>Run the command <code>build_win</code> in the console window to build the janet executable.</li>
+        <li>Run the command <code>build_win test</code> to verify that everything is working.</li>
+
+      </ol>
+
+      <h2>Documentation</h2>
+
+      <p>For a tutorial/introduction to janet, checkout the <a href="https://github.com/bakpakin/janet/wiki/Introduction">GitHub wiki introudction</a>. For
+      information in specific functions, use the <code>(doc function-name)</code> macro in the repl. This will display documentation for a given function.
+      </p>
+
+      <h2>Development</h2>
+
+      <p>Janet is developed on <a href="https://github.com/bakpakin/janet">GitHub</a>. For issues, feature request, check GitHub as well. Contributions
+      are welcome! Make sure to read <a href="https://github.com/bakpain/janet/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> before submitting pull requests.</p>
+
+      <h2>License</h2>
+
+      <p>Because janet is licensed under the <a href="https://github.com/bakpakin/janet/blob/master/LICENSE">MIT/X11 license</a>, feel free to use it any project, embed it in any project, or modify it how you please.</p>
+    </div>
+
+    <hr>
+
+    <footer>
+      Copyright &copy; Calvin Rose 2018
+    </footer>
+
+  </body>
+</html>
