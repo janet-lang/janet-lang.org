@@ -94,6 +94,61 @@ pre {
     margin: 15px;
 }
 
+#replterm {
+    border-radius: 2px 2px 0 0;
+    border-top: solid #CCC 1px;
+    border-left: solid #CCC 1px;
+    border-right: solid #CCC 1px;
+    font-family: 'Inconsolata', monospace;
+    padding: 10px;
+    height: 350px;
+    margin: 10px 10px 0 10px;
+    color: black;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#replinbar {
+    border-radius: 0 0 2px 2px;
+    border: solid #CCC 1px;
+    font-family: 'Inconsolata', monospace;
+    margin: 0 10px 10px 10px;
+    color: black;
+    display: flex;
+    background: #F8F8F8;
+}
+
+#replprompt {
+    padding: 10px;
+    display: inline-block;
+    margin: 0;
+    color: #9198e5;
+    flex-shrink: 0;
+}
+
+#replin {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+#replin:focus {
+    outline: none;
+    background: #F0F0F0;
+}
+
+#replin br {
+    display: none;
+}
+
+#replin * {
+    display: inline;
+    white-space: nowrap;
+}
+
 h1, h2, h3 {
     margin-left: 8px;
     margin-right: 8px;

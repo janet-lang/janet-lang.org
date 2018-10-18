@@ -37,9 +37,19 @@
         <li>Interactive environment with detailed stack traces</li>
       </ul>
 
+      <h2>Try it</h2>
+      <div id="replblock">
+        <div id="replterm">
+
+        </div>
+        <div id="replinbar">
+          <span id="replprompt">&gt;</span><div contenteditable="true" id="replin">(print "hello, world!")</div>
+        </div>
+      </div>
+
       <h2>Example</h2>
 
-      <pre class="codeblock"># Fizbuzz
+      <pre class="codeblock"># Fizzbuzz
 (defn fizz-buzz
   "Do fizz-buzz for 1-n"
   [n]
@@ -89,7 +99,7 @@
       <h2>Development</h2>
 
       <p>Janet is developed on <a href="https://github.com/bakpakin/janet">GitHub</a>. For issues, feature request, check GitHub as well. Contributions
-      are welcome! Make sure to read <a href="https://github.com/bakpain/janet/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> before submitting pull requests.</p>
+      are welcome! Make sure to read <a href="https://github.com/bakpakin/janet/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> before submitting pull requests.</p>
 
       <h2>License</h2>
 
@@ -101,6 +111,12 @@
     <footer>
       Copyright &copy; Calvin Rose 2018
     </footer>
+
+    <!-- Set up emscripten runtime -->
+    <script type='text/javascript' src="js/repl.js"></script>
+
+    <!-- Load and start running janet -->
+    <script async type="text/javascript" src="js/janet.js"></script>
 
   </body>
 </html>
