@@ -35,6 +35,9 @@ var errorsReady = false;
 var replHistory = [''];
 var historyIndex = 0;
 
+// prevent infinite restarts
+var restartCount = 0;
+
 var Module = {
   preRun: [],
   print: function(x) {
@@ -87,6 +90,17 @@ var Module = {
       }
     });
     errorsReady = true;
-  }]
+  }],
 };
 
+window.onerror = function (code) {
+  const element = document.getElementById('replterm');
+  if (restartCount > 100) {
+    element.innerHTML = '<span style="color:#E55">Repl restarted too many times. Browser may be unsupported.<span><br>';
+  } else {
+    restartCount++;
+    element.innerHTML = '<span style="color:#E55">Restarting repl...</span><br>';
+    Module._repl_deinit();
+    Module._repl_init();
+  }
+};
