@@ -133,6 +133,7 @@ pre {
     margin: 0;
     width: 100%;
     transition: background 0.3s;
+    text-indent 2px;
 }
 
 #replin:focus {

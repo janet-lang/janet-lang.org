@@ -1,3 +1,6 @@
+run:
+	cd src && python3 -m http.server 8080
+
 deploy:
 	echo "Deploying..."
 	aws s3 rm s3://janet-lang.org --recursive
