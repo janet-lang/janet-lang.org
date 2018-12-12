@@ -53,7 +53,7 @@ body {
 }
 
 .top {
-    background: linear-gradient(to left, #e66465, #9198e5);
+    background: linear-gradient(to left, #32d5FF, #AA4400);
 }
 
 .title {
@@ -64,12 +64,24 @@ body {
     height: 2px;
     margin-top: 2px;
     margin-bottom: 48px;
-    background: linear-gradient(to left, #e66465, #9198e5);
+    background: linear-gradient(to left, #32d5FF, #AA4400);
 }
 
 .content-wrapper {
     margin: 0 auto;
     max-width: 800px;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    width: 150%;
+    height: 150%;
+    max-width: 256px;
+    max-height: 256px;
 }
 
 ol, ul {
@@ -178,7 +190,7 @@ h3 {
 
 hr {
     height: 2px;
-    background: linear-gradient(to left, #e66465, #9198e5);
+    background: linear-gradient(to left, #32d5FF, #AA4400);
     border: none;
     margin-top: 30px;
     margin-bottom: 30px;
