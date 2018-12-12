@@ -53,7 +53,7 @@ body {
 }
 
 .top {
-    background: linear-gradient(to left, #32d5FF, #AA4400);
+    background: linear-gradient(to left, #09a5b8, #076591);
 }
 
 .title {
@@ -64,7 +64,7 @@ body {
     height: 2px;
     margin-top: 2px;
     margin-bottom: 48px;
-    background: linear-gradient(to left, #32d5FF, #AA4400);
+    background: linear-gradient(to left, #09a5b8, #076591);
 }
 
 .content-wrapper {
@@ -75,6 +75,13 @@ body {
 .block {
     display: flex;
     align-items: center;
+    color: white;
+    padding-top: 22px;
+    padding-bottom: 32px;
+}
+
+.block img {
+    padding: 10px;
 }
 
 #logo {
@@ -170,8 +177,8 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: 3rem;
-    padding-top: 36px;
+    font-size: 3.6rem;
+    padding-top: 60px;
     padding-bottom: 32px;
 }
 
@@ -190,7 +197,7 @@ h3 {
 
 hr {
     height: 2px;
-    background: linear-gradient(to left, #32d5FF, #AA4400);
+    background: linear-gradient(to left, #09a5b8, #076591);
     border: none;
     margin-top: 30px;
     margin-bottom: 30px;
