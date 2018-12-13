@@ -78,16 +78,26 @@ body {
     color: white;
     padding-top: 22px;
     padding-bottom: 32px;
-}
-
-@media (width < 600px) {
-    .block {
-        flex-direction: column;
-    }
+    margin: 0 10px 0 10px;
 }
 
 .block img {
     padding: 10px;
+}
+
+.block p {
+    text-align: justify;
+}
+
+@media (max-width: 600px) {
+    .block {
+        flex-direction: column;
+    }
+
+    .block p {
+        margin-top: 20px;
+        margin-left: 0;
+    }
 }
 
 #logo {
