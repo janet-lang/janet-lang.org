@@ -80,6 +80,12 @@ body {
     padding-bottom: 32px;
 }
 
+@media (width < 600px) {
+    .block {
+        flex-direction: column;
+    }
+}
+
 .block img {
     padding: 10px;
 }
@@ -180,6 +186,12 @@ h1 {
     font-size: 3.6rem;
     padding-top: 60px;
     padding-bottom: 32px;
+}
+
+@media (width < 500px) {
+    h1 {
+        font-size: 2.5rem;
+    }
 }
 
 h2 {
