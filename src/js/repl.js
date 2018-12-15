@@ -104,3 +104,6 @@ window.onerror = function (code) {
     Module._repl_init();
   }
 };
+
+// HLJS stuff.
+

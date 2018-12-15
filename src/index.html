@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Janet Programming Language</title>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
     <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis|Inconsolata|Open+Sans">
     <link rel="shortcut icon" href="assets/favicon.ico">
@@ -69,7 +72,7 @@
 
       <h2>Example</h2>
 
-      <pre class="codeblock"># Fizzbuzz
+      <pre><code class="codeblock lang-janet"># Fizzbuzz
 (defn fizz-buzz
   "Do fizz-buzz for 1-n"
   [n]
@@ -78,7 +81,7 @@
       (zero? (% i 15)) "fizz buzz"
       (zero? (% i 5)) "fizz"
       (zero? (% i 3)) "buzz"
-      i))))</pre>
+      i))))</code></pre>
 
       <h2>Usage</h2>
 
@@ -137,6 +140,7 @@
 
     <!-- Load and start running janet -->
     <script async type="text/javascript" src="js/janet.js"></script>
+    <script async type="text/javascript" src="js/janet-hljs.js"></script>
 
   </body>
 </html>
