@@ -21,8 +21,8 @@ hljs.registerLanguage('janet', function (hljs) {
       cN: 'number',
       b: '[-+]?' + prefix + '(' +
         dig + '+|' +
-        dig + '+.' + dig + '*|' +
-        '.' + dig + '+)(' + expo + '[-+]?[' + digit + ']+)?'
+        dig + '+\\.' + dig + '*|' +
+        '\\.' + dig + '+)(' + expo + '[-+]?[' + digit + ']+)?'
     });
   }
   var radix_chars = "0123456789abcdefghijklmnopqrstuvwxyz";
