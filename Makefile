@@ -2,6 +2,8 @@ run:
 	cd src && python3 -m http.server 8080
 
 refresh:
+	$(MAKE) -C ~/code/janet docs
+	cp ~/code/janet/build/doc.html src/doc.html
 	$(MAKE) -C ~/code/janet emscripten -j 16
 	cp ~/code/janet/build/janet.js src/js/janet.js
 	cp ~/code/janet/build/janet.wasm src/js/janet.wasm
