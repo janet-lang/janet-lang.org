@@ -72,6 +72,24 @@ body {
     max-width: 800px;
 }
 
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.carousel a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.7em;
+}
+
+.carousel div {
+    margin: 20px 15px;
+}
+
 .block {
     display: flex;
     align-items: center;
