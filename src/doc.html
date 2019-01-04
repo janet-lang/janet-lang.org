@@ -18,7 +18,7 @@
 }
 </style>
 </head>
-<h1>Janet Core API</h1><p>Version 0.3.0-5fff36d</p><p>Generated 1546484133 seconds after epoch</p><hr><h2 class="binding">%</h2>
+<h1>Janet Core API</h1><p>Version 0.3.0-5fa96a6</p><p>Generated 1546566575 seconds after epoch</p><hr><h2 class="binding">%</h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(% dividend divisor)<br><br>Returns the remainder of dividend &#47; divisor.</p>
 <hr>
@@ -129,7 +129,7 @@
 <h2 class="binding">all-symbols</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(all-symbols env &amp;)<br><br>Get all symbols available in the current environment.</p>
-<span class="source-map">core.janet (51473:51798)</span><hr>
+<span class="source-map">core.janet (51461:51786)</span><hr>
 <h2 class="binding">and</h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(and &amp; forms)<br><br>Evaluates to the last argument if all preceding elements are true, otherwise  evaluates to false.</p>
@@ -429,11 +429,11 @@
 <h2 class="binding">eval</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(eval form)<br><br>Evaluates a form in the current environment. If more control over the  environment is needed, use run-context.</p>
-<span class="source-map">core.janet (46310:46549)</span><hr>
+<span class="source-map">core.janet (46298:46537)</span><hr>
 <h2 class="binding">eval-string</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(eval-string str)<br><br>Evaluates a string in the current environment. If more control over the  environment is needed, use run-context.</p>
-<span class="source-map">core.janet (45746:46307)</span><hr>
+<span class="source-map">core.janet (45734:46295)</span><hr>
 <h2 class="binding">even?</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(even? x)<br><br>Check if x is even.</p>
@@ -585,11 +585,11 @@
 <h2 class="binding">import</h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(import path &amp; args)<br><br>Import a module. First requires the module, and then merges its  symbols into the current environment, prepending a given prefix as needed.  (use the :as or :prefix option to set a prefix). If no prefix is provided,  use the name of the module as a prefix.</p>
-<span class="source-map">core.janet (50264:50746)</span><hr>
+<span class="source-map">core.janet (50252:50734)</span><hr>
 <h2 class="binding">import*</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(import* env path &amp; args)<br><br>Import a module into a given environment table. This is the  functional form of (import ...) that expects and explicit environment  table.</p>
-<span class="source-map">core.janet (49667:50261)</span><hr>
+<span class="source-map">core.janet (49655:50249)</span><hr>
 <h2 class="binding">inc</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(inc x)<br><br>Returns x + 1.</p>
@@ -789,7 +789,7 @@
 <h2 class="binding">module&#47;find</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(module&#47;find path paths)<br><br>Try to match a module or path name from the patterns in paths.</p>
-<span class="source-map">core.janet (47440:47776)</span><hr>
+<span class="source-map">core.janet (47428:47764)</span><hr>
 <h2 class="binding">native</h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(native path)<br><br>Load a native module from the given path. The path must be an absolute or relative path on the file system, and is usually a .so file on Unix systems, and a .dll file on Windows. Returns an environment table that contains functions and other values from the native module.</p>
@@ -904,11 +904,15 @@
 <hr>
 <h2 class="binding">parser&#47;error</h2>
 <span class="binding-type">cfunction</span>
-<p class="docstring">(parser&#47;error parser)<br><br>If the parser is in the error state, returns the message asscoiated with that error. Otherwise, returns nil.</p>
+<p class="docstring">(parser&#47;error parser)<br><br>If the parser is in the error state, returns the message asscoiated with that error. Otherwise, returns nil. Also flushes the parser state and parser queue, so be sure to handle everything in the queue before calling parser&#47;error.</p>
 <hr>
 <h2 class="binding">parser&#47;flush</h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(parser&#47;flush parser)<br><br>Clears the parser state and parse queue. Can be used to reset the parser if an error was encountered. Does not reset the line and column counter, so to begin parsing in a new context, create a new parser.</p>
+<hr>
+<h2 class="binding">parser&#47;has-more</h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;has-more parser)<br><br>Check if the parser has more values in the value queue.</p>
 <hr>
 <h2 class="binding">parser&#47;new</h2>
 <span class="binding-type">cfunction</span>
@@ -924,7 +928,7 @@
 <hr>
 <h2 class="binding">parser&#47;status</h2>
 <span class="binding-type">cfunction</span>
-<p class="docstring">(parser&#47;status parser)<br><br>Gets the current status of the parser state machine. The status will be one of:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:full - there are values in the parse queue to be consumed.<br>&nbsp;&nbsp;&nbsp;&nbsp;:pending - no values in the queue but a value is being parsed.<br>&nbsp;&nbsp;&nbsp;&nbsp;:error - a parsing error was encountered.<br>&nbsp;&nbsp;&nbsp;&nbsp;:root - the parser can either read more values or safely terminate.</p>
+<p class="docstring">(parser&#47;status parser)<br><br>Gets the current status of the parser state machine. The status will be one of:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:pending - a value is being parsed.<br>&nbsp;&nbsp;&nbsp;&nbsp;:error - a parsing error was encountered.<br>&nbsp;&nbsp;&nbsp;&nbsp;:root - the parser can either read more values or safely terminate.</p>
 <hr>
 <h2 class="binding">parser&#47;where</h2>
 <span class="binding-type">cfunction</span>
@@ -973,11 +977,11 @@
 <h2 class="binding">repl</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(repl chunks onsignal &amp;)<br><br>Run a repl. The first parameter is an optional function to call to  get a chunk of source code that should return nil for end of file.  The second parameter is a function that is called when a signal is  caught.</p>
-<span class="source-map">core.janet (50749:51470)</span><hr>
+<span class="source-map">core.janet (50737:51458)</span><hr>
 <h2 class="binding">require</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(require module)<br><br>  Require a module with the given name. Will search all of the paths in  module&#47;paths, then the path as a raw file path. Returns the new environment  returned from compiling and running the file.</p>
-<span class="source-map">core.janet (47779:49664)</span><hr>
+<span class="source-map">core.janet (47767:49652)</span><hr>
 <h2 class="binding">resume</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(resume fiber [,x])<br><br>Resume a new or suspended fiber and optionally pass in a value to the fiber that will be returned to the last yield in the case of a pending fiber, or the argument to the dispatch function in the case of a new fiber. Returns either the return result of the fiber&#39;s dispatch function, or the value from the next yield call in fiber.</p>
@@ -989,7 +993,7 @@
 <h2 class="binding">run-context</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(run-context env chunks onstatus where &amp;)<br><br>Run a context. This evaluates expressions of janet in an environment,  and is encapsulates the parsing, compilation, and evaluation of janet.  env is the environment to evaluate the code in, chunks is a function  that returns strings or buffers of source code (from a repl, file,  network connection, etc. onstatus is a callback that is  invoked when a result is returned or any other signal is raised.  This function can be used to implement a repl very easily, simply  pass a function that reads line from stdin to chunks, status-pp to onstatus</p>
-<span class="source-map">core.janet (42417:44411)</span><hr>
+<span class="source-map">core.janet (42417:44399)</span><hr>
 <h2 class="binding">scan-number</h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(scan-number str)<br><br>Parse a number from a byte sequence an return that number, either and integer or a real. The number must be in the same format as numbers in janet source code. Will return nil on an invalid number.</p>
@@ -1013,7 +1017,7 @@
 <h2 class="binding">status-pp</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(status-pp sig x f source)<br><br>Pretty print a signal and asscoaited state. Can be used as the  onsignal argument to run-context.</p>
-<span class="source-map">core.janet (44414:45743)</span><hr>
+<span class="source-map">core.janet (44402:45731)</span><hr>
 <h2 class="binding">stderr</h2>
 <span class="binding-type">core/file</span>
 <p class="docstring">The standard error file.</p>
@@ -1184,7 +1188,7 @@
 <span class="source-map">core.janet (2944:3005)</span><hr>
 <h2 class="binding">type</h2>
 <span class="binding-type">cfunction</span>
-<p class="docstring">(type x)<br><br>Returns the type of x as a keyword symbol. x is one of<br>&nbsp;&nbsp;&nbsp;&nbsp;:nil<br>&nbsp;&nbsp;&nbsp;&nbsp;:boolean<br>&nbsp;&nbsp;&nbsp;&nbsp;:integer<br>&nbsp;&nbsp;&nbsp;&nbsp;:real<br>&nbsp;&nbsp;&nbsp;&nbsp;:array<br>&nbsp;&nbsp;&nbsp;&nbsp;:tuple<br>&nbsp;&nbsp;&nbsp;&nbsp;:table<br>&nbsp;&nbsp;&nbsp;&nbsp;:struct<br>&nbsp;&nbsp;&nbsp;&nbsp;:string<br>&nbsp;&nbsp;&nbsp;&nbsp;:buffer<br>&nbsp;&nbsp;&nbsp;&nbsp;:symbol<br>&nbsp;&nbsp;&nbsp;&nbsp;:function<br>&nbsp;&nbsp;&nbsp;&nbsp;:cfunction<br><br>or another symbol for an abstract type.</p>
+<p class="docstring">(type x)<br><br>Returns the type of x as a keyword symbol. x is one of<br>&nbsp;&nbsp;&nbsp;&nbsp;:nil<br>&nbsp;&nbsp;&nbsp;&nbsp;:boolean<br>&nbsp;&nbsp;&nbsp;&nbsp;:integer<br>&nbsp;&nbsp;&nbsp;&nbsp;:real<br>&nbsp;&nbsp;&nbsp;&nbsp;:array<br>&nbsp;&nbsp;&nbsp;&nbsp;:tuple<br>&nbsp;&nbsp;&nbsp;&nbsp;:table<br>&nbsp;&nbsp;&nbsp;&nbsp;:struct<br>&nbsp;&nbsp;&nbsp;&nbsp;:string<br>&nbsp;&nbsp;&nbsp;&nbsp;:buffer<br>&nbsp;&nbsp;&nbsp;&nbsp;:symbol<br>&nbsp;&nbsp;&nbsp;&nbsp;:keyword<br>&nbsp;&nbsp;&nbsp;&nbsp;:function<br>&nbsp;&nbsp;&nbsp;&nbsp;:cfunction<br><br>or another symbol for an abstract type.</p>
 <hr>
 <h2 class="binding">unless</h2>
 <span class="binding-type">macro</span>
