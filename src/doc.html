@@ -18,7 +18,7 @@
 }
 </style>
 </head>
-<h1>Janet Core API</h1><p>Version 0.3.0-2bad243</p><p>Generated 1547919922 seconds after epoch</p><hr><h2 class="binding">%</h2>
+<h1>Janet Core API</h1><p>Version 0.3.0-2bad243</p><p>Generated 1548096400 seconds after epoch</p><hr><h2 class="binding">%</h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(% dividend divisor)<br><br>Returns the remainder of dividend &#47; divisor.</p>
 <hr>
@@ -125,7 +125,7 @@
 <h2 class="binding">all-bindings</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(all-bindings env &amp;)<br><br>Get all symbols available in the current environment.</p>
-<span class="source-map">core.janet (52258:52611)</span><hr>
+<span class="source-map">core.janet (52310:52663)</span><hr>
 <h2 class="binding">and</h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(and &amp; forms)<br><br>Evaluates to the last argument if all preceding elements are true, otherwise  evaluates to false.</p>
@@ -448,12 +448,12 @@
 <hr>
 <h2 class="binding">eval</h2>
 <span class="binding-type">function</span>
-<p class="docstring">(eval form)<br><br>Evaluates a form in the current environment. If more control over the  environment is needed, use run-context.</p>
-<span class="source-map">core.janet (46761:47003)</span><hr>
+<p class="docstring">(eval form env &amp;)<br><br>Evaluates a form in the current environment. If more control over the  environment is needed, use run-context.</p>
+<span class="source-map">core.janet (46787:47055)</span><hr>
 <h2 class="binding">eval-string</h2>
 <span class="binding-type">function</span>
-<p class="docstring">(eval-string str)<br><br>Evaluates a string in the current environment. If more control over the  environment is needed, use run-context.</p>
-<span class="source-map">core.janet (46197:46758)</span><hr>
+<p class="docstring">(eval-string str env &amp;)<br><br>Evaluates a string in the current environment. If more control over the  environment is needed, use run-context.</p>
+<span class="source-map">core.janet (46197:46784)</span><hr>
 <h2 class="binding">even?</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(even? x)<br><br>Check if x is even.</p>
@@ -605,11 +605,11 @@
 <h2 class="binding">import</h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(import path &amp; args)<br><br>Import a module. First requires the module, and then merges its  symbols into the current environment, prepending a given prefix as needed.  (use the :as or :prefix option to set a prefix). If no prefix is provided,  use the name of the module as a prefix.</p>
-<span class="source-map">core.janet (50954:51437)</span><hr>
+<span class="source-map">core.janet (51006:51489)</span><hr>
 <h2 class="binding">import*</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(import* env path &amp; args)<br><br>Import a module into a given environment table. This is the  functional form of (import ...) that expects and explicit environment  table.</p>
-<span class="source-map">core.janet (50469:50951)</span><hr>
+<span class="source-map">core.janet (50521:51003)</span><hr>
 <h2 class="binding">inc</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(inc x)<br><br>Returns x + 1.</p>
@@ -801,7 +801,7 @@
 <h2 class="binding">meta</h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(meta &amp; args)<br><br>Add metadata to the current environment.</p>
-<span class="source-map">core.janet (52109:52255)</span><hr>
+<span class="source-map">core.janet (52161:52307)</span><hr>
 <h2 class="binding">min</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(min &amp; args)<br><br>Returns the numeric minimum of the arguments.</p>
@@ -813,27 +813,27 @@
 <h2 class="binding">module&#47;*syspath*</h2>
 <span class="binding-type">var (string)</span>
 <p class="docstring">The path where globally installed libraries are located.  The default value is the environment variable JANET_PATH,  and if that is not set &#47;usr&#47;local&#47;lib&#47;janet on linux&#47;posix, and  on Windows the default is the empty string.</p>
-<span class="source-map">core.janet (47614:47961)</span><hr>
+<span class="source-map">core.janet (47666:48013)</span><hr>
 <h2 class="binding">module&#47;cache</h2>
 <span class="binding-type">table</span>
 <p class="docstring">Table mapping loaded module identifiers to their environments.</p>
-<span class="source-map">core.janet (48454:48544)</span><hr>
+<span class="source-map">core.janet (48506:48596)</span><hr>
 <h2 class="binding">module&#47;find</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(module&#47;find path paths)<br><br>Try to match a module or path name from the patterns in paths.</p>
-<span class="source-map">core.janet (47964:48451)</span><hr>
+<span class="source-map">core.janet (48016:48503)</span><hr>
 <h2 class="binding">module&#47;loading</h2>
 <span class="binding-type">table</span>
 <p class="docstring">Table mapping currently loading modules to true. Used to prevent  circular dependencies.</p>
-<span class="source-map">core.janet (48547:48666)</span><hr>
+<span class="source-map">core.janet (48599:48718)</span><hr>
 <h2 class="binding">module&#47;native-paths</h2>
 <span class="binding-type">array</span>
 <p class="docstring">See doc for module&#47;paths</p>
-<span class="source-map">core.janet (47443:47611)</span><hr>
+<span class="source-map">core.janet (47495:47663)</span><hr>
 <h2 class="binding">module&#47;paths</h2>
 <span class="binding-type">array</span>
 <p class="docstring">The list of paths to look for modules. The followig  substitutions are preformed on each path. :sys: becomes  module&#47;*syspath*, :name: becomes the last part of the module  name after the last &#47;, and :all: is the module name literally.  :native: becomes the dynamic library file extension, usually dll  or so.</p>
-<span class="source-map">core.janet (47006:47440)</span><hr>
+<span class="source-map">core.janet (47058:47492)</span><hr>
 <h2 class="binding">native</h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(native path [,env])<br><br>Load a native module from the given path. The path must be an absolute or relative path on the file system, and is usually a .so file on Unix systems, and a .dll file on Windows. Returns an environment table that contains functions and other values from the native module.</p>
@@ -896,11 +896,15 @@
 <hr>
 <h2 class="binding">os&#47;clock</h2>
 <span class="binding-type">cfunction</span>
-<p class="docstring">(os&#47;clock)<br><br>Return the number of seconds since some fixed point in time. The clock is guaranteed to be non decreased in real time.</p>
+<p class="docstring">(os&#47;clock)<br><br>Return the number of seconds since some fixed point in time. The clock is guaranteed to be non decreasing in real time.</p>
 <hr>
 <h2 class="binding">os&#47;cwd</h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(os&#47;cwd)<br><br>Returns the current working directory.</p>
+<hr>
+<h2 class="binding">os&#47;date</h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;date [,time])<br><br>Returns the given time as a date struct, or the current time if no time is given. Returns a struct with following key values. Note that all numbers are 0-indexed.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:seconds - number of seconds [0-61]<br>&nbsp;&nbsp;&nbsp;&nbsp;:minutes - number of minutes [0-59]<br>&nbsp;&nbsp;&nbsp;&nbsp;:seconds - number of hours [0-23]<br>&nbsp;&nbsp;&nbsp;&nbsp;:month-day - day of month [0-30]<br>&nbsp;&nbsp;&nbsp;&nbsp;:month - month of year [0, 11]<br>&nbsp;&nbsp;&nbsp;&nbsp;:year - years since year 0 (e.g. 2019)<br>&nbsp;&nbsp;&nbsp;&nbsp;:week-day - day of the week [0-6]<br>&nbsp;&nbsp;&nbsp;&nbsp;:year-day - day of the year [0-365]<br>&nbsp;&nbsp;&nbsp;&nbsp;:dst - If Day Light Savings is in effect</p>
 <hr>
 <h2 class="binding">os&#47;execute</h2>
 <span class="binding-type">cfunction</span>
@@ -1033,11 +1037,11 @@
 <h2 class="binding">repl</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(repl chunks onsignal &amp;)<br><br>Run a repl. The first parameter is an optional function to call to  get a chunk of source code that should return nil for end of file.  The second parameter is a function that is called when a signal is  caught.</p>
-<span class="source-map">core.janet (51440:52106)</span><hr>
+<span class="source-map">core.janet (51492:52158)</span><hr>
 <h2 class="binding">require</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(require path &amp; args)<br><br>Require a module with the given name. Will search all of the paths in  module&#47;paths, then the path as a raw file path. Returns the new environment  returned from compiling and running the file.</p>
-<span class="source-map">core.janet (49097:50357)</span><hr>
+<span class="source-map">core.janet (49149:50409)</span><hr>
 <h2 class="binding">resume</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(resume fiber [,x])<br><br>Resume a new or suspended fiber and optionally pass in a value to the fiber that will be returned to the last yield in the case of a pending fiber, or the argument to the dispatch function in the case of a new fiber. Returns either the return result of the fiber&#39;s dispatch function, or the value from the next yield call in fiber.</p>
@@ -1058,6 +1062,10 @@
 <span class="binding-type">macro</span>
 <p class="docstring">(seq head &amp; body)<br><br>Similar to loop, but accumulates the loop body into an array and returns that.  See loop for details.</p>
 <span class="source-map">core.janet (16698:16938)</span><hr>
+<h2 class="binding">slurp</h2>
+<span class="binding-type">function</span>
+<p class="docstring">(slurp path)<br><br>Read all data from a file with name path  and then close the file.</p>
+<span class="source-map">core.janet (52666:52852)</span><hr>
 <h2 class="binding">some</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(some pred xs)<br><br>Returns false if all xs are false or nil, otherwise returns the first true value.</p>
@@ -1070,6 +1078,10 @@
 <span class="binding-type">function</span>
 <p class="docstring">(sorted ind by)<br><br>Returns a new sorted array without modifying the old one.</p>
 <span class="source-map">core.janet (21467:21582)</span><hr>
+<h2 class="binding">spit</h2>
+<span class="binding-type">function</span>
+<p class="docstring">(spit path contents mode &amp;)<br><br>Write contents to a file at path.  Can optionally append to the file.</p>
+<span class="source-map">core.janet (52855:53066)</span><hr>
 <h2 class="binding">status-pp</h2>
 <span class="binding-type">function</span>
 <p class="docstring">(status-pp sig x f source)<br><br>Pretty print a signal and associated state. Can be used as the  onsignal argument to run-context.</p>
