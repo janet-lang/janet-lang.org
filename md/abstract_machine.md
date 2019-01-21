@@ -112,17 +112,10 @@ O - Opcode bits
 8 bits for the opcode leaves 24 bits for the payload, which may or may not be utilized.
 There are a few instruction variants that divide these payload bits.
 
-* 0 arg - Used for noops, returning nil, or other instructions that take no
-  arguments. The payload is essentially ignored.
-* 1 arg - All payload bits correspond to a single value, usually a signed or unsigned integer.
-  Used for instructions of 1 argument, like returning a value, yielding a value to the parent fiber,
-  or doing a (relative) jump.
-* 2 arg - Payload is split into byte 2 and bytes 3 and 4.
-  The first argument is the 8 bit value from byte 2, and the second argument is the 16 bit value
-  from bytes 3 and 4 (`instruction >> 16`). Used for instructions of two arguments, like move, normal
-  function calls, conditionals, etc.
-* 3 arg - Bytes 2, 3, and 4 each correspond to an 8 bit argument.
-  Used for arithmetic operations, emitting a signal, etc.
+* 0 arg - Used for noops, returning nil, or other instructions that take no arguments. The payload is essentially ignored.
+* 1 arg - All payload bits correspond to a single value, usually a signed or unsigned integer. Used for instructions of 1 argument, like returning a value, yielding a value to the parent fiber, or doing a (relative) jump.
+* 2 arg - Payload is split into byte 2 and bytes 3 and 4. The first argument is the 8 bit value from byte 2, and the second argument is the 16 bit value from bytes 3 and 4 (`instruction >> 16`). Used for instructions of two arguments, like move, normal function calls, conditionals, etc.
+* 3 arg - Bytes 2, 3, and 4 each correspond to an 8 bit argument. Used for arithmetic operations, emitting a signal, etc.
 
 These instruction variants can be further refined based on the semantics of the arguments.
 Some instructions may treat an argument as a slot index, while other instructions
@@ -143,17 +136,9 @@ failure to return or error.
 
 ### Notation
 
-* The $ prefix indicates that a instruction parameter is acting as a virtual register (slot).
-  If a parameter does not have the $ suffix in the description, it is acting as some kind
-  of literal (usually an unsigned integer for indexes, and a signed integer for literal integers).
-
-* Some operators in the description have the suffix 'i' or 'r'. These indicate
-  that these operators correspond to integers or real numbers only, respectively. All
-  bit-wise operators and bit shifts only work with integers.
-
-* The `>>>` indicates unsigned right shift, as in Java. Because all integers in janet are
-  signed, we differentiate the two kinds of right bit shift.
-
+* The $ prefix indicates that a instruction parameter is acting as a virtual register (slot). If a parameter does not have the $ suffix in the description, it is acting as some kind of literal (usually an unsigned integer for indexes, and a signed integer for literal integers).
+* Some operators in the description have the suffix 'i' or 'r'. These indicate that these operators correspond to integers or real numbers only, respectively. All bit-wise operators and bit shifts only work with integers.
+* The `>>>` indicates unsigned right shift, as in Java. Because all integers in janet are signed, we differentiate the two kinds of right bit shift.
 * The 'im' suffix in the instruction name is short for immediate.
 
 ### Reference Table

@@ -129,6 +129,11 @@ footer {
     text-align: center;
 }
 
+/* Lists */
+li {
+    margin-bottom: 15px;
+}
+
 /* Tables */
 
 table {
