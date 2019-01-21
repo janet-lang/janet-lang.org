@@ -1,0 +1,54 @@
+{%(def page-content (markdown (slurp content))) ""%}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{%title%}</title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis|Inconsolata|Open+Sans">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="{% title %}" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div class="top">
+      <div class="content-wrapper">
+        <h1 class="title">{% title %}</h1>
+      </div>
+    </div>
+    <div class="top-under"></div>
+
+    <div class="doc-nav">
+      <a href="bindings.html">bindings</a>
+      <a href="data_structures.html">data_structures</a>
+      <a href="destructuring.html">destructuring</a>
+      <a href="fibers.html">fibers</a>
+      <a href="flow.html">flow</a>
+      <a href="functions.html">functions</a>
+      <a href="introduction.html">introduction</a>
+      <a href="loop.html">loop</a>
+      <a href="macros.html">macros</a>
+      <a href="numbers.html">numbers</a>
+      <a href="peg.html">peg</a>
+      <a href="prototypes.html">prototypes</a>
+      <a href="specials.html">specials</a>
+      <a href="strings.html">strings</a>
+      <a href="syntax.html">syntax</a>
+    </div>
+
+    <div class="content-wrapper">
+      {% page-content %}
+    </div>
+
+    <footer>
+      <hr>
+      Copyright &copy; Calvin Rose {% ((os/date) :year) %}
+    </footer>
+
+  </body>
+</html>

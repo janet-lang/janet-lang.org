@@ -1,0 +1,61 @@
+{% (def title "Data Structures") %}
+
+Once you have a handle on functions and the primitive value types, you may be wondering how
+to work with collections of things. Janet has a small number of core data structure types
+that are very versatile. Tables, Structs, Arrays, Tuples, Strings, and Buffers, are the 6 main
+built in data structure types. These data structures can be arranged in a useful table describing
+their relationship to each other.
+
+|            | Mutable | Immutable                |
+| ---------- | ------- | -------------------------|
+| Indexed    | Array   | Tuple                    |
+| Dictionary | Table   | Struct                   |
+| Bytes      | Buffer  | String (Symbol, Keyword) |
+
+Indexed types are linear lists of elements than can be accessed in constant time with an integer index.
+Indexed types are backed by a single chunk of memory for fast access, and are indexed from 0 as in C.
+Dictionary types associate keys with values. The difference between dictionaries and indexed types
+is that dictionaries are not limited to integer keys. They are backed by a hashtable and also offer
+constant time lookup (and insertion for the mutable case).
+Finally, the 'bytes' abstraction is any type that contains a sequence of bytes. A 'bytes' value or byteseq associates
+integer keys (the indices) with integer values between 0 and 255 (the byte values). In this way,
+they behave much like Arrays and Tuples. However, one cannot put non integer values into a byteseq
+
+```janet
+(def mytuple (tuple 1 2 3))
+
+(def myarray @(1 2 3))
+(def myarray (array 1 2 3))
+
+(def mystruct {
+ :key "value"
+ :key2 "another"
+ 1 2
+ 4 3})
+
+(def another-struct
+ (struct :a 1 :b 2))
+
+(def my-table @{
+ :a :b
+ :c :d
+ :A :qwerty})
+(def another-table
+ (table 1 2 3 4))
+
+(def my-buffer @"thisismutable")
+(def my-buffer2 @``This is also mutable``)
+```
+
+To read the values in a data structure, use the get function. The first parameter is the data structure
+itself, and the second parameter is the key.
+
+```janet
+(get @{:a 1} :a) # -> 1
+(get {:a 1} :a) # -> 1
+(get @[:a :b :c] 2) # -> :c
+(get (tuple "a" "b" "c") 1) # -> "b"
+(get @"hello, world" 1) # -> 101
+(get "hello, world" 0) # -> 104
+```
+

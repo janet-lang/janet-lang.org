@@ -52,77 +52,9 @@ body {
     color: #222
 }
 
-.top {
-    background: linear-gradient(to left, #09a5b8, #076591);
-}
-
-.title {
-    color: white;
-}
-
-.top-under {
-    height: 2px;
-    margin-top: 2px;
-    margin-bottom: 48px;
-    background: linear-gradient(to left, #09a5b8, #076591);
-}
-
 .content-wrapper {
     margin: 0 auto;
     max-width: 800px;
-}
-
-.carousel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    flex-wrap: wrap;
-}
-
-.carousel a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.7em;
-}
-
-.carousel div {
-    margin: 20px 15px;
-}
-
-.block {
-    display: flex;
-    align-items: center;
-    color: white;
-    padding-top: 22px;
-    padding-bottom: 32px;
-    margin: 0 10px 0 10px;
-}
-
-.block img {
-    padding: 10px;
-}
-
-.block p {
-    text-align: justify;
-}
-
-@media (max-width: 600px) {
-    .block {
-        flex-direction: column;
-    }
-
-    .block p {
-        margin-top: 20px;
-        margin-left: 0;
-    }
-}
-
-#logo {
-    width: 150%;
-    height: 150%;
-    max-width: 256px;
-    max-height: 256px;
 }
 
 ol, ul {
@@ -133,6 +65,10 @@ ol, ul {
 
 p {
     margin-left: 20px;
+}
+
+.content-wrapper p {
+    margin-bottom: 1em;
 }
 
 a {
@@ -147,62 +83,6 @@ pre {
     margin: 15px;
 }
 
-#replterm {
-    border-radius: 2px 2px 0 0;
-    border-top: solid #CCC 1px;
-    border-left: solid #CCC 1px;
-    border-right: solid #CCC 1px;
-    font-family: 'Inconsolata', monospace;
-    padding: 10px;
-    height: 350px;
-    margin: 10px 10px 0 10px;
-    color: black;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-#replinbar {
-    border-radius: 0 0 2px 2px;
-    border: solid #CCC 1px;
-    font-family: 'Inconsolata', monospace;
-    margin: 0 10px 10px 10px;
-    color: black;
-    display: flex;
-    background: #F8F8F8;
-}
-
-#replprompt {
-    padding: 10px;
-    display: inline-block;
-    margin: 0;
-    color: #9198e5;
-    flex-shrink: 0;
-}
-
-#replin {
-    padding: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    margin: 0;
-    width: 100%;
-    transition: background 0.3s;
-    text-indent 2px;
-}
-
-#replin:focus {
-    outline: none;
-    background: #F0F0F0;
-}
-
-#replin br {
-    display: none;
-}
-
-#replin * {
-    display: inline;
-    white-space: nowrap;
-}
-
 h1, h2, h3 {
     margin-left: 8px;
     margin-right: 8px;
@@ -212,7 +92,7 @@ h1, h2, h3 {
 
 h1 {
     font-size: 3.6rem;
-    padding-top: 60px;
+    padding-top: 50px;
     padding-bottom: 32px;
 }
 
@@ -245,6 +125,69 @@ hr {
 
 footer {
     margin: 32px auto;
+    margin-top: 100px;
     text-align: center;
 }
 
+/* Tables */
+
+table {
+    width: 100%;
+    margin: 25px 20px;
+}
+
+table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+}
+
+table tr th {
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    text-align: left;
+    margin: 0;
+    padding: 8px 15px;
+}
+
+table tr td {
+    border: 1px solid #cccccc;
+    text-align: left;
+    margin: 0;
+    padding: 8px 15px;
+}
+
+table tr th :first-child, table tr td :first-child {
+    margin-top: 0;
+}
+
+table tr th :last-child, table tr td :last-child {
+    margin-bottom: 0;
+}
+
+/* Janet syntax highlighting */
+
+.code-inline {
+    padding: 5px;
+    background: #EEE;
+    border-radius: 5px;
+}
+
+.codeblock {
+    padding: 14px;
+    background: #EEE;
+    border-radius: 5px;
+}
+
+.j-main {
+    color: white;
+    background: #111;
+    border-radius: 4px;
+    padding: 14px;
+}
+.j-number { color: #89dc76; }
+.j-keyword { color: #ffd866; }
+.j-string { color: #ab90f2; }
+.j-coresym { color: #ff6188; }
+.j-constant { color: #fc9867; }
+.j-comment { color: darkgray; }
+.j-line { color: gray; }
