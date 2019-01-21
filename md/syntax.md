@@ -228,3 +228,9 @@ Shorthand for `(unquote x)`
 
 These shorthand notations can be combined in any order, allowing
 forms like `''x` (`(quote (quote x))`), or `,;x` (`(unquote (splice x))`).
+
+## Syntax Highlighting
+
+For syntax highlighting, there is some preliminary vim syntax highlighting in [janet.vim](https://github.com/janet-lang/janet.vim).
+Generic lisp syntax highlighting should, however, provide good results. One can also generate a janet.tmLanguage
+file for other programs with `make grammar` from the Janet sourc code.

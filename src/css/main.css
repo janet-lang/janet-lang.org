@@ -46,9 +46,9 @@ table {
 /* Now apply relevant style */
 
 body {
-    font-size: 18px;
+    font-size: 1rem;
     font-family: sans-serif;
-    line-height: 1.3em;
+    line-height: 1.4em;
     color: #222
 }
 
@@ -81,6 +81,7 @@ code, pre.codeblock {
 
 pre {
     margin: 15px;
+    line-height: 1.2em;
 }
 
 h1, h2, h3 {
@@ -191,3 +192,10 @@ table tr th :last-child, table tr td :last-child {
 .j-constant { color: #fc9867; }
 .j-comment { color: darkgray; }
 .j-line { color: gray; }
+
+/* Page gen tag */
+
+.gentag {
+    color: #888;
+    font-size: 0.8em;
+}

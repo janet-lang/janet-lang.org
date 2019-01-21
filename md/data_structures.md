@@ -6,7 +6,7 @@ that are very versatile. Tables, Structs, Arrays, Tuples, Strings, and Buffers, 
 built in data structure types. These data structures can be arranged in a useful table describing
 their relationship to each other.
 
-|            | Mutable | Immutable                |
+| Interface  | Mutable | Immutable                |
 | ---------- | ------- | -------------------------|
 | Indexed    | Array   | Tuple                    |
 | Dictionary | Table   | Struct                   |

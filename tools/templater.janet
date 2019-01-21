@@ -27,6 +27,24 @@
 (def html-escape hl/html-escape)
 
 #
+# Current Date
+#
+
+(def months '("January" "February" "March" "April" "May" "June" "July" "August" "September"
+                        "October" "November" "December"))
+(defn nice-date
+  "Get the current date nicely formatted"
+  []
+  (let [date (os/date)
+        M (months (date :month))
+        D (date :month-day)
+        Y (date :year)
+        HH (date :hours)
+        MM (date :minutes)
+        SS (date :seconds)]
+    (string M " " D ", " Y " at " HH ":" MM ":" SS)))
+
+#
 # Template parser
 #
 

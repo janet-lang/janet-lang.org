@@ -58,16 +58,6 @@
     <div class="top-under"></div>
     <div class="content-wrapper">
 
-      <h2>Try it</h2>
-      <div id="replblock">
-        <div id="replterm">
-
-        </div>
-        <div id="replinbar">
-          <span id="replprompt">&gt;</span><div contenteditable="true" id="replin">(print "hello, world!")</div>
-        </div>
-      </div>
-
       {% (markdown (slurp content)) %}
 
     </div>
@@ -75,6 +65,8 @@
     <footer>
       <hr>
       Copyright &copy; Calvin Rose {% ((os/date) :year) %}
+      <div class="gentag">{% (string "Generated on " (nice-date)
+        " with Janet " janet/version "-" janet/build) %}</div>
     </footer>
 
     <!-- Set up emscripten runtime -->

@@ -49,6 +49,8 @@
     <footer>
       <hr>
       Copyright &copy; Calvin Rose {% ((os/date) :year) %}
+      <div class="gentag">{% (string "Generated on " (nice-date)
+        " with Janet " janet/version "-" janet/build) %}</div>
     </footer>
 
   </body>
