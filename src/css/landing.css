@@ -21,6 +21,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
+    padding-bottom: 20px;
     flex-wrap: wrap;
 }
 
@@ -31,7 +32,15 @@
 }
 
 .carousel div {
-    margin: 20px 15px;
+    margin: 5px 5px;
+    padding: 10px 15px;
+    background-color: #ffffff1a;
+    border-radius: 10px;
+    border: solid 1.5px white;
+}
+
+.carousel div:hover {
+    background-color: #ffffff30;
 }
 
 .block {
@@ -54,11 +63,15 @@
 @media (max-width: 600px) {
     .block {
         flex-direction: column;
+        padding-bottom: 0;
+    }
+
+    .top-under {
+        margin-bottom: 0;
     }
 
     .block p {
         margin-top: 20px;
-        margin-left: 0;
     }
 }
 
