@@ -184,8 +184,8 @@ slow in general.
 
 ## String Searching and other Idioms
 
-Although all pattern matching is done in anchored in mode, operations like global substitution
-and searching can be implemented with the `peg/module`. A simple Janet function that produces PEGs
+Although all pattern matching is done in anchored mode, operations like global substitution
+and searching can be implemented with the peg module. A simple Janet function that produces PEGs
 that search for strings shows how captures and looping specials can composed, and how quasiquoting
 can be used to embed values in patterns.
 
@@ -198,4 +198,20 @@ can be used to embed values in patterns.
 (def where-are-the-dogs? (finder "dog"))
 
 (peg/match where-are-the-dogs? "dog dog cat dog") # -> @[0 4 12]
+
+# Our finder function also works any pattern, not just strings.
+
+(def find-cats (finder '(* "c" (some "a") "t")))
+
+(peg/match find-cats "cat ct caat caaaaat cat") # -> @[0 7 12 20]
+```
+
+We can also wrap a peg to turn it into a global substituion grammar with
+the accumulate special `(%)`.
+
+```janet
+(defn replacer
+ "Creates a peg that replaces instances of patt with subst."
+ [patt subst]
+ (peg/compile ~(% (any (+ (/ (<- ,patt) ,subst) (<- 1))))))
 ```

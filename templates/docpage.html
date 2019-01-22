@@ -17,29 +17,31 @@
   <body>
 
     <div class="top">
+
       <div class="content-wrapper">
         <h1 class="title">{% title %}</h1>
+        <div class="subtitle">Janet {% janet/version %} Documentation</div>
       </div>
     </div>
     <div class="top-under"></div>
 
     <div class="doc-nav">
-      <a href="abstract_machine.html">Abstract Machine</a>
-      <a href="bindings.html">Bindings</a>
-      <a href="data_structures.html">Data Structures</a>
-      <a href="destructuring.html">Destructuring</a>
-      <a href="fibers.html">Fibers</a>
-      <a href="flow.html">Flow</a>
-      <a href="functions.html">Functions</a>
-      <a href="introduction.html">Introduction</a>
-      <a href="loop.html">Loop</a>
-      <a href="macros.html">Macros</a>
-      <a href="numbers.html">Numbers</a>
-      <a href="peg.html">Peg</a>
-      <a href="prototypes.html">Prototypes</a>
-      <a href="specials.html">Specials</a>
-      <a href="strings.html">Strings</a>
-      <a href="syntax.html">Syntax</a>
+      <div><a href="abstract_machine.html">Abstract Machine</a></div>
+      <div><a href="bindings.html">Bindings</a></div>
+      <div><a href="data_structures.html">Data Structures</a></div>
+      <div><a href="destructuring.html">Destructuring</a></div>
+      <div><a href="fibers.html">Fibers</a></div>
+      <div><a href="flow.html">Flow</a></div>
+      <div><a href="functions.html">Functions</a></div>
+      <div><a href="introduction.html">Introduction</a></div>
+      <div><a href="loop.html">Loop</a></div>
+      <div><a href="macros.html">Macros</a></div>
+      <div><a href="numbers.html">Numbers</a></div>
+      <div><a href="peg.html">Peg</a></div>
+      <div><a href="prototypes.html">Prototypes</a></div>
+      <div><a href="specials.html">Specials</a></div>
+      <div><a href="strings.html">Strings</a></div>
+      <div><a href="syntax.html">Syntax</a></div>
     </div>
 
     <div class="content-wrapper">
@@ -48,9 +50,11 @@
 
     <footer>
       <hr>
-      Copyright &copy; Calvin Rose {% ((os/date) :year) %}
+      &copy; Calvin Rose {% ((os/date) :year) %}
       <div class="gentag">{% (string "Generated on " (nice-date)
         " with Janet " janet/version "-" janet/build) %}</div>
+      <div class="see-problem">See a problem? Source
+        <a href="https://github.com/janet-lang/janet-lang.org">on Github</a></div>
     </footer>
 
   </body>

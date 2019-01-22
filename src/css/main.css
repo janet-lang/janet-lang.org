@@ -48,26 +48,34 @@ table {
 body {
     font-size: 1rem;
     font-family: sans-serif;
-    line-height: 1.4em;
+    line-height: 1.4;
     color: #222
 }
 
-.content-wrapper {
-    margin: 0 auto;
-    max-width: 800px;
+@media (width < 1000px) {
+    .content-wrapper {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+}
+
+@media (width >= 1000px) {
+    .content-wrapper {
+        margin: 0 auto;
+        max-width: 800px;
+    }
 }
 
 ol, ul {
     margin-top: 15px;
     margin-bottom: 15px;
     margin-left: 45px;
+    margin-right: 20px;
 }
 
 p {
     margin-left: 20px;
-}
-
-.content-wrapper p {
+    margin-right: 20px;
     margin-bottom: 1em;
 }
 
@@ -75,45 +83,74 @@ a {
     color: #2674d3;
 }
 
-code, pre.codeblock {
+code, pre {
     font-family: 'Inconsolata', monospace;
+    white-space: pre-wrap;
 }
 
 pre {
     margin: 15px;
-    line-height: 1.2em;
+    line-height: 1.2;
 }
 
 h1, h2, h3 {
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: 15px;
+    margin-right: 15px;
     font-family: 'Dosis', sans-serif;
     color: #111;
 }
 
 h1 {
-    font-size: 3.6rem;
-    padding-top: 50px;
-    padding-bottom: 32px;
+    font-size: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
 }
-
-@media (width < 500px) {
-    h1 {
-        font-size: 2.5rem;
-    }
-}
-
 h2 {
     font-size: 2rem;
     padding-top: 32px;
     padding-bottom: 24px;
 }
-
 h3 {
     color: #333;
     font-size: 1.6rem;
     padding-top: 18px;
     padding-bottom: 16px;
+}
+
+@media (width < 700px) {
+    h1 {
+        font-size: 2.5rem;
+        padding-top: 2.5rem;
+        padding-bottom: 1.5rem;
+    }
+    h2 {
+        font-size: 1.8rem;
+        padding-top: 28px;
+        padding-bottom: 20px;
+    }
+    h3 {
+        font-size: 1.5rem;
+        padding-top: 16px;
+        padding-bottom: 14px;
+    }
+}
+
+@media (width < 500px) {
+    h1 {
+        font-size: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+        padding-top: 24px;
+        padding-bottom: 18px;
+    }
+    h3 {
+        font-size: 1.4rem;
+        padding-top: 14px;
+        padding-bottom: 12px;
+    }
 }
 
 hr {
@@ -124,16 +161,10 @@ hr {
     margin-bottom: 30px;
 }
 
-footer {
-    margin: 32px auto;
-    margin-top: 100px;
-    text-align: center;
-}
-
 /* Tables */
 
 table {
-    width: 100%;
+    width: calc(100% - 40px);
     margin: 25px 20px;
 }
 
@@ -170,7 +201,6 @@ table tr th :last-child, table tr td :last-child {
 .code-inline {
     padding: 5px;
     background: #EEE;
-    border-radius: 5px;
 }
 
 .codeblock {
@@ -193,9 +223,19 @@ table tr th :last-child, table tr td :last-child {
 .j-comment { color: darkgray; }
 .j-line { color: gray; }
 
-/* Page gen tag */
+/* Footer */
+
+footer {
+    margin: 32px auto;
+    margin-top: 100px;
+    text-align: center;
+    color: #888;
+}
 
 .gentag {
-    color: #888;
+    font-size: 0.8em;
+}
+
+.see-problem {
     font-size: 0.8em;
 }

@@ -4,7 +4,6 @@
 
 .title {
     color: white;
-    padding-bottom: 50px;
 }
 
 .top-under {
@@ -14,20 +13,56 @@
     background: linear-gradient(to left, #09a5b8, #076591);
 }
 
-.doc-nav {
-    height: calc(100% - 150px);
-    width: 200px;
-    position: fixed;
-    z-index: 1;
-    top: 150px;
-    left: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
 .doc-nav a {
   padding: 2px 10px 2px 18px;
   text-decoration: none;
   color: #818181;
   display: block;
+  font-size: 0.8rem;
+}
+
+@media (width < 1250px) {
+    .top-under {
+        margin-bottom: 0;
+    }
+    .doc-nav {
+        background: #EEE;
+        color: #555;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-bottom: 25px;
+    }
+    .doc-nav a {
+        padding: 1px 5px 1px 5px;
+    }
+}
+
+@media (width < 800px) {
+    .doc-nav a {
+        font-size: 1.2rem;
+    }
+}
+
+@media (width >= 1250px) {
+    .doc-nav {
+        height: calc(100% - 200px);
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 200px;
+        left: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+}
+
+.subtitle {
+    color: white;
+    font-size: 0.8em;
+    padding: 15px;
+}
+
+.corner-badge a {
+    color: #CCC;
 }
