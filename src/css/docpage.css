@@ -21,7 +21,7 @@
   font-size: 0.8rem;
 }
 
-@media (width < 1250px) {
+@media (max-width: 1250px) {
     .top-under {
         margin-bottom: 0;
     }
@@ -38,13 +38,13 @@
     }
 }
 
-@media (width < 800px) {
+@media (max-width: 800px) {
     .doc-nav a {
         font-size: 1.2rem;
     }
 }
 
-@media (width >= 1250px) {
+@media (min-width: 1251px) {
     .doc-nav {
         height: calc(100% - 200px);
         width: 200px;
