@@ -7,6 +7,7 @@ $(shell cp -rf src/* out)
 
 # Generate documentation pages
 build: out/index.html \
+	out/arrays.html \
 	out/abstract_machine.html \
 	out/bindings.html \
 	out/data_structures.html \

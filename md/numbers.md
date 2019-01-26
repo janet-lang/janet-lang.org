@@ -40,3 +40,5 @@ return a real number (never an integer!) Bit-wise functions are all prefixed wit
 They are `bnot`, `bor`, `bxor`, `band`, `blshift`, `brshift`, and `brushift`. Bit-wise
 functions only work on integers.
 
+See the [Core Library API](doc.html#math/acos) for info on functions in the `math/` namespace.
+
