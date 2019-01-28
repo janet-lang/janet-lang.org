@@ -10,6 +10,7 @@ build: out/index.html \
 	out/arrays.html \
 	out/abstract_machine.html \
 	out/bindings.html \
+	out/buffers.html \
 	out/data_structures.html \
 	out/destructuring.html \
 	out/fibers.html \

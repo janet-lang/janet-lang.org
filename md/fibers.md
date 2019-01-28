@@ -60,3 +60,21 @@ Besides being used as coroutines, fibers can be used to implement error handling
  (print "result contains the error")
  (print "result contains the good result"))
 ```
+
+Since the above code is rather verbose, Janet provides a
+`try` macro which is similar to try - catch in other languages.
+It wraps a body of code in a new fiber, `resume`s the fiber, and
+then checks the result. If the fiber has errored, an error clause
+is evaluated.
+
+```
+(try
+ (error 1)
+ ([err] (print "got error: " err)))
+# evaluates to nil and prints "got error: 1"
+
+(try
+ (+ 1 2 3)
+ ([err] (print "oops")))
+# Evaluates to 6 - no error thrown
+```

@@ -108,4 +108,5 @@ To see a list of all global functions in the REPL, type the command
 (all-bindings)
 ```
 
-Which will print out every global binding in the janet REPL.
+Which will print out every global binding in the janet REPL. You can also
+browse the [Core Library API on the website](/doc.html).
