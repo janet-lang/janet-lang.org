@@ -18,7 +18,7 @@
 }
 </style>
 </head>
-<h1>Janet Core API</h1><p>Version 0.3.0-4d81fbc</p><p>Generated 1548515344 seconds after epoch</p><hr><h2 class="binding"><a id="%">%</a></h2>
+<h1>Janet Core API</h1><p>Version 0.3.0-46c540b</p><p>Generated 1548803986 seconds after epoch</p><hr><h2 class="binding"><a id="%">%</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(% dividend divisor)<br><br>Returns the remainder of dividend &#47; divisor.</p>
 <hr>
@@ -37,7 +37,7 @@
 <h2 class="binding"><a id="*doc-width*">*doc-width*</a></h2>
 <span class="binding-type">var (number)</span>
 <p class="docstring">Width in columns to print documentation.</p>
-<span class="source-map">core.janet (36946:37012)</span><hr>
+<span class="source-map">core.janet (36977:37043)</span><hr>
 <h2 class="binding"><a id="*env*">*env*</a></h2>
 <span class="binding-type">var (table)</span>
 <p class="docstring">The current environment.</p>
@@ -69,19 +69,19 @@
 <h2 class="binding"><a id="->">-&gt;</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(-&gt; x &amp; forms)<br><br>Threading macro. Inserts x as the second value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. Useful for expressing pipelines of data.</p>
-<span class="source-map">core.janet (26346:26823)</span><hr>
+<span class="source-map">core.janet (26377:26854)</span><hr>
 <h2 class="binding"><a id="->>">-&gt;&gt;</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(-&gt;&gt; x &amp; forms)<br><br>Threading macro. Inserts x as the last value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. Useful for expressing pipelines of data.</p>
-<span class="source-map">core.janet (26826:27305)</span><hr>
+<span class="source-map">core.janet (26857:27336)</span><hr>
 <h2 class="binding"><a id="-?>">-?&gt;</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(-?&gt; x &amp; forms)<br><br>Short circuit threading macro. Inserts x as the last value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. The pipeline will return nil  if an intermediate value is nil.  Useful for expressing pipelines of data.</p>
-<span class="source-map">core.janet (27308:27917)</span><hr>
+<span class="source-map">core.janet (27339:27948)</span><hr>
 <h2 class="binding"><a id="-?>>">-?&gt;&gt;</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(-?&gt;&gt; x &amp; forms)<br><br>Threading macro. Inserts x as the last value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. The pipeline will return nil  if an intermediate value is nil.  Useful for expressing pipelines of data.</p>
-<span class="source-map">core.janet (27920:28519)</span><hr>
+<span class="source-map">core.janet (27951:28550)</span><hr>
 <h2 class="binding"><a id="/">&#47;</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(&#47; &amp; xs)<br><br>Returns the quotient of xs. If xs is empty, returns 1. If xs has one value x, returns the reciprocal of x. Otherwise return the first value of xs repeatedly divided by the remaining values. Division by two integers uses truncating division.</p>
@@ -121,11 +121,11 @@
 <h2 class="binding"><a id="all">all</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(all pred xs)<br><br>Returns true if all xs are truthy, otherwise the first false or nil value.</p>
-<span class="source-map">core.janet (40918:41091)</span><hr>
+<span class="source-map">core.janet (40949:41122)</span><hr>
 <h2 class="binding"><a id="all-bindings">all-bindings</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(all-bindings env &amp;)<br><br>Get all symbols available in the current environment.</p>
-<span class="source-map">core.janet (52310:52663)</span><hr>
+<span class="source-map">core.janet (52074:52427)</span><hr>
 <h2 class="binding"><a id="and">and</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(and &amp; forms)<br><br>Evaluates to the last argument if all preceding elements are true, otherwise  evaluates to false.</p>
@@ -177,11 +177,11 @@
 <h2 class="binding"><a id="as->">as-&gt;</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(as-&gt; x as &amp; forms)<br><br>Thread forms together, replacing as in forms with the value  of the previous form. The first for is the value x. Returns the  last value.</p>
-<span class="source-map">core.janet (29459:29816)</span><hr>
+<span class="source-map">core.janet (29490:29847)</span><hr>
 <h2 class="binding"><a id="as?->">as?-&gt;</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(as?-&gt; x as &amp; forms)<br><br>Thread forms together, replacing as in forms with the value  of the previous form. The first for is the value x. If any  intermediate values are falsey, return nil; otherwise, returns the  last value.</p>
-<span class="source-map">core.janet (29819:30244)</span><hr>
+<span class="source-map">core.janet (29850:30275)</span><hr>
 <h2 class="binding"><a id="asm">asm</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(asm assembly)<br><br>Returns a new function that is the compiled result of the assembly.<br>The syntax for the assembly can be found on the janet wiki. Will throw an<br>error on invalid assembly.</p>
@@ -361,11 +361,11 @@
 <h2 class="binding"><a id="deep-not=">deep-not=</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(deep-not= x y)<br><br>Like not=, but mutable types (arrays, tables, buffers) are considered  equal if they have identical structure. Much slower than not=.</p>
-<span class="source-map">core.janet (41298:41861)</span><hr>
+<span class="source-map">core.janet (41329:41892)</span><hr>
 <h2 class="binding"><a id="deep=">deep=</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(deep= x y)<br><br>Like =, but mutable types (arrays, tables, buffers) are considered  equal if they have identical structure. Much slower than =.</p>
-<span class="source-map">core.janet (41864:42040)</span><hr>
+<span class="source-map">core.janet (41895:42071)</span><hr>
 <h2 class="binding"><a id="def-">def-</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(def- name &amp; more)<br><br>Define a private value that will not be exported.</p>
@@ -409,27 +409,27 @@
 <h2 class="binding"><a id="distinct">distinct</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(distinct xs)<br><br>Returns an array of the deduplicated values in xs.</p>
-<span class="source-map">core.janet (33365:33564)</span><hr>
+<span class="source-map">core.janet (33396:33595)</span><hr>
 <h2 class="binding"><a id="doc">doc</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(doc sym)<br><br>Shows documentation for the given symbol.</p>
-<span class="source-map">core.janet (38595:38685)</span><hr>
+<span class="source-map">core.janet (38626:38716)</span><hr>
 <h2 class="binding"><a id="doc*">doc*</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(doc* env sym)<br><br>Get the documentation for a symbol in a given environment.</p>
-<span class="source-map">core.janet (37865:38592)</span><hr>
+<span class="source-map">core.janet (37896:38623)</span><hr>
 <h2 class="binding"><a id="doc-format">doc-format</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(doc-format text)<br><br>Reformat text to wrap at a given line.</p>
-<span class="source-map">core.janet (37015:37862)</span><hr>
+<span class="source-map">core.janet (37046:37893)</span><hr>
 <h2 class="binding"><a id="drop-until">drop-until</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(drop-until pred ind)<br><br>Given a predicate, remove elements from an indexed type that satisfy  the predicate, and abort on first failure. Returns a new tuple.</p>
-<span class="source-map">core.janet (25496:25718)</span><hr>
+<span class="source-map">core.janet (25527:25749)</span><hr>
 <h2 class="binding"><a id="drop-while">drop-while</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(drop-while pred ind)<br><br>Same as (drop-until (complement pred) ind).</p>
-<span class="source-map">core.janet (25721:25835)</span><hr>
+<span class="source-map">core.janet (25752:25866)</span><hr>
 <h2 class="binding"><a id="each">each</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(each binding ind &amp; body)<br><br>Loop over each value in ind. Returns nil.</p>
@@ -449,11 +449,11 @@
 <h2 class="binding"><a id="eval">eval</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(eval form env &amp;)<br><br>Evaluates a form in the current environment. If more control over the  environment is needed, use run-context.</p>
-<span class="source-map">core.janet (46787:47055)</span><hr>
+<span class="source-map">core.janet (46818:47086)</span><hr>
 <h2 class="binding"><a id="eval-string">eval-string</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(eval-string str env &amp;)<br><br>Evaluates a string in the current environment. If more control over the  environment is needed, use run-context.</p>
-<span class="source-map">core.janet (46197:46784)</span><hr>
+<span class="source-map">core.janet (46228:46815)</span><hr>
 <h2 class="binding"><a id="even?">even?</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(even? x)<br><br>Check if x is even.</p>
@@ -461,7 +461,7 @@
 <h2 class="binding"><a id="every?">every?</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(every? ind)<br><br>Returns true if each value in is truthy, otherwise the first  falsey value.</p>
-<span class="source-map">core.janet (30369:30552)</span><hr>
+<span class="source-map">core.janet (30400:30583)</span><hr>
 <h2 class="binding"><a id="extreme">extreme</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(extreme order args)<br><br>Returns the most extreme value in args based on the function order.  order should take two values and return true or false (a comparison).  Returns nil if args is empty.</p>
@@ -529,7 +529,7 @@
 <h2 class="binding"><a id="find">find</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(find pred ind)<br><br>Find the first value in an indexed collection that satisfies a predicate. Returns  nil if not found. Note their is no way to differentiate a nil from the indexed collection  and a not found. Consider find-index if this is an issue.</p>
-<span class="source-map">core.janet (24832:25127)</span><hr>
+<span class="source-map">core.janet (24832:25158)</span><hr>
 <h2 class="binding"><a id="find-index">find-index</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(find-index pred ind)<br><br>Find the index of indexed type for which pred is true. Returns nil if not found.</p>
@@ -541,11 +541,11 @@
 <h2 class="binding"><a id="flatten">flatten</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(flatten xs)<br><br>Takes a nested array (tree), and returns the depth first traversal of  that array. Returns a new array.</p>
-<span class="source-map">core.janet (33830:33983)</span><hr>
+<span class="source-map">core.janet (33861:34014)</span><hr>
 <h2 class="binding"><a id="flatten-into">flatten-into</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(flatten-into into xs)<br><br>Takes a nested array (tree), and appends the depth first traversal of  that array to an array &#39;into&#39;. Returns array into.</p>
-<span class="source-map">core.janet (33567:33827)</span><hr>
+<span class="source-map">core.janet (33598:33858)</span><hr>
 <h2 class="binding"><a id="for">for</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(for binding start end &amp; body)<br><br>Do a c style for loop for side effects. Returns nil.</p>
@@ -553,7 +553,7 @@
 <h2 class="binding"><a id="frequencies">frequencies</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(frequencies ind)<br><br>Get the number of occurrences of each value in a indexed structure.</p>
-<span class="source-map">core.janet (32826:33037)</span><hr>
+<span class="source-map">core.janet (32857:33068)</span><hr>
 <h2 class="binding"><a id="function?">function?</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(function? x)<br><br>Check if x is a function (not a cfunction).</p>
@@ -605,11 +605,11 @@
 <h2 class="binding"><a id="import">import</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(import path &amp; args)<br><br>Import a module. First requires the module, and then merges its  symbols into the current environment, prepending a given prefix as needed.  (use the :as or :prefix option to set a prefix). If no prefix is provided,  use the name of the module as a prefix.</p>
-<span class="source-map">core.janet (51006:51489)</span><hr>
+<span class="source-map">core.janet (50770:51253)</span><hr>
 <h2 class="binding"><a id="import*">import*</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(import* env path &amp; args)<br><br>Import a module into a given environment table. This is the  functional form of (import ...) that expects and explicit environment  table.</p>
-<span class="source-map">core.janet (50521:51003)</span><hr>
+<span class="source-map">core.janet (50285:50767)</span><hr>
 <h2 class="binding"><a id="inc">inc</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(inc x)<br><br>Returns x + 1.</p>
@@ -621,15 +621,15 @@
 <h2 class="binding"><a id="interleave">interleave</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(interleave &amp; cols)<br><br>Returns an array of the first elements of each col,  then the second, etc.</p>
-<span class="source-map">core.janet (33040:33362)</span><hr>
+<span class="source-map">core.janet (33071:33393)</span><hr>
 <h2 class="binding"><a id="interpose">interpose</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(interpose sep ind)<br><br>Returns a sequence of the elements of ind separated by  sep. Returns a new array.</p>
-<span class="source-map">core.janet (34226:34532)</span><hr>
+<span class="source-map">core.janet (34257:34563)</span><hr>
 <h2 class="binding"><a id="invert">invert</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(invert ds)<br><br>Returns a table of where the keys of an associative data structureare the values, and the values of the keys. If multiple keys have the samevalue, one key will be ignored.</p>
-<span class="source-map">core.janet (30820:31088)</span><hr>
+<span class="source-map">core.janet (30851:31119)</span><hr>
 <h2 class="binding"><a id="janet/build">janet&#47;build</a></h2>
 <span class="binding-type">string</span>
 <p class="docstring">The build identifier of the running janet program.</p>
@@ -641,11 +641,11 @@
 <h2 class="binding"><a id="juxt">juxt</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(juxt &amp; funs)<br><br>Macro form of juxt*. Same behavior but more efficient.</p>
-<span class="source-map">core.janet (26092:26343)</span><hr>
+<span class="source-map">core.janet (26123:26374)</span><hr>
 <h2 class="binding"><a id="juxt*">juxt*</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(juxt* &amp; funs)<br><br>Returns the juxtaposition of functions. In other words,  ((juxt* a b c) x) evaluates to ((a x) (b x) (c x)).</p>
-<span class="source-map">core.janet (25838:26089)</span><hr>
+<span class="source-map">core.janet (25869:26120)</span><hr>
 <h2 class="binding"><a id="keep">keep</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(keep pred ind)<br><br>Given a predicate, take only elements from an array or tuple for  which (pred element) is truthy. Returns a new array of truthy predicate results.</p>
@@ -653,7 +653,7 @@
 <h2 class="binding"><a id="keys">keys</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(keys x)<br><br>Get the keys of an associative data structure.</p>
-<span class="source-map">core.janet (32184:32384)</span><hr>
+<span class="source-map">core.janet (32215:32415)</span><hr>
 <h2 class="binding"><a id="keyword">keyword</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(keyword &amp; xs)<br><br>Creates a keyword by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new keyword.</p>
@@ -665,7 +665,7 @@
 <h2 class="binding"><a id="kvs">kvs</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(kvs dict)<br><br>Takes a table or struct and returns and array of key value pairs  like @[k v k v ...]. Returns a new array.</p>
-<span class="source-map">core.janet (33986:34223)</span><hr>
+<span class="source-map">core.janet (34017:34254)</span><hr>
 <h2 class="binding"><a id="last">last</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(last xs)<br><br>Get the last element from an indexed data structure.</p>
@@ -685,15 +685,15 @@
 <h2 class="binding"><a id="macex">macex</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(macex x)<br><br>Expand macros completely.</p>
-<span class="source-map">core.janet (42043:42338)</span><hr>
+<span class="source-map">core.janet (42074:42369)</span><hr>
 <h2 class="binding"><a id="macex1">macex1</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(macex1 x)<br><br>Expand macros in a form, but do not recursively expand macros.</p>
-<span class="source-map">core.janet (38725:40915)</span><hr>
+<span class="source-map">core.janet (38756:40946)</span><hr>
 <h2 class="binding"><a id="make-env">make-env</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(make-env parent &amp;)<br><br>Create a new environment table. The new environment  will inherit bindings from the parent environment, but new  bindings will not pollute the parent environment.</p>
-<span class="source-map">core.janet (42462:42749)</span><hr>
+<span class="source-map">core.janet (42493:42780)</span><hr>
 <h2 class="binding"><a id="map">map</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(map f &amp; inds)<br><br>Map a function over every element in an indexed data structure and  return an array of the results.</p>
@@ -709,7 +709,7 @@
 <h2 class="binding"><a id="match">match</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(match x &amp; cases)<br><br>Pattern matching. Match an expression x against  any number of cases. Easy case is a pattern to match against, followed  by an expression to evaluate to if that case is matched. A pattern that is  a symbol will match anything, binding x&#39;s value to that symbol. An array  will match only if all of it&#39;s elements match the corresponding elements in  x. A table or struct will match if all values match with the corresponding  values in x. A tuple pattern will match if it&#39;s first element matches, and the following  elements are treated as predicates and are true. Any other value pattern will only  match if it is equal to x.</p>
-<span class="source-map">core.janet (35807:36858)</span><hr>
+<span class="source-map">core.janet (35838:36889)</span><hr>
 <h2 class="binding"><a id="math/acos">math&#47;acos</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(math&#47;acos x)<br><br>Returns the arccosine of x.</p>
@@ -793,15 +793,15 @@
 <h2 class="binding"><a id="merge">merge</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(merge &amp; colls)<br><br>Merges multiple tables&#47;structs to one. If a key appears in more than one  collection, then later values replace any previous ones.  Returns a new table.</p>
-<span class="source-map">core.janet (31883:32181)</span><hr>
+<span class="source-map">core.janet (31914:32212)</span><hr>
 <h2 class="binding"><a id="merge-into">merge-into</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(merge-into tab &amp; colls)<br><br>Merges multiple tables&#47;structs into a table. If a key appears in more than one  collection, then later values replace any previous ones.  Returns the original table.</p>
-<span class="source-map">core.janet (31594:31880)</span><hr>
+<span class="source-map">core.janet (31625:31911)</span><hr>
 <h2 class="binding"><a id="meta">meta</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(meta &amp; args)<br><br>Add metadata to the current environment.</p>
-<span class="source-map">core.janet (52161:52307)</span><hr>
+<span class="source-map">core.janet (51925:52071)</span><hr>
 <h2 class="binding"><a id="min">min</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(min &amp; args)<br><br>Returns the numeric minimum of the arguments.</p>
@@ -813,27 +813,27 @@
 <h2 class="binding"><a id="module/*syspath*">module&#47;*syspath*</a></h2>
 <span class="binding-type">var (string)</span>
 <p class="docstring">The path where globally installed libraries are located.  The default value is the environment variable JANET_PATH,  and if that is not set &#47;usr&#47;local&#47;lib&#47;janet on linux&#47;posix, and  on Windows the default is the empty string.</p>
-<span class="source-map">core.janet (47666:48013)</span><hr>
+<span class="source-map">core.janet (47721:48068)</span><hr>
 <h2 class="binding"><a id="module/cache">module&#47;cache</a></h2>
 <span class="binding-type">table</span>
 <p class="docstring">Table mapping loaded module identifiers to their environments.</p>
-<span class="source-map">core.janet (48506:48596)</span><hr>
+<span class="source-map">core.janet (48543:48633)</span><hr>
 <h2 class="binding"><a id="module/find">module&#47;find</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(module&#47;find path paths)<br><br>Try to match a module or path name from the patterns in paths.</p>
-<span class="source-map">core.janet (48016:48503)</span><hr>
+<span class="source-map">core.janet (48071:48540)</span><hr>
 <h2 class="binding"><a id="module/loading">module&#47;loading</a></h2>
 <span class="binding-type">table</span>
 <p class="docstring">Table mapping currently loading modules to true. Used to prevent  circular dependencies.</p>
-<span class="source-map">core.janet (48599:48718)</span><hr>
+<span class="source-map">core.janet (48636:48755)</span><hr>
 <h2 class="binding"><a id="module/native-paths">module&#47;native-paths</a></h2>
 <span class="binding-type">array</span>
 <p class="docstring">See doc for module&#47;paths</p>
-<span class="source-map">core.janet (47495:47663)</span><hr>
+<span class="source-map">core.janet (47538:47718)</span><hr>
 <h2 class="binding"><a id="module/paths">module&#47;paths</a></h2>
 <span class="binding-type">array</span>
 <p class="docstring">The list of paths to look for modules. The followig  substitutions are preformed on each path. :sys: becomes  module&#47;*syspath*, :name: becomes the last part of the module  name after the last &#47;, and :all: is the module name literally.  :native: becomes the dynamic library file extension, usually dll  or so.</p>
-<span class="source-map">core.janet (47058:47492)</span><hr>
+<span class="source-map">core.janet (47089:47535)</span><hr>
 <h2 class="binding"><a id="native">native</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(native path [,env])<br><br>Load a native module from the given path. The path must be an absolute or relative path on the file system, and is usually a .so file on Unix systems, and a .dll file on Windows. Returns an environment table that contains functions and other values from the native module.</p>
@@ -941,7 +941,7 @@
 <h2 class="binding"><a id="pairs">pairs</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(pairs x)<br><br>Get the values of an associative data structure.</p>
-<span class="source-map">core.janet (32602:32823)</span><hr>
+<span class="source-map">core.janet (32633:32854)</span><hr>
 <h2 class="binding"><a id="parser/byte">parser&#47;byte</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(parser&#47;byte parser b)<br><br>Input a single byte into the parser byte stream. Returns the parser.</p>
@@ -985,7 +985,7 @@
 <h2 class="binding"><a id="partial">partial</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(partial f &amp; more)<br><br>Partial function application.</p>
-<span class="source-map">core.janet (30247:30366)</span><hr>
+<span class="source-map">core.janet (30278:30397)</span><hr>
 <h2 class="binding"><a id="peg/compile">peg&#47;compile</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(peg&#47;compile peg)<br><br>Compiles a peg source data structure into a &lt;core&#47;peg&gt;. This will speed up matching if the same peg will be used multiple times.</p>
@@ -1001,15 +1001,15 @@
 <h2 class="binding"><a id="postwalk">postwalk</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(postwalk f form)<br><br>Do a post-order traversal of a data structure and call (f x)  on every visitation.</p>
-<span class="source-map">core.janet (29180:29335)</span><hr>
+<span class="source-map">core.janet (29211:29366)</span><hr>
 <h2 class="binding"><a id="pp">pp</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(pp x)<br><br>Pretty print to stdout.</p>
-<span class="source-map">core.janet (42341:42411)</span><hr>
+<span class="source-map">core.janet (42372:42442)</span><hr>
 <h2 class="binding"><a id="prewalk">prewalk</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(prewalk f form)<br><br>Similar to postwalk, but do pre-order traversal.</p>
-<span class="source-map">core.janet (29338:29456)</span><hr>
+<span class="source-map">core.janet (29369:29487)</span><hr>
 <h2 class="binding"><a id="print">print</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(print &amp; xs)<br><br>Print values to the console (standard out). Value are converted to strings if they are not already. After printing all values, a newline character is printed. Returns nil.</p>
@@ -1037,11 +1037,11 @@
 <h2 class="binding"><a id="repl">repl</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(repl chunks onsignal &amp;)<br><br>Run a repl. The first parameter is an optional function to call to  get a chunk of source code that should return nil for end of file.  The second parameter is a function that is called when a signal is  caught.</p>
-<span class="source-map">core.janet (51492:52158)</span><hr>
+<span class="source-map">core.janet (51256:51922)</span><hr>
 <h2 class="binding"><a id="require">require</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(require path &amp; args)<br><br>Require a module with the given name. Will search all of the paths in  module&#47;paths, then the path as a raw file path. Returns the new environment  returned from compiling and running the file.</p>
-<span class="source-map">core.janet (49149:50409)</span><hr>
+<span class="source-map">core.janet (48861:50257)</span><hr>
 <h2 class="binding"><a id="resume">resume</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(resume fiber [,x])<br><br>Resume a new or suspended fiber and optionally pass in a value to the fiber that will be returned to the last yield in the case of a pending fiber, or the argument to the dispatch function in the case of a new fiber. Returns either the return result of the fiber&#39;s dispatch function, or the value from the next yield call in fiber.</p>
@@ -1049,11 +1049,11 @@
 <h2 class="binding"><a id="reverse">reverse</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(reverse t)<br><br>Reverses the order of the elements in a given array or tuple and returns a new array.</p>
-<span class="source-map">core.janet (30555:30817)</span><hr>
+<span class="source-map">core.janet (30586:30848)</span><hr>
 <h2 class="binding"><a id="run-context">run-context</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(run-context env chunks onstatus where &amp;)<br><br>Run a context. This evaluates expressions of janet in an environment,  and is encapsulates the parsing, compilation, and evaluation of janet.  env is the environment to evaluate the code in, chunks is a function  that returns strings or buffers of source code (from a repl, file,  network connection, etc. onstatus is a callback that is  invoked when a result is returned or any other signal is raised.  This function can be used to implement a repl very easily, simply  pass a function that reads line from stdin to chunks, status-pp to onstatus</p>
-<span class="source-map">core.janet (42752:44913)</span><hr>
+<span class="source-map">core.janet (42783:44944)</span><hr>
 <h2 class="binding"><a id="scan-number">scan-number</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(scan-number str)<br><br>Parse a number from a byte sequence an return that number, either and integer or a real. The number must be in the same format as numbers in janet source code. Will return nil on an invalid number.</p>
@@ -1065,11 +1065,11 @@
 <h2 class="binding"><a id="slurp">slurp</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(slurp path)<br><br>Read all data from a file with name path  and then close the file.</p>
-<span class="source-map">core.janet (52666:52852)</span><hr>
+<span class="source-map">core.janet (52430:52674)</span><hr>
 <h2 class="binding"><a id="some">some</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(some pred xs)<br><br>Returns false if all xs are false or nil, otherwise returns the first true value.</p>
-<span class="source-map">core.janet (41094:41295)</span><hr>
+<span class="source-map">core.janet (41125:41326)</span><hr>
 <h2 class="binding"><a id="sort">sort</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(sort xs [, by])<br><br>Sort an array in-place. Uses quick-sort and is not a stable sort.</p>
@@ -1081,11 +1081,11 @@
 <h2 class="binding"><a id="spit">spit</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(spit path contents mode &amp;)<br><br>Write contents to a file at path.  Can optionally append to the file.</p>
-<span class="source-map">core.janet (52855:53066)</span><hr>
+<span class="source-map">core.janet (52677:52965)</span><hr>
 <h2 class="binding"><a id="status-pp">status-pp</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(status-pp sig x f source)<br><br>Pretty print a signal and associated state. Can be used as the  onsignal argument to run-context.</p>
-<span class="source-map">core.janet (44916:46194)</span><hr>
+<span class="source-map">core.janet (44947:46225)</span><hr>
 <h2 class="binding"><a id="stderr">stderr</a></h2>
 <span class="binding-type">core/file</span>
 <p class="docstring">The standard error file.</p>
@@ -1221,11 +1221,11 @@
 <h2 class="binding"><a id="take-until">take-until</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(take-until pred ind)<br><br>Given a predicate, take only elements from an indexed type that satisfy  the predicate, and abort on first failure. Returns a new array.</p>
-<span class="source-map">core.janet (25130:25376)</span><hr>
+<span class="source-map">core.janet (25161:25407)</span><hr>
 <h2 class="binding"><a id="take-while">take-while</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(take-while pred ind)<br><br>Same as (take-until (complement pred) ind).</p>
-<span class="source-map">core.janet (25379:25493)</span><hr>
+<span class="source-map">core.janet (25410:25524)</span><hr>
 <h2 class="binding"><a id="true?">true?</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(true? x)<br><br>Check if x is true.</p>
@@ -1269,11 +1269,11 @@
 <h2 class="binding"><a id="update">update</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(update ds key func &amp; args)<br><br>Accepts a key argument and passes its&#39; associated value to a function.  The key then, is associated to the function&#39;s return value</p>
-<span class="source-map">core.janet (31361:31591)</span><hr>
+<span class="source-map">core.janet (31392:31622)</span><hr>
 <h2 class="binding"><a id="values">values</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(values x)<br><br>Get the values of an associative data structure.</p>
-<span class="source-map">core.janet (32387:32599)</span><hr>
+<span class="source-map">core.janet (32418:32630)</span><hr>
 <h2 class="binding"><a id="varglobal">varglobal</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(varglobal name init)<br><br>Dynamically create a global var.</p>
@@ -1281,7 +1281,7 @@
 <h2 class="binding"><a id="walk">walk</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(walk f form)<br><br>Iterate over the values in ast and apply f  to them. Collect the results in a data structure . If ast is not a  table, struct, array, or tuple,  returns form.</p>
-<span class="source-map">core.janet (28757:29125)</span><hr>
+<span class="source-map">core.janet (28788:29156)</span><hr>
 <h2 class="binding"><a id="when">when</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(when condition &amp; body)<br><br>Evaluates the body when the condition is true. Otherwise returns nil.</p>
@@ -1309,6 +1309,6 @@
 <h2 class="binding"><a id="zipcoll">zipcoll</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(zipcoll keys vals)<br><br>Creates a table from two arrays&#47;tuples.  Returns a new table.</p>
-<span class="source-map">core.janet (31091:31358)</span>
+<span class="source-map">core.janet (31122:31389)</span>
 </html>
 
