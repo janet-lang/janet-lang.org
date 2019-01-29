@@ -7,7 +7,8 @@
 # as other markdown flavors but should have all of the
 # basic markdown functionality.
 
-(import highlight :as hl)
+(import tools/highlight :as hl)
+(import tools/html :as html)
 
 (defn- get-header
   [prefix & content]
@@ -74,7 +75,7 @@
               (constant "</table>"))
     :code    (* "`"
                (constant "<code class=\"code-inline\">")
-               (/ '(any (if-not "`" 1)) ,hl/html-escape)
+               (/ '(any (if-not "`" 1)) ,html/escape)
                (constant "</code>")
                "`")
     :codeblock-inner '(any (if-not "```" 1))
@@ -82,7 +83,7 @@
                   (+ (* "janet" :opt-ws :opt-nl (/ :codeblock-inner ,hl/html))
                      (* :opt-ws :opt-nl
                         (constant "<pre class=\"codeblock\"><code>")
-                        (/ :codeblock-inner ,hl/html-escape)
+                        (/ :codeblock-inner ,html/escape)
                         (constant "</code></pre>")))
                   "```")
     :table-token (+ :img :anchor :strong

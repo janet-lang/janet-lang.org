@@ -67,7 +67,7 @@ It wraps a body of code in a new fiber, `resume`s the fiber, and
 then checks the result. If the fiber has errored, an error clause
 is evaluated.
 
-```
+```janet
 (try
  (error 1)
  ([err] (print "got error: " err)))
