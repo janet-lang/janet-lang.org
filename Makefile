@@ -24,7 +24,8 @@ build: out/index.html \
 	out/prototypes.html \
 	out/specials.html \
 	out/strings.html \
-	out/syntax.html
+	out/syntax.html \
+	out/tables.html
 
 out/%.html: md/%.md templates/docpage.html tools/templater.janet tools/md.janet
 	tools/templater.janet \
