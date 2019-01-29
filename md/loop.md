@@ -158,7 +158,8 @@ However, we can do better than this with the loop macro using the `:pairs` or `:
   (print letter " is for " word))
 ```
 
-Using the `:keys` verb and the dot syntax for indexing
+Using the `:keys` verb and shorthand notation for indexing
+a data structure.
 
 ```janet
 (loop [letter :keys alphabook]
@@ -177,7 +178,7 @@ pairs respectively of the alphabook.
   (print letter " is for " word))
 
 (loop [letter :in (keys alphabook)]
-  (print letter " is for " alphabook letter))
+  (print letter " is for " (alphabook letter)))
 ```
 
 Notice that iteration through the table is in no particular order. Iterating
