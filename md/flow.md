@@ -1,4 +1,9 @@
-{% (def title "Flow Control") %}
+{%
+(def title "Flow Control")
+(def description "Janet has only a handful of special forms that are
+ used to implement flow control in a Janet program. The if, while, do,
+ and fn specials are all that Janet uses to implement branching and loops.")    
+%}
 Janet has only two built in primitives to change flow while inside a function. The first is the
 `if` special form, which behaves as expected in most functional languages. It takes two or three parameters:
 a condition, an expression to evaluate to if the condition is true (not nil or false),

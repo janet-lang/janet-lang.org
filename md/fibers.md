@@ -1,4 +1,10 @@
-{% (def title "Fibers") %}
+{%
+(def title "Fibers")
+(def description "Janet supports a form of multithreading with fibers,
+ known in some languages as coroutines or green threads. While fibers run
+ on a single core, they provide a useful mechanism for creating
+ generators, handling errors, and implementing debuggers.")
+%}
 Janet has support for single-core asynchronous programming via coroutines, or fibers.
 Fibers allow a process to stop and resume execution later, essentially enabling
 multiple returns from a function. This allows many patterns such a schedules, generators,

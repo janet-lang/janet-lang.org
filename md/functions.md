@@ -1,4 +1,10 @@
-{% (def title "Functions") %}
+{%
+(def title "Functions")
+(def description "Functions are the main means of abstraction in Janet, and
+ can be created dynamically and passed around like any other value.
+ This means functions are first class in the language.")
+%}
+
 Janet is a functional language - that means that one of the basic building blocks of your
 program will be defining functions (the other is using data structures). Because janet
 is a Lisp, functions are values just like numbers or strings - they can be passed around and

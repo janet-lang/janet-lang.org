@@ -1,4 +1,9 @@
-{% (def title "Data Structures") %}
+{%
+(def title "Data Structures")
+(def description "Janet has a handful of core data structures.
+ These can be summed up as three main kinds, dictionaries, indexed
+ types, and byte sequences, and two flavors of each kind, mutable and immutable.")
+%}
 
 Once you have a handle on functions and the primitive value types, you may be wondering how
 to work with collections of things. Janet has a small number of core data structure types

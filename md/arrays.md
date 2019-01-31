@@ -1,4 +1,9 @@
-{% (def title "Arrays") %}
+{%
+(def title "Arrays")
+(def description "Janet documentation for arrays. Arrays are one of the
+ basic data types in Janet that represent a sequence of values. Arrays are
+ also mutable and can grow or shrink as needed.")    
+%}
 
 Arrays are a central datatype in Janet. Arrays are values that contain
 a sequence of other values, indexed from 0. Arrays are also mutable, meaning

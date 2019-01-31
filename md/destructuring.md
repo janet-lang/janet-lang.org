@@ -1,6 +1,14 @@
-{% (def title "Destructuring") %}
-In many cases, however, you do not need the `get` function at all. Janet supports destructuring, which
-means both the `def` and `var` special forms can extract values from inside structures themselves.
+{%
+(def title "Destructuring")
+(def description "Like many lisps, Janet supports destructuring to
+ extract values from data structures in a convenient and succinct way.")
+%}
+
+Janet uses the `get` function to retrieve values from inside data
+structures.  In many cases, however, you do not need the `get`
+function at all. Janet supports destructuring, which means both the
+`def` and `var` special forms can extract values from inside
+structures themselves.
 
 ```janet
 # Before, we might do

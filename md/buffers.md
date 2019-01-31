@@ -1,4 +1,9 @@
-{% (def title "Buffers") %}
+{%
+(def title "Buffers")
+(def description "Janet buffers contain a sequence of byte
+ values. They can be used to represent mutable strings, or to
+ represent arbitrary memory.")
+%}
 
 Buffers in Janet are the mutable version of strings. Since strings
 in Janet can hold any sequence of bytes, including zeros, buffers share

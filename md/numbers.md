@@ -1,4 +1,10 @@
-{% (def title "Numbers and Arithmetic") %}
+{%
+(def title "Numbers and Arithmetic")
+(def description "Numbers and arithmetic in Janet. Operators and
+ mathematical functions are just normal Janet functions. Most operators
+ like +, -, * and / are variadic, meaning they can take any number of
+ arguments.")
+%}
 
 Any programming language will have some way to do arithmetic. Janet is no exception,
 and supports the basic arithmetic operators

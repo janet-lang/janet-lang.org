@@ -1,4 +1,13 @@
-{%(def title "Macros")%}
+{%
+(def title "Macros")
+(def description "A macro is a function that transforms some
+ Janet source code into some different Janet source code. Calling
+ a Janet macro looks like a function call, but the source code itself
+ is passed as an argument to the macro. The macro should then return
+ some valid Janet code, which will be spliced back into the source code.
+ This is a powerful transformation which lets users extend the language
+ for themselves.")
+%}
 Janet supports macros like most lisps. A macro is like a function, but transforms
 the code itself rather than data. They let you extend the syntax of the language itself.
 

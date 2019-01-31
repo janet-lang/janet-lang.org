@@ -1,4 +1,13 @@
-{% (def title "Parsing Expression Grammars") %}
+{%
+(def title "Parsing Expression Grammars")
+(def description "Janet has a built in peg module which
+ can be used to quickly build parsers and pattern matching
+ expressions, much like regex. PEGs (Parsing Expression Grammars)
+ are more powerful than regex's, however, and are more flexible
+ in their uses.")
+%}
+
+
 A common programming task is recognizing patterns in text, be it
 filtering emails from a list or extracting data from a CSV file. Programming
 languages and libraries usually offer a number of tools for this, including prebuilt

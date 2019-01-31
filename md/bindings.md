@@ -1,4 +1,9 @@
-{% (def title "Bindings (def and var)") %}
+{%
+(def title "Bindings (def and var)")
+(def description "Janet documentation for def and var. Def and var
+ are the two most primitive special forms that create bindings, or assign
+ names to values.")
+%}
 
 Values can be bound to symbols for later use using the keyword `def`. Using undefined
 symbols will raise an error.

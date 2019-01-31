@@ -1,4 +1,12 @@
-{% (def title "Special Forms") %}
+{%
+(def title "Special Forms")
+(def description "While the majority of forms in Janet
+ are functions and macros, there are several special forms
+ that are fundamental - they either cannot be implemented in
+ terms of other forms, or are directly recognized by the compiler
+ for efficiency. Janet only has a few special forms, but they
+ are all useful and necessary to know to program in Janet.")
+%}
 
 This document serves as an overview of all of the special forms in Janet.
 

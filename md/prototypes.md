@@ -1,4 +1,11 @@
-{% (def title "Prototypes") %}
+{%
+(def title "Prototypes")
+(def description "A Janet table can have a prototype table, which is
+ another table that the table will check when a lookup in the table fails
+ (returns nil). Prototypes can be used to implement all sorts of interesting
+ patterns, including inheritance and Object Oriented programming.")
+ %}
+
 To support basic generic programming, Janet tables support a prototype
 table. A prototype table contains default values for a table if certain keys
 are not found in the original table. This allows many similar tables to share

@@ -1,4 +1,11 @@
-{% (def title "The Janet Abstract Machine") %}
+{%
+(def title "The Janet Abstract Machine")
+(def description "Documentation for the Janet Abstract Machine (AM). The
+ Janet AM is the runtime machine that interprets Janet bytecode. Janet source
+ code is read first into Janet data structures (parsing), and these data
+ structures are then compiled into bytecode (compilation).")
+%}
+
 The Janet language is implemented on top of an abstract machine (AM). The compiler
 converts Janet data structures to this bytecode, which can then be efficiently executed
 from inside a C program. To understand the janet bytecode, it is useful to understand

@@ -1,4 +1,10 @@
-{% (def title "Strings, Keywords, and Symbols") %}
+{%
+(def title "Strings, Keywords, and Symbols")
+(def description "Janet supports several varieties of types that can be used as labels for things in
+ your program. The most useful type for this purpose is the keyword type. A keyword
+ begins with a semicolon, and then contains 0 or more alphanumeric or a few other common
+ characters. For example, `:hello`, `:my-name`, `::`, and `:ABC123_-*&^%$` are all keywords.")
+%}
 
 Janet supports several varieties of types that can be used as labels for things in
 your program. The most useful type for this purpose is the keyword type. A keyword

@@ -1,6 +1,14 @@
 {%
 (def title "Syntax and the Parser")
+(def description "A Janet program begins life as a text file, just a sequence of byte like
+any other on your system. Janet source files should be UTF-8 or ASCII
+encoded. Before Janet can compile or run your program, it must transform
+your source code into a data structure. Janet is a lisp, which means it is
+homoiconic - code is data, so all of the facilities in the language for
+manipulating arrays, tuples, strings, and tables can be used for manipulating
+your source code as well.")
 %}
+
 A Janet program begins life as a text file, just a sequence of byte like
 any other on your system. Janet source files should be UTF-8 or ASCII
 encoded. Before Janet can compile or run your program, it must transform

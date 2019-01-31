@@ -1,6 +1,12 @@
 {%
-    (def title "Loops")
+(def title "Loops")
+(def description "A very common and essential operation in all programming is looping. Most
+languages support looping of some kind, either with explicit loops or recursion.
+Janet supports both recursion and a primitive `while` loop. While recursion is
+useful in many cases, sometimes is more convenient to use a explicit loop to
+iterate over a collection like an array.")
 %}
+
 A very common and essential operation in all programming is looping. Most
 languages support looping of some kind, either with explicit loops or recursion.
 Janet supports both recursion and a primitive `while` loop. While recursion is
