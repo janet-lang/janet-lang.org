@@ -59,4 +59,7 @@ deploy: build
 	aws cloudfront create-invalidation --distribution-id E36S10WSIVPLGB --paths "/*"
 	echo "Done!"
 
-.PHONY: deploy run refresh build
+clean:
+	rm -rf out
+
+.PHONY: deploy run refresh build clean
