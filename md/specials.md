@@ -212,7 +212,7 @@ a data structure and key. This allows set to behave like `setf` or `setq` in Com
 (set x 11)
 (prx) # prints 11
 (set x nil)
-(prx) # prints 12
+(prx) # prints nil
 
 (def tab @{})
 (set (tab :property) "hello")
