@@ -69,6 +69,7 @@ Options are:
   -- Stop handling options
 ```
 
-## IRC
+## Discussion
 
-Feel free to ask questions and join discussion on [the #janet channel on Freenode](https://webchat.freenode.net/)
+Feel free to ask questions and join discussion on the [Janet Gitter Channel](https://gitter.im/janet-language/community).
+Alternatively, check out [the #janet channel on Freenode](https://webchat.freenode.net/)
