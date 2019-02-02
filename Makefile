@@ -23,6 +23,7 @@ build: out/index.html \
 	out/peg.html \
 	out/prototypes.html \
 	out/specials.html \
+	out/string_library.html \
 	out/strings.html \
 	out/syntax.html \
 	out/tables.html
