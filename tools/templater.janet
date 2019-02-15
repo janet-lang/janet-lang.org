@@ -31,7 +31,7 @@
   []
   (let [date (os/date)
         M (months (date :month))
-        D (date :month-day)
+        D (+ (date :month-day) 1)
         Y (date :year)
         HH (date :hours)
         MM (date :minutes)
