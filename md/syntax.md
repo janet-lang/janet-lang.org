@@ -103,7 +103,7 @@ can be any integer from 2 to 36. For any radix above 10, use the letters as digi
 
 ## Strings
 
-Strings in janet are surrounded by double quotes. Strings are 8bit clean, 
+Strings in janet are surrounded by double quotes. Strings are 8bit clean,
 meaning they can contain any arbitrary sequence of bytes, including embedded
 0s. To insert a double quote into a string itself, escape
 the double quote with a backslash. For unprintable characters, you can either use
@@ -185,8 +185,8 @@ Arrays are the same as tuples, but have a leading @ to indicate mutability.
 Structs are represented by a sequence of white-space delimited key value pairs
 surrounded by curly braces. The sequence is defined as key1, value1, key2, value2, etc.
 There must be an even number of items between curly braces or the parser will
-signal a parse error. Any value can be a key or value. Using nil or NaN as a key, however, 
-will drop that pair from the parsed struct. Using nil as value will drop that 
+signal a parse error. Any value can be a key or value. Using nil or NaN as a key, however,
+will drop that pair from the parsed struct. Using nil as value will drop that
 pair from the parsed struct
 
 ```janet
@@ -242,4 +242,49 @@ forms like `''x` (`(quote (quote x))`), or `,;x` (`(unquote (splice x))`).
 
 For syntax highlighting, there is some preliminary vim syntax highlighting in [janet.vim](https://github.com/janet-lang/janet.vim).
 Generic lisp syntax highlighting should, however, provide good results. One can also generate a janet.tmLanguage
-file for other programs with `make grammar` from the Janet sourc code.
+file for other programs with `make grammar` from the Janet source code.
+
+## Grammar
+
+For anyone looking for a more succinct description of the grammar, a PEG grammar
+for recognizing Janet source code is below. The PEG syntax is itself similar to EBNF.
+More info on the PEG syntax can be found in [the documentation for the peg module](/peg.html).
+
+```janet
+(def grammar
+  ~{:ws (set " \t\r\f\n\0")
+    :readermac (set "';~,")
+    :symchars (+ (range "09" "AZ" "az" "\x80\xFF") (set "!$%&*+-./:<?=>@^_|"))
+    :token (some :symchars)
+    :hex (range "09" "af" "AF")
+    :escape (* "\\" (+ (set "ntrzf0\"\\e")
+                       (* "x" :hex :hex)
+                       (error (constant "bad hex escape"))))
+    :comment (* "#" (any (if-not (+ "\n" -1) 1)))
+    :symbol :token
+    :keyword (* ":" (any :symchars))
+    :constant (+ "true" "false" "nil")
+    :bytes (* "\"" (any (+ :escape (if-not "\"" 1))) "\"")
+    :string :bytes
+    :buffer (* "@" :bytes)
+    :long-bytes {:delim (some "`")
+                 :open (capture :delim :n)
+                 :close (cmt (* (not (> -1 "`")) (-> :n) ':delim) ,=)
+                 :main (drop (* :open (any (if-not :close 1)) :close))}
+    :long-string :long-bytes
+    :long-buffer (* "@" :long-bytes)
+    :number (cmt (<- :token) ,scan-number)
+    :raw-value (+ :comment :constant :number :keyword
+                  :string :buffer :long-string :long-buffer
+                  :parray :barray :ptuple :btuple :struct :dict :symbol)
+    :value (* (any (+ :ws :readermac)) :raw-value (any :ws))
+    :root (any :value)
+    :root2 (any (* :value :value))
+    :ptuple (* "(" :root (+ ")" (error "")))
+    :btuple (* "[" :root (+ "]" (error "")))
+    :struct (* "{" :root2 (+ "}" (error "")))
+    :parray (* "@" :ptuple)
+    :barray (* "@" :btuple)
+    :dict (* "@" :struct)
+    :main :root})
+```

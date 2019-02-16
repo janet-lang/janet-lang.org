@@ -73,8 +73,8 @@
     :symchars (+ (range "09" "AZ" "az" "\x80\xFF") (set "!$%&*+-./:<?=>@^_|"))
     :token (some :symchars)
     :hex (range "09" "af" "AF")
-    :escape (* "\\" (+ (set "ntrzf0\"\\e") 
-                       (* "x" :hex :hex) 
+    :escape (* "\\" (+ (set "ntrzf0\"\\e")
+                       (* "x" :hex :hex)
                        (error (constant "bad hex escape"))))
 
     :comment ,(<-c :comment ~(* "#" (any (if-not (+ "\n" -1) 1))))
@@ -107,7 +107,7 @@
     :barray (* '"@" :btuple)
     :dict (* '"@"  :struct)
 
-    :main (+ (% (* 
+    :main (+ (% (*
                   (constant "<pre class=\"j-main\"><code>")
                   :root
                   (constant "</code></pre>"))) (error ""))})
