@@ -29,9 +29,6 @@
     color: white;
     text-decoration: none;
     font-size: 1.4em;
-}
-
-.carousel div {
     margin: 5px 5px;
     padding: 10px 15px;
     background-color: #ffffff1a;
@@ -39,7 +36,7 @@
     border: solid 1.5px white;
 }
 
-.carousel div:hover {
+.carousel a:hover {
     background-color: #ffffff30;
 }
 
