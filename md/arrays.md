@@ -3,6 +3,12 @@
 (def description "Janet documentation for arrays. Arrays are one of the
  basic data types in Janet that represent a sequence of values. Arrays are
  also mutable and can grow or shrink as needed.")    
+(def prev-page {
+ :link "/data_structures.html"
+ :text "Data Structures"})
+(def next-page {
+ :link "/tables.html"
+ :text "Tables"})
 %}
 
 Arrays are a central datatype in Janet. Arrays are values that contain

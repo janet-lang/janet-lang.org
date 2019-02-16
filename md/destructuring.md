@@ -2,6 +2,12 @@
 (def title "Destructuring")
 (def description "Like many lisps, Janet supports destructuring to
  extract values from data structures in a convenient and succinct way.")
+(def prev-page {
+ :link "/macros.html"
+ :text "Macros"})
+(def next-page {
+ :link "/fibers.html"
+ :text "Fibers"})
 %}
 
 Janet uses the `get` function to retrieve values from inside data

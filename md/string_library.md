@@ -4,6 +4,12 @@
  for manipulating strings in Janet. The Janet string library provides a number
  of functions for selecting substrings, concatenating strings, and transforming
  strings.")
+(def prev-page {
+ :link "/strings.html"
+ :text "Strings"})
+(def next-page {
+ :link "/data_structures.html"
+ :text "Data Structures"})
 %}
 
 The string is a basic type that represents a sequence of characters. Strings

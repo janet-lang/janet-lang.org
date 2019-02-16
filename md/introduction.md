@@ -3,6 +3,12 @@
 (def description "Getting started with Janet. Janet can be installed from a prebuilt binary,
  built from source, or embedded into an application. The
  easiest way to get started is the online web REPL.")
+(def prev-page {
+ :link "/"
+ :text "Home"})
+(def next-page {
+ :link "/syntax.html"
+ :text "Syntax"})
 %}
 
 ## Installation

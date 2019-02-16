@@ -7,7 +7,14 @@
  some valid Janet code, which will be spliced back into the source code.
  This is a powerful transformation which lets users extend the language
  for themselves.")
+(def prev-page {
+ :link "/loop.html"
+ :text "Looping"})
+(def next-page {
+ :link "/destructuring.html"
+ :text "Destructuring"})
 %}
+
 Janet supports macros like most lisps. A macro is like a function, but transforms
 the code itself rather than data. They let you extend the syntax of the language itself.
 

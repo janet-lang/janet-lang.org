@@ -3,6 +3,12 @@
 (def description "Janet buffers contain a sequence of byte
  values. They can be used to represent mutable strings, or to
  represent arbitrary memory.")
+(def prev-page {
+ :link "/tables.html"
+ :text "Tables"})
+(def next-page {
+ :link "/loop.html"
+ :text "Looping"})
 %}
 
 Buffers in Janet are the mutable version of strings. Since strings

@@ -3,6 +3,12 @@
 (def description "Janet has a handful of core data structures.
  These can be summed up as three main kinds, dictionaries, indexed
  types, and byte sequences, and two flavors of each kind, mutable and immutable.")
+(def prev-page {
+ :link "/string_library.html"
+ :text "String Library"})
+(def next-page {
+ :link "/arrays.html"
+ :text "Arrays"})
 %}
 
 Once you have a handle on functions and the primitive value types, you may be wondering how

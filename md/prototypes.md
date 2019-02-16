@@ -4,6 +4,12 @@
  another table that the table will check when a lookup in the table fails
  (returns nil). Prototypes can be used to implement all sorts of interesting
  patterns, including inheritance and Object Oriented programming.")
+(def prev-page {
+ :link "/peg.html"
+ :text "Peg"})
+(def next-page {
+ :link "/specials.html"
+ :text "Specials"})
  %}
 
 To support basic generic programming, Janet tables support a prototype

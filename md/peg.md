@@ -5,8 +5,13 @@
  expressions, much like regex. PEGs (Parsing Expression Grammars)
  are more powerful than regex's, however, and are more flexible
  in their uses.")
+(def prev-page {
+ :link "/fibers.html"
+ :text "Fibers"})
+(def next-page {
+ :link "/prototypes.html"
+ :text "Prototypes"})
 %}
-
 
 A common programming task is recognizing patterns in text, be it
 filtering emails from a list or extracting data from a CSV file. Programming

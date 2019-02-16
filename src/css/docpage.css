@@ -78,3 +78,17 @@
 .corner-badge a {
     color: #CCC;
 }
+
+.prevnext-bar {
+    display: flex;
+    justify-content: space-between;
+    margin: 18px;
+}
+
+.prev:before {
+    content: "< ";
+}
+
+.next:after {
+    content: " >";
+}

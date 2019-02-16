@@ -4,6 +4,12 @@
  your program. The most useful type for this purpose is the keyword type. A keyword
  begins with a colon, and then contains 0 or more alphanumeric or a few other common
  characters. For example, `:hello`, `:my-name`, `::`, and `:ABC123_-*&^%$` are all keywords.")
+(def prev-page {
+ :link "/functions.html"
+ :text "Functions"})
+(def next-page {
+ :link "/string_library.html"
+ :text "String Library"})
 %}
 
 Janet supports several varieties of types that can be used as labels for things in

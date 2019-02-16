@@ -7,6 +7,12 @@ your source code into a data structure. Janet is a lisp, which means it is
 homoiconic - code is data, so all of the facilities in the language for
 manipulating arrays, tuples, strings, and tables can be used for manipulating
 your source code as well.")
+(def prev-page {
+ :link "/introduction.html"
+ :text "Introduction"})
+(def next-page {
+ :link "/numbers.html"
+ :text "Numbers"})
 %}
 
 A Janet program begins life as a text file, just a sequence of bytes like

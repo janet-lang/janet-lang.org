@@ -3,6 +3,12 @@
 (def description "Janet has only a handful of special forms that are
  used to implement flow control in a Janet program. The if, while, do,
  and fn specials are all that Janet uses to implement branching and loops.")    
+(def prev-page {
+ :link "/bindings.html"
+ :text "Bindings"})
+(def next-page {
+ :link "/functions.html"
+ :text "Functions"})
 %}
 Janet has only two built in primitives to change flow while inside a function. The first is the
 `if` special form, which behaves as expected in most functional languages. It takes two or three parameters:

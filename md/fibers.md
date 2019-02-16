@@ -4,7 +4,14 @@
  known in some languages as coroutines or green threads. While fibers run
  on a single core, they provide a useful mechanism for creating
  generators, handling errors, and implementing debuggers.")
+(def prev-page {
+ :link "/destructuring.html"
+ :text "Destructuring"})
+(def next-page {
+ :link "/peg.html"
+ :text "Peg"})
 %}
+
 Janet has support for single-core asynchronous programming via coroutines, or fibers.
 Fibers allow a process to stop and resume execution later, essentially enabling
 multiple returns from a function. This allows many patterns such a schedules, generators,

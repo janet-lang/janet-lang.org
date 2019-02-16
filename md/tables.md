@@ -5,6 +5,12 @@ is modeled after the associative array, or dictionary. Values are
 put into a table with a key, and can be looked up later with the
 same key. Tables are implemented with an underlying open hash table, so
 they are quite fast and cache friendly.")
+(def prev-page {
+ :link "/arrays.html"
+ :text "Arrays"})
+(def next-page {
+ :link "/buffers.html"
+ :text "Buffers"})
 %}
 
 The table is one of the most flexible data structures in Janet and

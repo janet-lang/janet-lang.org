@@ -3,6 +3,12 @@
 (def description "Functions are the main means of abstraction in Janet, and
  can be created dynamically and passed around like any other value.
  This means functions are first class in the language.")
+(def prev-page {
+ :link "/flow.html"
+ :text "Flow"})
+(def next-page {
+ :link "/strings.html"
+ :text "Strings"})
 %}
 
 Janet is a functional language - that means that one of the basic building blocks of your

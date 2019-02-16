@@ -4,6 +4,12 @@
  Janet AM is the runtime machine that interprets Janet bytecode. Janet source
  code is read first into Janet data structures (parsing), and these data
  structures are then compiled into bytecode (compilation).")
+(def prev-page {
+ :link "/specials.html"
+ :text "Specials"})
+(def next-page {
+ :link "/"
+ :text "Home"})
 %}
 
 The Janet language is implemented on top of an abstract machine (AM). The compiler

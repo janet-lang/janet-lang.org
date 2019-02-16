@@ -4,6 +4,12 @@
  mathematical functions are just normal Janet functions. Most operators
  like +, -, * and / are variadic, meaning they can take any number of
  arguments.")
+(def prev-page {
+ :link "/syntax.html"
+ :text "Syntax"})
+(def next-page {
+ :link "/bindings.html"
+ :text "Bindings"})
 %}
 
 Any programming language will have some way to do arithmetic. Janet is no exception,
