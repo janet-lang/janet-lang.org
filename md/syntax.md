@@ -1,6 +1,6 @@
 {%
 (def title "Syntax and the Parser")
-(def description "A Janet program begins life as a text file, just a sequence of byte like
+(def description "A Janet program begins life as a text file, just a sequence of bytes like
 any other on your system. Janet source files should be UTF-8 or ASCII
 encoded. Before Janet can compile or run your program, it must transform
 your source code into a data structure. Janet is a lisp, which means it is
@@ -9,7 +9,7 @@ manipulating arrays, tuples, strings, and tables can be used for manipulating
 your source code as well.")
 %}
 
-A Janet program begins life as a text file, just a sequence of byte like
+A Janet program begins life as a text file, just a sequence of bytes like
 any other on your system. Janet source files should be UTF-8 or ASCII
 encoded. Before Janet can compile or run your program, it must transform
 your source code into a data structure. Janet is a lisp, which means it is
@@ -39,7 +39,7 @@ false
 
 ## Symbols
 
-Janet symbols are represented a sequence of alphanumeric characters
+Janet symbols are represented as a sequence of alphanumeric characters
 not starting with a digit or a colon. They can also contain the characters
 \!, @, $, \%, \^, \&, \*, -, \_, +, =, \|, \~, :, \<, \>, ., \?, \\, /, as
 well as any Unicode codepoint not in the ASCII range.
@@ -103,7 +103,7 @@ can be any integer from 2 to 36. For any radix above 10, use the letters as digi
 
 ## Strings
 
-Strings in janet are surrounded by double quotes. Strings are 8bit clean, meaning
+Strings in janet are surrounded by double quotes. Strings are 8bit clean, 
 meaning they can contain any arbitrary sequence of bytes, including embedded
 0s. To insert a double quote into a string itself, escape
 the double quote with a backslash. For unprintable characters, you can either use
@@ -121,7 +121,7 @@ hexidecimal. The supported escapes are:
 - \\" Double Quote (ASCII 34)
 - \\\\ Backslash (ASCII 92)
 
-Strings can also contain literal newline characters that will be ignore.
+Strings can also contain literal newline characters that will be ignored.
 This lets one define a multiline string that does not contain newline characters.
 
 An alternative way of representing strings in janet is the long string, or the backquote
@@ -149,8 +149,8 @@ string
 
 ## Buffers
 
-Buffers are similar strings except they are mutable data structures. Strings in janet
-cannot be mutated after created, where a buffer can be changed after creation.
+Buffers are similar to strings except they are mutable data structures. Strings in janet
+cannot be mutated after being created, where a buffer can be changed after creation.
 The syntax for a buffer is the same as that for a string or long string, but
 the buffer must be prefixed with the '@' character.
 
@@ -185,8 +185,9 @@ Arrays are the same as tuples, but have a leading @ to indicate mutability.
 Structs are represented by a sequence of white-space delimited key value pairs
 surrounded by curly braces. The sequence is defined as key1, value1, key2, value2, etc.
 There must be an even number of items between curly braces or the parser will
-signal a parse error. Any value can be a key or value. Using nil as a key or
-value, however, will drop that pair from the parsed struct.
+signal a parse error. Any value can be a key or value. Using nil or NaN as a key, however, 
+will drop that pair from the parsed struct. Using nil as value will drop that 
+pair from the parsed struct
 
 ```janet
 {}
