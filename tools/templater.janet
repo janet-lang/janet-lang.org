@@ -36,7 +36,8 @@
         HH (date :hours)
         MM (date :minutes)
         SS (date :seconds)]
-    (string M " " D ", " Y " at " HH ":" MM ":" SS)))
+    (string/format "%s %d, %d at %.2d:%.2d:%.2d"
+                   M D Y HH MM SS)))
 
 #
 # Template parser
