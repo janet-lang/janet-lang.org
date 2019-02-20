@@ -69,6 +69,22 @@ Options are:
   -- Stop handling options
 ```
 
+## Modules and Libraries
+
+See some auxiliary projects on [GitHub](https://github.com/janet-lang). Here is a short list of libraries
+for Janet to help you get started with some interesting stuff.
+
+* [Circlet](https://github.com/janet-lang/circlet) - An HTTP server for Janet
+* [JSON](https://github.com/janet-lang/json) - A JSON parser and encoder
+* [SQLite3](https://github.com/janet-lang/sqlite3) - Bindings to SQLite
+* [Webview](https://github.com/janet-lang/webview) - Spawn a browser window for creating HTML+CSS UIs on any platform
+* [JanetUI](https://github.com/janet-lang/janetui) - Bindings to [libui](https://github.com/andlabs/libui)
+
+For editor support:
+
+* [janet.vim](https://github.com/janet-lang/janet.vim) - Support for Janet syntax in the vim editor
+* [vscode-janet](https://github.com/janet-lang/vscode-janet) - VSCode plugin for Janet
+
 ## Discussion
 
 Feel free to ask questions and join discussion on the [Janet Gitter Channel](https://gitter.im/janet-language/community).

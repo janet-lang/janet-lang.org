@@ -7,8 +7,8 @@
  for efficiency. Janet only has a few special forms, but they
  are all useful and necessary to know to program in Janet.")
 (def prev-page {
- :link "/prototypes.html"
- :text "Prototypes"})
+ :link "/object_oriented.html"
+ :text "Object Oriented Programming"})
 (def next-page {
  :link "/abstract_machine.html"
  :text "Abstract Machine"})

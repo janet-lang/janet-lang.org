@@ -8,8 +8,8 @@
  :link "/peg.html"
  :text "Peg"})
 (def next-page {
- :link "/specials.html"
- :text "Specials"})
+ :link "/object_oriented.html"
+ :text "Object Oriented Programming"})
  %}
 
 To support basic generic programming, Janet tables support a prototype

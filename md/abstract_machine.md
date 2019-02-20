@@ -6,7 +6,7 @@
  structures are then compiled into bytecode (compilation).")
 (def prev-page {
  :link "/specials.html"
- :text "Specials"})
+ :text "Special Forms"})
 (def next-page {
  :link "/"
  :text "Home"})

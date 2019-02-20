@@ -177,6 +177,12 @@ to be white-space.
 [do 1 2 3]
 ```
 
+Square brackets indicate that a tuple will be used as a tuple literal rather than
+a function call, macro call, or special form. The parser will set a flag on a tuple
+if it has square brackets to let the compiler know to compile the tuple into a
+constructor. The programmer can check if a tuple has brackets via the
+`tuple/type` function.
+
 ## Arrays
 
 Arrays are the same as tuples, but have a leading @ to indicate mutability.

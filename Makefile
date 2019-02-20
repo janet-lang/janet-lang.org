@@ -20,6 +20,7 @@ build: out/index.html \
 	out/loop.html \
 	out/macros.html \
 	out/numbers.html \
+	out/object_oriented.html \
 	out/peg.html \
 	out/prototypes.html \
 	out/specials.html \
