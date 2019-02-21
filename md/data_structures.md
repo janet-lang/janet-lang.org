@@ -69,4 +69,17 @@ itself, and the second parameter is the key.
 (get @"hello, world" 1) # -> 101
 (get "hello, world" 0) # -> 104
 ```
+The table below summarizes the big-O complexity of various operations and other information
+on the built-in data structures.
 
+| Data structure    | Access | Search    | Insert    | Delete    | Space Complexity | Growable? |
+| --------------    | ------ | ------    | ------    | ------    | ---------------- | --------- |
+| Array             | O(1)   | O(n)      | -         | -         | O(1)             | No        |
+| Tuple             | O(1)   | O(n)      | -         | -         | O(1)             | No        |
+| Table             | -      | O(1)      | O(1)      | O(1)      | O(1)             | Yes       |
+| Struct            | -      | O(log(n)) | O(log(n)) | O(log(n)) | O(1)             | Yes       |
+| Buffer            | O(1)   | O(n)      | O(1)      | O(1)      | O(1)             | Yes       |
+| String            | O(1)   | O(n)      | O(log(n)) | O(log(n)) | O(1)             | Yes       |
+| Keyword/Symbol(*) | -      | -         | O(1)      | O(1)      | O(1)             | Yes       |
+
+(*) for keywords/symbols we actually mean their underlying container - the module.
