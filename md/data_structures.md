@@ -30,7 +30,24 @@ is that dictionaries are not limited to integer keys. They are backed by a hasht
 constant time lookup (and insertion for the mutable case).
 Finally, the 'bytes' abstraction is any type that contains a sequence of bytes. A 'bytes' value or byteseq associates
 integer keys (the indices) with integer values between 0 and 255 (the byte values). In this way,
-they behave much like Arrays and Tuples. However, one cannot put non integer values into a byteseq
+they behave much like Arrays and Tuples. However, one cannot put non integer values into a byteseq.
+
+The table below summarizes the big-O complexity of various operations and other information
+on the built-in data structures. All primitive operations on data structures will run in constant
+time regarding the number of items in the data structure. All primitive operations on data structures
+will run in constant time with regard to the number of items in the data structure.
+
+| Data structure        | Access | Insert/Append | Delete    | Space Complexity | Mutable   |
+| --------------        | ------ | ------        | ------    | ---------------- | --------- |
+| Array\*               | O(1)   | O(1)          | O(1)      | O(1)             | Yes       |
+| Tuple                 | O(1)   | -             | -         | O(1)             | No        |
+| Table                 | O(1)   | O(1)          | O(1)      | O(1)             | Yes       |
+| Struct                | O(1)   | -             | -         | O(1)             | No        |
+| Buffer                | O(1)   | O(1)          | O(1)      | O(1)             | Yes       |
+| String/Keyword/Symbol | O(1)   | -             | -         | O(1)             | No        |
+
+\*: Append and delete for an array correspond to `array/push` and `array/pop`. Removing or inserting
+elements at random indices will run in `O(n)` time where `n` is the number of elements in the array.
 
 ```janet
 (def mytuple (tuple 1 2 3))
@@ -69,17 +86,3 @@ itself, and the second parameter is the key.
 (get @"hello, world" 1) # -> 101
 (get "hello, world" 0) # -> 104
 ```
-The table below summarizes the big-O complexity of various operations and other information
-on the built-in data structures.
-
-| Data structure    | Access | Search    | Insert    | Delete    | Space Complexity | Growable? |
-| --------------    | ------ | ------    | ------    | ------    | ---------------- | --------- |
-| Array             | O(1)   | O(n)      | -         | -         | O(1)             | No        |
-| Tuple             | O(1)   | O(n)      | -         | -         | O(1)             | No        |
-| Table             | -      | O(1)      | O(1)      | O(1)      | O(1)             | Yes       |
-| Struct            | -      | O(log(n)) | O(log(n)) | O(log(n)) | O(1)             | Yes       |
-| Buffer            | O(1)   | O(n)      | O(1)      | O(1)      | O(1)             | Yes       |
-| String            | O(1)   | O(n)      | O(log(n)) | O(log(n)) | O(1)             | Yes       |
-| Keyword/Symbol(*) | -      | -         | O(1)      | O(1)      | O(1)             | Yes       |
-
-(*) for keywords/symbols we actually mean their underlying container - the module.
