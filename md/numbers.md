@@ -5,8 +5,8 @@
  like +, -, * and / are variadic, meaning they can take any number of
  arguments.")
 (def prev-page {
- :link "/syntax.html"
- :text "Syntax"})
+ :link "/specials.html"
+ :text "Special Forms"})
 (def next-page {
  :link "/bindings.html"
  :text "Bindings"})

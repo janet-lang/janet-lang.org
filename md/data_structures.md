@@ -34,17 +34,16 @@ they behave much like Arrays and Tuples. However, one cannot put non integer val
 
 The table below summarizes the big-O complexity of various operations and other information
 on the built-in data structures. All primitive operations on data structures will run in constant
-time regarding the number of items in the data structure. All primitive operations on data structures
-will run in constant time with regard to the number of items in the data structure.
+time regarding the number of items in the data structure.
 
 | Data structure        | Access | Insert/Append | Delete    | Space Complexity | Mutable   |
 | --------------        | ------ | ------        | ------    | ---------------- | --------- |
-| Array\*               | O(1)   | O(1)          | O(1)      | O(1)             | Yes       |
-| Tuple                 | O(1)   | -             | -         | O(1)             | No        |
-| Table                 | O(1)   | O(1)          | O(1)      | O(1)             | Yes       |
-| Struct                | O(1)   | -             | -         | O(1)             | No        |
-| Buffer                | O(1)   | O(1)          | O(1)      | O(1)             | Yes       |
-| String/Keyword/Symbol | O(1)   | -             | -         | O(1)             | No        |
+| Array\*               | O(1)   | O(1)          | O(1)      | O(n)             | Yes       |
+| Tuple                 | O(1)   | -             | -         | O(n)             | No        |
+| Table                 | O(1)   | O(1)          | O(1)      | O(n)             | Yes       |
+| Struct                | O(1)   | -             | -         | O(n)             | No        |
+| Buffer                | O(1)   | O(1)          | O(1)      | O(n)             | Yes       |
+| String/Keyword/Symbol | O(1)   | -             | -         | O(n)             | No        |
 
 \*: Append and delete for an array correspond to `array/push` and `array/pop`. Removing or inserting
 elements at random indices will run in `O(n)` time where `n` is the number of elements in the array.

@@ -5,8 +5,8 @@
  code is read first into Janet data structures (parsing), and these data
  structures are then compiled into bytecode (compilation).")
 (def prev-page {
- :link "/specials.html"
- :text "Special Forms"})
+ :link "/object_oriented.html"
+ :text "Object Oriented Programming"})
 (def next-page {
  :link "/"
  :text "Home"})

@@ -7,11 +7,11 @@
  for efficiency. Janet only has a few special forms, but they
  are all useful and necessary to know to program in Janet.")
 (def prev-page {
- :link "/object_oriented.html"
- :text "Object Oriented Programming"})
+ :link "/syntax.html"
+ :text "Syntax"})
 (def next-page {
- :link "/abstract_machine.html"
- :text "Abstract Machine"})
+ :link "/numbers.html"
+ :text "Numbers"})
 %}
 
 This document serves as an overview of all of the special forms in Janet.

@@ -11,8 +11,8 @@ your source code as well.")
  :link "/introduction.html"
  :text "Introduction"})
 (def next-page {
- :link "/numbers.html"
- :text "Numbers"})
+ :link "/specials.html"
+ :text "Special Forms"})
 %}
 
 A Janet program begins life as a text file, just a sequence of bytes like

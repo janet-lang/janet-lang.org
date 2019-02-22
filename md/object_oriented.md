@@ -7,8 +7,8 @@
  :link "/prototypes.html"
  :text "Prototypes"})
 (def next-page {
- :link "/specials.html"
- :text "Special Forms"})
+ :link "/abstract_machine.html"
+ :text "Abstract Machine"})
 %}
 
 Although Janet is a primarily functional language, it has support for
