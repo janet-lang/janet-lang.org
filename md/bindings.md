@@ -38,7 +38,7 @@ being exported to code that imports your current module. You can also add docume
 a function by passing a string the def or var command.
 
 ```janet
-(def mydef :private "This will have priavte scope. My doc here." 123)
+(def mydef :private "This will have private scope. My doc here." 123)
 (var myvar "docstring here" 321)
 ```
 
