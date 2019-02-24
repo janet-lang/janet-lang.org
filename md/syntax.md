@@ -264,12 +264,12 @@ More info on the PEG syntax can be found in [the documentation for the peg modul
 
 ```janet
 (def grammar
-  ~{:ws (set " \t\r\f\n\0")
+  ~{:ws (set " \t\r\f\n\0\v")
     :readermac (set "';~,")
     :symchars (+ (range "09" "AZ" "az" "\x80\xFF") (set "!$%&*+-./:<?=>@^_|"))
     :token (some :symchars)
     :hex (range "09" "af" "AF")
-    :escape (* "\\" (+ (set "ntrzf0\"\\e")
+    :escape (* "\\" (+ (set "ntrzfev0\"\\")
                        (* "x" :hex :hex)
                        (error (constant "bad hex escape"))))
     :comment (* "#" (any (if-not (+ "\n" -1) 1)))

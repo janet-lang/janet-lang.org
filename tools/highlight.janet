@@ -68,12 +68,12 @@
   (paint (if should-color :coresym :symbol) text))
 
 (def grammar
-  ~{:ws (set " \t\r\f\n\0")
+  ~{:ws (set " \v\t\r\f\n\0")
     :readermac (set "';~,")
     :symchars (+ (range "09" "AZ" "az" "\x80\xFF") (set "!$%&*+-./:<?=>@^_|"))
     :token (some :symchars)
     :hex (range "09" "af" "AF")
-    :escape (* "\\" (+ (set "ntrzf0\"\\e")
+    :escape (* "\\" (+ (set "ntrvzf0e\"\\")
                        (* "x" :hex :hex)
                        (error (constant "bad hex escape"))))
 
