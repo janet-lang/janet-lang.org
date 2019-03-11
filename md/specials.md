@@ -204,6 +204,47 @@ of the loop will go on for ever. The while loop always evaluates to nil.
  (++ i))
 ```
 
+## `(break value?)`
+
+Break from a while loop or return early from a function. The break special form can only
+break from the inner-most loop. Since a while loop always returns nil, the optional `value`
+parameter has no effect when used in a while loop, but when returning from a function, the
+value parameter is function's return value.
+
+The `break` special form is most useful as a low level construct for macros. You should
+try to avoid using it in hand written code, although it can be very useful for handling
+early exit conditions without requiring deeply indented code (try the `cond` macro first, though).
+
+```janet
+# Breaking from a while loop
+(while true
+ (def x (math/random))
+ (if (> x 0.95) (break))
+ (print x))
+```
+
+```janet
+# Early exit example using (break)
+(fn myfn
+ [x]
+ (if (= x :one) (break))
+ (if (= x :three) (break x))
+ (if (and (number? x) (even? x)) (break))
+ (print "x = " x)
+ x)
+
+# Example using (cond)
+(fn myfn
+ [x]
+ (cond
+  (= x :one) nil
+  (= x :three) x
+  (and (number? x) (even? x)) nil
+  (do
+   (print "x = " x)
+   x)))
+```
+
 ## `(set l-value r-value)`
 
 Update the value of a var l-value to a new value r-value. The set special form will then evaluate to r-value.
