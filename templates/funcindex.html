@@ -1,0 +1,140 @@
+{%(import tools/findex :prefix "") ""%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Janet Function Index</title>
+    <meta name="description" content="Core Function Index for the Janet programming language.">
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis|Inconsolata|Open+Sans">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Janet Function Index" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div class="top">
+      <div class="content-wrapper">
+        <h1 class="title">Janet Function Index</h1>
+        <div class="subtitle">Janet {% janet/version %} Core Function Index</div>
+      </div>
+    </div>
+    <div class="top-under"></div>
+
+    <div class="content-wrapper">
+      <h3><a href="/doc.html">Full Core API</a></h3>
+
+      <h3>Special Forms</h3>
+      <p>These forms are recoginized as special by the compiler and define the core Janet language. Most of the other functions in the core library are defined in termns of these forms, or are implemented in C for performance.</p>
+      {% (listify specs) %}
+
+      <h3>Defining Forms</h3>
+      <p>These forms are shorthands for creating top level bindings. Note that the macro forms should only be used at the top level, otherwise they will be interpretted as normal functions.</p>
+      {% (listify def-forms) %}
+
+      <h3>Operators</h3>
+      <p>These core operators are some of the most primitve and mathematical operators, defining arithmetic and comparisons. There are also macros for C-style imperative 
+      manipulation of variables. Imperative programming should mostly be internal to functions or very simple.</p>
+      {% (listify operators) %}
+
+      <h3>Flow Forms</h3>
+      <p>Use these forms to add branching to your programming. The most primitive branching stucture is the if special form.</p>
+      {% (listify flow-forms) %}
+
+      <h3>Arrays</h3>
+      <p>Arrays are mutable, order sequences of values. They are one of the core data types in Janet.</p>
+      {% (listify array-funcs) %}
+
+      <h3>Buffers</h3>
+      <p>Buffer represent a mutable sequence of bytes. They are much like strings but can be modified and appended to. Buffers also support other operations that treat them like generic blocks of memory.</p>
+      {% (listify buffer-funcs) %}
+
+      <h3>Predicates</h3>
+      <p>A predicate is a function of one argument that returns true or false. Predicates or most commonly used with combinators, like filter, keep, or find.</p>
+      {% (listify predicates) %}
+
+      <h3>Threading Macros</h3>
+      <p>Threading macros are useful for creating pipelines. The janet threading macros are borrowed from janet. They make deeply nested code more linear form, and usually easier to read.</p>
+      {% (listify threading) %}
+
+      <h3>String Functions</h3>
+      <p>Strings in Janet represent both text and arbitrary byte sequences. Strings are immutable, so most operations on them will create new strings.</p>
+      {% (listify string-funcs) %}
+
+      <h3>Table Functions</h3>
+      <p>The mutable hashtable type in Janet is very versatile and can be used for an associative array, prototype based OO, and execution environments.</p>
+      {% (listify table-funcs) %}
+
+      <h3>Struct Functions</h3>
+      <p>Structs are janet's immutable hashtable type. They are very similar to tables but do not offer prototypes, and support value equality. They make great keys for other structs or tables.</p>
+      {% (listify struct-funcs) %}
+
+      <h3>Tuple Functions</h3>
+      <p>Tuples are immutable lists. They are also the data type used
+      to represent function calls, macro invocations, and special forms
+      in Janet. They come in two flavors, bracketed and unbracketed tuples.
+      </p>
+      {% (listify tuple-funcs) %}
+
+      <h3>Fiber Functions</h3>
+      <p>Fibers represent a separate flow of execution in Janet, with it's own stack
+      an execution context. Multiple fiber's can be run on the same OS thread, in this
+      sense they are more fine grained than OS threads.</p>
+      {% (listify fiber-funcs) %}
+
+      <h3>Peg Functions</h3>
+      <p>Pegs, or Parsing Expression Grammars, are Janet's main pattern matching facility, replacing
+      regular expressions in other languages.</p>
+      {% (listify peg-funcs) %}
+
+      <h3>OS Functions</h3>
+      <p>Janet offers several functions for operating with the OS in both platform dependent
+      and platform independent ways.</p>
+      {% (listify os-funcs) %}
+
+      <h3>IO Functions</h3>
+      <p>Janet offers basic file I/O for interacting with the file system. The file library is mostly
+      a wrapper around the C stdio library.</p>
+      {% (listify io-funcs) %}
+
+      <h3>Module Functions</h3>
+      <p>Interact with the Janet module system. Janet has a simple but not inflexible system
+      for mapping module names to file paths, preventing modules from loading more than once, and
+      import and exporting symbols from one module to another.</p>
+      {% (listify module-forms) %}
+
+      <h3>Assembler</h3>
+      <p>Inspect or create functions from Janet bytecode</p>
+      {% (listify asm-funcs) %}
+
+      <h3>Macro Helpers</h3>
+      <p>These functions and macros are useful for writing your own macros. Also checkout
+      the quasiquote special form.</p>
+      {% (listify macro-helpers) %}
+
+      <h3>Looping</h3>
+      <p>Besides the primitive while loop and tail recursion, Janet has a handful
+      of macros for looping.</p>
+      {% (listify loop-forms) %}
+
+      <h3>Misc Forms</h3>
+      <p>Other useful bindings in the core library</p>
+      {% (listify misc-forms) %}
+    </div>
+
+    <footer>
+      <hr>
+      &copy; Calvin Rose {% ((os/date) :year) %}
+      <div class="gentag">{% (string "Generated on " (nice-date)
+        " with Janet " janet/version "-" janet/build) %}</div>
+      <div class="see-problem">See a problem? Source
+        <a href="https://github.com/janet-lang/janet-lang.org">on Github</a></div>
+    </footer>
+
+  </body>
+</html>

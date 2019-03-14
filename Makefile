@@ -27,7 +27,8 @@ build: out/index.html \
 	out/string_library.html \
 	out/strings.html \
 	out/syntax.html \
-	out/tables.html
+	out/tables.html \
+	out/funcindex.html
 
 out/%.html: md/%.md templates/docpage.html tools/templater.janet tools/md.janet
 	tools/templater.janet \
@@ -40,6 +41,11 @@ out/index.html: md/index.md templates/index.html tools/templater.janet tools/md.
 		--content $< \
 		--out $@ \
 		--template templates/index.html
+
+out/funcindex.html: templates/funcindex.html tools/templater.janet tools/md.janet tools/findex.janet
+	tools/templater.janet \
+		--out $@ \
+		--template templates/funcindex.html
 
 # Run a local version of the website
 run: build
