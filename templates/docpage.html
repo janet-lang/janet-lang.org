@@ -26,6 +26,8 @@
     <div class="top-under"></div>
 
     <div class="doc-nav">
+      <div><a href="index.html">Home</a></div>
+
       <div><a class='{% (if (= (opts "--out") "out/introduction.html") "selected" "") %}'
         href="introduction.html">Introduction</a></div>
       <div><a class='{% (if (= (opts "--out") "out/syntax.html") "selected" "") %}'
@@ -68,6 +70,8 @@
         href="object_oriented.html">Object Oriented Programming</a></div>
       <div><a class='{% (if (= (opts "--out") "out/abstract_machine.html") "selected" "") %}'
         href="abstract_machine.html">Abstract Machine</a></div>
+      <div><a class='{% (if (= (opts "--out") "out/funcindex.html") "selected" "") %}'
+        href="funcindex.html">Function Index</a></div>
     </div>
 
     <div class="content-wrapper">
@@ -88,7 +92,7 @@
       <div class="gentag">{% (string "Generated on " (nice-date)
         " with Janet " janet/version "-" janet/build) %}</div>
       <div class="see-problem">See a problem? Source
-        <a href="https://github.com/janet-lang/janet-lang.org">on Github</a></div>
+        <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
     </footer>
 
   </body>

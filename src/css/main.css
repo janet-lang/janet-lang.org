@@ -236,3 +236,29 @@ footer {
 .see-problem {
     font-size: 0.8em;
 }
+
+/* Carousel */
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.carousel a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4em;
+    margin: 5px 5px;
+    padding: 10px 15px;
+    background-color: #ffffff1a;
+    border-radius: 10px;
+    border: solid 1.5px white;
+}
+
+.carousel a:hover {
+    background-color: #ffffff30;
+}

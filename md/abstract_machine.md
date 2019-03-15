@@ -8,8 +8,8 @@
  :link "/object_oriented.html"
  :text "Object Oriented Programming"})
 (def next-page {
- :link "/"
- :text "Home"})
+ :link "/funcindex.html"
+ :text "Function Index"})
 %}
 
 The Janet language is implemented on top of an abstract machine (AM). The compiler

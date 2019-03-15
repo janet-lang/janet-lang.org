@@ -24,7 +24,7 @@
   background: white;
   display: block;
   font-size: 0.8rem;
-  border-left: solid #076591 2.5px;
+  border-left: solid 1px #076591;
 }
 
 .doc-nav .selected {
@@ -46,13 +46,10 @@
         margin-bottom: 25px;
     }
     .doc-nav a {
-        padding: 1px 5px 1px 5px;
-    }
-}
-
-@media (max-width: 800px) {
-    .doc-nav a {
         font-size: 1.2rem;
+        padding: 1px 5px 1px 5px;
+        text-align: center;
+        border-bottom: solid 1px #076591;
     }
 }
 
