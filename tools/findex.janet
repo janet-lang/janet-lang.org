@@ -47,10 +47,16 @@ in the Janet core library.")
 (def loop-forms '(loop seq for each while generate))
 
 (defn listify [bindings]
-  # Make sure all bindings are valid
   (string "<p>" 
           ;(map (fn [x] 
                   (string "<span><a href=\"doc.html#" 
                           x "\">"
+                          x "</a></span> "))
+                (sorted bindings order<)) "</p>"))
+
+(defn listify-specs [bindings]
+  (string "<p>" 
+          ;(map (fn [x] 
+                  (string "<span><a href=\"specials.html\">" 
                           x "</a></span> "))
                 (sorted bindings order<)) "</p>"))
