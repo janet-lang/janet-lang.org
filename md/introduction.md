@@ -18,6 +18,17 @@ Janet is prebuilt for a few systems, but if you want to develop janet, run janet
 get the latest, you must build janet from source. Janet is in alpha and may change
 in backwards incompatible ways.
 
+### Windows
+
+On Windows, the easiest way to install is via the [scoop](https://scoop.sh)
+package manager. You will first need to add the janet-lang bucket, and then you can install janet
+normally.
+
+```
+scoop bucket add janet-lang https://github.com/janet-lang/scoop
+scoop install janet
+```
+
 ## Compiling and Running from Source
 
 If you would like the latest version of Janet, are trying to run Janet on
