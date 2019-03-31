@@ -29,13 +29,18 @@ scoop bucket add janet-lang https://github.com/janet-lang/scoop
 scoop install janet
 ```
 
+### AUR
+
+You can install either the latest git verion or the latest stable version for Arch Linux
+from the Arch user repositories with [janet-lang-git](https://aur.archlinux.org/packages/janet-lang-git/) or [janet-lang](https://aur.archlinux.org/packages/janet-lang).
+
 ## Compiling and Running from Source
 
 If you would like the latest version of Janet, are trying to run Janet on
 a platform that is not macos or Windows, or would like to help develop
 Janet, you can build janet from source.
 Janet only uses Make and batch files to compile on Posix and windows
-respectively. To configure janet, edit the header file src/include/janet/janet.h
+respectively. To configure janet, edit the header file src/include/janet/janetconf.h
 before compilation.
 
 ### macos and Unix-like
@@ -80,6 +85,12 @@ have `emcc` installed and on your path. On a linux or macOS system, use `make em
 The JavaScript build is what runs the repl on the main website,
 but really serves mainly as a proof of concept. Janet will run slower in a browser.
 Building with emscripten on windows is currently unsupported.
+
+### Meson
+
+Janet also has a build file for [Meson](https://mesonbuild.com/), a cross platform build
+system. This is not currently the main supported build system, but should work on any
+system that supports meson. Meson also provides much better IDE integration than Make or batch files.
 
 ## First Program
 

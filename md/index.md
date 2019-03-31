@@ -84,6 +84,7 @@ For editor support:
 
 * [janet.vim](https://github.com/janet-lang/janet.vim) - Support for Janet syntax in the vim editor
 * [vscode-janet](https://github.com/janet-lang/vscode-janet) - VSCode plugin for Janet
+* [language-janet](https://atom.io/packages/language-janet)
 
 ## Discussion
 
