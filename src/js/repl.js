@@ -1,4 +1,5 @@
 (function() {
+  var ansi_up = new AnsiUp;
   var printRaw = (function () {
     var element = document.getElementById('replterm');
     if (element) element.textContent = ''; // clear browser cache
@@ -11,11 +12,8 @@
   })();
 
   function htmlEscape(text) {
-    text = text.replace(/&/g, "&amp;");
-    text = text.replace(/</g, "&lt;");
-    text = text.replace(/>/g, "&gt;");
+    text = ansi_up.ansi_to_html(text);
     text = text.replace('\n', '<br>', 'g');
-    text = text.replace(/\s/g, "&nbsp;");
     return text;
   }
 
