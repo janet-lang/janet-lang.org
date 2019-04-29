@@ -1,12 +1,12 @@
 {$
 (defn render-toc
   [state node]
+  (def url (if (node :pages) (string (node :url) "/index.html") (node :url)))
   {:tag "li"
   "class" (if (node :pages) "caret")
   :content [{:tag "span" 
-              "class" (if (or (= (state :url) (node :url))
-                              (= (state :url) (string (node :url) "/index.html"))) "selected")
-              :content {:tag "a" "href" (node :url) :content (or (node :nav-title) (node :title))}}
+              "class" (if (= (state :url) url) "selected")
+              :content {:tag "a" "href" url :content (or (node :nav-title) (node :title))}}
              (if-let [pages (node :pages)]
                 {:tag "ul"
                 :content (map (partial render-toc state) pages)})]})
