@@ -43,7 +43,7 @@
   (def bindings
     (seq [[k entry] :in entries]
          [{:tag "hr" :no-close true} (emit-item k entry)]))
-  [index bindings])
+  [{:tag "p" :content index} bindings])
 
 (defn gen
   "Generate all bindings."
