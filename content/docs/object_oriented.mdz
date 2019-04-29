@@ -1,0 +1,104 @@
+{:title "Object Oriented Programming"
+ :template "docpage"}
+---
+
+Although Janet is a primarily functional language, it has support for
+Object Oriented programming as well, where objects and classes are
+represented by tables. Object oriented programming can be very useful
+in domains that are less analytical and more about modeling, such as
+some simulations, GUIs, and game scripting. More specifically, Janet supports
+a form of Object Oriented programming via prototypical inheritance, which was pioneered in the
+@link[http://www.selflanguage.org/][Self] language and is used in languages like Lua
+and JavaScript. Janet's implementation of Object Oriented programming is
+designed to be simple, terse, flexible, and efficient in that order of priority.
+
+For information on how table prototypes work, see the previous section on
+@link[/docs/prototypes.html][prototypes].
+
+For example:
+
+@codeblock[janet]```
+# Create a new object called Car with two methods, :say and :honk.
+(def Car
+ @{:type "Car"
+   :color "gray"
+   :say (fn [self msg] (print "Car says: " msg))
+   :honk (fn [self] (print "beep beep! I am " (self :color) "!"))})
+
+# Red Car inherits from Car
+(def RedCar
+ (table/setproto @{:color "red"} Car))
+
+(:honk Car) # prints "beep beep! I am gray!"
+(:honk RedCar) # prints "beep beep! I am red!"
+
+# Pass more arguments
+(:say Car "hello!") # prints "Car says: hello!"
+```
+
+In the above example, we could replace the method call @code[(:honk Car)] with
+@code[((get Car :honk) Car)], and this is exactly what the runtime does when it
+sees a keyword called as a function. In any method call, the object is always
+passed as the first argument to the method. Since functions in Janet check that
+their arity is correct, make sure to include a self argument to methods, even
+when it is not used in the function body.
+
+## Factory functions
+
+Rather than costructors, creating objects in Janet can usually be done with
+a factory function. One can wrap the boilerplate of initializing fields and
+setting the table prototype with a single function with a nice interface.
+
+@codeblock[janet]```
+(defn make-car
+ []
+ (table/setproto @{:serial-number (math/random)} Car))
+
+(def c1 (make-car))
+(def c2 (make-car))
+(def c3 (make-car))
+
+(c1 :serial-number) # 0.840188
+(c2 :serial-number) # 0.394383
+(c3 :serial-number) # 0.783099
+```
+
+One could also define a set of macros for creating objects with useful factory functions, methods, and
+properties. The core library does not currently provide such functionality, as it should be fairly simple
+to customize.
+
+## Structs
+
+Structs can be used as objects as well, not just tables. Structs are of limited use, however, because
+they do not have prototypes. This means that they cannot implement any form of inheritance. The above example
+would work for the first object @code`Car`, but @code`RedCar` could not inherit from @code`Car`.
+
+@codeblock[janet]```
+# Create a new struct object called Car with two methods, :say and :honk.
+(def Car
+ {:type "Car"
+  :color "gray"
+  :say (fn [self msg] (print "Car says: " msg))
+  :honk (fn [self] (print "beep beep! I am " (self :color) "!"))})
+
+(:honk Car) # prints "beep beep! I am gray!"
+
+# Pass more arguments
+(:say Car "hello!") # prints "Car says: hello!"
+```
+
+## Abstract Types
+
+While tables make good objects, Janet also strives for good interoperation with C.
+Many C libraries expose pseudo Object Oriented interfaces to their libraries, so
+Janet allows adding methods to abstract types. The built in abstract type
+@code`:core/file` can be manipulated with methods as well as the @code`file/` functions.
+
+@codeblock[janet]```
+(file/read stdin :line)
+
+# or
+
+(:read stdin :line)
+```
+

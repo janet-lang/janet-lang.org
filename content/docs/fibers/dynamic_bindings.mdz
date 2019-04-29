@@ -1,0 +1,122 @@
+{:title "Dynamic Bindings"
+ :template "docpage"}
+---
+
+Many lisps, especially traditional lisps, support dynamically scoped bindings.
+This is in contrast to lexically scoped bindings, which are usually superior to
+dynamically scoped bindings in terms of clarity, composability, and
+performance. However, dynamic scoping can be used to great effect for implicit
+contexts, configuration, and testing. Janet supports dynamic scoping as of
+version 0.5.0 on a per fiber basis @html[&mdash;] each fiber contains an
+environment table that can be queried for values. Using table prototypes, we
+can easily emulate dynamic scoping.
+
+## Setting a value
+
+Tp set a dynamic binding, use the @code`setdyn` function.
+
+@codeblock[janet]```
+# Sets a dynamic binding :my-var to 10 in the current fiber.
+(setdyn :my-var 10)
+```
+
+## Getting a value
+
+To get a dynamically scoped binding, use the @code`dyn` function.
+
+@codeblock[janet]```
+(dyn :my-var) # returns nil
+(setdyn :my-var 10)
+(dyn :my-var) # returns 10
+```
+
+## Creating a Dynamic Scope
+
+Now that we can get and set dynamic bindings, we need to know how to create
+dynamic scopes themselves. To do this, we can create a new fiber and then use
+@code`fiber/setenv` to set the dynamic environment of the fiber. To inherit from
+the current environment, we set the prototype of the new environment table to
+the current environment table.
+
+Below, we set the dynamic binding @code`:pretty-format` to configure the pretty
+print function @code`pp`.
+
+@codeblock[janet]```
+# Body of our new fiber
+(defn myblock
+ []
+ (pp [1 2 3]))
+
+# The current env
+(def curr-env (fiber/getenv (fiber/current)))
+
+# The dynamic bindings we want to use
+(def my-env {:pretty-format "Inside myblock: %.20P"})
+
+# Set up a new fiber
+(def f (fiber/new myblock))
+(fiber/setenv f (table/setproto my-env curr-env))
+
+# Run the code
+(pp [1 2 3]) # prints "[1 2 3]"
+(resume f) # prints "Inside myblock: [1 2 3]"
+(pp [1 2 3]) # prints "[1 2 3]"
+```
+
+This is verbose so the core library provides a macro, @code`with-dyns`, that makes it much clearer in the common case.
+
+@codeblock[janet]```
+(pp [1 2 3]) # prints "[1 2 3]"
+# prints "Inside with-dyns: [1 2 3]"
+(with-dyns [:pretty-format "Inside with-dyns: %.20P"]
+  (pp [1 2 3]))
+(pp [1 2 3]) # prints "[1 2 3]"
+```
+
+## When to Use Dynamic Bindings
+
+Dynamic bindings should be used when you want to pass around an implicit, global context, especially when you want to
+automatically reset the context if an error is raised. Since a dynamic binding is tied to the current fiber, when a fiber
+exits the context is automatically unset. This is much easier and often more efficient than manually trying to detect errors
+and unset context. Consider the following example code, written once with a global var and once with a dynamic binding.
+
+### Using a Global Var
+
+@codeblock[janet]```
+(var *my-binding* 10)
+
+(defn may-error
+ "A function that may error."
+ []
+ (if (> (math/random) *my-binding*) (error "uh oh")))
+
+(defn do-with-value
+ "Set *my-binding* to a value and run may-error."
+ [x]
+ (def oldx *my-binding*)
+ (set *my-binding* x)
+ (may-error)
+ (set *my-binding* oldx))
+```
+
+This example is a bit verbose, but most importantly it fails to reset @code`*my-binding*` if an error is thrown. We could fix
+this with a @code`try`, but even that may have subtle bugs if the fiber yields but is never resumed. However, there is a better solution with dynamic bindings.
+
+### Using a Dynamic Binding 
+
+@codeblock[janet]```
+(defn may-error
+ "A function that may error."
+ []
+ (if (> (math/random) (dyn :my-binding)) (error "uh oh")))
+
+(defn do-with-value
+ [x]
+ (with-dyns [:my-binding x]
+   (may-error)))
+```
+
+This looks much cleaner, thanks to a macro, but is also correct in handling errors and any other signal that a fiber may emit.
+In general, prefer dynamic bindings over global vars. Global vars are mainly
+useful for scripts or truly program global configuration.
+

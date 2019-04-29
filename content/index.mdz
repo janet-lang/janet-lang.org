@@ -1,0 +1,101 @@
+{:title "The Janet Programming Language"
+ :nav-title "Home"
+ :template "index"
+ :order 1}
+ ---
+
+## Use Cases
+
+Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototying, dynamic systems, and other domains
+where lisp shines. Implemented in mostly standard C99, janet runs on Windows, Linux and macOS.
+The few features that are not standard C (dynamic library loading, compiler specific optimizations),
+are fairly straight forward. Janet can be easily ported to new platforms.
+
+## Features
+
+@ul{@li{Minimal setup - one binary and you are good to go!}
+    @li{First class closures}
+    @li{Garbage collection}
+    @li{First class green threads (continuations)}
+    @li{Python style generators (implemented as a plain macro)}
+    @li{Mutable and immutable arrays (array/tuple)}
+    @li{Mutable and immutable hashtables (table/struct)}
+    @li{Mutable and immutable strings (buffer/string)}
+    @li{Lisp Macros}
+    @li{Byte code interpreter with an assembly interface, as well as bytecode verification}
+    @li{Tailcall Optimization}
+    @li{Direct interop with C via abstract types and C functions}
+    @li{Dynamically load C libraries}
+    @li{Functional and imperative standard library}
+    @li{Lexical scoping}
+    @li{Imperative programming as well as functional}
+    @li{REPL}
+    @li{Parsing Expression Grammars built in to the core library}
+    @li{300+ functions and macros in the core library}
+    @li{Interactive environment with detailed stack traces}}
+
+## Try It
+
+@html[
+<div id="replblock">
+<div id="replterm">
+
+</div>
+<div id="replinbar">
+  <span id="replprompt">&gt;</span><div contenteditable="true" id="replin">(print "hello, world!")</div>
+</div>
+</div>
+]
+
+## Usage
+
+A repl is launched when the binary is invoked with no arguments. Pass the -h flag
+to display the usage information. Individual scripts can be run with `janet myscript.janet`
+
+If you are looking to explore, you can print a list of all available macros, functions, and constants
+by entering the command @code[all-bindings] into the repl.
+
+@codeblock(```
+$ janet
+Janet 0.3.0-2bad243  Copyright (C) 2017-2019 Calvin Rose
+janet:0:> (+ 1 2 3)
+6
+janet:10:> (print "Hello, world!")
+Hello, world!
+nil
+janet:34:> (os/exit)
+$ janet -h
+usage: janet [options] script args...
+Options are:
+  -h Show this help
+  -v Print the version string
+  -s Use raw stdin instead of getline like functionality
+  -e Execute a string of janet
+  -r Enter the repl after running all scripts
+  -p Keep on executing if there is a top level error (persistent)
+  -q Hide prompt, logo, and repl output (quiet)
+  -l Execute code in a file before running the main script
+  -- Stop handling options
+```)
+
+## Modules and Libraries
+
+See some auxiliary projects on @link[https://github.com/janet-lang]{GitHub}. Here is a short list of libraries
+for Janet to help you get started with some interesting stuff.
+
+@ul{@li{@link[https://github.com/janet-lang/circlet]{Circlet} - An HTTP server for Janet}
+    @li{@link[https://github.com/janet-lang/json]{JSON} - A JSON parser and encoder}
+    @li{@link[https://github.com/janet-lang/sqlite3]{SQLite3} - Bindings to SQLite}
+    @li{@link[https://github.com/janet-lang/webview]{WebView} - Spawn a browser window for creating HTML+CSS UIs on any platform}
+    @li{@link[https://github.com/janet-lang/janetui]{JanetUI} - Bindings to @link[https://github.com/andlabs/libui]{libui}}}
+
+For editor support:
+
+@ul{@li{@link[https://github.com/janet-lang/janet.vim]{janet.vim} - Support for Janet syntax in the vim editor}
+    @li{@link[https://github.com/janet-lang/vscode-janet]{vscode-janet} - VSCode plugin for Janet}
+    @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}}
+
+## Discussion
+
+Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
+Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}

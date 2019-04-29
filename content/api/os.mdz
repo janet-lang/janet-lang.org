@@ -1,0 +1,15 @@
+(import tools/gen-docs :as gen-docs)
+{:title "OS Module"
+ :nav-title "os"
+ :template "docpage"}
+---
+
+The @code`os` module contains most Operating System specific functionality as well as routines
+for interacting with the host OS. There is also some functionality for interacting with the
+file system. The functionality in this module can be much reduced by setting the @code`JANET_REDUCED_OS`
+define in @code`janetconf.h`.
+
+## Index
+
+@gen-docs/gen-prefix[os/]
+

@@ -1,0 +1,9 @@
+(import tools/gen-docs :as gen-docs)
+{:title "Fiber Module"
+ :nav-title "fiber"
+ :template "docpage"}
+---
+
+## Index
+
+@gen-docs/gen-prefix[fiber/]

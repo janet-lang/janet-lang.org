@@ -1,0 +1,10 @@
+(import tools/gen-docs :as gen-docs)
+{:title "Debug Module"
+ :nav-title "debug"
+ :template "docpage"}
+---
+
+## Index
+
+@gen-docs/gen-prefix[debug/]
+

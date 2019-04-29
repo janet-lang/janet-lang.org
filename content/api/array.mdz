@@ -1,0 +1,14 @@
+(import tools/gen-docs :as gen-docs)
+{:title "Array Module"
+ :nav-title "array"
+ :template "docpage"}
+---
+
+Arrays are the mutable indexed type in Janet. They contain a sequence of values
+that are keyed with an index. They can also be used to implement stacks and queues.
+See the @link[/docs/data_structures/arrays.html][Arrays] documentation for more info.
+
+## Index
+
+@gen-docs/gen-prefix[array/]
+

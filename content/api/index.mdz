@@ -1,0 +1,11 @@
+(import tools/gen-docs :as gen-docs)
+{:title "Core API"
+ :nav-title "API"
+ :template "docpage"
+ :permalinks ["doc.html"] }
+---
+
+## Index
+
+@gen-docs/gen
+

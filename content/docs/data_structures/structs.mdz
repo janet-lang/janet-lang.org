@@ -1,0 +1,66 @@
+{:title "Structs"
+ :template "docpage"}
+---
+
+Structs are immutable data structures that map keys to values. They are semantically similar to
+@link[/docs/data_structures/tables.html][tables], but are immutable. They also can be used as
+keys in tables and other structs, and follow the expected equality semantics. Like tables, they
+are backed by an efficient, native hashtable.
+
+To create a struct, you may use a struct literal or the @code`struct` function.
+
+@codeblock[janet]```
+(def my-struct {:key1 2
+                :key2 4})
+
+(def my-struct2 (struct
+                 :key1 2
+                 :key2 4))
+
+# Structs with identical contents are equal
+(= my-struct my-struct2) #-> true
+```
+
+As with other data structures, you may retrieve values in a struct via the @code`get` function, or
+call the struct as a function. Since structs are immutable, you cannot add key value pairs
+
+@codeblock[janet]```
+(def st {:a 1 :b 2})
+
+(get st :a) #-> 1
+(st :b) #-> 2
+```
+
+## Converting a Table to a Struct
+
+A table can be converted to a struct via the @code`table/to-struct` function. This is useful for incrementally
+building up a struct via putting key values pairs in a table.
+
+@codeblock[janet]```
+(def accum @{})
+(for i 0 100
+ (put accum (string i) i))
+(def my-struct (table/to-struct accum))
+```
+
+## Using Structs as Keys
+
+Because structs are equal to any struct with the same contents, they make useful keys for
+tables or other structs. For example, we can use structs to represent cartesian points and
+keep a mapping of from points to other values.
+
+@codeblock[janet]```
+(def points @{
+ {:x 10 :y 12} "A"
+ {:x 12 :y 10} "B"
+ {:x 0 :y 0}   "C"})
+
+(defn get-item
+  "Get item at a specific point"
+  [x y]
+  (points {:x x :y y}))
+
+(get-item 10 12) # -> "A"
+(get-item 0 0) # -> "C"
+(get-item 5 5) # -> nil
+```

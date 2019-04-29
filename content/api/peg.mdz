@@ -1,0 +1,12 @@
+(import tools/gen-docs :as gen-docs)
+{:title "PEG Module"
+ :nav-title "peg"
+ :template "docpage"}
+---
+
+See @link[/docs/peg.html][The peg documentation] for more information.
+
+## Index
+
+@gen-docs/gen-prefix[peg/]
+

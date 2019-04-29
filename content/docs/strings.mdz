@@ -1,0 +1,165 @@
+{:title "Strings, Keywords, and Symbols"
+ :template "docpage"
+ :order 7}
+---
+
+Janet supports several varieties of types that can be used as labels for things in
+your program. The most useful type for this purpose is the keyword type. A keyword
+begins with a colon, and then contains 0 or more alphanumeric or a few other common
+characters. For example, @code`:hello`, @code`:my-name`, @code`::`, and @code`:ABC123_-*&^%$` are all keywords.
+
+Keywords, symbols, and strings all behave similarly and can be used as keys for tables and structs.
+Symbols and keywords are optimized for fast equality checks, so are preferred for table keys.
+
+The difference between symbols and keywords is that keywords evaluate to themselves, while
+symbols evaluate to whatever they are bound to. To have a symbol evaluate to itself, it must be
+quoted.
+
+@codeblock[janet]```
+# Evaluates to :monday
+:monday
+
+# Will throw a compile error as monday is not defined
+monday
+
+# Quote it - evaluates to the symbol monday
+'monday
+
+# Our first define, 'monday'
+(def monday "It is monday")
+
+# Now the evaluation should work - monday evaluates to "It is monday"
+monday
+```
+
+The most common thing to do with a keyword is to check it for equality or use it as a key into
+a table or struct. Note that symbols, keywords and strings are all immutable. Besides making your
+code easier to reason about, it allows for many optimizations involving these types.
+
+@codeblock[janet]```
+# Evaluates to true
+(= :hello :hello)
+
+# Evaluates to false, everything in janet is case sensitive
+(= :hello :HeLlO)
+
+# Look up into a table - evaluates to 25
+(get {
+    :name "John"
+    :age 25
+    :occupation "plumber"
+} :age)
+```
+
+Strings can be used similarly to keywords, but there primary usage is for defining either text
+or arbitrary sequences of bytes. Strings (and symbols) in janet are what is sometimes known as
+˝8-bit clean˝; they can hold any number of bytes, and are completely unaware of things like character
+encodings. This is completely compatible with ASCII and UTF-8, two of the most common character
+encodings. By being encoding agnostic, janet strings can be very simple, fast, and useful for
+for other uses besides holding text.
+
+Literal text can be entered inside quotes, as we have seen above.
+
+@codeblock[janet]```
+"Hello, this is a string."
+
+# We can also add escape characters for newlines, double quotes, backslash, tabs, etc.
+"Hello\nThis is on line two\n\tThis is indented\n"
+
+# For long strings where you don't want to type a lot of escape characters,
+# you can use 1 or more backticks (`) to delimit a string.
+# To close this string, simply repeat the opening sequence of backticks
+``
+This is a string.
+Line 2
+    Indented
+"We can just type quotes here", and backslashes \ no problem.
+``
+```
+
+Strings, symbols, and keywords can all contain embedded utf-8. It is recomended
+to embed utf-8 literally in strings rather than escaping it if it is printable.
+
+@codeblock[janet]```
+"Hello, 👍"
+```
+
+## Substrings
+
+The @code`string/slice` function is used to get substrings from a string. Negative
+integers can be used to index from the end of the string.
+
+@codeblock[janet]```
+(string/slice "abcdefg") # -> "abcdefg"
+(string/slice "abcdefg" 1) # -> "bcdefg"
+(string/slice "abcdefg" 2 -2) # -> "cdef"
+(string/slice "abcdefg" -4 -2) # -> "ef"
+```
+
+## Finding Substrings
+
+Janet has multiple functions for finding and replacing strings. The
+Janet string finding functions do not work on patterns or regular expressions;
+they only work on string literals. For more flexible searching and replacing, see
+the @link[/peg.html][peg module].
+
+@codeblock[janet]```
+(string/find "h" "h h h h") #-> 0
+(string/find-all "h" "h h h h") #-> @[0 2 4 6]
+(string/replace "a" "b" "a a a a") #-> "b a a a"
+(string/replace-all "a" "b" "a a a a") #-> "b b b b"
+```
+
+## Splitting Strings
+
+The @code`string/split` function can be used to split strings or buffer on a delimiting
+character. This can be used as a quick and dirty function for getting fields
+from a csv line or getting words from a sentence.
+
+@codeblock[janet]```
+(string/split "," "abc,def,ghi") #-> @["abc" "def" "ghi"]
+(string/split " " "abc def ghi") #-> @["abc" "def" "ghi"]
+```
+
+## Concatenating strings
+
+There are many ways to concatenate strings. The first, most common
+way is the @code`string` function, which takes any number of arguments and
+creates a string that is the concatenation of all of the arguments.
+
+@codeblock[janet]```
+(string "abc" 123 "def") # -> "abc123def"
+```
+
+The second way is the @code`string/join` function, which takes an array
+or tuple of strings and joins them together. @code`string/join` can also
+take an optional separator string which is inserted between items in
+the array. All items in the array or tuple must be byte sequences.
+
+@codeblock[janet]```
+(string/join @["abc" "123" "def"]) #-> "abc123def"
+(string/join @["abc" "123" "def"] ",") # -> "abc,123,def"
+```
+
+This has the advantage over the @code`string` function that one can
+specify a separator. Otherwise, the behavior can be easily emulated
+using the splice special form.
+
+@codeblock[janet]```
+(= (string ;@["a" "b" "c"])
+   (string/join @["a" "b" "c"])) # -> true
+```
+
+## Upper and lower case
+
+The string library also provides facilities for converting strings to
+upper case and lower case. However, only ascii is supported for case
+transformations. The functions @code`string/ascii-upper` and @code`string/ascii-lower`
+return a new string that has all character in the appropriate case.
+
+@codeblock[janet]```
+(string/ascii-upper "aBcdef--*") #-> "ABCDEF--*"
+(string/ascii-lower "aBc676A--*") #-> "abc676a--*"
+```
+
+
