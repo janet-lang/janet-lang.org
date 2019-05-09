@@ -16,7 +16,7 @@
   font-size: 0.8em;
 }
 </style>
-</head><h1>Janet Core API</h1><p>Version 0.5.0-3c0f12e</p><p>Generated April 28, 2019 at 16:22:13</p><hr><h2 class="binding"><a id="%">%</a></h2>
+</head><h1>Janet Core API</h1><p>Version 0.5.0-5a28d8d</p><p>Generated May 9, 2019 at 13:46:17</p><hr><h2 class="binding"><a id="%">%</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(% dividend divisor)<br><br>Returns the remainder of dividend &#47; divisor.</p>
 <hr>
@@ -115,11 +115,11 @@
 <h2 class="binding"><a id="all-bindings">all-bindings</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(all-bindings)<br><br>Get all symbols available in the current environment.</p>
-<span class="source-map">boot.janet (52594:52696)</span><hr>
+<span class="source-map">boot.janet (53372:53474)</span><hr>
 <h2 class="binding"><a id="all-dynamics">all-dynamics</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(all-dynamics)<br><br>Get all dynamic bindings in the current fiber.</p>
-<span class="source-map">boot.janet (52699:52795)</span><hr>
+<span class="source-map">boot.janet (53477:53573)</span><hr>
 <h2 class="binding"><a id="and">and</a></h2>
 <span class="binding-type">macro</span>
 <p class="docstring">(and &amp; forms)<br><br>Evaluates to the last argument if all preceding elements are true, otherwise  evaluates to false.</p>
@@ -1138,8 +1138,8 @@
 <span class="source-map">boot.janet (17983:18202)</span><hr>
 <h2 class="binding"><a id="repl">repl</a></h2>
 <span class="binding-type">function</span>
-<p class="docstring">(repl &amp;opt chunks onsignal)<br><br>Run a repl. The first parameter is an optional function to call to  get a chunk of source code that should return nil for end of file.  The second parameter is a function that is called when a signal is  caught.</p>
-<span class="source-map">boot.janet (51621:52288)</span><hr>
+<p class="docstring">(repl &amp;opt chunks onsignal env)<br><br>Run a repl. The first parameter is an optional function to call to  get a chunk of source code that should return nil for end of file.  The second parameter is a function that is called when a signal is  caught.</p>
+<span class="source-map">boot.janet (51621:53066)</span><hr>
 <h2 class="binding"><a id="require">require</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(require path &amp; args)<br><br>Require a module with the given name. Will search all of the paths in  module&#47;paths, then the path as a raw file path. Returns the new environment  returned from compiling and running the file.</p>
@@ -1235,6 +1235,14 @@
 <h2 class="binding"><a id="string/from-bytes">string&#47;from-bytes</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(string&#47;from-bytes byte-array)<br><br>Creates a string from an array of integers with byte values. All integers will be coerced to the range of 1 byte 0-255.</p>
+<hr>
+<h2 class="binding"><a id="string/has-prefix?">string&#47;has-prefix?</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;has-prefix? pfx str)<br><br>Tests whether str starts with pfx.</p>
+<hr>
+<h2 class="binding"><a id="string/has-suffix?">string&#47;has-suffix?</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;has-suffix? sfx str)<br><br>Tests whether str ends with sfx.</p>
 <hr>
 <h2 class="binding"><a id="string/join">string&#47;join</a></h2>
 <span class="binding-type">cfunction</span>
@@ -1352,6 +1360,10 @@
 <span class="binding-type">cfunction</span>
 <p class="docstring">(tarray&#47;swap-bytes src sindex dst dindex [count=1])<br><br>Swap count elements between src array from index sindex and dst array at position dindex memory can overlap.</p>
 <hr>
+<h2 class="binding"><a id="trace">trace</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(trace func)<br><br>Enable tracing on a function. Returns the function.</p>
+<hr>
 <h2 class="binding"><a id="true?">true?</a></h2>
 <span class="binding-type">function</span>
 <p class="docstring">(true? x)<br><br>Check if x is true.</p>
@@ -1391,6 +1403,10 @@
 <h2 class="binding"><a id="unmarshal">unmarshal</a></h2>
 <span class="binding-type">cfunction</span>
 <p class="docstring">(unmarshal buffer [,lookup])<br><br>Unmarshal a janet value from a buffer. An optional lookup table can be provided to allow for aliases to be resolved. Returns the value unmarshalled from the buffer.</p>
+<hr>
+<h2 class="binding"><a id="untrace">untrace</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(untrace func)<br><br>Disables tracing on a function. Returns the function.</p>
 <hr>
 <h2 class="binding"><a id="update">update</a></h2>
 <span class="binding-type">function</span>
