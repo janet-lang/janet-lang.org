@@ -1,7 +1,7 @@
 {:title "The Janet C API"
  :nav-title "C API"
  :template "docpage"
- :order 1}
+ :order 4}
 ---
 
 One of the fundmemental design goals or Janet is to extend it via the C programming
