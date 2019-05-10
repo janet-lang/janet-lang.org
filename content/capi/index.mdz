@@ -1,0 +1,95 @@
+{:title "The Janet C API"
+ :nav-title "C API"
+ :template "docpage"
+ :order 1}
+---
+
+One of the fundmemental design goals or Janet is to extend it via the C programming
+language, as well as embed the interpretter in a larger program. To this end, Janet
+exposes most of it's low level functionality in well defined C API. Unlike Janet, the
+Janet C API is not safe @html[&mdash;] it's possible to write programs in C that will
+crash, use memory after freeing it, or simply cause undefined behavior. However, using the
+C API will let you use high performance libraries on almost any system and access native
+functionality that is not possible in pure Janet.
+
+Janet's C API assumes that you will have one Janet interpreter per OS thread
+(if the system you are on has threads). The means
+that Janet must have some global, thread local state. This is a problem for some
+host languages, like Go, that expect all code to be fully re-entrant on any thread.
+This design choice, however, makes the Janet APIs more pleasant to use in languages
+like C and C++, as there is no need to pass around a context object to all api functions.
+
+## What defines the C API?
+
+The C API is defined by the header @code`janet.h`, which should be included
+by programs to both embed Janet is a larger program, or to write a Janet module.
+
+## Writing a Module
+
+The easiest way to get started with the Janet C API is to write a Janet native
+module. A native module is native code that can be loaded dynamically at runtime
+in the interpretter. 
+
+A basic skeleton for a native module in C is below.
+
+@codeblock[c]```
+#include <janet.h>
+
+static Janet myfun(int32_t argc, const Janet *argv) {
+    janet_fixarity(argc, 0);
+    printf("hello from a module!\n");
+    return janet_wrap_nil();
+}
+
+static const JanetReg cfuns[] = {
+    {"myfun", myfun, "(mymod/myfun)\n\nPrints a hello message."},
+    {NULL, NULL, NULL}
+};
+
+JANET_MODULE_ENTRY(JanetTable *env) {
+    janet_cfuns(env, "mymod", cfuns);
+}
+```
+
+This module is a very simple module that exposes one
+native function called @code`myfun`. The module is called `mymod`, although
+when importing the module, the user can rename it to whatever he or she likes.
+
+### Compiling the Module
+
+Once you have written you native code a file @code`mymod.c`, you will need to
+compile it with your system's C compiler. Rather than write instructions here for all
+possible systems, we will use the `cook` module, which is included with Janet, to
+compile the native module. In general, native modules should be compiled with the
+same flags that Janet was compiled with, plus anything necessary for shared objects on your system.
+Notably, your module should @strong[NOT] be linked to @code`libjanet.so` or @code`janet.dll` on
+windows. The host interpreter that loads the module will provide the needed symbols and functions
+to the Janet module.
+
+The easiest way to compile a module is to start up a repl, import @code`cook`, and use
+the function @code`cook/make-native` to compile your native module.
+
+@codeblock[janet]```
+(import cook)
+(cook/make-native :name "mymod" :source @["mymod.c"])
+```
+
+If all goes well, cook should have built a file @code`build/mymod.so`. In your repl, you can now
+import your module and use it.
+
+@codeblock[janet]```
+(import build/mymod :as mymod)
+(mymod/myfun) # Prints the hello message
+```
+
+Congratulations, you have a native module.
+
+### A more complex build system
+
+For any project beyond a simple hello world example, you will want to automate the building of
+your native module. The easiest way to do this is to write a script such as @code`build.janet` in
+your project directory that contains the code to build to module. Then, on the command line you
+may use @code`janet build` to build your native module. It is recommended to write similar scripts
+for testing, installing, etc.
+
+In the future, Janet may have a tool to help make this process more declarative.

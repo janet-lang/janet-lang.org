@@ -1,0 +1,66 @@
+{:title "Wrapping Types"
+ :nav-title "Wrapping Types"
+ :template "docpage"
+ :order 1}
+---
+
+Janet has several built in fundemental datatypes. These data types are the 
+bread and butter of the Janet C API, and most functions and macros in the
+API expect some of their arguments to be if these types. However, as Janet is
+a dynamically language, Janet internally uses a boxed representation of these
+types, simply called @code`Janet`.
+
+Functions that are specific to a particular type expect the unboxed or
+unwrapped type, while operations that are generic to janet values will
+typically expect a @code`Janet`.
+
+## Wrapping Functions
+
+These functions convert a C type into a generic Janet value.
+
+@codeblock[c]```
+JANET_API Janet janet_wrap_nil(void);
+JANET_API Janet janet_wrap_number(double x);
+JANET_API Janet janet_wrap_true(void);
+JANET_API Janet janet_wrap_false(void);
+JANET_API Janet janet_wrap_boolean(int x);
+JANET_API Janet janet_wrap_string(const uint8_t *x);
+JANET_API Janet janet_wrap_symbol(const uint8_t *x);
+JANET_API Janet janet_wrap_keyword(const uint8_t *x);
+JANET_API Janet janet_wrap_array(JanetArray *x);
+JANET_API Janet janet_wrap_tuple(const Janet *x);
+JANET_API Janet janet_wrap_struct(const JanetKV *x);
+JANET_API Janet janet_wrap_fiber(JanetFiber *x);
+JANET_API Janet janet_wrap_buffer(JanetBuffer *x);
+JANET_API Janet janet_wrap_function(JanetFunction *x);
+JANET_API Janet janet_wrap_cfunction(JanetCFunction x);
+JANET_API Janet janet_wrap_table(JanetTable *x);
+JANET_API Janet janet_wrap_abstract(void *x);
+JANET_API Janet janet_wrap_pointer(void *x);
+JANET_API Janet janet_wrap_integer(int32_t x);
+```
+
+## Unwrapping Functions
+
+These function convert from a @code`Janet` to a
+more specific C type. If the Janet being unwrapped is
+not actually the returned type, the behavior is undefined.
+
+@codeblock[c]```
+JANET_API const JanetKV *janet_unwrap_struct(Janet x);
+JANET_API const Janet *janet_unwrap_tuple(Janet x);
+JANET_API JanetFiber *janet_unwrap_fiber(Janet x);
+JANET_API JanetArray *janet_unwrap_array(Janet x);
+JANET_API JanetTable *janet_unwrap_table(Janet x);
+JANET_API JanetBuffer *janet_unwrap_buffer(Janet x);
+JANET_API const uint8_t *janet_unwrap_string(Janet x);
+JANET_API const uint8_t *janet_unwrap_symbol(Janet x);
+JANET_API const uint8_t *janet_unwrap_keyword(Janet x);
+JANET_API void *janet_unwrap_abstract(Janet x);
+JANET_API void *janet_unwrap_pointer(Janet x);
+JANET_API JanetFunction *janet_unwrap_function(Janet x);
+JANET_API JanetCFunction janet_unwrap_cfunction(Janet x);
+JANET_API int janet_unwrap_boolean(Janet x);
+JANET_API double janet_unwrap_number(Janet x);
+JANET_API int32_t janet_unwrap_integer(Janet x);
+```

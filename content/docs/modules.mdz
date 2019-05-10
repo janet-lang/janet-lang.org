@@ -1,0 +1,69 @@
+{:title "Modules"
+ :template "docpage"
+ :order 12}
+---
+
+As programs grow, they should be broken into smaller pieces for
+maintainability. Janet has the concept of modules to this end. A
+module is a collection of bindings and it's associated environment.
+By default, modules correspond one to one with source files in Janet, although
+you may override this and structure modules however you like.
+
+## Importing a Module
+
+To use a module, the best way is use the @code`(import)` macro, which
+looks for a module with the given name on your system and imports it's symbols
+into the current environment, usually prefixed with the name of the module.
+
+A default install of Janet, installed via @code`make install`, comes with a few modules
+out of the box. One such module is @code`cook`, which is a tool to help build
+artifacts for Janet, including native modules.
+
+@codeblock[janet]```
+(import cook)
+
+(cook/shell "ls -l")
+```
+
+Once @code`cook` is imported, all of it's symbols are available to the host program, but
+prefixed with @code`cook/`. To import the symbols with a custom prefix or
+without any prefix, use the @code`:prefix` argument
+to the import macro.
+
+@codeblock[janet]```
+(import cook :prefix "")
+
+(shell "ls -l")
+```
+
+You may also use the @code`:as` argument to specify the prefix in a more natural way.
+
+@codeblock[janet]```
+(import cook :as ck)
+
+(ck/shell "ls -l")
+```
+
+## Writing a module
+
+Writing a module in Janet is mostly about exposing only the public functions
+that you want users of your module to be able to use. All top level functions defined
+via @code`defn`, macros defined @code`defmacro`, constants defined via @code`def`, and
+and vars defined via @code`var` will be exported in your module. To mark a function or
+binding as private to your module, you may use @code`defn-` or @code`def-` at the top level.
+You can also add the @code`:private` metadata to the binding.
+
+## @code`module/paths` 
+
+To understand how module loading in Janet works, it's necessary to understand
+@code`module/paths`. This is an array of file paths to search for modules in the
+file system. Each element in this array is a pair @code`[path type]`, where path
+is the a templated file path, which determines what path corresponds to a module name, and
+where type is the loading method used to load the module. Loading can be one of
+@code`:native`, @code`:source`, or @code`:image`.
+
+@ul{@li{A @code`:native` module is loaded via the @code`native` function, which
+        under the hood is a thin wrapper around @code`dlopen` to load a native module.}
+    @li{Source code modules (@code`:source`) are compile from janet source code.}
+    @li{Image modules (@code`:image`) are janet images, usually created via @code`janet -c`}}
+

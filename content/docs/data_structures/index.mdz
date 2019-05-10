@@ -1,5 +1,6 @@
 {:title "Data Structures"
- :template "docpage"}
+ :template "docpage"
+ :order 11}
 ---
 
 Once you have a handle on functions and the primitive value types, you may be wondering how
