@@ -49,8 +49,9 @@
 }
 
 #logo {
-    width: 256px;
+    width: 150%;
     max-width: 256px;
+    height: auto;
 }
 
 /* Web REPL */
