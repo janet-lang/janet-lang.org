@@ -4,8 +4,8 @@
  :order 4}
 ---
 
-One of the fundmemental design goals or Janet is to extend it via the C programming
-language, as well as embed the interpretter in a larger program. To this end, Janet
+One of the fundamental design goals or Janet is to extend it via the C programming
+language, as well as embed the interpreter in a larger program. To this end, Janet
 exposes most of it's low level functionality in well defined C API. Unlike Janet, the
 Janet C API is not safe @html[&mdash;] it's possible to write programs in C that will
 crash, use memory after freeing it, or simply cause undefined behavior. However, using the
@@ -22,13 +22,13 @@ like C and C++, as there is no need to pass around a context object to all api f
 ## What defines the C API?
 
 The C API is defined by the header @code`janet.h`, which should be included
-by programs to both embed Janet is a larger program, or to write a Janet module.
+by programs to both embed Janet in a larger program, or to write a Janet module.
 
 ## Writing a Module
 
 The easiest way to get started with the Janet C API is to write a Janet native
 module. A native module is native code that can be loaded dynamically at runtime
-in the interpretter. 
+in the interpreter. 
 
 A basic skeleton for a native module in C is below.
 

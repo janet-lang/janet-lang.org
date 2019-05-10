@@ -4,14 +4,14 @@
  :order 1}
 ---
 
-Janet has several built in fundemental datatypes. These data types are the 
+Janet has several built in fundamental data types. These data types are the 
 bread and butter of the Janet C API, and most functions and macros in the
 API expect some of their arguments to be if these types. However, as Janet is
 a dynamically language, Janet internally uses a boxed representation of these
 types, simply called @code`Janet`.
 
 Functions that are specific to a particular type expect the unboxed or
-unwrapped type, while operations that are generic to janet values will
+unwrapped type, while operations that are generic to Janet values will
 typically expect a @code`Janet`.
 
 ## Wrapping Functions
