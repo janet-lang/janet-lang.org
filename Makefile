@@ -23,11 +23,11 @@ refresh:
 
 # Deploy static website to AWS
 deploy: build
-	echo "Deploying..."
+	@echo "Deploying..."
 	aws s3 rm s3://janet-lang.org --recursive
 	aws s3 cp site s3://janet-lang.org --recursive
 	aws cloudfront create-invalidation --distribution-id E36S10WSIVPLGB --paths "/*"
-	echo "Done!"
+	@echo "Done!"
 
 clean:
 	mdz clean
