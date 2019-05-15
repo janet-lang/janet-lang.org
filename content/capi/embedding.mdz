@@ -7,7 +7,7 @@
 Janet can be embedded in a host program, usually written in C or C++, in
 several ways. The easiest way is to use the Janet's amalgamated build, which
 is a single giant C source file that can be copied into the host program's source
-tree. This method has many upsides, including simplicity and stabiliity. You can
+tree. This method has many upsides, including simplicity and stability. You can
 also link to @code`libjanet.so` to include Janet as shared object.
 
 ## Clients
@@ -66,20 +66,26 @@ JanetSignal janet_pcall(JanetFunction *fun, int32_t argc, const Janet *argv, Jan
 
 Invoke a function in a protected manner, catching any panics raised. Returns the resulting status
 code, as well as placing the return value in @code`*out`. The fiber pointer f is a pointer
-to a fiber pointer will contain the the fiber used to run the function fun. If f is NULL, a new
+to a fiber pointer will contain the fiber used to run the function fun. If f is NULL, a new
 fiber will be created. Otherwise, Janet will use the fiber pointed to by f to run fun.
 
 If no panics are raised, will return @code`JANET_SIGNAL_OK`. If an error is raised, will return
 @code `JANET_SIGNAL_ERROR`. Other signals will be returned as expected.
 
-
-
-
 @codeblock[c]```
 Janet janet_call(JanetFunction *fun, int32_t argc, const Janet *argv);
 ```
+
+Make a simple, re-entrant call back into the Janet interpreter from C. Try to
+put mostly simple, short running logic here as this suspends the garbage collector
+for the duration of the call. Functions called this way also must either return or error.
+Other signals will be coerced into an error.
+
 
 @codeblock[c]```
 void janet_stacktrace(JanetFiber *fiber, Janet err);
 ```
 
+Print a janet stacktrace for the given fiber to stderr, or whatever is bound
+to the @code`:err` dynamic binding on the current fiber. You also must supply the
+return value or error message raised, as that is not tracked by the fiber itself.
