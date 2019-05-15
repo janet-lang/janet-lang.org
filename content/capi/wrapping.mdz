@@ -19,25 +19,25 @@ typically expect a @code`Janet`.
 These functions convert a C type into a generic Janet value.
 
 @codeblock[c]```
-JANET_API Janet janet_wrap_nil(void);
-JANET_API Janet janet_wrap_number(double x);
-JANET_API Janet janet_wrap_true(void);
-JANET_API Janet janet_wrap_false(void);
-JANET_API Janet janet_wrap_boolean(int x);
-JANET_API Janet janet_wrap_string(const uint8_t *x);
-JANET_API Janet janet_wrap_symbol(const uint8_t *x);
-JANET_API Janet janet_wrap_keyword(const uint8_t *x);
-JANET_API Janet janet_wrap_array(JanetArray *x);
-JANET_API Janet janet_wrap_tuple(const Janet *x);
-JANET_API Janet janet_wrap_struct(const JanetKV *x);
-JANET_API Janet janet_wrap_fiber(JanetFiber *x);
-JANET_API Janet janet_wrap_buffer(JanetBuffer *x);
-JANET_API Janet janet_wrap_function(JanetFunction *x);
-JANET_API Janet janet_wrap_cfunction(JanetCFunction x);
-JANET_API Janet janet_wrap_table(JanetTable *x);
-JANET_API Janet janet_wrap_abstract(void *x);
-JANET_API Janet janet_wrap_pointer(void *x);
-JANET_API Janet janet_wrap_integer(int32_t x);
+Janet janet_wrap_nil(void);
+Janet janet_wrap_number(double x);
+Janet janet_wrap_true(void);
+Janet janet_wrap_false(void);
+Janet janet_wrap_boolean(int x);
+Janet janet_wrap_string(const uint8_t *x);
+Janet janet_wrap_symbol(const uint8_t *x);
+Janet janet_wrap_keyword(const uint8_t *x);
+Janet janet_wrap_array(JanetArray *x);
+Janet janet_wrap_tuple(const Janet *x);
+Janet janet_wrap_struct(const JanetKV *x);
+Janet janet_wrap_fiber(JanetFiber *x);
+Janet janet_wrap_buffer(JanetBuffer *x);
+Janet janet_wrap_function(JanetFunction *x);
+Janet janet_wrap_cfunction(JanetCFunction x);
+Janet janet_wrap_table(JanetTable *x);
+Janet janet_wrap_abstract(void *x);
+Janet janet_wrap_pointer(void *x);
+Janet janet_wrap_integer(int32_t x);
 ```
 
 ## Unwrapping Functions
@@ -47,20 +47,20 @@ more specific C type. If the Janet being unwrapped is
 not actually the returned type, the behavior is undefined.
 
 @codeblock[c]```
-JANET_API const JanetKV *janet_unwrap_struct(Janet x);
-JANET_API const Janet *janet_unwrap_tuple(Janet x);
-JANET_API JanetFiber *janet_unwrap_fiber(Janet x);
-JANET_API JanetArray *janet_unwrap_array(Janet x);
-JANET_API JanetTable *janet_unwrap_table(Janet x);
-JANET_API JanetBuffer *janet_unwrap_buffer(Janet x);
-JANET_API const uint8_t *janet_unwrap_string(Janet x);
-JANET_API const uint8_t *janet_unwrap_symbol(Janet x);
-JANET_API const uint8_t *janet_unwrap_keyword(Janet x);
-JANET_API void *janet_unwrap_abstract(Janet x);
-JANET_API void *janet_unwrap_pointer(Janet x);
-JANET_API JanetFunction *janet_unwrap_function(Janet x);
-JANET_API JanetCFunction janet_unwrap_cfunction(Janet x);
-JANET_API int janet_unwrap_boolean(Janet x);
-JANET_API double janet_unwrap_number(Janet x);
-JANET_API int32_t janet_unwrap_integer(Janet x);
+const JanetKV *janet_unwrap_struct(Janet x);
+const Janet *janet_unwrap_tuple(Janet x);
+JanetFiber *janet_unwrap_fiber(Janet x);
+JanetArray *janet_unwrap_array(Janet x);
+JanetTable *janet_unwrap_table(Janet x);
+JanetBuffer *janet_unwrap_buffer(Janet x);
+const uint8_t *janet_unwrap_string(Janet x);
+const uint8_t *janet_unwrap_symbol(Janet x);
+const uint8_t *janet_unwrap_keyword(Janet x);
+void *janet_unwrap_abstract(Janet x);
+void *janet_unwrap_pointer(Janet x);
+JanetFunction *janet_unwrap_function(Janet x);
+JanetCFunction janet_unwrap_cfunction(Janet x);
+int janet_unwrap_boolean(Janet x);
+double janet_unwrap_number(Janet x);
+int32_t janet_unwrap_integer(Janet x);
 ```

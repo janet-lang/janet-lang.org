@@ -1,0 +1,85 @@
+{:title "Embedding"
+ :nav-title "Embedding"
+ :template "docpage"
+ :order 2}
+---
+
+Janet can be embedded in a host program, usually written in C or C++, in
+several ways. The easiest way is to use the Janet's amalgamated build, which
+is a single giant C source file that can be copied into the host program's source
+tree. This method has many upsides, including simplicity and stabiliity. You can
+also link to @code`libjanet.so` to include Janet as shared object.
+
+## Clients
+
+In the context of embedding Janet in a program, we can call
+the larger program a client which usually uses the Janet
+library to run Janet source code. Most Janet clients have a number
+of things in common, especially some boilerplate required to get Janet code running.
+
+## Basic Janet Functions
+
+@codeblock[c]```JANET_API int janet_init(void);```
+
+Use this function to initialize global Janet state. This must be called once
+per thread if using Janet in a multithreaded environment, as all Janet global
+state is thread local by default.
+
+@codeblock[c]```JANET_API void janet_deinit(void);```
+
+Call this function to free all memory and resources managed by Janet.
+
+@codeblock[c]```
+JanetTable *janet_core_env(JanetTable *replacements);
+```
+
+Use this function to get the core environment for the Janet language. Replacements
+is an optional table that can be used to override some of the default bindings
+in the core environment. Usually, set to NULL.
+
+@codeblock[c]```
+int janet_dobytes(JanetTable *env, const uint8_t *bytes, int32_t len, const char *sourcePath, Janet *out);
+```
+
+Use this function to compile and run some Janet source code from C. If you plan on running the code
+multiple times, there are more efficient options. However, for code that will only run once, this
+is a useful function.
+
+@codeblock[c]```
+int janet_dostring(JanetTable *env, const char *str, const char *sourcePath, Janet *out);
+```
+
+Similar to @code`janet_dobytes`, runs a null-terminated C string of Janet soruce code.
+
+@codeblock[c]```
+JanetSignal janet_continue(JanetFiber *fiber, Janet in, Janet *out);
+```
+
+Resumes a new or suspended fiber. Returns a signal that corresponds to the status
+of the fiber after execution, and places the return/signal value in out. When
+resuming a fiber, the value to resume with should be in the argument in, which
+corresponds to the second argument to the Janet @code`resume` function.
+
+@codeblock[c]```
+JanetSignal janet_pcall(JanetFunction *fun, int32_t argc, const Janet *argv, Janet *out, JanetFiber **f);
+```
+
+Invoke a function in a protected manner, catching any panics raised. Returns the resulting status
+code, as well as placing the return value in @code`*out`. The fiber pointer f is a pointer
+to a fiber pointer will contain the the fiber used to run the function fun. If f is NULL, a new
+fiber will be created. Otherwise, Janet will use the fiber pointed to by f to run fun.
+
+If no panics are raised, will return @code`JANET_SIGNAL_OK`. If an error is raised, will return
+@code `JANET_SIGNAL_ERROR`. Other signals will be returned as expected.
+
+
+
+
+@codeblock[c]```
+Janet janet_call(JanetFunction *fun, int32_t argc, const Janet *argv);
+```
+
+@codeblock[c]```
+void janet_stacktrace(JanetFiber *fiber, Janet err);
+```
+
