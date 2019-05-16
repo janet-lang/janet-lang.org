@@ -198,29 +198,6 @@ table tr th :last-child, table tr td :last-child {
 
 /* Janet syntax highlighting */
 
-pre {
-    font-family: 'Inconsolata', monospace;
-    white-space: pre-wrap;
-}
-
-code {
-    font-family: 'Inconsolata', monospace;
-}
-
-.mendoza-code {
-    padding: 5px;
-    background: #EEE;
-}
-
-.mendoza-codeblock {
-    color: white;
-    padding: 14px;
-    background: #111;
-    border-radius: 5px;
-    margin: 15px;
-    line-height: 1.2;
-}
-
 /* Footer */
 
 footer {
@@ -264,7 +241,31 @@ footer {
     background-color: #ffffff30;
 }
 
-/* Syntax highlighting theme */
+/* Syntax highlighting */
+
+pre {
+    font-family: 'Inconsolata', monospace;
+    white-space: pre-wrap;
+}
+
+code {
+    font-family: 'Inconsolata', monospace;
+}
+
+.mendoza-code {
+    padding: 5px;
+    background: #EEE;
+}
+
+.mendoza-codeblock {
+    color: white;
+    padding: 14px;
+    background: #111;
+    border-radius: 5px;
+    margin: 15px;
+    line-height: 1.2;
+}
+
 /* Based on Sublime Text's Monokai theme */
 
 .mdzsyn-comment {color: #B5B19e;}
