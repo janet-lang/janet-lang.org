@@ -2,6 +2,15 @@
 
 (import mendoza/markup-env :as mdz)
 
+(defn- remove-extra-spaces
+  "Many docstrings have extra spaces that don't look
+  good when formatted. This removes them."
+  [str]
+  (var ret str)
+  (for i 0 10
+    (set ret (string/replace "  " " " ret)))
+  ret)
+
 (defn- emit-item
   "Generate documentation for one entry."
   [key env-entry]
@@ -13,7 +22,8 @@
         binding-type (cond
                        macro :macro
                        ref (string :var " (" (type (get ref 0)) ")")
-                       (type val))]
+                       (type val))
+        docstring (remove-extra-spaces docstring)]
     {:tag "div" "class" "binding"
      :content [{:tag "span" "class" "binding-sym" "id" key :content key} " "
                {:tag "span" "class" "binding-type" :content binding-type} " "
