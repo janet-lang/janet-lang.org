@@ -65,13 +65,13 @@ Define this to compile the `os` module with only the bar minimum needed for @cod
 is just @code`os/exit`, @code`os/getenv`, and @code`os/which`. All other functions in the @code`os`
 module will be disabled.
 
-### @code `#define JANET_API` __attribute__((visibility ("default")))
+### @code `#define JANET_API __attribute__((visibility ("default")))`
 
 Set this define to change how Janet symbols in the core library are exported. If using dynamic
 modules, all symbols in the Janet core library must be publicly visible. It is not recommended to change
 this unless you are dramatically changing the build system.
 
-### @code`#define JANET_OUT_OF_MEMORY do { printf("oops!\n"); exit(1); } while (0)
+### @code`#define JANET_OUT_OF_MEMORY do { printf("oops!\n"); exit(1); } while (0)`
 
 Set this macro to decide what Janet will do if it runs out of memory. Be default, the program
 will print an error message and exit, but you may want Janet to clean up resources or
