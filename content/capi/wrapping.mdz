@@ -4,15 +4,16 @@
  :order 1}
 ---
 
-Janet has several built in fundamental data types. These data types are the 
+Janet has several built-in fundamental data types. These data types are the 
 bread and butter of the Janet C API, and most functions and macros in the
-API expect some of their arguments to be if these types. However, as Janet is
-a dynamically language, Janet internally uses a boxed representation of these
+API expect at least some of their arguments to be of these types. However, as Janet is
+a dynamically typed language, Janet internally uses a boxed representation of these
 types, simply called @code`Janet`.
 
 Functions that are specific to a particular type expect the unboxed or
 unwrapped type, while operations that are generic to Janet values will
-typically expect a @code`Janet`.
+typically expect a @code`Janet`. It is important to be able to convert between
+these two representations in order to interact with Janet from C.
 
 ## Wrapping Functions
 
@@ -64,3 +65,104 @@ int janet_unwrap_boolean(Janet x);
 double janet_unwrap_number(Janet x);
 int32_t janet_unwrap_integer(Janet x);
 ```
+
+## Janet Types
+
+Before unwrapping a Janet value, one should check the value is of the
+correct Janet type. Janet provides two macros for checking this, @code`janet_checktype`
+and @code`janet_checktypes`. These macros may be more efficient than the more
+obvious way of checking types via @code`janet_type(x) == JANET_ARRAY`, and so
+are preferred.
+
+The enum @code`JanetType` represents the base type of a Janet value. There are
+are exactly 16 basic types.
+
+@codeblock[c]```
+typedef enum JanetType {
+    JANET_NUMBER,
+    JANET_NIL,
+    JANET_BOOLEAN,
+    JANET_FIBER,
+    JANET_STRING,
+    JANET_SYMBOL,
+    JANET_KEYWORD,
+    JANET_ARRAY,
+    JANET_TUPLE,
+    JANET_TABLE,
+    JANET_STRUCT,
+    JANET_BUFFER,
+    JANET_FUNCTION,
+    JANET_CFUNCTION,
+    JANET_ABSTRACT,
+    JANET_POINTER
+} JanetType;
+```
+
+@hr
+
+@codeblock[c]```
+/* macro */
+int janet_checktype(Janet x, JanetType type);
+```
+
+Checks the type x, and returns a non zero value if x is the correct type, and
+0 otherwise. Usually, you will want to use this function before unwrapping a value.
+
+@hr
+
+@codeblock[c]```
+/* macro */
+int janet_checktypes(Janet x, int typeflags);
+```
+
+Similar to @code`janet_checktype`, but allows the programmer to check mutliple types
+at one in an efficient manner. @code`typeflags` should be a bit set of all of the types
+to check membership for. For example, to check if @code`x` is one of nil or a number, you
+would call
+
+@codeblock[c]```
+janet_checktypes(x, (1 << JANET_NIL) | (1 << JANET_NUMBER))
+```
+
+There are also several aliases so you don't need to do the shift yourself.
+
+@codeblock```
+#define JANET_TFLAG_NIL (1 << JANET_NIL)
+#define JANET_TFLAG_BOOLEAN (1 << JANET_BOOLEAN)
+#define JANET_TFLAG_FIBER (1 << JANET_FIBER)
+#define JANET_TFLAG_NUMBER (1 << JANET_NUMBER)
+#define JANET_TFLAG_STRING (1 << JANET_STRING)
+#define JANET_TFLAG_SYMBOL (1 << JANET_SYMBOL)
+#define JANET_TFLAG_KEYWORD (1 << JANET_KEYWORD)
+#define JANET_TFLAG_ARRAY (1 << JANET_ARRAY)
+#define JANET_TFLAG_TUPLE (1 << JANET_TUPLE)
+#define JANET_TFLAG_TABLE (1 << JANET_TABLE)
+#define JANET_TFLAG_STRUCT (1 << JANET_STRUCT)
+#define JANET_TFLAG_BUFFER (1 << JANET_BUFFER)
+#define JANET_TFLAG_FUNCTION (1 << JANET_FUNCTION)
+#define JANET_TFLAG_CFUNCTION (1 << JANET_CFUNCTION)
+#define JANET_TFLAG_ABSTRACT (1 << JANET_ABSTRACT)
+#define JANET_TFLAG_POINTER (1 << JANET_POINTER)
+
+/* Some abstractions */
+#define JANET_TFLAG_BYTES (JANET_TFLAG_STRING | JANET_TFLAG_SYMBOL | JANET_TFLAG_BUFFER | JANET_TFLAG_KEYWORD)
+#define JANET_TFLAG_INDEXED (JANET_TFLAG_ARRAY | JANET_TFLAG_TUPLE)
+#define JANET_TFLAG_DICTIONARY (JANET_TFLAG_TABLE | JANET_TFLAG_STRUCT)
+#define JANET_TFLAG_LENGTHABLE (JANET_TFLAG_BYTES | JANET_TFLAG_INDEXED | JANET_TFLAG_DICTIONARY)
+#define JANET_TFLAG_CALLABLE (JANET_TFLAG_FUNCTION | JANET_TFLAG_CFUNCTION | \
+        JANET_TFLAG_LENGTHABLE | JANET_TFLAG_ABSTRACT)
+```
+
+The resulting call would look like:
+
+@codeblock[c]```
+janet_checktypes(x, JANET_TFLAG_NIL | JANET_TFLAG_NUMBER)
+```
+
+@hr
+
+@codeblock[c]```
+JANET_API JanetType janet_type(Janet x);
+```
+
+Returns the type of Janet value.

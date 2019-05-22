@@ -17,6 +17,30 @@ the larger program a client which usually uses the Janet
 library to run Janet source code. Most Janet clients have a number
 of things in common, especially some boilerplate required to get Janet code running.
 
+The simplest Janet client will need to initialize the VM, load the
+core environment, run some Janet code, and then deinitialize the environent. A simple
+example program that does this is below.
+
+@codeblock[c]```
+#include <janet.h>
+
+int main(int argc, const char *argv[]) {
+    // Initialize the virtual machine. Do this before any calls to Janet functions.
+    janet_init();
+
+    // Get the core janet environment. This contains all of the C functions in the core
+    // as well as the code in src/boot/boot.janet.
+    JanetTable *env = janet_core_env(NULL);
+
+    // One of several ways to begin the Janet vm.
+    janet_dostring(env, "(print `hello, world!`)", "main", NULL);
+
+    // Use this to free all resources allocated by Janet.
+    janet_deinit();
+    return 0;
+}
+```
+
 ## Basic Janet Functions
 
 @codeblock[c]```JANET_API int janet_init(void);```
