@@ -1,0 +1,53 @@
+{:title "Fiber C API"
+ :template "docpage"
+ :order 7}
+---
+
+## Definition
+
+@codeblock[c]```
+/* Fiber statuses - mostly corresponds to signals. */
+typedef enum {
+    JANET_STATUS_DEAD,
+    JANET_STATUS_ERROR,
+    JANET_STATUS_DEBUG,
+    JANET_STATUS_PENDING,
+    JANET_STATUS_USER0,
+    JANET_STATUS_USER1,
+    JANET_STATUS_USER2,
+    JANET_STATUS_USER3,
+    JANET_STATUS_USER4,
+    JANET_STATUS_USER5,
+    JANET_STATUS_USER6,
+    JANET_STATUS_USER7,
+    JANET_STATUS_USER8,
+    JANET_STATUS_USER9,
+    JANET_STATUS_NEW,
+    JANET_STATUS_ALIVE
+} JanetFiberStatus;
+
+/* A lightweight green thread in janet. Does not correspond to
+ * operating system threads. */
+struct JanetFiber {
+    JanetGCObject gc; /* GC Object stuff */
+    int32_t flags; /* More flags */
+    int32_t frame; /* Index of the stack frame */
+    int32_t stackstart; /* Beginning of next args */
+    int32_t stacktop; /* Top of stack. Where values are pushed and popped from. */
+    int32_t capacity;
+    int32_t maxstack; /* Arbitrary defined limit for stack overflow */
+    JanetTable *env; /* Dynamic bindings table (usually current environment). */
+    Janet *data;
+    JanetFiber *child; /* Keep linked list of fibers for restarting pending fibers */
+};
+typedef struct JanetFiber JanetFiber;
+```
+
+## Functions
+
+@codeblock[c]```
+JANET_API JanetFiber *janet_fiber(JanetFunction *callee, int32_t capacity, int32_t argc, const Janet *argv);
+JANET_API JanetFiber *janet_fiber_reset(JanetFiber *fiber, JanetFunction *callee, int32_t argc, const Janet *argv);
+JANET_API JanetFiberStatus janet_fiber_status(JanetFiber *fiber);
+JANET_API JanetFiber *janet_current_fiber(void);
+```

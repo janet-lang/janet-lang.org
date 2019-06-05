@@ -14,9 +14,14 @@ they can work together.
 
 ## Defines
 
-### @code`#define JANET_VERSION "1.2.3"`
+### @code`#define JANET_MAJOR 1`
+### @code`#define JANET_MINOR 2`
+### @code`#define JANET_PATCH 3`
+### @code`#define JANET_EXTRA "-dev"`
+### @code`#define JANET_VERSION "1.2.3-dev"`
 
-Set this to any string, such as @code`"1.2.3"` to indicate what value @code`janet/version` will have.
+Use these defines to set the janet version.
+The major, minor, and patch values must be in sync with the version string.
 
 ### @code`#define JANET_BUILD "my-local-build"`
 

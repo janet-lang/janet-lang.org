@@ -50,7 +50,7 @@ are fairly straight forward. Janet can be easily ported to new platforms.
 ## Usage
 
 A repl is launched when the binary is invoked with no arguments. Pass the -h flag
-to display the usage information. Individual scripts can be run with `janet myscript.janet`
+to display the usage information. Individual scripts can be run with @code`janet myscript.janet`
 
 If you are looking to explore, you can print a list of all available macros, functions, and constants
 by entering the command @code[all-bindings] into the repl.

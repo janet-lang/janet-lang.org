@@ -1,0 +1,33 @@
+{:title "Table C API"
+ :template "docpage"
+ :order 6}
+---
+
+## Definition
+
+@codeblock[c]```
+/* A mutable associative data type. Backed by a hashtable. */
+struct JanetTable {
+    JanetGCObject gc;
+    int32_t count;
+    int32_t capacity;
+    int32_t deleted;
+    JanetKV *data;
+    JanetTable *proto;
+};
+typedef struct JanetTable JanetTable;
+```
+
+## Functions
+
+@codeblock[c]```
+JANET_API JanetTable *janet_table(int32_t capacity);
+JANET_API Janet janet_table_get(JanetTable *t, Janet key);
+JANET_API Janet janet_table_rawget(JanetTable *t, Janet key);
+JANET_API Janet janet_table_remove(JanetTable *t, Janet key);
+JANET_API void janet_table_put(JanetTable *t, Janet key, Janet value);
+JANET_API const JanetKV *janet_table_to_struct(JanetTable *t);
+JANET_API void janet_table_merge_table(JanetTable *table, JanetTable *other);
+JANET_API void janet_table_merge_struct(JanetTable *table, const JanetKV *other);
+JANET_API JanetKV *janet_table_find(JanetTable *t, Janet key);
+```

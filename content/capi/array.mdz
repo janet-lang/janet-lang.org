@@ -1,0 +1,69 @@
+{:title "Array C API"
+ :template "docpage"
+ :order 4}
+---
+
+## Definition
+
+@codeblock[c]```
+/* A dynamic array type. */
+struct JanetArray {
+    JanetGCObject gc;
+    int32_t count;
+    int32_t capacity;
+    Janet *data;
+};
+typedef struct JanetArray JanetArray;
+```
+
+## Functions
+
+@codeblock[c]```
+JANET_API JanetArray *janet_array(int32_t capacity);
+```
+
+Creates a new, empty array with enough preallocated space for
+capacity elements.
+
+@codeblock[c]```
+JANET_API JanetArray *janet_array_n(const Janet *elements, int32_t n);
+```
+
+Creates a new array and fills it with n elements.
+The elements are copied into the array via @code`memcpy`.
+
+@codeblock[c]```
+JANET_API void janet_array_ensure(JanetArray *array, int32_t capacity, int32_t growth);
+```
+
+Ensure that an array has enough space for capacity elements. If not, resize
+the backing memory to @code`capacity * growth` slots. In most cases, growth should
+be 1 or 2.
+
+@codeblock[c]```
+JANET_API void janet_array_setcount(JanetArray *array, int32_t count);
+```
+
+Set the length of a janet array by setting @code`array->count = count`.
+If @code`count` is greater than the current @code`array->count`, also lengthens
+the array by appending nils. Do not pass a negative value to count.
+
+@codeblock[c]```
+JANET_API void janet_array_push(JanetArray *array, Janet x);
+```
+
+Insert a value at the end of an array. May panic if the
+array runs out of capacity.
+
+@codeblock[c]```
+JANET_API Janet janet_array_pop(JanetArray *array);
+```
+
+Remove an element from the end of the array. Returns the element, or nil
+if the array is empty.
+
+@codeblock[c]```
+JANET_API Janet janet_array_peek(JanetArray *array);
+```
+
+Returns the last element in the array, not modifying the array.
