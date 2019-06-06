@@ -57,7 +57,7 @@ by entering the command @code[all-bindings] into the repl.
 
 @codeblock(```
 $ janet
-Janet 0.3.0-2bad243  Copyright (C) 2017-2019 Calvin Rose
+Janet 1.0.0-dev-cc1ff91  Copyright (C) 2017-2019 Calvin Rose
 janet:0:> (+ 1 2 3)
 6
 janet:10:> (print "Hello, world!")
@@ -67,16 +67,24 @@ janet:34:> (os/exit)
 $ janet -h
 usage: janet [options] script args...
 Options are:
-  -h Show this help
-  -v Print the version string
-  -s Use raw stdin instead of getline like functionality
-  -e Execute a string of janet
-  -r Enter the repl after running all scripts
-  -p Keep on executing if there is a top level error (persistent)
-  -q Hide prompt, logo, and repl output (quiet)
-  -l Execute code in a file before running the main script
-  -- Stop handling options
+  -h : Show this help
+  -v : Print the version string
+  -s : Use raw stdin instead of getline like functionality
+  -e code : Execute a string of janet
+  -r : Enter the repl after running all scripts
+  -p : Keep on executing if there is a top level error (persistent)
+  -q : Hide prompt, logo, and repl output (quiet)
+  -k : Compile scripts but do not execute
+  -m syspath : Set system path for loading global modules
+  -c source output : Compile janet source code into an image
+  -n : Disable ANSI color output in the repl
+  -l path : Execute code in a file before running the main script
+  -- : Stop handling options
 ```)
+
+## Projects using Janet
+
+@ul{@li{@link[https://github.com/andrewchambers/janetsh]{janetsh} - A shell extensible with Janet}}
 
 ## Modules and Libraries
 
@@ -91,7 +99,11 @@ for Janet to help you get started with some interesting stuff.
 
 For editor support:
 
-@ul{@li{@link[https://github.com/janet-lang/janet.vim]{janet.vim} - Support for Janet syntax in the vim editor}
+@ul{@li{@link[https://github.com/janet-lang/janet.vim]{janet.vim} - Support for Janet syntax in Vim}
+    @li{@link[https://github.com/janet-lang/vscode-janet]{vscode-janet} - VSCode plugin for Janet}
+    @li{@link[https://github.com/SerialDev/ijanet-mode]{ijanet-mode} - Emacs interactive Janet mode}
+    @li{@link[https://github.com/ALSchwam/janet-mode]{janet-mode} - Janet major mode for Emacs}
+    @li{@link[https://github.com/velkyel/inf-janet]{inf-janet} - Inferior lisp Janet mode for Emacs}
     @li{@link[https://github.com/janet-lang/vscode-janet]{vscode-janet} - VSCode plugin for Janet}
     @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}}
 
