@@ -1,0 +1,136 @@
+{:title "Janet's Memory Model"
+ :nav-title "Memory Model"
+ :template "docpage"
+ :order 8}
+---
+
+In order to write a functional and correct C extension to Janet, it
+is necessarry to have a good understanding of Janet's memory model. Code
+that does not follow this model may leak memory, especially on errors (panics), and
+may trigger use after free bugs. It is the author's recomendation to test your
+extension with a tool like @link[http://www.valgrind.org/]{valgrind} or an address sanitizer
+to ensure that your extension does not access memory in an invalid way.
+
+## Janet's Garbage Collector
+
+Like most dyanmic languages, Janet has a garbage collector cleans up unused
+objects. The garbage collector cannot "see" objects allocated via @code`malloc`/@code`free`, only
+memory allocated through the function @code`janet_gcalloc`. It is recommended to not use this function
+at all, and instead use the Janet C API functions for creating Janet data structures that will
+be collected when needed. These data structures will be collected when no longer reachable, ensuring
+that your program does not leak memory. Janet's garbage collector can only run at certain times, meaning
+most of the time when writing a native function you can ignore it. However, any Janet C API function that
+may re-enter the interpreter may trigger a collection, which could collect any data structures you have just allocated.
+The notable exception to this is @code`janet_call`, which suspends garbage collection until it completes
+for convenience. Other re-entrant functions, like @code`janet_pcall`, @code`janet_continue`, @code`janet_dobytes`, and
+@code`janet_dostring` may trigger a collection.
+
+## Adding Janet values to the GC Root list
+
+Janet keeps a global list of objects that are considered reachable. To determine
+all reachable objects, the garbage collector will traverse this list when needed.
+Any value not in this list, or not accessible via traversing this list, is considered
+garabge (with the exception of a few values, such as the current fiber). Notably, this
+means that values allocated in a C function, by default, considered garbage and will
+be collected at the next collection. Most C functions take advantage of the fact that the
+GC will not run until the interpreter is resumed. Sometimes, however, it is necessarry to
+add a value to the root list so that a temporary value isn't collected before you are finished with it.
+
+Below is an example C function that adds a value to the root list to prevent the garbage collector
+from deleting it.
+@codeblock[c]```
+Janet make_some_table(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 0);
+    JanetTable *table = janet_table(0);
+    Janet tablev = janet_wrap_table(table);
+
+    // Root the table before potentially calling collect, as
+    // no live objects reference the table
+    janet_gcroot(tablev);
+    janet_collect();
+    janet_gcunroot(tablev);
+
+    return tablev;
+}
+```
+
+This does have some downsides, though. First, it may leak memory if the code between @code`janet_gcroot` and
+@code`janet_gcunroot` can panic. This isn't as bad as it sounds, as most if not all of the functions in the
+Janet API that can enter the interpretter cannot panic, or will swallow panics and return a signal code instead.
+It is then up to the user to rethrow any panics caught after releasing (or unrooting) the values. Basically, if you use this
+method, you MUST clean up after yourself!
+
+This is also why it is recommended to use @code`janet_call` over @code`janet_pcall` if you can. Since @code`janet_call` suspends
+the garbage collector (including all nested calls to things like @code`janet_pcall`), there is not need modify the gcroot
+list on regular basis. It is also recommened to not use too much re-entrant code, as it will often suspend the garbage collector.
+For example, if you run your entire application inside call to @code`janet_call`, the garbage collector will never run.
+
+## The @code`argv` array 
+
+Another gotcha in the memory model for the C API is the argument stack to native functions. This
+pointer to a seqeunce of Janet values is a pointer into the current fiber where the function arguments
+were pushed, and has a short lifespan. Any function that may cause the stack to resize invalidates this pointer, and
+the pointer should be considered invlaid after the function returns.
+
+Functions that may cause the stack to resize are any function that modifies a fiber in the fiber API, as
+well as any function that invokes the interpretter. This means functions like @code`janet_call` will invalidate
+the @code`argv` pointer to your function!
+
+Example of buggy code:
+@codeblock[c]```
+Janet my_bad_cfunc(int32_t argc, Janet *argv) {
+    for (int32_t i = 0; i < argc; i++) {
+        JanetFunction *func = janet_getfunction(argv, i);
+        janet_call(func, 0, NULL);
+    }
+    return janet_wrap_nil();
+}
+```
+
+This code is incorrect because it tries to access the @code`argv` pointer
+after @code`janet_call` has be called. This usual fix to this is to copy the argv
+data into a new array that will not be resized if the stack is. A tuple can
+handily be used for this.
+
+Better code:
+@codeblock[c]```
+Janet my_bad_cfunc(int32_t argc, Janet *argv) {
+    const Janet *argv2 = janet_tuple_n(argv, argv);
+    for (int32_t i = 0; i < argc; i++) {
+        JanetFunction *func = janet_getfunction(argv2, i);
+        janet_call(func, 0, NULL);
+    }
+    return janet_wrap_nil();
+}
+```
+
+## Scratch Memory
+
+Many algorithms will need to allocated memory, but cleaning up the memory can be difficult to
+correctly integrate with Janet's memory model, considering that many functions in Janet's API
+can panic, longjumping over your clean up code. Rather tan trying to prevent panics, it's much
+easier to accept that they can happen and allocate resources that be automatically clean up for your.
+
+Janet brings the concept of scratch memory for this purpose, or memory that will certainly
+be cleaned up at the next collection. This memory can also be freed manually if no error is encountered, making
+sure that we don't generate garbage in the common case.
+
+@codeblock[janet]```
+void *janet_smalloc(size_t size);
+void *janet_srealloc(void *p, size_t size);
+void janet_sfree(void *p);
+```
+
+## GC API
+
+@codeblock[janet]```
+void janet_mark(Janet x);
+void janet_sweep(void);
+void janet_collect(void);
+void janet_clear_memory(void);
+void janet_gcroot(Janet root);
+int janet_gcunroot(Janet root);
+int janet_gcunrootall(Janet root);
+int janet_gclock(void);
+void janet_gcunlock(int handle);
+```

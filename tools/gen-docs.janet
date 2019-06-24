@@ -35,13 +35,13 @@
 (defn- get-from-prefix
   "Get all bindings that start with a prefix."
   [prefix]
-  (def peg (peg/compile prefix))
-  (seq [[k entry]
-        :in all-entries
+  (seq [x :in all-entries
+        :let [[k entry] x]
+        :when (symbol? k)
         :when (get entry :doc)
         :when (not (get entry :private))
-        :when (peg/match peg k)]
-       [k entry]))
+        :when (string/has-prefix? prefix k)]
+       x))
 
 (defn gen-prefix
   "Generate the document for all of the core api."

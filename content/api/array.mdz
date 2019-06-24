@@ -1,7 +1,7 @@
 (import tools/gen-docs :as gen-docs)
 {:title "Array Module"
  :nav-title "array"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 Arrays are the mutable indexed type in Janet. They contain a sequence of values
