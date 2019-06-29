@@ -28,6 +28,16 @@ scoop install janet
 You can install either the latest git verion or the latest stable version for Arch Linux
 from the Arch user repositories with @link[https://aur.archlinux.org/packages/janet-lang-git/][janet-lang-git] or @link[https://aur.archlinux.org/packages/janet-lang][janet-lang].
 
+### macos
+
+Janet is available for installation through the @link[https://brew.sh/][homebrew] package
+manager as @code[janet]. The latest version from git can be installed by adding the
+@code[--HEAD] flag.
+
+@codeblock(```
+brew install janet
+```)
+
 ## Compiling and Running from Source
 
 If you would like the latest version of Janet, are trying to run Janet on
