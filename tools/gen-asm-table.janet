@@ -48,6 +48,7 @@
    ['mul '(mul dest lhs rhs) "$dest = $lhs * $rhs"]
    ['mulim '(mulim dest lhs im) "$dest = $lhs * im"]
    ['noop '(noop) "Does nothing."]
+   ['prop '(prop val fiber) "Propagate (Re-raise) a signal that has been caught."]
    ['push '(push val) "Push $val on arg"]
    ['push2 '(push2 val1 val3) "Push $val1, $val2 on args"]
    ['push3 '(push3 val1 val2 val3) "Push $val1, $val2, $val3, on args"]
