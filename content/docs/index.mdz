@@ -131,7 +131,7 @@ For efficient programming in Janet, it is good to be able to make use of many of
 functions.
 
 If at any time you want to see short documentation on
-a binding, Use the @code[doc] macro to view the documentation for it in the REPL.
+a binding, use the @code[doc] macro to view the documentation for it in the REPL.
 
 @codeblock[janet](```(doc defn) # -> Prints the documentation for "defn"```)
 
