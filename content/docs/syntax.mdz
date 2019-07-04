@@ -248,7 +248,7 @@ file for other programs with @code`make grammar` from the Janet source code.
 
 For anyone looking for a more succinct description of the grammar, a PEG grammar
 for recognizing Janet source code is below. The PEG syntax is itself similar to EBNF.
-More info on the PEG syntax can be found in @link[/peg.html][the documentation for the peg module].
+More info on the PEG syntax can be found in @link[/docs/peg.html][the documentation for the peg module].
 
 @codeblock[janet]```
 (def grammar
