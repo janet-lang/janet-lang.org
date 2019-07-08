@@ -15,7 +15,7 @@ Special forms can be thought of as forming the real 'core' language of janet.
 
 ## @code`(def name meta... value)`
 
-This special form binds a value to a symbol. The symbol can the be substituted
+This special form binds a value to a symbol. The symbol can be substituted
 for the value in subsequent expression for the same result. A binding made by def
 is a constant and cannot be updated. A symbol can be redefined to a new value, but previous
 uses of the binding will refer to the previous value of the binding.
