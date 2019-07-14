@@ -44,6 +44,117 @@ You may also use the @code`:as` argument to specify the prefix in a more natural
 (ck/shell "ls -l")
 ```
 
+## Custom Loaders (@code`module/paths` and @code`module/loaders`)
+
+The @code`module/paths` and @code`module/loaders` data structures determine how Janet
+will load a given module name. @code`module/paths` is a list of patterns and methods
+to use to try and find a given module. The entries in @code`module/paths`
+will be checked in order, as it is possible that multiple entries could match.
+If a module name matches a pattern (which
+usually means that some file exists), then we use the corresponding loader in
+@code`module/loaders` to evaluate that file, source code, url, or whatever else
+we want to derive from the module name. The resulting value, usually an environment
+table, is then cached so that it can be reused later without evaluating a module
+twice.
+
+By modifying @code`module/paths` and @code`module/loaders`, you can create
+custom module schemes, handlers for file extensions, or even your own module
+system. It is recommended to not modify existing entries in @code`module/paths`
+or @code`module/loader`, and add on to the existing entries. This is rather
+addvanced usage, but can be incredibly useful in creating DSLs that feel
+native to Janet.
+
+### @code`module/paths` 
+
+This is an array of file paths to search for modules in the
+file system. Each element in this array is a pair @code`[path type predicate]`, where path
+is the a templated file path, which determines what path corresponds to a module name, and
+where type is the loading method used to load the module. @code`type can be one of
+@code`:native`, @code`:source`, @code`:image`, or any key in the @code`module/loaders` table.
+
+@code`predicate` is an optional function
+or file extension used to further filter whether or not a module name should match.
+It's mainly useful when @code`path` is a string and you want to further refine the pattern.
+
+@code`path` can also be a function that checks if a module name matches. If the module name
+matches, the function should return a string that will be used as the main identifier for the
+module. Most of the time, this should be the absolute path to the module, but it can be
+any unqiue key that identifies the module such as an absolute url. It is this key that is
+used to determine if a module has been loaded already.
+This mechanism lets @code`./mymod` and @code`mymod`
+refer to the same module even though they are different names passed to import.
+
+### @code`module/loaders`
+
+Once a primary module identifier and module type has been chosen, Janet's import
+machinery (defined mostly in @code`require` and @code`module/find`) will use
+the appropriate loader from @code`module/loaders` to get an environment table.
+Each loader in the table is just a function that takes the primary module identifier
+(usually an absolute path to the module) as well as optionally any other arguments
+passed to @code`require` or @code`import`, and returns the environment table.
+For example, the @code`:source` type is a thin wrapper around @code`dofile`, the
+@code`:image` type is a wrapper around @code`load-image`, and the @code`:native` type
+is a wrapper around @code`native`.
+
+### URL loader example
+
+An example from @code`examples/urlloader.janet` in the source repository shows how
+a loader can be a wrapper around curl and @code`dofile` to load source files from HTTP URLs.
+To use it, simply evaluate this file somewhere in your program before you require code from
+a URL. Don't use this as is in production code, as if @code`url` contains spaces in @code`load-url`
+the module will not load correctly. A more robust solution would quote the url, or better yet
+use @code`os/execute` and write to a temporary file instead of @code`file/popen`.
+
+@codeblock[janet]```
+(defn- load-url
+  [url args]
+  (def f (file/popen (string "curl " url)))
+  (def res (dofile f :source url ;args))
+  (try (file/close f) ([err] nil))
+  res)
+
+(defn- check-http-url
+  [path]
+  (if (or (string/has-prefix? "http://" path)
+          (string/has-prefix? "https://" path))
+    path))
+
+# Add the module loader and path tuple to right places
+(array/push module/paths [check-http-url :janet-http])
+(put module/loaders :janet-http load-url)
+```
+
+## Relative imports
+
+You can include files relative to the current file by prefixing
+the module name with a @code`./`. For example, if you have a file tree
+that is structured like so:
+
+@codeblock```
+mymod/
+  init.janet
+  deps/
+    dep1.janet
+    dep2.janet
+```
+
+With the above structre, @code`init.janet` can import @code`dep1` and
+@code`dep2` with relative imports. This is less brittle as the entire
+@code`mymod/` directory can be installed without any chance that @code`dep1`
+and @code`dep2` will overwrite other files, or that @code`init.janet` will
+acidentally import a different file named @code`dep1.janet` or
+@code`dep2.janet`. @code`mymod` can even be a sub directory in another janet
+source tree and work as expected.
+
+init.janet
+@codeblock[janet]```
+(import ./deps/dep1 :as dep1)
+(import ./deps/dep2 :as dep2)
+
+...
+```
+
+
 ## Writing a module
 
 Writing a module in Janet is mostly about exposing only the public functions
@@ -53,17 +164,52 @@ and vars defined via @code`var` will be exported in your module. To mark a funct
 binding as private to your module, you may use @code`defn-` or @code`def-` at the top level.
 You can also add the @code`:private` metadata to the binding.
 
-## @code`module/paths` 
+Sample module:
 
-To understand how module loading in Janet works, it's necessary to understand
-@code`module/paths`. This is an array of file paths to search for modules in the
-file system. Each element in this array is a pair @code`[path type]`, where path
-is the a templated file path, which determines what path corresponds to a module name, and
-where type is the loading method used to load the module. Loading can be one of
-@code`:native`, @code`:source`, or @code`:image`.
+@codeblock[janet]```
+# Put imports and other requisite code up here
 
-@ul{@li{A @code`:native` module is loaded via the @code`native` function, which
-        under the hood is a thin wrapper around @code`dlopen` to load a native module.}
-    @li{Source code modules (@code`:source`) are compile from janet source code.}
-    @li{Image modules (@code`:image`) are janet images, usually created via @code`janet -c`}}
+(def api-constant
+ "Some constant."
+ 1000)
+
+(def- private-constant
+ "Not exported."
+ :abc)
+
+(var *api-var*
+ "Some API var. Be careful with these, dynamic bindings may be better."
+ nil)
+
+(var *private-var* :private
+ "var that is not exported."
+ 123)
+
+(defn- private-fun
+ "Sum three numbers."
+ [x y z]
+ (+ x y z))
+
+(defn api-fun
+ "Do a thing."
+ [stuff]
+ (+ 10 (private-fun stuff 1 2)))
+```
+
+To import our sample module given that it is in some path @code`mymod.janet`, we
+could do something like the following (this also works in a repl):
+
+@codeblock[janet]```
+(import mymod)
+
+mymod/api-constant # evaluates to 10000
+
+(mymod/api-fun 10) # evaluates to 23
+
+mymod/*api-var* # evaluates to nil
+(set mymod/*api-var* 10)
+mymod/*api-var* # evaluates to 10
+
+(mymod/private-fun 10) # will not compile
+```
 
