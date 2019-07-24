@@ -57,14 +57,15 @@
       var promptel = document.getElementById('replprompt');
       promptel.textContent = repl_prompt();
       document.getElementById('replin').addEventListener('keydown', (e) => {
+        const srcElement = e.target || srcElement;
         if (e.keyCode === 13) {
-          const content = e.srcElement.textContent;
+          const content = srcElement.textContent;
           const text = cleanContentEditableInput(content + '\n');
           replHistory.pop();
           replHistory.push(content);
           historyIndex = replHistory.length;
           replHistory.push('');
-          e.srcElement.textContent = '';
+          srcElement.textContent = '';
           printRaw('<span style="color:#9198e5;">' + htmlEscape(repl_prompt() + text) + '</span>')
           repl_input(text);
           promptel.textContent = repl_prompt();
@@ -72,19 +73,19 @@
           if (historyIndex > 0) {
             if (historyIndex === replHistory.length - 1) {
               replHistory.pop()
-              replHistory.push(e.srcElement.textContent)
+              replHistory.push(srcElement.textContent)
             }
             historyIndex--;
-            e.srcElement.textContent = replHistory[historyIndex];
+            srcElement.textContent = replHistory[historyIndex];
           }
         } else if (e.keyCode === 40) {
           if (historyIndex < replHistory.length - 1) {
             if (historyIndex === replHistory.length - 1) {
               replHistory.pop()
-              replHistory.push(e.srcElement.textContent)
+              replHistory.push(srcElement.textContent)
             }
             historyIndex++;
-            e.srcElement.textContent = replHistory[historyIndex];
+            srcElement.textContent = replHistory[historyIndex];
           }
         }
       });
