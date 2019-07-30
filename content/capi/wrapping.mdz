@@ -4,7 +4,7 @@
  :order 1}
 ---
 
-Janet has several built-in fundamental data types. These data types are the 
+Janet has several built-in fundamental data types. These data types are the
 bread and butter of the Janet C API, and most functions and macros in the
 API expect at least some of their arguments to be of these types. However, as Janet is
 a dynamically typed language, Janet internally uses a boxed representation of these
@@ -115,8 +115,8 @@ Checks the type x, and returns a non zero value if x is the correct type, and
 int janet_checktypes(Janet x, int typeflags);
 ```
 
-Similar to @code`janet_checktype`, but allows the programmer to check mutliple types
-at one in an efficient manner. @code`typeflags` should be a bit set of all of the types
+Similar to @code`janet_checktype`, but allows the programmer to check multiple types
+at once, in an efficient manner. @code`typeflags` should be a bit set of all of the types
 to check membership for. For example, to check if @code`x` is one of nil or a number, you
 would call
 
