@@ -81,6 +81,8 @@ gmake test CC=gcc
     @li{Run @code[build_win] to compile janet.}
     @li{Run @code[build_win test] to make sure everything is working.}}
 
+To install from source, the best way to is use @link[https://sourceforge.net/projects/nsis/]{NSIS} to generate an installer and run that. You will need NSVC (or the Microsoft Build Tools) to build everything, and NSIS to build the installer. From a Developer Command Prompt, run `build_win all` to build, test, and install Janet on your local machine.
+
 ### Emscripten
 
 To build janet for the web via @link[https://kripken.github.io/emscripten-site/][Emscripten], make sure you

@@ -67,11 +67,13 @@ windows. The host interpreter that loads the module will provide the needed symb
 to the Janet module.
 
 The easiest way to compile a module is to start up a repl, import @code`cook`, and use
-the function @code`cook/make-native` to compile your native module.
+the function @code`cook/declare-native` to compile your native module.
 
 @codeblock[janet]```
 (import cook)
-(cook/make-native :name "mymod" :source @["mymod.c"])
+(cook/declare-project)
+(cook/declare-native :name "mymod" :source @["mymod.c"])
+(cook/do-rule "build")
 ```
 
 If all goes well, cook should have built a file @code`build/mymod.so`. In your repl, you can now
