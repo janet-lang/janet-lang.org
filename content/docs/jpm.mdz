@@ -180,9 +180,10 @@ The declaration for an executable file is pretty simple.
     for you. The final executable will be located at @code`build/myexec`, or @code`build\myexec.exe`
     on windows.}
 
-Also note that the entry of an executable file should look different than a normal janet script.
-It should define a @code`main` function that can receive a single parameter, the
-array of commandline arguments. It will be called as the entry to your executable.
+Also note that the entry of an executable file should look different than a
+normal janet script.  It should define a @code`main` function that can receive
+a variable number of parameters, the command-line arguments. It will be called
+as the entry to your executable.
 
 @codeblock[janet]```
 (import mylib1)
@@ -191,9 +192,9 @@ array of commandline arguments. It will be called as the entry to your executabl
 # This will be printed when you run `jpm build`
 (print "build time!")
 
-(defn main [argv]
-    # You can also get argv through (dyn :args)
-    (print "args: " ;(interpolate ", " argv))
+(defn main [& args]
+    # You can also get command-line arguments through (dyn :args)
+    (print "args: " ;(interpolate ", " args))
     (mylib1/do-thing)
     (mylib2/do-thing))
 ```
