@@ -1,6 +1,7 @@
 {:title "Fiber Overview"
  :nav-title "Fibers"
- :template "docpage"}
+ :template "docpage"
+ :order 13}
 ---
 
 Janet has support for single-core asynchronous programming via coroutines, or fibers.

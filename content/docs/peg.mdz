@@ -1,5 +1,6 @@
 {:title "Parsing Expression Grammars"
- :template "docpage"}
+ :template "docpage"
+ :order 15}
 ---
 
 A common programming task is recognizing patterns in text, be it

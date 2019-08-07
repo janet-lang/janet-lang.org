@@ -122,6 +122,12 @@
     animation:octocat-wave 560ms ease-in-out;
 }
 
+/* Donate button */
+
+.donate-link {
+    margin: 0 15px;
+}
+
 @keyframes octocat-wave{
     0%, 100% {
         transform:rotate(0);

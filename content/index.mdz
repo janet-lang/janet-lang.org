@@ -114,6 +114,9 @@ Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel
 ## Donate
 
 @html```
-<script src="https://liberapay.com/Janet-Language/widgets/button.js"></script>
-<noscript><a href="https://liberapay.com/Janet-Language/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+<div class="donate-link">
+    <a href="https://liberapay.com/Janet-Language/donate">
+        <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg">
+    </a>
+</div>
 ```
