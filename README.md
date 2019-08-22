@@ -21,9 +21,7 @@ sudo make install
 ### Installing Mendoza
 
 ```sh
-git clone https://github.com/bakpakin/mendoza
-cd mendoza
-sudo ./install
+sudo jpm install https://github.com/bakpakin/mendoza.git
 ```
 
 ## Building
