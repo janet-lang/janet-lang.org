@@ -9,39 +9,52 @@ module is a collection of bindings and it's associated environment.
 By default, modules correspond one to one with source files in Janet, although
 you may override this and structure modules however you like.
 
+## Installing a Module
+
+Using @code`jpm`, the `path` module can be installed like so from the command line:
+
+@codeblock```
+sudo jpm install https://github.com/janet-lang/path.git
+```
+
+The use of @code`sudo` is not required in some setups, but is often needed
+for a global install on posix systems. You can pass in a git repository URL
+to the install command, and jpm will install that package globally on your system.
+
+If you are not using jpm, you can place the file @code`path.janet` from the repository
+in your current directory, and janet will be able to import it as well. However, for
+more complicated packages or packages containing native C extension, jpm will usually
+be much easier.
+
 ## Importing a Module
 
 To use a module, the best way is use the @code`(import)` macro, which
 looks for a module with the given name on your system and imports it's symbols
 into the current environment, usually prefixed with the name of the module.
 
-A default install of Janet, installed via @code`make install`, comes with a few modules
-out of the box. One such module is @code`cook`, which is a tool to help build
-artifacts for Janet, including native modules.
-
 @codeblock[janet]```
-(import cook)
+(import path)
 
-(cook/shell "ls -l")
+(path/join (os/cwd) "temp")
 ```
 
-Once @code`cook` is imported, all of it's symbols are available to the host program, but
-prefixed with @code`cook/`. To import the symbols with a custom prefix or
+Once @code`path` is imported, all of it's symbols are available to the host program, but
+prefixed with @code`path/`. To import the symbols with a custom prefix or
 without any prefix, use the @code`:prefix` argument
 to the import macro.
 
 @codeblock[janet]```
-(import cook :prefix "")
+(import path :prefix "")
 
-(shell "ls -l")
+(join (os/cwd) "temp")
 ```
 
 You may also use the @code`:as` argument to specify the prefix in a more natural way.
 
 @codeblock[janet]```
-(import cook :as ck)
+(import path :as p)
 
-(ck/shell "ls -l")
+(p/join (os/cwd) "temp")
 ```
 
 ## Custom Loaders (@code`module/paths` and @code`module/loaders`)
@@ -64,7 +77,7 @@ or @code`module/loader`, and add on to the existing entries. This is rather
 addvanced usage, but can be incredibly useful in creating DSLs that feel
 native to Janet.
 
-### @code`module/paths` 
+### @code`module/paths`
 
 This is an array of file paths to search for modules in the
 file system. Each element in this array is a pair @code`[path type predicate]`, where path
@@ -153,7 +166,6 @@ init.janet
 
 ...
 ```
-
 
 ## Writing a module
 

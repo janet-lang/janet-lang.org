@@ -11,7 +11,7 @@ watch:
 
 # Run a local version of the website
 run:
-	mdz serve 8080
+	mdz serve
 
 # Rebuild web version of janet for online REPL with latest Janet
 refresh:

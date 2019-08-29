@@ -33,7 +33,7 @@ To build, simply use `make` or `mdz`
 This requires first installing `inotify-tools`, which can be installed easily on most Linux distros.
 To watch for changes, use `make watch` or `mdz watch`.
 
-## Serve on localhost:8080
+## Serve on localhost:8000
 
 ```
 make serve
