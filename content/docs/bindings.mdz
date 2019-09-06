@@ -39,7 +39,7 @@ a function by passing a string the def or var command.
 
 Defs and vars (collectively known as bindings) live inside what is called a scope. A scope is
 simply where the bindings are valid. If a binding is referenced outside of its scope, the compiler
-will throw an error. Scopes are useful for organizing your bindings and my extension your programs.
+will throw an error. Scopes are useful for organizing your bindings and they can expand your programs.
 There are two main ways to create a scope in Janet.
 
 The first is to use the @code[do] special form. @code[do] executes a series of statements in a scope
