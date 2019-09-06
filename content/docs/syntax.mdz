@@ -3,22 +3,23 @@
  :order 1}
 ---
 
-A Janet program begins life as a text file, just a sequence of bytes like
-any other on your system. Janet source files should be UTF-8 or ASCII
-encoded. Before Janet can compile or run your program, it must transform
-your source code into a data structure. Janet is a lisp, which means it is
-homoiconic - code is data, so all of the facilities in the language for
-manipulating arrays, tuples, strings, and tables can be used for manipulating
-your source code as well.
 
-But before janet code is represented as a data structure, it must be read, or parsed,
-by the janet parser. Called the reader in many other lisps, the parser is a machine
-that takes in plain text and outputs data structures which can be used by both
-the compiler and macros. In janet, it is a parser rather than a reader because
-there is no code execution at read time. This is safer and simpler, and also
-lets janet syntax serve as a robust data interchange format. While a parser
-is not extensible, in janet the philosophy is to extend the language via macros
-rather than reader macros.
+A Janet program begins life as a text file, just a sequence of bytes like any
+other file on the system. Janet source files should be UTF-8 or ASCII encoded.
+Before Janet can compile or run the program, it must transform the source code
+into a data structure. Janet is a lisp, which means it is homoiconic - code is
+data -  thus all the facilities in the language for manipulation of tuples,
+strings and tables are used for manipulation of the source code as well.
+
+However, before Janet code transforms to a data structure, it must be read, or
+parsed, by the Janet parser. The parser, called the reader in many other lisps,
+is a machine that takes in plain text and outputs data structures which can be
+used by both the compiler and macros. In Janet, it is a parser rather than a
+reader because there is no code execution at reading time. This approach is
+safer and more straightforward, and also lets Janet syntax serve as a robust
+data interchange format. While a parser is not extensible, in Janet the
+philosophy is to extend the language via macros rather than reader macros.
+
 
 ## Nil, True and False
 
