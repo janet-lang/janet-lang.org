@@ -17,7 +17,7 @@ quirks to make your scripts, binaries, and applications cross-platform.
     projects. Since Janet code doesn't usually need to
     be compiled, you don't always need @code`jpm`, especially for scripts, but @code`jpm`
     comes with some functionality that is difficult to duplicate, like compiling janet source code
-    and all importedd modules into a statically linked executable for distribution.
+    and all imported modules into a statically linked executable for distribution.
 }
 
 ## Glossary
@@ -63,7 +63,7 @@ artifacts will be created in the @code`build` subdirectory of the current
 project. Therefor, it is probably a good idea to exclude the build directory
 from source control. For building executables and native modules, you will need
 to have a c compiler on your PATH where you ran @code`jpm build`. For posix
-systems, the is @code`cc`.
+systems, the compiler is @code`cc`.
 
 If you make changes to the source code after building once, @code`jpm` will
 try to only rebuild what is needed on a rebuild. If this fails for any reason, you
@@ -89,7 +89,7 @@ Finally, once we have built our software and tested that it works, we can
 install it on our system. For an executable, this means copying it to the
 @code`bin` directory, and for libraries it means copying them to the global
 syspath. You can optionally install into any directory if you don't wan to
-pollute your system or oyu don't have permission to write the directory
+pollute your system or you don't have permission to write the directory
 where janet itself was installed.  You can specify the path to install modules
 to via the @code`--modpath` option, and the path to install binaries to with
 the @code`--binpath` option. These need to given before the subcommand

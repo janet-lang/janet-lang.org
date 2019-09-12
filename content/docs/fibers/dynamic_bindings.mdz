@@ -13,7 +13,7 @@ can easily emulate dynamic scoping.
 
 ## Setting a value
 
-Tp set a dynamic binding, use the @code`setdyn` function.
+To set a dynamic binding, use the @code`setdyn` function.
 
 @codeblock[janet]```
 # Sets a dynamic binding :my-var to 10 in the current fiber.
