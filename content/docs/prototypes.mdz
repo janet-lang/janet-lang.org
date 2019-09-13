@@ -29,7 +29,7 @@ Looking up a value in a table with a prototype can be summed up with the followi
 
 @ol{@li{@code`(get my-table my-key)` is called.}
     @li{my-table is checked for the key if my-key. If there is a value for the key, it is returned.}
-    @li{If there is a prototype table for my-table, set `my-table` = `my-table's prototype` and got to 2. Otherwise go to 4.}
+    @li{If there is a prototype table for my-table, set `my-table` = `my-table's prototype` and go to 2. Otherwise go to 4.}
     @li{Return nil as the key was not found.}}
 
 Janet will check up to about a 1000 prototypes recursively by default before giving up and returning nil. This

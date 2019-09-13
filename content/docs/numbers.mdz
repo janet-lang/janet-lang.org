@@ -33,6 +33,23 @@ Numbers can also be in scientific notation such as @code[3e10]. A custom radix c
 as for scientific notation numbers, (the exponent will share the radix). For numbers in scientific
 notation with a radix besides 10, use the @code[&] symbol to indicate the exponent rather then @code[e].
 
+Some example numbers:
+@codeblock[janet]```
+0
++0.0
+-10_000
+16r1234abcd
+0x23.23
+1e10
+1.6e-4
+7r343_111_266.6&+10 # a base 7 number in scientific notation.
+# evaluates to 1.72625e+13 in base 10
+```
+
+Janet will allow some pretty wacky formats for numbers. However, no matter what format
+you write your number in, the resulting value will always be a double precision
+floating point number. 
+
 ## Arithmetic Functions
 
 Besides the 5 main arithmetic functions, janet also supports a number of math functions

@@ -78,7 +78,7 @@ part of the function is represented by @code[JanetFuncDef *], and a function env
 is represented with @code[JanetFuncEnv *].
 
 The function definition part of a function (the 'bytecode' part, @code[JanetFuncDef *]),
-we also store various metadata about the function which is useful for debugging,
+also stores various metadata about the function which is useful for debugging,
 as well as constants referenced by the function.
 
 ## C Functions
@@ -90,17 +90,16 @@ in invoking a C function and invoking a normal janet function.
 
 ## Bytecode Format
 
-Janet bytecode presents an interface to a virtual machine with a large number
-of identical registers that can hold any Janet value (@code[Janet *] in C). Most instructions
-have a destination register, and 1 or 2 source register. Registers are simply
-named with positive integers.
+Janet bytecode operates on an array of identical registers that can hold any Janet value (@code[Janet *] in C). Most instructions
+have a destination register, and 1 or 2 source registers. Registers are simply indexes
+into the stack frame, which can be thought of a constant sized array.
 
 Each instruction is a 32 bit integer, meaning that the instruction set is a constant
 width RISC instruction set like MIPS. The opcode of each instruction is the least significant
 byte of the instruction. The highest bit of
 this leading byte is reserved for debugging purpose, so there are 128 possible opcodes encodable
 with this scheme. Not all of these possible opcode are defined, and will trap the interpreter
-and emit a debug signal. Note that this mean an unknown opcode is still valid bytecode, it will
+and emit a debug signal. Note that this means an unknown opcode is still valid bytecode, it will
 just put the interpreter into a debug state when executed.
 
 @codeblock(```
@@ -130,12 +129,13 @@ There are a few instruction variants that divide these payload bits.
 These instruction variants can be further refined based on the semantics of the arguments.
 Some instructions may treat an argument as a slot index, while other instructions
 will treat the argument as a signed integer literal, and index for a constant, an index
-for an environment, or an unsigned integer.
+for an environment, or an unsigned integer. Keeping the bytecode fairly uniform makes
+verification, compilation, and debugging simpler.
 
 ## Instruction Reference
 
-A listing of all opcode values can be found in src/include/janet/janetopcodes.h. The janet assembly
-short names can be found src/assembler/asm.c. In this document, we will refer to the instructions
+A listing of all opcode values can be found in janet.h. The janet assembly
+short names can be found src/core/asm.c. In this document, we will refer to the instructions
 by their short names as presented to the assembler rather than their numerical values.
 
 Each instruction is also listed with a signature, which are the arguments the instruction
