@@ -22,7 +22,7 @@ even with taking shortcuts. A succinct way in janet is
 We will limit ourselves however to using explicit looping and no functions
 like @code[(range n)] which generate a list of natural numbers for us.
 
-For our first version, we will use only the while macro to iterate, similar
+For our first version, we will use only the while form to iterate, similar
 to how one might sum natural numbers in a language such as C.
 
 @codeblock[janet](```
@@ -34,10 +34,10 @@ to how one might sum natural numbers in a language such as C.
 (print sum) # prints 45
 ```)
 
-This is a very imperative style program which can grow very large very quickly.
+This is a very imperative style program which is not the best way to write this in Janet.
 We are manually updating a counter @code[i] in a loop. Using the macros @code[+=] and @code[++], this
 style code is similar in density to C code.
-It is recommended to use either macros (such as the loop macro) or a functional
+It is recommended to use either macros (such as the @code`loop` or @code`for` macros) or a functional
 style in janet.
 
 Since this is such a common pattern, Janet has a macro for this exact purpose. The
@@ -122,6 +122,13 @@ We can also use the @code[loop] macro for this case as well using the @code[:in]
 @codeblock[janet](```
 (loop [name :in names] (print name))
 ```)
+
+Lastly, we can use the @code`map` function to apply a function over each value in the
+array.
+
+@codeblock[janet]```
+(map print names)
+```
 
 ## Iterating a Dictionary
 
