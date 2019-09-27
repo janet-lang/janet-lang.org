@@ -128,3 +128,11 @@ Sometimes you may want to have a function that can take a number of extra argume
 use them. This happens because a function may be part of an interface, but the function itself
 doesn't need those arguments. You can write a function that will simply drop extra parameters
 by adding @code`&` as the last parameter in the function.
+
+@codeblock[janet]```
+(defn ignore-extra
+ [x &]
+ (+ x 1))
+
+(ignore-extra 1 2 3 4 5) # -> 2
+```

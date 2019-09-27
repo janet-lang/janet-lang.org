@@ -91,9 +91,11 @@ body will not escape outside the body.
 (fn [& args] (length args)) # A variadic function that counts its arguments.
 
 # A function that doesn't strictly check the number of arguments.
-# Extra arguments are ignored, and arguments not passed are nil.
+# Extra arguments are ignored.
 (fn [w x y z &] (tuple w w x x y y z z))
 ```
+
+For more information on functions, see @link[/docs/functions.html][/docs/functions.html].
 
 ## @code`(do body...)`
 
