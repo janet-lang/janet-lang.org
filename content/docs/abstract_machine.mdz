@@ -1,4 +1,5 @@
-(import tools/gen-asm-table :as asm-table)
+(import ./gen-asm-table :as asm-table)
+
 {:title "The Janet Abstract Machine"
  :template "docpage"
  :order 17}

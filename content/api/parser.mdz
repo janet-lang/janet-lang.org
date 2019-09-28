@@ -1,4 +1,5 @@
-(import tools/gen-docs :as gen-docs)
+(import ./gen-docs :as gen-docs)
+
 {:title "Parser Module"
  :nav-title "parser"
  :template "docpage"}

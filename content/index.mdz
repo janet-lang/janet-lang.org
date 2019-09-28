@@ -33,6 +33,7 @@ are fairly straight forward. Janet can be easily ported to new platforms.
     @li{Parsing Expression Grammars built in to the core library}
     @li{300+ functions and macros in the core library}
     @li{Interactive environment with detailed stack traces}}
+    @li{Export your projects to standalone executables with a companion build tool, jpm}}
 
 ## Try It
 
