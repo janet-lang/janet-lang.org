@@ -43,7 +43,7 @@ If you would like the latest version of Janet, are trying to run Janet on
 a platform that is not macos or Windows, or would like to help develop
 Janet, you can build janet from source.
 Janet only uses Make and batch files to compile on Posix and windows
-respectively. To configure janet, edit the header file src/include/janet/janetconf.h
+respectively. To configure janet, edit the header file src/conf/janetconf.h
 before compilation.
 
 ### macos and Unix-like
