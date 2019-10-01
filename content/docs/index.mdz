@@ -1,5 +1,5 @@
 {:title "Introduction"
- :template "docpage"
+ :template "docpage.html"
  :order 2
  :nav-title "Documentation"
  :permalinks ["introduction.html"]}
@@ -58,9 +58,6 @@ make test
 
 After building, run @code[make install] to install the janet binary and libs.
 Will install in @code[/usr/local] by default, see the Makefile to customize.
-
-It's also recommended to set the @code[JANET_PATH] variable in your profile.
-This is where janet will look for imported libraries after the current directory.
 
 ### FreeBSD
 

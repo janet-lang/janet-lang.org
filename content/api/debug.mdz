@@ -2,7 +2,7 @@
 
 {:title "Debug Module"
  :nav-title "debug"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

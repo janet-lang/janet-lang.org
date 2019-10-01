@@ -1,5 +1,5 @@
 {:title "Functions"
- :template "docpage"
+ :template "docpage.html"
  :order 6}
 ---
 

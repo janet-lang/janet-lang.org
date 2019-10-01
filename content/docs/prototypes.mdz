@@ -1,5 +1,5 @@
 {:title "Prototypes"
- :template "docpage"
+ :template "docpage.html"
  :order 16}
 ---
 

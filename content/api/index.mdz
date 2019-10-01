@@ -3,7 +3,7 @@
 {:title "Core API"
  :nav-title "API"
  :order 3
- :template "docpage"
+ :template "docpage.html"
  :permalinks ["doc.html"] }
 ---
 

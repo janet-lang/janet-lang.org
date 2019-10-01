@@ -2,7 +2,7 @@
 
 {:title "Type Array Module"
  :nav-title "tarray"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

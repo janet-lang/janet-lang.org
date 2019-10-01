@@ -1,5 +1,5 @@
 {:title "Strings, Keywords, and Symbols"
- :template "docpage"
+ :template "docpage.html"
  :order 7}
 ---
 

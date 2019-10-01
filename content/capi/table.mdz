@@ -1,5 +1,5 @@
 {:title "Table C API"
- :template "docpage"
+ :template "docpage.html"
  :order 6}
 ---
 

@@ -2,7 +2,7 @@
 
 {:title "Fiber Module"
  :nav-title "fiber"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

@@ -1,5 +1,5 @@
 {:title "Parsing Expression Grammars"
- :template "docpage"
+ :template "docpage.html"
  :order 15}
 ---
 

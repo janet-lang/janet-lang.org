@@ -1,6 +1,6 @@
 {:title "Fiber Overview"
  :nav-title "Fibers"
- :template "docpage"
+ :template "docpage.html"
  :order 13}
 ---
 

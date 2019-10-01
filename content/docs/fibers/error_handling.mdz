@@ -1,6 +1,6 @@
 {:title "Error Handling"
  :nav-title "Errors"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 One of the main uses of Fibers is to encapsulate and handle errors. Janet offers

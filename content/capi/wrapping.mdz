@@ -1,6 +1,6 @@
 {:title "Wrapping Types"
  :nav-title "Wrapping Types"
- :template "docpage"
+ :template "docpage.html"
  :order 1}
 ---
 

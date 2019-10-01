@@ -2,7 +2,7 @@
 
 {:title "OS Module"
  :nav-title "os"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 The @code`os` module contains most Operating System specific functionality as well as routines

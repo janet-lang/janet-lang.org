@@ -1,6 +1,6 @@
 {:title "Embedding"
  :nav-title "Embedding"
- :template "docpage"
+ :template "docpage.html"
  :order 2}
 ---
 

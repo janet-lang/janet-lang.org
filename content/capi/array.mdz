@@ -1,5 +1,5 @@
 {:title "Array C API"
- :template "docpage"
+ :template "docpage.html"
  :order 4}
 ---
 

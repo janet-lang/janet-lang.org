@@ -1,5 +1,5 @@
 {:title "Fiber C API"
- :template "docpage"
+ :template "docpage.html"
  :order 7}
 ---
 

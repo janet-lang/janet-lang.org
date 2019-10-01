@@ -1,7 +1,7 @@
 (import ./gen-asm-table :as asm-table)
 
 {:title "The Janet Abstract Machine"
- :template "docpage"
+ :template "docpage.html"
  :order 17}
 ---
 The Janet language is implemented on top of an abstract machine (AM). The compiler

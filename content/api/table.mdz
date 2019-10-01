@@ -2,7 +2,7 @@
 
 {:title "Table Module"
  :nav-title "table"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

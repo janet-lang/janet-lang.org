@@ -1,5 +1,5 @@
 {:title "Tuples"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 Tuples are immutable, sequential types that are similar to arrays. They also

@@ -1,5 +1,5 @@
 {:title "Bindings (def and var)"
- :template "docpage"
+ :template "docpage.html"
  :order 4}
 ---
 

@@ -1,5 +1,5 @@
 {:title "Destructuring"
- :template "docpage"
+ :template "docpage.html"
  :order 10}
 ---
 

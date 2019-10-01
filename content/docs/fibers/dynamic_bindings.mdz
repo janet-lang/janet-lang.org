@@ -1,5 +1,5 @@
 {:title "Dynamic Bindings"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 Many lisps, especially traditional lisps, support dynamically scoped bindings.

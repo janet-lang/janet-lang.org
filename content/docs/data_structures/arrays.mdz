@@ -1,5 +1,5 @@
 {:title "Arrays"
- :template "docpage"
+ :template "docpage.html"
  :order 2}
 ---
 

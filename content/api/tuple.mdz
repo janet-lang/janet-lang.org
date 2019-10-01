@@ -2,7 +2,7 @@
 
 {:title "Tuple Module"
  :nav-title "tuple"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

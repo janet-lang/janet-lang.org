@@ -2,7 +2,7 @@
 
 {:title "Parser Module"
  :nav-title "parser"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

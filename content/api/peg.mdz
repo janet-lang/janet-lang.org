@@ -2,7 +2,7 @@
 
 {:title "PEG Module"
  :nav-title "peg"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 See @link[/docs/peg.html][The peg documentation] for more information.

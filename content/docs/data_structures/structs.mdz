@@ -1,5 +1,5 @@
 {:title "Structs"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 Structs are immutable data structures that map keys to values. They are semantically similar to

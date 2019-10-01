@@ -1,51 +1,18 @@
-{$
-(defn render-toc
-  [state node]
-  (def url (if (node :pages) (string (node :url) "/index.html") (node :url)))
-  {:tag "li"
-  "class" (if (node :pages) "caret")
-  :content [{:tag "span" 
-              "class" (if (= (state :url) url) "selected")
-              :content {:tag "a" "href" url :content (or (node :nav-title) (node :title))}}
-             (if-let [pages (node :pages)]
-                {:tag "ul"
-                :content (map (partial render-toc state) pages)})]})
-$}
-
-{%
-# Evaluated for every invocation of the template
-(def total-order @[])
-(defn visit
-  [node]
-  (if-let [ps (node :pages)]
-    (do 
-      (if (node :index) (array/push total-order (node :index)))
-      (each page ps (visit page)))
-    (array/push total-order node)))
-(visit sitemap)
-(defn findrel [offset]
-  (def len (length total-order))
-  (def my-index (find-index (fn [x] (= url (x :url))) total-order))
-  (def index (% (+ my-index len offset) len))
-  (total-order index))
-(def page-next (findrel 1))
-(def page-prev (findrel -1))
-%}
-
+{$ (use ./docpage) $}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{{ (state :title) }}</title>
-    <meta name="description" content="{{ (or (state :description) `Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.`) }}">
+    <title>{{ (dyn :title) }}</title>
+    <meta name="description" content="{{ (or (dyn :description) `Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.`) }}">
     <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="/css/docpage.css" type="text/css" media="screen" charset="utf-8">
     <link rel="shortcut icon" href="assets/favicon.ico">
 
     <!-- Open Graph -->
-    <meta property="og:description" content="{{ (or (state :description) `Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.`) }}" />
-    <meta property="og:title" content="{{ (state :title) }}" />
+    <meta property="og:description" content="{{ (or (dyn :description) `Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.`) }}" />
+    <meta property="og:title" content="{{ (dyn :title) }}" />
     <meta property="og:type" content="website" />
   </head>
   <body>
@@ -73,15 +40,18 @@ $}
       window.addEventListener('DOMContentLoaded', addTocToggle);
     </script>
 
+    {% (def page-prev (findrel url -1))
+       (def page-next (findrel url 1)) %}
+
     <div class="twocol">
       <div class="toc toc-hidden">
         <ul>
-          {{ (seq [sm :in (sitemap :pages)] (render-toc state sm)) }}
+          {{ (seq [sm :in (sitemap :pages)] (render-toc sm)) }}
         </ul>
       </div>
       <div class="content-wrapper main-content">
         <h4 class="subtitle">Janet {{ janet/version }} Documentation</h4>
-        <h1 class="subtitle">{{ (state :title) }}</h1>
+        <h1 class="subtitle">{{ (dyn :title) }}</h1>
         <div class="prevnext-bar">
           <span class="prev"><a href="{{ (page-prev :url) }}"><span class="prevnext-text">{{ (page-prev :title) }}</span></a></span>
           <span class="next"><a href="{{ (page-next :url) }}"><span class="prevnext-text">{{ (page-next :title) }}</span></a></span>
@@ -94,7 +64,7 @@ $}
       </div>
     </div>
 
-    {{ {:template "footer"} }}
+    {{ {:template "footer.html"} }}
 
   </body>
 </html>

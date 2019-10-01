@@ -2,7 +2,7 @@
 
 {:title "Math Module"
  :nav-title "math"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

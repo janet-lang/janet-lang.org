@@ -1,5 +1,5 @@
 {:title "Configuration"
- :template "docpage"
+ :template "docpage.html"
  :order 3}
 ---
 

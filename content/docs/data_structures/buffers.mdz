@@ -1,5 +1,5 @@
 {:title "Buffers"
- :template "docpage"
+ :template "docpage.html"
  :order 2}
 ---
 

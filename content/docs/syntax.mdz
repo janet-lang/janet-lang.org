@@ -1,5 +1,5 @@
 {:title "Syntax and the Parser"
- :template "docpage"
+ :template "docpage.html"
  :order 1}
 ---
 

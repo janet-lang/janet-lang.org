@@ -1,5 +1,5 @@
 {:title "Buffer C API"
- :template "docpage"
+ :template "docpage.html"
  :order 5}
 ---
 

@@ -1,6 +1,6 @@
 {:title "The Janet C API"
  :nav-title "C API"
- :template "docpage"
+ :template "docpage.html"
  :order 4}
 ---
 

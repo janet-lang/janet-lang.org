@@ -1,6 +1,6 @@
 {:title "The Janet Programming Language"
  :nav-title "Home"
- :template "index"
+ :template "index.html"
  :order 1}
  ---
 

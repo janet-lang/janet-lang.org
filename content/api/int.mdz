@@ -2,7 +2,7 @@
 
 {:title "Integer Types Module"
  :nav-title "int"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

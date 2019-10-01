@@ -2,7 +2,7 @@
 
 {:title "File Module"
  :nav-title "file"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index

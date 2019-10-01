@@ -1,6 +1,6 @@
 {:title "Janet's Memory Model"
  :nav-title "Memory Model"
- :template "docpage"
+ :template "docpage.html"
  :order 8}
 ---
 

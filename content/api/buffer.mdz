@@ -2,7 +2,7 @@
 
 {:title "Buffer Module"
  :nav-title "buffer"
- :template "docpage"}
+ :template "docpage.html"}
 ---
 
 ## Index
