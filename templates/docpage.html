@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>{{ (dyn :title) }}</title>
     <meta name="description" content="{{ (or (dyn :description) `Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.`) }}">
-    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" charset="utf-8">
-    <link rel="stylesheet" href="/css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="{{ (relative-url `/css/main.css`) }}" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="{{ (relative-url `/css/docpage.css`) }}" type="text/css" media="screen" charset="utf-8">
     <link rel="shortcut icon" href="assets/favicon.ico">
 
     <!-- Open Graph -->
@@ -41,7 +41,9 @@
     </script>
 
     {% (def page-prev (findrel url -1))
-       (def page-next (findrel url 1)) %}
+       (def page-next (findrel url 1))
+       (def prev-url (relative-url (page-prev :url)))
+       (def next-url (relative-url (page-next :url))) %}
 
     <div class="twocol">
       <div class="toc toc-hidden">
@@ -53,13 +55,14 @@
         <h4 class="subtitle">Janet {{ janet/version }} Documentation</h4>
         <h1 class="subtitle">{{ (dyn :title) }}</h1>
         <div class="prevnext-bar">
-          <span class="prev"><a href="{{ (page-prev :url) }}"><span class="prevnext-text">{{ (page-prev :title) }}</span></a></span>
-          <span class="next"><a href="{{ (page-next :url) }}"><span class="prevnext-text">{{ (page-next :title) }}</span></a></span>
+          <span class="prev"><a href="{{ prev-url }}"><span class="prevnext-text">{{ (page-prev :title) }}</span></a></span>
+
+          <span class="next"><a href="{{ next-url }}"><span class="prevnext-text">{{ (page-next :title) }}</span></a></span>
         </div>
         {{ content }}
         <div class="prevnext-bar">
-          <span class="prev"><a href="{{ (page-prev :url) }}"><span class="prevnext-text">{{ (page-prev :title) }}</span></a></span>
-          <span class="next"><a href="{{ (page-next :url) }}"><span class="prevnext-text">{{ (page-next :title) }}</span></a></span>
+          <span class="prev"><a href="{{ prev-url }}"><span class="prevnext-text">{{ (page-prev :title) }}</span></a></span>
+          <span class="next"><a href="{{ next-url }}"><span class="prevnext-text">{{ (page-next :title) }}</span></a></span>
         </div>
       </div>
     </div>

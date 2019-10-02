@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Tuples</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Tuples" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../index.html">Documentation</a></span><ul><li><span><a href="../syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../specials.html">Special Forms</a></span></li><li><span><a href="../numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../flow.html">Flow</a></span></li><li><span><a href="../functions.html">Functions</a></span></li><li><span><a href="../strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../loop.html">Looping</a></span></li><li><span><a href="../macros.html">Macros</a></span></li><li><span><a href="../destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="index.html">Data Structures</a></span><ul><li><span><a href="arrays.html">Arrays</a></span></li><li><span><a href="buffers.html">Buffers</a></span></li><li><span><a href="tables.html">Tables</a></span></li><li><span><a href="structs.html">Structs</a></span></li><li><span class="selected"><a href="tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../modules.html">Modules</a></span></li><li class="caret"><span><a href="../fibers/index.html">Fibers</a></span><ul><li><span><a href="../fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../object_oriented.html">Object Oriented Programming</a></span></li><li><span><a href="../peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../prototypes.html">Prototypes</a></span></li><li><span><a href="../abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li><li><span><a href="../../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.3.1 Documentation</h4>
+        <h1 class="subtitle">Tuples</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="structs.html"><span class="prevnext-text">Structs</span></a></span>
+
+          <span class="next"><a href="../modules.html"><span class="prevnext-text">Modules</span></a></span>
+        </div>
+        
+
+<p>Tuples are immutable, sequential types that are similar to arrays. They also
+represent forms so are the main data structure in source code. Like all data structres, their
+contents can be retrieved with the <code class="mendoza-code">get</code> function, and their length retrieved with
+the <code class="mendoza-code">length</code> function.
+</p>
+<p>There are many ways to create tuples, but the two most common are the
+<code class="mendoza-code">tuple</code> function and tuple literals.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Use brackets to indicate a tuple constructor</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mytup</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>])
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mytup2</span> (<span class="mdzsyn-coresym">tuple</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mytup3</span> '(<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mytup4</span> ~(<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> ,(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">2</span>)))</code></pre><h2>As Table Keys
+</h2>
+<p>Tuples can be conveniently used as table keys because two tuples with the same
+contents are considered equal.
+</p>
+<h2>Sorting Tuples
+</h2>
+<p>Tuples can also be used to sort items. When sorting tuples via the <code class="mendoza-code">order&lt;</code> or
+<code class="mendoza-code">&lt;</code> comparators, the first elements are compared first. If those elements are equal, we
+move on to the second element, then the third, and so on. We could use this property of tuples
+to sort all sorts of data, or sort one array by the contents of another array.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">inventory</span> [
+ [<span class="mdzsyn-string">"ermie"</span> <span class="mdzsyn-number">1</span>]
+ [<span class="mdzsyn-string">"banana"</span> <span class="mdzsyn-number">18</span>]
+ [<span class="mdzsyn-string">"cat"</span> <span class="mdzsyn-number">5</span>]
+ [<span class="mdzsyn-string">"dog"</span> <span class="mdzsyn-number">3</span>]
+ [<span class="mdzsyn-string">"flamingo"</span> <span class="mdzsyn-number">23</span>]
+ [<span class="mdzsyn-string">"apple"</span> <span class="mdzsyn-number">2</span>]])
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">sorted-inventory</span> (<span class="mdzsyn-coresym">sorted</span> <span class="mdzsyn-symbol">inventory</span>))
+
+(<span class="mdzsyn-coresym">each</span> [<span class="mdzsyn-symbol">item</span> <span class="mdzsyn-symbol">n</span>] <span class="mdzsyn-symbol">sorted-inventory</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">item</span> <span class="mdzsyn-string">": "</span> <span class="mdzsyn-symbol">n</span>))
+<span class="mdzsyn-comment"># apple: 2</span>
+<span class="mdzsyn-comment"># banana: 18</span>
+<span class="mdzsyn-comment"># cat: 5</span>
+<span class="mdzsyn-comment"># dog: 3</span>
+<span class="mdzsyn-comment"># ermie: 1</span>
+<span class="mdzsyn-comment"># flamingo: 23</span></code></pre><h2>Bracketed Tuples
+</h2>
+<p>There are actually two kinds of tuples, bracketed an non bracketed. We've seen early that bracket
+tuples are used to write a tuple literal constructor. The way the tuple is interpreted by the compiler
+is in fact one of the very few ways that bracketed tuples are different from normal tuples.
+</p>
+<ul><li>Bracket tuples, when printed via <code class="mendoza-code">pp</code>, are printed with square brackets instead of parentheses</li>
+    <li>Bracket tuples are interpreter as a tuple constructor rather than a function call by the compiler.</li>
+    <li>When passed as an argument to <code class="mendoza-code">tuple/type</code>, bracket tuples will returns <code class="mendoza-code">:brackets</code> instead of <code class="mendoza-code">:parens</code></li></ul><p>In al other ways, bracket tuples should behave identically to normal tuples. It is not recommended to use them for
+anything but macros and tuple constructors.
+</p>
+<h2>More Functions
+</h2>
+<p>Most functions in the core libary that work on arrays will also work
+on tuples, or have an analgous function for tuples. For all functions
+in the <code class="mendoza-code">tuple</code> module, see the <a href="/doc.html#tuple">Core Library API</a>.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="structs.html"><span class="prevnext-text">Structs</span></a></span>
+          <span class="next"><a href="../modules.html"><span class="prevnext-text">Modules</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose 2019
+  <div class="gentag">Generated on October 1, 2019 at 20:32:58 with Janet 1.3.1-7809f89</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

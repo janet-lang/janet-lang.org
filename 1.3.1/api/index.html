@@ -1,0 +1,1010 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Core API</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Core API" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/object_oriented.html">Object Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li></ul></li><li class="caret"><span class="selected"><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="tuple.html">tuple</a></span></li><li><span><a href="tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.3.1 Documentation</h4>
+        <h1 class="subtitle">Core API</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../docs/jpm.html"><span class="prevnext-text">jpm</span></a></span>
+
+          <span class="next"><a href="array.html"><span class="prevnext-text">Array Module</span></a></span>
+        </div>
+        
+
+<h2>Index
+</h2>
+<p><a href="#%">%</a> <a href="#%=">%=</a> <a href="#*">*</a> <a href="#*=">*=</a> <a href="#+">+</a> <a href="#++">++</a> <a href="#+=">+=</a> <a href="#-">-</a> <a href="#--">--</a> <a href="#-=">-=</a> <a href="#->">-&gt;</a> <a href="#->>">-&gt;&gt;</a> <a href="#-?>">-?&gt;</a> <a href="#-?>>">-?&gt;&gt;</a> <a href="#/">/</a> <a href="#/=">/=</a> <a href="#<">&lt;</a> <a href="#<=">&lt;=</a> <a href="#=">=</a> <a href="#==">==</a> <a href="#>">&gt;</a> <a href="#>=">&gt;=</a> <a href="#abstract?">abstract?</a> <a href="#all">all</a> <a href="#all-bindings">all-bindings</a> <a href="#all-dynamics">all-dynamics</a> <a href="#and">and</a> <a href="#apply">apply</a> <a href="#array">array</a> <a href="#array/concat">array/concat</a> <a href="#array/ensure">array/ensure</a> <a href="#array/insert">array/insert</a> <a href="#array/new">array/new</a> <a href="#array/peek">array/peek</a> <a href="#array/pop">array/pop</a> <a href="#array/push">array/push</a> <a href="#array/remove">array/remove</a> <a href="#array/slice">array/slice</a> <a href="#array?">array?</a> <a href="#as->">as-&gt;</a> <a href="#as?->">as?-&gt;</a> <a href="#asm">asm</a> <a href="#bad-compile">bad-compile</a> <a href="#bad-parse">bad-parse</a> <a href="#band">band</a> <a href="#blshift">blshift</a> <a href="#bnot">bnot</a> <a href="#boolean?">boolean?</a> <a href="#bor">bor</a> <a href="#brshift">brshift</a> <a href="#brushift">brushift</a> <a href="#buffer">buffer</a> <a href="#buffer/bit">buffer/bit</a> <a href="#buffer/bit-clear">buffer/bit-clear</a> <a href="#buffer/bit-set">buffer/bit-set</a> <a href="#buffer/bit-toggle">buffer/bit-toggle</a> <a href="#buffer/blit">buffer/blit</a> <a href="#buffer/clear">buffer/clear</a> <a href="#buffer/format">buffer/format</a> <a href="#buffer/new">buffer/new</a> <a href="#buffer/new-filled">buffer/new-filled</a> <a href="#buffer/popn">buffer/popn</a> <a href="#buffer/push-byte">buffer/push-byte</a> <a href="#buffer/push-string">buffer/push-string</a> <a href="#buffer/push-word">buffer/push-word</a> <a href="#buffer/slice">buffer/slice</a> <a href="#buffer?">buffer?</a> <a href="#bxor">bxor</a> <a href="#bytes?">bytes?</a> <a href="#case">case</a> <a href="#cfunction?">cfunction?</a> <a href="#comment">comment</a> <a href="#comp">comp</a> <a href="#compile">compile</a> <a href="#complement">complement</a> <a href="#cond">cond</a> <a href="#coro">coro</a> <a href="#count">count</a> <a href="#debug">debug</a> <a href="#debug/arg-stack">debug/arg-stack</a> <a href="#debug/break">debug/break</a> <a href="#debug/fbreak">debug/fbreak</a> <a href="#debug/lineage">debug/lineage</a> <a href="#debug/stack">debug/stack</a> <a href="#debug/stacktrace">debug/stacktrace</a> <a href="#debug/unbreak">debug/unbreak</a> <a href="#debug/unfbreak">debug/unfbreak</a> <a href="#dec">dec</a> <a href="#deep-not=">deep-not=</a> <a href="#deep=">deep=</a> <a href="#def-">def-</a> <a href="#default">default</a> <a href="#defglobal">defglobal</a> <a href="#defmacro">defmacro</a> <a href="#defmacro-">defmacro-</a> <a href="#defn">defn</a> <a href="#defn-">defn-</a> <a href="#describe">describe</a> <a href="#dictionary?">dictionary?</a> <a href="#disasm">disasm</a> <a href="#distinct">distinct</a> <a href="#doc">doc</a> <a href="#doc*">doc*</a> <a href="#doc-format">doc-format</a> <a href="#dofile">dofile</a> <a href="#drop">drop</a> <a href="#drop-until">drop-until</a> <a href="#drop-while">drop-while</a> <a href="#dyn">dyn</a> <a href="#each">each</a> <a href="#empty?">empty?</a> <a href="#env-lookup">env-lookup</a> <a href="#error">error</a> <a href="#eval">eval</a> <a href="#eval-string">eval-string</a> <a href="#even?">even?</a> <a href="#every?">every?</a> <a href="#extreme">extreme</a> <a href="#false?">false?</a> <a href="#fiber/current">fiber/current</a> <a href="#fiber/getenv">fiber/getenv</a> <a href="#fiber/maxstack">fiber/maxstack</a> <a href="#fiber/new">fiber/new</a> <a href="#fiber/setenv">fiber/setenv</a> <a href="#fiber/setmaxstack">fiber/setmaxstack</a> <a href="#fiber/status">fiber/status</a> <a href="#fiber?">fiber?</a> <a href="#file/close">file/close</a> <a href="#file/fdopen">file/fdopen</a> <a href="#file/fileno">file/fileno</a> <a href="#file/flush">file/flush</a> <a href="#file/open">file/open</a> <a href="#file/popen">file/popen</a> <a href="#file/read">file/read</a> <a href="#file/seek">file/seek</a> <a href="#file/write">file/write</a> <a href="#filter">filter</a> <a href="#find">find</a> <a href="#find-index">find-index</a> <a href="#first">first</a> <a href="#flatten">flatten</a> <a href="#flatten-into">flatten-into</a> <a href="#for">for</a> <a href="#freeze">freeze</a> <a href="#frequencies">frequencies</a> <a href="#function?">function?</a> <a href="#gccollect">gccollect</a> <a href="#gcinterval">gcinterval</a> <a href="#gcsetinterval">gcsetinterval</a> <a href="#generate">generate</a> <a href="#gensym">gensym</a> <a href="#get">get</a> <a href="#get-in">get-in</a> <a href="#getline">getline</a> <a href="#hash">hash</a> <a href="#idempotent?">idempotent?</a> <a href="#identity">identity</a> <a href="#if-let">if-let</a> <a href="#if-not">if-not</a> <a href="#import">import</a> <a href="#import*">import*</a> <a href="#inc">inc</a> <a href="#indexed?">indexed?</a> <a href="#int/s64">int/s64</a> <a href="#int/u64">int/u64</a> <a href="#int?">int?</a> <a href="#interleave">interleave</a> <a href="#interpose">interpose</a> <a href="#invert">invert</a> <a href="#janet/build">janet/build</a> <a href="#janet/config-bits">janet/config-bits</a> <a href="#janet/version">janet/version</a> <a href="#juxt">juxt</a> <a href="#juxt*">juxt*</a> <a href="#keep">keep</a> <a href="#keys">keys</a> <a href="#keyword">keyword</a> <a href="#keyword?">keyword?</a> <a href="#kvs">kvs</a> <a href="#last">last</a> <a href="#length">length</a> <a href="#let">let</a> <a href="#load-image">load-image</a> <a href="#loop">loop</a> <a href="#macex">macex</a> <a href="#macex1">macex1</a> <a href="#make-env">make-env</a> <a href="#make-image">make-image</a> <a href="#map">map</a> <a href="#mapcat">mapcat</a> <a href="#marshal">marshal</a> <a href="#match">match</a> <a href="#math/abs">math/abs</a> <a href="#math/acos">math/acos</a> <a href="#math/asin">math/asin</a> <a href="#math/atan">math/atan</a> <a href="#math/atan2">math/atan2</a> <a href="#math/ceil">math/ceil</a> <a href="#math/cos">math/cos</a> <a href="#math/cosh">math/cosh</a> <a href="#math/e">math/e</a> <a href="#math/exp">math/exp</a> <a href="#math/floor">math/floor</a> <a href="#math/inf">math/inf</a> <a href="#math/log">math/log</a> <a href="#math/log10">math/log10</a> <a href="#math/pi">math/pi</a> <a href="#math/pow">math/pow</a> <a href="#math/random">math/random</a> <a href="#math/seedrandom">math/seedrandom</a> <a href="#math/sin">math/sin</a> <a href="#math/sinh">math/sinh</a> <a href="#math/sqrt">math/sqrt</a> <a href="#math/tan">math/tan</a> <a href="#math/tanh">math/tanh</a> <a href="#max">max</a> <a href="#max-order">max-order</a> <a href="#mean">mean</a> <a href="#merge">merge</a> <a href="#merge-into">merge-into</a> <a href="#min">min</a> <a href="#min-order">min-order</a> <a href="#module/cache">module/cache</a> <a href="#module/expand-path">module/expand-path</a> <a href="#module/find">module/find</a> <a href="#module/loaders">module/loaders</a> <a href="#module/loading">module/loading</a> <a href="#module/paths">module/paths</a> <a href="#nat?">nat?</a> <a href="#native">native</a> <a href="#neg?">neg?</a> <a href="#next">next</a> <a href="#nil?">nil?</a> <a href="#not">not</a> <a href="#not=">not=</a> <a href="#not==">not==</a> <a href="#number?">number?</a> <a href="#odd?">odd?</a> <a href="#one?">one?</a> <a href="#or">or</a> <a href="#order<">order&lt;</a> <a href="#order<=">order&lt;=</a> <a href="#order>">order&gt;</a> <a href="#order>=">order&gt;=</a> <a href="#os/arch">os/arch</a> <a href="#os/cd">os/cd</a> <a href="#os/clock">os/clock</a> <a href="#os/cwd">os/cwd</a> <a href="#os/date">os/date</a> <a href="#os/dir">os/dir</a> <a href="#os/execute">os/execute</a> <a href="#os/exit">os/exit</a> <a href="#os/getenv">os/getenv</a> <a href="#os/link">os/link</a> <a href="#os/mkdir">os/mkdir</a> <a href="#os/rename">os/rename</a> <a href="#os/rm">os/rm</a> <a href="#os/rmdir">os/rmdir</a> <a href="#os/setenv">os/setenv</a> <a href="#os/shell">os/shell</a> <a href="#os/sleep">os/sleep</a> <a href="#os/stat">os/stat</a> <a href="#os/time">os/time</a> <a href="#os/touch">os/touch</a> <a href="#os/which">os/which</a> <a href="#pairs">pairs</a> <a href="#parser/byte">parser/byte</a> <a href="#parser/clone">parser/clone</a> <a href="#parser/consume">parser/consume</a> <a href="#parser/eof">parser/eof</a> <a href="#parser/error">parser/error</a> <a href="#parser/flush">parser/flush</a> <a href="#parser/has-more">parser/has-more</a> <a href="#parser/insert">parser/insert</a> <a href="#parser/new">parser/new</a> <a href="#parser/produce">parser/produce</a> <a href="#parser/state">parser/state</a> <a href="#parser/status">parser/status</a> <a href="#parser/where">parser/where</a> <a href="#partial">partial</a> <a href="#partition">partition</a> <a href="#peg/compile">peg/compile</a> <a href="#peg/match">peg/match</a> <a href="#pos?">pos?</a> <a href="#postwalk">postwalk</a> <a href="#pp">pp</a> <a href="#prewalk">prewalk</a> <a href="#print">print</a> <a href="#printf">printf</a> <a href="#product">product</a> <a href="#propagate">propagate</a> <a href="#put">put</a> <a href="#put-in">put-in</a> <a href="#range">range</a> <a href="#reduce">reduce</a> <a href="#repl">repl</a> <a href="#require">require</a> <a href="#resume">resume</a> <a href="#reverse">reverse</a> <a href="#run-context">run-context</a> <a href="#scan-number">scan-number</a> <a href="#seq">seq</a> <a href="#setdyn">setdyn</a> <a href="#short-fn">short-fn</a> <a href="#slurp">slurp</a> <a href="#some">some</a> <a href="#sort">sort</a> <a href="#sorted">sorted</a> <a href="#spit">spit</a> <a href="#stderr">stderr</a> <a href="#stdin">stdin</a> <a href="#stdout">stdout</a> <a href="#string">string</a> <a href="#string/ascii-lower">string/ascii-lower</a> <a href="#string/ascii-upper">string/ascii-upper</a> <a href="#string/bytes">string/bytes</a> <a href="#string/check-set">string/check-set</a> <a href="#string/find">string/find</a> <a href="#string/find-all">string/find-all</a> <a href="#string/format">string/format</a> <a href="#string/from-bytes">string/from-bytes</a> <a href="#string/has-prefix?">string/has-prefix?</a> <a href="#string/has-suffix?">string/has-suffix?</a> <a href="#string/join">string/join</a> <a href="#string/repeat">string/repeat</a> <a href="#string/replace">string/replace</a> <a href="#string/replace-all">string/replace-all</a> <a href="#string/reverse">string/reverse</a> <a href="#string/slice">string/slice</a> <a href="#string/split">string/split</a> <a href="#string/trim">string/trim</a> <a href="#string/triml">string/triml</a> <a href="#string/trimr">string/trimr</a> <a href="#string?">string?</a> <a href="#struct">struct</a> <a href="#struct?">struct?</a> <a href="#sum">sum</a> <a href="#symbol">symbol</a> <a href="#symbol?">symbol?</a> <a href="#table">table</a> <a href="#table/clone">table/clone</a> <a href="#table/getproto">table/getproto</a> <a href="#table/new">table/new</a> <a href="#table/rawget">table/rawget</a> <a href="#table/setproto">table/setproto</a> <a href="#table/to-struct">table/to-struct</a> <a href="#table?">table?</a> <a href="#take">take</a> <a href="#take-until">take-until</a> <a href="#take-while">take-while</a> <a href="#tarray/buffer">tarray/buffer</a> <a href="#tarray/copy-bytes">tarray/copy-bytes</a> <a href="#tarray/length">tarray/length</a> <a href="#tarray/new">tarray/new</a> <a href="#tarray/properties">tarray/properties</a> <a href="#tarray/slice">tarray/slice</a> <a href="#tarray/swap-bytes">tarray/swap-bytes</a> <a href="#trace">trace</a> <a href="#true?">true?</a> <a href="#try">try</a> <a href="#tuple">tuple</a> <a href="#tuple/brackets">tuple/brackets</a> <a href="#tuple/setmap">tuple/setmap</a> <a href="#tuple/slice">tuple/slice</a> <a href="#tuple/sourcemap">tuple/sourcemap</a> <a href="#tuple/type">tuple/type</a> <a href="#tuple?">tuple?</a> <a href="#type">type</a> <a href="#unless">unless</a> <a href="#unmarshal">unmarshal</a> <a href="#untrace">untrace</a> <a href="#update">update</a> <a href="#update-in">update-in</a> <a href="#use">use</a> <a href="#values">values</a> <a href="#varglobal">varglobal</a> <a href="#walk">walk</a> <a href="#when">when</a> <a href="#when-let">when-let</a> <a href="#with">with</a> <a href="#with-dyns">with-dyns</a> <a href="#with-syms">with-syms</a> <a href="#yield">yield</a> <a href="#zero?">zero?</a> <a href="#zipcoll">zipcoll</a> </p><hr><div class="binding"><span id="%" class="binding-sym">%</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(% dividend divisor)
+
+Returns the remainder of dividend / divisor.</pre></div><hr><div class="binding"><span id="%=" class="binding-sym">%=</span> <span class="binding-type">macro</span> <pre class="binding-text">(%= x n)
+
+Shorthand for (set x (% x n)).</pre></div><hr><div class="binding"><span id="*" class="binding-sym">*</span> <span class="binding-type">function</span> <pre class="binding-text">(* &amp; xs)
+
+Returns the product of all elements in xs. If xs is empty, returns 1.</pre></div><hr><div class="binding"><span id="*=" class="binding-sym">*=</span> <span class="binding-type">macro</span> <pre class="binding-text">(*= x n)
+
+Shorthand for (set x (* x n)).</pre></div><hr><div class="binding"><span id="+" class="binding-sym">+</span> <span class="binding-type">function</span> <pre class="binding-text">(+ &amp; xs)
+
+Returns the sum of all xs. xs must be integers or real numbers only. If xs is empty, return 0.</pre></div><hr><div class="binding"><span id="++" class="binding-sym">++</span> <span class="binding-type">macro</span> <pre class="binding-text">(++ x)
+
+Increments the var x by 1.</pre></div><hr><div class="binding"><span id="+=" class="binding-sym">+=</span> <span class="binding-type">macro</span> <pre class="binding-text">(+= x n)
+
+Increments the var x by n.</pre></div><hr><div class="binding"><span id="-" class="binding-sym">-</span> <span class="binding-type">function</span> <pre class="binding-text">(- &amp; xs)
+
+Returns the difference of xs. If xs is empty, returns 0. If xs has one element, returns the negative value of that element. Otherwise, returns the first element in xs minus the sum of the rest of the elements.</pre></div><hr><div class="binding"><span id="--" class="binding-sym">--</span> <span class="binding-type">macro</span> <pre class="binding-text">(-- x)
+
+Decrements the var x by 1.</pre></div><hr><div class="binding"><span id="-=" class="binding-sym">-=</span> <span class="binding-type">macro</span> <pre class="binding-text">(-= x n)
+
+Decrements the var x by n.</pre></div><hr><div class="binding"><span id="->" class="binding-sym">-&gt;</span> <span class="binding-type">macro</span> <pre class="binding-text">(-&gt; x &amp; forms)
+
+Threading macro. Inserts x as the second value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. Useful for expressing pipelines of data.</pre></div><hr><div class="binding"><span id="->>" class="binding-sym">-&gt;&gt;</span> <span class="binding-type">macro</span> <pre class="binding-text">(-&gt;&gt; x &amp; forms)
+
+Threading macro. Inserts x as the last value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. Useful for expressing pipelines of data.</pre></div><hr><div class="binding"><span id="-?>" class="binding-sym">-?&gt;</span> <span class="binding-type">macro</span> <pre class="binding-text">(-?&gt; x &amp; forms)
+
+Short circuit threading macro. Inserts x as the last value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. The pipeline will return nil if an intermediate value is nil. Useful for expressing pipelines of data.</pre></div><hr><div class="binding"><span id="-?>>" class="binding-sym">-?&gt;&gt;</span> <span class="binding-type">macro</span> <pre class="binding-text">(-?&gt;&gt; x &amp; forms)
+
+Threading macro. Inserts x as the last value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. The pipeline will return nil if an intermediate value is nil. Useful for expressing pipelines of data.</pre></div><hr><div class="binding"><span id="/" class="binding-sym">/</span> <span class="binding-type">function</span> <pre class="binding-text">(/ &amp; xs)
+
+Returns the quotient of xs. If xs is empty, returns 1. If xs has one value x, returns the reciprocal of x. Otherwise return the first value of xs repeatedly divided by the remaining values. Division by two integers uses truncating division.</pre></div><hr><div class="binding"><span id="/=" class="binding-sym">/=</span> <span class="binding-type">macro</span> <pre class="binding-text">(/= x n)
+
+Shorthand for (set x (/ x n)).</pre></div><hr><div class="binding"><span id="<" class="binding-sym">&lt;</span> <span class="binding-type">function</span> <pre class="binding-text">(&lt; &amp; xs)
+
+Check if xs is in numerically ascending order. Returns a boolean.</pre></div><hr><div class="binding"><span id="<=" class="binding-sym">&lt;=</span> <span class="binding-type">function</span> <pre class="binding-text">(&lt;= &amp; xs)
+
+Check if xs is in numerically non-descending order. Returns a boolean.</pre></div><hr><div class="binding"><span id="=" class="binding-sym">=</span> <span class="binding-type">function</span> <pre class="binding-text">(= &amp; xs)
+
+Returns true if all values in xs are the same, false otherwise.</pre></div><hr><div class="binding"><span id="==" class="binding-sym">==</span> <span class="binding-type">function</span> <pre class="binding-text">(== &amp; xs)
+
+Check if all values in xs are numerically equal (4.0 == 4). Returns a boolean.</pre></div><hr><div class="binding"><span id=">" class="binding-sym">&gt;</span> <span class="binding-type">function</span> <pre class="binding-text">(&gt; &amp; xs)
+
+Check if xs is in numerically descending order. Returns a boolean.</pre></div><hr><div class="binding"><span id=">=" class="binding-sym">&gt;=</span> <span class="binding-type">function</span> <pre class="binding-text">(&gt;= &amp; xs)
+
+Check if xs is in numerically non-ascending order. Returns a boolean.</pre></div><hr><div class="binding"><span id="abstract?" class="binding-sym">abstract?</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(abstract? x)
+
+Check if x is an abstract type.</pre></div><hr><div class="binding"><span id="all" class="binding-sym">all</span> <span class="binding-type">function</span> <pre class="binding-text">(all pred xs)
+
+Returns true if all xs are truthy, otherwise the first false or nil value.</pre></div><hr><div class="binding"><span id="all-bindings" class="binding-sym">all-bindings</span> <span class="binding-type">function</span> <pre class="binding-text">(all-bindings &amp;opt env)
+
+Get all symbols available in an enviroment. Defaults to the current fiber's environment.</pre></div><hr><div class="binding"><span id="all-dynamics" class="binding-sym">all-dynamics</span> <span class="binding-type">function</span> <pre class="binding-text">(all-dynamics &amp;opt env)
+
+Get all dynamic bindings in an environment. Defaults to the current fiber's environment.</pre></div><hr><div class="binding"><span id="and" class="binding-sym">and</span> <span class="binding-type">macro</span> <pre class="binding-text">(and &amp; forms)
+
+Evaluates to the last argument if all preceding elements are true, otherwise evaluates to false.</pre></div><hr><div class="binding"><span id="apply" class="binding-sym">apply</span> <span class="binding-type">function</span> <pre class="binding-text">(apply f &amp; args)
+
+Applies a function to a variable number of arguments. Each element in args is used as an argument to f, except the last element in args, which is expected to be an array-like. Each element in this last argument is then also pushed as an argument to f. For example:
+
+	(apply + 1000 (range 10))
+
+sums the first 10 integers and 1000.</pre></div><hr><div class="binding"><span id="array" class="binding-sym">array</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array &amp; items)
+
+Create a new array that contains items. Returns the new array.</pre></div><hr><div class="binding"><span id="array/concat" class="binding-sym">array/concat</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/concat arr &amp; parts)
+
+Concatenates a variadic number of arrays (and tuples) into the first argument which must an array. If any of the parts are arrays or tuples, their elements will be inserted into the array. Otherwise, each part in parts will be appended to arr in order. Return the modified array arr.</pre></div><hr><div class="binding"><span id="array/ensure" class="binding-sym">array/ensure</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/ensure arr capacity)
+
+Ensures that the memory backing the array is large enough for capacity items. Capacity must be an integer. If the backing capacity is already enough, then this function does nothing. Otherwise, the backing memory will be reallocated so that there is enough space.</pre></div><hr><div class="binding"><span id="array/insert" class="binding-sym">array/insert</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/insert arr at &amp; xs)
+
+Insert all of xs into array arr at index at. at should be an integer 0 and the length of the array. A negative value for at will index from the end of the array, such that inserting at -1 appends to the array. Returns the array.</pre></div><hr><div class="binding"><span id="array/new" class="binding-sym">array/new</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/new capacity)
+
+Creates a new empty array with a pre-allocated capacity. The same as (array) but can be more efficient if the maximum size of an array is known.</pre></div><hr><div class="binding"><span id="array/peek" class="binding-sym">array/peek</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/peek arr)
+
+Returns the last element of the array. Does not modify the array.</pre></div><hr><div class="binding"><span id="array/pop" class="binding-sym">array/pop</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/pop arr)
+
+Remove the last element of the array and return it. If the array is empty, will return nil. Modifies the input array.</pre></div><hr><div class="binding"><span id="array/push" class="binding-sym">array/push</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/push arr x)
+
+Insert an element in the end of an array. Modifies the input array and returns it.</pre></div><hr><div class="binding"><span id="array/remove" class="binding-sym">array/remove</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/remove arr at &amp;opt n)
+
+Remove up to n elements starting at index at in array arr. at can index from the end of the array with a negative index, and n must be a non-negative integer. By default, n is 1. Returns the array.</pre></div><hr><div class="binding"><span id="array/slice" class="binding-sym">array/slice</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(array/slice arrtup &amp;opt start end)
+
+Takes a slice of array or tuple from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the array. By default, start is 0 and end is the length of the array. Returns a new array.</pre></div><hr><div class="binding"><span id="array?" class="binding-sym">array?</span> <span class="binding-type">function</span> <pre class="binding-text">(array? x)
+
+Check if x is an array.</pre></div><hr><div class="binding"><span id="as->" class="binding-sym">as-&gt;</span> <span class="binding-type">macro</span> <pre class="binding-text">(as-&gt; x as &amp; forms)
+
+Thread forms together, replacing as in forms with the value of the previous form. The first for is the value x. Returns the last value.</pre></div><hr><div class="binding"><span id="as?->" class="binding-sym">as?-&gt;</span> <span class="binding-type">macro</span> <pre class="binding-text">(as?-&gt; x as &amp; forms)
+
+Thread forms together, replacing as in forms with the value of the previous form. The first for is the value x. If any intermediate values are falsey, return nil; otherwise, returns the last value.</pre></div><hr><div class="binding"><span id="asm" class="binding-sym">asm</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(asm assembly)
+
+Returns a new function that is the compiled result of the assembly.
+The syntax for the assembly can be found on the janet wiki. Will throw an
+error on invalid assembly.</pre></div><hr><div class="binding"><span id="bad-compile" class="binding-sym">bad-compile</span> <span class="binding-type">function</span> <pre class="binding-text">(bad-compile msg macrof where)
+
+Default handler for a compile error.</pre></div><hr><div class="binding"><span id="bad-parse" class="binding-sym">bad-parse</span> <span class="binding-type">function</span> <pre class="binding-text">(bad-parse p where)
+
+Default handler for a parse error.</pre></div><hr><div class="binding"><span id="band" class="binding-sym">band</span> <span class="binding-type">function</span> <pre class="binding-text">(band &amp; xs)
+
+Returns the bit-wise and of all values in xs. Each x in xs must be an integer.</pre></div><hr><div class="binding"><span id="blshift" class="binding-sym">blshift</span> <span class="binding-type">function</span> <pre class="binding-text">(blshift x &amp; shifts)
+
+Returns the value of x bit shifted left by the sum of all values in shifts. x and each element in shift must be an integer.</pre></div><hr><div class="binding"><span id="bnot" class="binding-sym">bnot</span> <span class="binding-type">function</span> <pre class="binding-text">(bnot x)
+
+Returns the bit-wise inverse of integer x.</pre></div><hr><div class="binding"><span id="boolean?" class="binding-sym">boolean?</span> <span class="binding-type">function</span> <pre class="binding-text">(boolean? x)
+
+Check if x is a boolean.</pre></div><hr><div class="binding"><span id="bor" class="binding-sym">bor</span> <span class="binding-type">function</span> <pre class="binding-text">(bor &amp; xs)
+
+Returns the bit-wise or of all values in xs. Each x in xs must be an integer.</pre></div><hr><div class="binding"><span id="brshift" class="binding-sym">brshift</span> <span class="binding-type">function</span> <pre class="binding-text">(brshift x &amp; shifts)
+
+Returns the value of x bit shifted right by the sum of all values in shifts. x and each element in shift must be an integer.</pre></div><hr><div class="binding"><span id="brushift" class="binding-sym">brushift</span> <span class="binding-type">function</span> <pre class="binding-text">(brushift x &amp; shifts)
+
+Returns the value of x bit shifted right by the sum of all values in shifts. x and each element in shift must be an integer. The sign of x is not preserved, so for positive shifts the return value will always be positive.</pre></div><hr><div class="binding"><span id="buffer" class="binding-sym">buffer</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer &amp; xs)
+
+Creates a new buffer by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new buffer.</pre></div><hr><div class="binding"><span id="buffer/bit" class="binding-sym">buffer/bit</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit buffer index)
+
+Gets the bit at the given bit-index. Returns true if the bit is set, false if not.</pre></div><hr><div class="binding"><span id="buffer/bit-clear" class="binding-sym">buffer/bit-clear</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit-clear buffer index)
+
+Clears the bit at the given bit-index. Returns the buffer.</pre></div><hr><div class="binding"><span id="buffer/bit-set" class="binding-sym">buffer/bit-set</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit-set buffer index)
+
+Sets the bit at the given bit-index. Returns the buffer.</pre></div><hr><div class="binding"><span id="buffer/bit-toggle" class="binding-sym">buffer/bit-toggle</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit-toggle buffer index)
+
+Toggles the bit at the given bit index in buffer. Returns the buffer.</pre></div><hr><div class="binding"><span id="buffer/blit" class="binding-sym">buffer/blit</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/blit dest src &amp; opt dest-start src-start src-end)
+
+Insert the contents of src into dest. Can optionally take indices that indicate which part of src to copy into which part of dest. Indices can be negative to index from the end of src or dest. Returns dest.</pre></div><hr><div class="binding"><span id="buffer/clear" class="binding-sym">buffer/clear</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/clear buffer)
+
+Sets the size of a buffer to 0 and empties it. The buffer retains its memory so it can be efficiently refilled. Returns the modified buffer.</pre></div><hr><div class="binding"><span id="buffer/format" class="binding-sym">buffer/format</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/format buffer format &amp; args)
+
+Snprintf like functionality for printing values into a buffer. Returns the modified buffer.</pre></div><hr><div class="binding"><span id="buffer/new" class="binding-sym">buffer/new</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/new capacity)
+
+Creates a new, empty buffer with enough memory for capacity bytes. Returns a new buffer.</pre></div><hr><div class="binding"><span id="buffer/new-filled" class="binding-sym">buffer/new-filled</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/new-filled count &amp;opt byte)
+
+Creates a new buffer of length count filled with byte. By default, byte is 0. Returns the new buffer.</pre></div><hr><div class="binding"><span id="buffer/popn" class="binding-sym">buffer/popn</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/popn buffer n)
+
+Removes the last n bytes from the buffer. Returns the modified buffer.</pre></div><hr><div class="binding"><span id="buffer/push-byte" class="binding-sym">buffer/push-byte</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/push-byte buffer x)
+
+Append a byte to a buffer. Will expand the buffer as necessary. Returns the modified buffer. Will throw an error if the buffer overflows.</pre></div><hr><div class="binding"><span id="buffer/push-string" class="binding-sym">buffer/push-string</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/push-string buffer str)
+
+Push a string onto the end of a buffer. Non string values will be converted to strings before being pushed. Returns the modified buffer. Will throw an error if the buffer overflows.</pre></div><hr><div class="binding"><span id="buffer/push-word" class="binding-sym">buffer/push-word</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/push-word buffer x)
+
+Append a machine word to a buffer. The 4 bytes of the integer are appended in twos complement, big endian order, unsigned. Returns the modified buffer. Will throw an error if the buffer overflows.</pre></div><hr><div class="binding"><span id="buffer/slice" class="binding-sym">buffer/slice</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/slice bytes &amp;opt start end)
+
+Takes a slice of a byte sequence from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the array. By default, start is 0 and end is the length of the buffer. Returns a new buffer.</pre></div><hr><div class="binding"><span id="buffer?" class="binding-sym">buffer?</span> <span class="binding-type">function</span> <pre class="binding-text">(buffer? x)
+
+Check if x is a buffer.</pre></div><hr><div class="binding"><span id="bxor" class="binding-sym">bxor</span> <span class="binding-type">function</span> <pre class="binding-text">(bxor &amp; xs)
+
+Returns the bit-wise xor of all values in xs. Each in xs must be an integer.</pre></div><hr><div class="binding"><span id="bytes?" class="binding-sym">bytes?</span> <span class="binding-type">function</span> <pre class="binding-text">(bytes? x)
+
+Check if x is a string, symbol, or buffer.</pre></div><hr><div class="binding"><span id="case" class="binding-sym">case</span> <span class="binding-type">macro</span> <pre class="binding-text">(case dispatch &amp; pairs)
+
+Select the body that equals the dispatch value. When pairs has an odd number of arguments, the last is the default expression. If no match is found, returns nil.</pre></div><hr><div class="binding"><span id="cfunction?" class="binding-sym">cfunction?</span> <span class="binding-type">function</span> <pre class="binding-text">(cfunction? x)
+
+Check if x a cfunction.</pre></div><hr><div class="binding"><span id="comment" class="binding-sym">comment</span> <span class="binding-type">macro</span> <pre class="binding-text">(comment &amp;)
+
+Ignores the body of the comment.</pre></div><hr><div class="binding"><span id="comp" class="binding-sym">comp</span> <span class="binding-type">function</span> <pre class="binding-text">(comp &amp; functions)
+
+Takes multiple functions and returns a function that is the composition of those functions.</pre></div><hr><div class="binding"><span id="compile" class="binding-sym">compile</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(compile ast &amp;opt env source)
+
+Compiles an Abstract Syntax Tree (ast) into a janet function. Pair the compile function with parsing functionality to implement eval. Returns a janet function and does not modify ast. Throws an error if the ast cannot be compiled.</pre></div><hr><div class="binding"><span id="complement" class="binding-sym">complement</span> <span class="binding-type">function</span> <pre class="binding-text">(complement f)
+
+Returns a function that is the complement to the argument.</pre></div><hr><div class="binding"><span id="cond" class="binding-sym">cond</span> <span class="binding-type">macro</span> <pre class="binding-text">(cond &amp; pairs)
+
+Evaluates conditions sequentially until the first true condition is found, and then executes the corresponding body. If there are an odd number of forms, the last expression is executed if no forms are matched. If there are no matches, return nil.</pre></div><hr><div class="binding"><span id="coro" class="binding-sym">coro</span> <span class="binding-type">macro</span> <pre class="binding-text">(coro &amp; body)
+
+A wrapper for making fibers. Same as (fiber/new (fn [] ;body) :yi).</pre></div><hr><div class="binding"><span id="count" class="binding-sym">count</span> <span class="binding-type">function</span> <pre class="binding-text">(count pred ind)
+
+Count the number of items in ind for which (pred item) is true.</pre></div><hr><div class="binding"><span id="debug" class="binding-sym">debug</span> <span class="binding-type">function</span> <pre class="binding-text">(debug)
+
+Throws a debug signal that can be caught by a parent fiber and used to inspect the running state of the current fiber. Returns nil.</pre></div><hr><div class="binding"><span id="debug/arg-stack" class="binding-sym">debug/arg-stack</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/arg-stack fiber)
+
+Gets all values currently on the fiber's argument stack. Normally, this should be empty unless the fiber signals while pushing arguments to make a function call. Returns a new array.</pre></div><hr><div class="binding"><span id="debug/break" class="binding-sym">debug/break</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/break source byte-offset)
+
+Sets a breakpoint with source a key at a given byte offset. An offset of 0 is the first byte in a file. Will throw an error if the breakpoint location cannot be found. For example
+
+	(debug/break "core.janet" 1000)
+
+wil set a breakpoint at the 1000th byte of the file core.janet.</pre></div><hr><div class="binding"><span id="debug/fbreak" class="binding-sym">debug/fbreak</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/fbreak fun &amp;opt pc)
+
+Set a breakpoint in a given function. pc is an optional offset, which is in bytecode instructions. fun is a function value. Will throw an error if the offset is too large or negative.</pre></div><hr><div class="binding"><span id="debug/lineage" class="binding-sym">debug/lineage</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/lineage fib)
+
+Returns an array of all child fibers from a root fiber. This function is useful when a fiber signals or errors to an ancestor fiber. Using this function, the fiber handling the error can see which fiber raised the signal. This function should be used mostly for debugging purposes.</pre></div><hr><div class="binding"><span id="debug/stack" class="binding-sym">debug/stack</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/stack fib)
+
+Gets information about the stack as an array of tables. Each table in the array contains information about a stack frame. The top most, current stack frame is the first table in the array, and the bottom most stack frame is the last value. Each stack frame contains some of the following attributes:
+
+	:c - true if the stack frame is a c function invocation
+	:column - the current source column of the stack frame
+	:function - the function that the stack frame represents
+	:line - the current source line of the stack frame
+	:name - the human friendly name of the function
+	:pc - integer indicating the location of the program counter
+	:source - string with the file path or other identifier for the source code
+	:slots - array of all values in each slot
+	:tail - boolean indicating a tail call</pre></div><hr><div class="binding"><span id="debug/stacktrace" class="binding-sym">debug/stacktrace</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/stacktrace fiber err)
+
+Prints a nice looking stacktrace for a fiber. The error message err must be passed to the function as fiber's do not keep track of the last error they have thrown. Returns the fiber.</pre></div><hr><div class="binding"><span id="debug/unbreak" class="binding-sym">debug/unbreak</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/unbreak source byte-offset)
+
+Remove a breakpoint with a source key at a given byte offset. An offset of 0 is the first byte in a file. Will throw an error if the breakpoint cannot be found.</pre></div><hr><div class="binding"><span id="debug/unfbreak" class="binding-sym">debug/unfbreak</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(debug/unfbreak fun &amp;opt pc)
+
+Unset a breakpoint set with debug/fbreak.</pre></div><hr><div class="binding"><span id="dec" class="binding-sym">dec</span> <span class="binding-type">function</span> <pre class="binding-text">(dec x)
+
+Returns x - 1.</pre></div><hr><div class="binding"><span id="deep-not=" class="binding-sym">deep-not=</span> <span class="binding-type">function</span> <pre class="binding-text">(deep-not= x y)
+
+Like not=, but mutable types (arrays, tables, buffers) are considered equal if they have identical structure. Much slower than not=.</pre></div><hr><div class="binding"><span id="deep=" class="binding-sym">deep=</span> <span class="binding-type">function</span> <pre class="binding-text">(deep= x y)
+
+Like =, but mutable types (arrays, tables, buffers) are considered equal if they have identical structure. Much slower than =.</pre></div><hr><div class="binding"><span id="def-" class="binding-sym">def-</span> <span class="binding-type">macro</span> <pre class="binding-text">(def- name &amp; more)
+
+Define a private value that will not be exported.</pre></div><hr><div class="binding"><span id="default" class="binding-sym">default</span> <span class="binding-type">macro</span> <pre class="binding-text">(default sym val)
+
+Define a default value for an optional argument. Expands to (def sym (if (= nil sym) val sym))</pre></div><hr><div class="binding"><span id="defglobal" class="binding-sym">defglobal</span> <span class="binding-type">function</span> <pre class="binding-text">(defglobal name value)
+
+Dynamically create a global def.</pre></div><hr><div class="binding"><span id="defmacro" class="binding-sym">defmacro</span> <span class="binding-type">macro</span> <pre class="binding-text">(defmacro name &amp; more)
+
+Define a macro.</pre></div><hr><div class="binding"><span id="defmacro-" class="binding-sym">defmacro-</span> <span class="binding-type">macro</span> <pre class="binding-text">(defmacro- name &amp; more)
+
+Define a private macro that will not be exported.</pre></div><hr><div class="binding"><span id="defn" class="binding-sym">defn</span> <span class="binding-type">macro</span> <pre class="binding-text">(defn name &amp; more)
+
+Define a function. Equivalent to (def name (fn name [args] ...)).</pre></div><hr><div class="binding"><span id="defn-" class="binding-sym">defn-</span> <span class="binding-type">macro</span> <pre class="binding-text">(defn- name &amp; more)
+
+Define a private function that will not be exported.</pre></div><hr><div class="binding"><span id="describe" class="binding-sym">describe</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(describe x)
+
+Returns a string that is a human readable description of a value x.</pre></div><hr><div class="binding"><span id="dictionary?" class="binding-sym">dictionary?</span> <span class="binding-type">function</span> <pre class="binding-text">(dictionary? x)
+
+Check if x a table or struct.</pre></div><hr><div class="binding"><span id="disasm" class="binding-sym">disasm</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(disasm func)
+
+Returns assembly that could be used be compile the given function.
+func must be a function, not a c function. Will throw on error on a badly
+typed argument.</pre></div><hr><div class="binding"><span id="distinct" class="binding-sym">distinct</span> <span class="binding-type">function</span> <pre class="binding-text">(distinct xs)
+
+Returns an array of the deduplicated values in xs.</pre></div><hr><div class="binding"><span id="doc" class="binding-sym">doc</span> <span class="binding-type">macro</span> <pre class="binding-text">(doc sym)
+
+Shows documentation for the given symbol.</pre></div><hr><div class="binding"><span id="doc*" class="binding-sym">doc*</span> <span class="binding-type">function</span> <pre class="binding-text">(doc* sym)
+
+Get the documentation for a symbol in a given environment.</pre></div><hr><div class="binding"><span id="doc-format" class="binding-sym">doc-format</span> <span class="binding-type">function</span> <pre class="binding-text">(doc-format text)
+
+Reformat text to wrap at a given line.</pre></div><hr><div class="binding"><span id="dofile" class="binding-sym">dofile</span> <span class="binding-type">function</span> <pre class="binding-text">(dofile path &amp; args)
+
+Evaluate a file and return the resulting environment.</pre></div><hr><div class="binding"><span id="drop" class="binding-sym">drop</span> <span class="binding-type">function</span> <pre class="binding-text">(drop n ind)
+
+Drop first n elements in an indexed type. Returns new indexed instance.</pre></div><hr><div class="binding"><span id="drop-until" class="binding-sym">drop-until</span> <span class="binding-type">function</span> <pre class="binding-text">(drop-until pred ind)
+
+Same as (drop-while (complement pred) ind).</pre></div><hr><div class="binding"><span id="drop-while" class="binding-sym">drop-while</span> <span class="binding-type">function</span> <pre class="binding-text">(drop-while pred ind)
+
+Given a predicate, remove elements from an indexed type that satisfy the predicate, and abort on first failure. Returns a new array.</pre></div><hr><div class="binding"><span id="dyn" class="binding-sym">dyn</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(dyn key &amp;opt default)
+
+Get a dynamic binding. Returns the default value (or nil) if no binding found.</pre></div><hr><div class="binding"><span id="each" class="binding-sym">each</span> <span class="binding-type">macro</span> <pre class="binding-text">(each x ind &amp; body)
+
+Loop over each value in ind. Returns nil.</pre></div><hr><div class="binding"><span id="empty?" class="binding-sym">empty?</span> <span class="binding-type">function</span> <pre class="binding-text">(empty? xs)
+
+Check if xs is empty.</pre></div><hr><div class="binding"><span id="env-lookup" class="binding-sym">env-lookup</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(env-lookup env)
+
+Creates a forward lookup table for unmarshalling from an environment. To create a reverse lookup table, use the invert function to swap keys and values in the returned table.</pre></div><hr><div class="binding"><span id="error" class="binding-sym">error</span> <span class="binding-type">function</span> <pre class="binding-text">(error e)
+
+Throws an error e that can be caught and handled by a parent fiber.</pre></div><hr><div class="binding"><span id="eval" class="binding-sym">eval</span> <span class="binding-type">function</span> <pre class="binding-text">(eval form)
+
+Evaluates a form in the current environment. If more control over the environment is needed, use run-context.</pre></div><hr><div class="binding"><span id="eval-string" class="binding-sym">eval-string</span> <span class="binding-type">function</span> <pre class="binding-text">(eval-string str)
+
+Evaluates a string in the current environment. If more control over the environment is needed, use run-context.</pre></div><hr><div class="binding"><span id="even?" class="binding-sym">even?</span> <span class="binding-type">function</span> <pre class="binding-text">(even? x)
+
+Check if x is even.</pre></div><hr><div class="binding"><span id="every?" class="binding-sym">every?</span> <span class="binding-type">function</span> <pre class="binding-text">(every? ind)
+
+Returns true if each value in is truthy, otherwise the first falsey value.</pre></div><hr><div class="binding"><span id="extreme" class="binding-sym">extreme</span> <span class="binding-type">function</span> <pre class="binding-text">(extreme order args)
+
+Returns the most extreme value in args based on the function order. order should take two values and return true or false (a comparison). Returns nil if args is empty.</pre></div><hr><div class="binding"><span id="false?" class="binding-sym">false?</span> <span class="binding-type">function</span> <pre class="binding-text">(false? x)
+
+Check if x is false.</pre></div><hr><div class="binding"><span id="fiber/current" class="binding-sym">fiber/current</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(fiber/current)
+
+Returns the currently running fiber.</pre></div><hr><div class="binding"><span id="fiber/getenv" class="binding-sym">fiber/getenv</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(fiber/getenv fiber)
+
+Gets the environment for a fiber. Returns nil if no such table is set yet.</pre></div><hr><div class="binding"><span id="fiber/maxstack" class="binding-sym">fiber/maxstack</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(fiber/maxstack fib)
+
+Gets the maximum stack size in janet values allowed for a fiber. While memory for the fiber's stack is not allocated up front, the fiber will not allocated more than this amount and will throw a stack-overflow error if more memory is needed. </pre></div><hr><div class="binding"><span id="fiber/new" class="binding-sym">fiber/new</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(fiber/new func &amp;opt sigmask)
+
+Create a new fiber with function body func. Can optionally take a set of signals to block from the current parent fiber when called. The mask is specified as a keyword where each character is used to indicate a signal to block. The default sigmask is :y. For example, 
+
+	(fiber/new myfun :e123)
+
+blocks error signals and user signals 1, 2 and 3. The signals are as follows: 
+
+	a - block all signals
+	d - block debug signals
+	e - block error signals
+	u - block user signals
+	y - block yield signals
+	0-9 - block a specific user signal
+
+The sigmask argument also can take environment flags. If any mutually exclusive flags are present, the last flag takes precedence.
+
+	i - inherit the environment from the current fiber
+	p - the environment table's prototype is the current environment table</pre></div><hr><div class="binding"><span id="fiber/setenv" class="binding-sym">fiber/setenv</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(fiber/setenv fiber table)
+
+Sets the environment table for a fiber. Set to nil to remove the current environment.</pre></div><hr><div class="binding"><span id="fiber/setmaxstack" class="binding-sym">fiber/setmaxstack</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(fiber/setmaxstack fib maxstack)
+
+Sets the maximum stack size in janet values for a fiber. By default, the maximum stack size is usually 8192.</pre></div><hr><div class="binding"><span id="fiber/status" class="binding-sym">fiber/status</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(fiber/status fib)
+
+Get the status of a fiber. The status will be one of:
+
+	:dead - the fiber has finished
+	:error - the fiber has errored out
+	:debug - the fiber is suspended in debug mode
+	:pending - the fiber has been yielded
+	:user(0-9) - the fiber is suspended by a user signal
+	:alive - the fiber is currently running and cannot be resumed
+	:new - the fiber has just been created and not yet run</pre></div><hr><div class="binding"><span id="fiber?" class="binding-sym">fiber?</span> <span class="binding-type">function</span> <pre class="binding-text">(fiber? x)
+
+Check if x is a fiber.</pre></div><hr><div class="binding"><span id="file/close" class="binding-sym">file/close</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/close f)
+
+Close a file and release all related resources. When you are done reading a file, close it to prevent a resource leak and let other processes read the file.</pre></div><hr><div class="binding"><span id="file/fdopen" class="binding-sym">file/fdopen</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/fdopen fd &amp;opt mode)
+
+Create a file from an fd. fd is a platform specific file descriptor, and mode is a set of flags indicating the mode to open the file in. mode is a keyword where each character represents a flag. If the file cannot be opened, returns nil, otherwise returns the new file handle. Mode flags:
+
+	r - allow reading from the file
+	w - allow writing to the file
+	a - append to the file
+	b - open the file in binary mode (rather than text mode)
+	+ - append to the file instead of overwriting it</pre></div><hr><div class="binding"><span id="file/fileno" class="binding-sym">file/fileno</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/fileno f)
+
+Return the underlying file descriptor for the file as a number.The meaning of this number is platform specific.</pre></div><hr><div class="binding"><span id="file/flush" class="binding-sym">file/flush</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/flush f)
+
+Flush any buffered bytes to the file system. In most files, writes are buffered for efficiency reasons. Returns the file handle.</pre></div><hr><div class="binding"><span id="file/open" class="binding-sym">file/open</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/open path &amp;opt mode)
+
+Open a file. path is an absolute or relative path, and mode is a set of flags indicating the mode to open the file in. mode is a keyword where each character represents a flag. If the file cannot be opened, returns nil, otherwise returns the new file handle. Mode flags:
+
+	r - allow reading from the file
+	w - allow writing to the file
+	a - append to the file
+	b - open the file in binary mode (rather than text mode)
+	+ - append to the file instead of overwriting it</pre></div><hr><div class="binding"><span id="file/popen" class="binding-sym">file/popen</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/popen path &amp;opt mode)
+
+Open a file that is backed by a process. The file must be opened in either the :r (read) or the :w (write) mode. In :r mode, the stdout of the process can be read from the file. In :w mode, the stdin of the process can be written to. Returns the new file.</pre></div><hr><div class="binding"><span id="file/read" class="binding-sym">file/read</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/read f what &amp;opt buf)
+
+Read a number of bytes from a file into a buffer. A buffer can be provided as an optional fourth argument, otherwise a new buffer is created. 'what' can either be an integer or a keyword. Returns the buffer with file contents. Values for 'what':
+
+	:all - read the whole file
+	:line - read up to and including the next newline character
+	n (integer) - read up to n bytes from the file</pre></div><hr><div class="binding"><span id="file/seek" class="binding-sym">file/seek</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/seek f &amp;opt whence n)
+
+Jump to a relative location in the file. 'whence' must be one of
+
+	:cur - jump relative to the current file location
+	:set - jump relative to the beginning of the file
+	:end - jump relative to the end of the file
+
+By default, 'whence' is :cur. Optionally a value n may be passed for the relative number of bytes to seek in the file. n may be a real number to handle large files of more the 4GB. Returns the file handle.</pre></div><hr><div class="binding"><span id="file/write" class="binding-sym">file/write</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(file/write f bytes)
+
+Writes to a file. 'bytes' must be string, buffer, or symbol. Returns the file.</pre></div><hr><div class="binding"><span id="filter" class="binding-sym">filter</span> <span class="binding-type">function</span> <pre class="binding-text">(filter pred ind)
+
+Given a predicate, take only elements from an array or tuple for which (pred element) is truthy. Returns a new array.</pre></div><hr><div class="binding"><span id="find" class="binding-sym">find</span> <span class="binding-type">function</span> <pre class="binding-text">(find pred ind)
+
+Find the first value in an indexed collection that satisfies a predicate. Returns nil if not found. Note there is no way to differentiate a nil from the indexed collection and a not found. Consider find-index if this is an issue.</pre></div><hr><div class="binding"><span id="find-index" class="binding-sym">find-index</span> <span class="binding-type">function</span> <pre class="binding-text">(find-index pred ind)
+
+Find the index of indexed type for which pred is true. Returns nil if not found.</pre></div><hr><div class="binding"><span id="first" class="binding-sym">first</span> <span class="binding-type">function</span> <pre class="binding-text">(first xs)
+
+Get the first element from an indexed data structure.</pre></div><hr><div class="binding"><span id="flatten" class="binding-sym">flatten</span> <span class="binding-type">function</span> <pre class="binding-text">(flatten xs)
+
+Takes a nested array (tree), and returns the depth first traversal of that array. Returns a new array.</pre></div><hr><div class="binding"><span id="flatten-into" class="binding-sym">flatten-into</span> <span class="binding-type">function</span> <pre class="binding-text">(flatten-into into xs)
+
+Takes a nested array (tree), and appends the depth first traversal of that array to an array 'into'. Returns array into.</pre></div><hr><div class="binding"><span id="for" class="binding-sym">for</span> <span class="binding-type">macro</span> <pre class="binding-text">(for i start stop &amp; body)
+
+Do a c style for loop for side effects. Returns nil.</pre></div><hr><div class="binding"><span id="freeze" class="binding-sym">freeze</span> <span class="binding-type">function</span> <pre class="binding-text">(freeze x)
+
+Freeze an object (make it immutable) and do a deep copy, making child values also immutable. Closures, fibers, and abstract types will not be recursively frozen, but all other types will.</pre></div><hr><div class="binding"><span id="frequencies" class="binding-sym">frequencies</span> <span class="binding-type">function</span> <pre class="binding-text">(frequencies ind)
+
+Get the number of occurrences of each value in a indexed structure.</pre></div><hr><div class="binding"><span id="function?" class="binding-sym">function?</span> <span class="binding-type">function</span> <pre class="binding-text">(function? x)
+
+Check if x is a function (not a cfunction).</pre></div><hr><div class="binding"><span id="gccollect" class="binding-sym">gccollect</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(gccollect)
+
+Run garbage collection. You should probably not call this manually.</pre></div><hr><div class="binding"><span id="gcinterval" class="binding-sym">gcinterval</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(gcinterval)
+
+Returns the integer number of bytes to allocate before running an iteration of garbage collection.</pre></div><hr><div class="binding"><span id="gcsetinterval" class="binding-sym">gcsetinterval</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(gcsetinterval interval)
+
+Set an integer number of bytes to allocate before running garbage collection. Low valuesi for interval will be slower but use less memory. High values will be faster but use more memory.</pre></div><hr><div class="binding"><span id="generate" class="binding-sym">generate</span> <span class="binding-type">macro</span> <pre class="binding-text">(generate head &amp; body)
+
+Create a generator expression using the loop syntax. Returns a fiber that yields all values inside the loop in order. See loop for details.</pre></div><hr><div class="binding"><span id="gensym" class="binding-sym">gensym</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(gensym)
+
+Returns a new symbol that is unique across the runtime. This means it will not collide with any already created symbols during compilation, so it can be used in macros to generate automatic bindings.</pre></div><hr><div class="binding"><span id="get" class="binding-sym">get</span> <span class="binding-type">function</span> <pre class="binding-text">(get ds key &amp;opt dflt)
+
+Get a value from any associative data structure. Arrays, tuples, tables, structs, strings, symbols, and buffers are all associative and can be used with get. Order structures, name arrays, tuples, strings, buffers, and symbols must use integer keys. Structs and tables can take any value as a key except nil and return a value except nil. Byte sequences will return integer representations of bytes as result of a get call. If no values is found, will return dflt or nil if no default is provided.</pre></div><hr><div class="binding"><span id="get-in" class="binding-sym">get-in</span> <span class="binding-type">function</span> <pre class="binding-text">(get-in ds ks &amp;opt dflt)
+
+Access a value in a nested data structure. Looks into the data structure via a sequence of keys.</pre></div><hr><div class="binding"><span id="getline" class="binding-sym">getline</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(getline &amp;opt prompt buf)
+
+Reads a line of input into a buffer, including the newline character, using a prompt. Returns the modified buffer. Use this function to implement a simple interface for a terminal program.</pre></div><hr><div class="binding"><span id="hash" class="binding-sym">hash</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(hash value)
+
+Gets a hash value for any janet value. The hash is an integer can be used as a cheap hash function for all janet objects. If two values are strictly equal, then they will have the same hash value.</pre></div><hr><div class="binding"><span id="idempotent?" class="binding-sym">idempotent?</span> <span class="binding-type">function</span> <pre class="binding-text">(idempotent? x)
+
+Check if x is a value that evaluates to itself when compiled.</pre></div><hr><div class="binding"><span id="identity" class="binding-sym">identity</span> <span class="binding-type">function</span> <pre class="binding-text">(identity x)
+
+A function that returns its first argument.</pre></div><hr><div class="binding"><span id="if-let" class="binding-sym">if-let</span> <span class="binding-type">macro</span> <pre class="binding-text">(if-let bindings tru &amp;opt fal)
+
+Make multiple bindings, and if all are truthy, evaluate the tru form. If any are false or nil, evaluate the fal form. Bindings have the same syntax as the let macro.</pre></div><hr><div class="binding"><span id="if-not" class="binding-sym">if-not</span> <span class="binding-type">macro</span> <pre class="binding-text">(if-not condition then &amp;opt else)
+
+Shorthand for (if (not condition) else then).</pre></div><hr><div class="binding"><span id="import" class="binding-sym">import</span> <span class="binding-type">macro</span> <pre class="binding-text">(import path &amp; args)
+
+Import a module. First requires the module, and then merges its symbols into the current environment, prepending a given prefix as needed. (use the :as or :prefix option to set a prefix). If no prefix is provided, use the name of the module as a prefix. One can also use :export true to re-export the imported symbols. If :exit true is given as an argument, any errors encountered at the top level in the module will cause (os/exit 1) to be called.</pre></div><hr><div class="binding"><span id="import*" class="binding-sym">import*</span> <span class="binding-type">function</span> <pre class="binding-text">(import* path &amp; args)
+
+Function form of import. Same parameters, but the path and other symbol parameters should be strings instead.</pre></div><hr><div class="binding"><span id="inc" class="binding-sym">inc</span> <span class="binding-type">function</span> <pre class="binding-text">(inc x)
+
+Returns x + 1.</pre></div><hr><div class="binding"><span id="indexed?" class="binding-sym">indexed?</span> <span class="binding-type">function</span> <pre class="binding-text">(indexed? x)
+
+Check if x is an array or tuple.</pre></div><hr><div class="binding"><span id="int/s64" class="binding-sym">int/s64</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(int/s64 value)
+
+Create a boxed signed 64 bit integer from a string value.</pre></div><hr><div class="binding"><span id="int/u64" class="binding-sym">int/u64</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(int/u64 value)
+
+Create a boxed unsigned 64 bit integer from a string value.</pre></div><hr><div class="binding"><span id="int?" class="binding-sym">int?</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(int? x)
+
+Check if x can be exactly represented as a 32 bit signed two's complement integer.</pre></div><hr><div class="binding"><span id="interleave" class="binding-sym">interleave</span> <span class="binding-type">function</span> <pre class="binding-text">(interleave &amp; cols)
+
+Returns an array of the first elements of each col, then the second, etc.</pre></div><hr><div class="binding"><span id="interpose" class="binding-sym">interpose</span> <span class="binding-type">function</span> <pre class="binding-text">(interpose sep ind)
+
+Returns a sequence of the elements of ind separated by sep. Returns a new array.</pre></div><hr><div class="binding"><span id="invert" class="binding-sym">invert</span> <span class="binding-type">function</span> <pre class="binding-text">(invert ds)
+
+Returns a table of where the keys of an associative data structure are the values, and the values of the keys. If multiple keys have the same value, one key will be ignored.</pre></div><hr><div class="binding"><span id="janet/build" class="binding-sym">janet/build</span> <span class="binding-type">string</span> <pre class="binding-text">The build identifier of the running janet program.</pre></div><hr><div class="binding"><span id="janet/config-bits" class="binding-sym">janet/config-bits</span> <span class="binding-type">number</span> <pre class="binding-text">The flag set of config options from janetconf.h which is used to check if native modules are compatible with the host program.</pre></div><hr><div class="binding"><span id="janet/version" class="binding-sym">janet/version</span> <span class="binding-type">string</span> <pre class="binding-text">The version number of the running janet program.</pre></div><hr><div class="binding"><span id="juxt" class="binding-sym">juxt</span> <span class="binding-type">macro</span> <pre class="binding-text">(juxt &amp; funs)
+
+Macro form of juxt*. Same behavior but more efficient.</pre></div><hr><div class="binding"><span id="juxt*" class="binding-sym">juxt*</span> <span class="binding-type">function</span> <pre class="binding-text">(juxt* &amp; funs)
+
+Returns the juxtaposition of functions. In other words, ((juxt* a b c) x) evaluates to [(a x) (b x) (c x)].</pre></div><hr><div class="binding"><span id="keep" class="binding-sym">keep</span> <span class="binding-type">function</span> <pre class="binding-text">(keep pred ind)
+
+Given a predicate, take only elements from an array or tuple for which (pred element) is truthy. Returns a new array of truthy predicate results.</pre></div><hr><div class="binding"><span id="keys" class="binding-sym">keys</span> <span class="binding-type">function</span> <pre class="binding-text">(keys x)
+
+Get the keys of an associative data structure.</pre></div><hr><div class="binding"><span id="keyword" class="binding-sym">keyword</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(keyword &amp; xs)
+
+Creates a keyword by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new keyword.</pre></div><hr><div class="binding"><span id="keyword?" class="binding-sym">keyword?</span> <span class="binding-type">function</span> <pre class="binding-text">(keyword? x)
+
+Check if x is a keyword.</pre></div><hr><div class="binding"><span id="kvs" class="binding-sym">kvs</span> <span class="binding-type">function</span> <pre class="binding-text">(kvs dict)
+
+Takes a table or struct and returns and array of key value pairs like @[k v k v ...]. Returns a new array.</pre></div><hr><div class="binding"><span id="last" class="binding-sym">last</span> <span class="binding-type">function</span> <pre class="binding-text">(last xs)
+
+Get the last element from an indexed data structure.</pre></div><hr><div class="binding"><span id="length" class="binding-sym">length</span> <span class="binding-type">function</span> <pre class="binding-text">(length ds)
+
+Returns the length or count of a data structure in constant time as an integer. For structs and tables, returns the number of key-value pairs in the data structure.</pre></div><hr><div class="binding"><span id="let" class="binding-sym">let</span> <span class="binding-type">macro</span> <pre class="binding-text">(let bindings &amp; body)
+
+Create a scope and bind values to symbols. Each pair in bindings is assigned as if with def, and the body of the let form returns the last value.</pre></div><hr><div class="binding"><span id="load-image" class="binding-sym">load-image</span> <span class="binding-type">function</span> <pre class="binding-text">(load-image image)
+
+The inverse operation to make-image. Returns an environment.</pre></div><hr><div class="binding"><span id="loop" class="binding-sym">loop</span> <span class="binding-type">macro</span> <pre class="binding-text">(loop head &amp; body)
+
+A general purpose loop macro. This macro is similar to the Common Lisp loop macro, although intentionally much smaller in scope. The head of the loop should be a tuple that contains a sequence of either bindings or conditionals. A binding is a sequence of three values that define something to loop over. They are formatted like:
+
+ 	binding :verb object/expression
+
+ Where binding is a binding as passed to def, :verb is one of a set of keywords, and object is any janet expression. The available verbs are:
+
+ 	:iterate - repeatedly evaluate and bind to the expression while it is truthy.
+ 	:range - loop over a range. The object should be two element tuple with a start and end value, and an optional positive step. The range is half open, [start, end).
+  	:down - Same as range, but loops in reverse.
+  	:keys - Iterate over the keys in a data structure.
+  	:pairs - Iterate over the keys value pairs in a data structure.
+  	:in - Iterate over the values in an indexed data structure or byte sequence.
+  	:generate - Iterate over values yielded from a fiber. Can be paired with the generator  function for the producer/consumer pattern.
+
+  loop also accepts conditionals to refine the looping further. Conditionals are of  the form:
+
+  	:modifier argument
+
+  where :modifier is one of a set of keywords, and argument is keyword dependent.  :modifier can be one of:
+
+  	:while expression - breaks from the loop if expression is falsey.
+  	:until expression - breaks from the loop if expression is truthy.
+  	:let bindings - defines bindings inside the loop as passed to the let macro.
+  	:before form - evaluates a form for a side effect before of the next inner loop.
+  	:after form - same as :before, but the side effect happens after the next inner loop.
+  	:repeat n - repeats the next inner loop n times.
+  	:when condition - only evaluates the loop body when condition is true.
+
+  The loop macro always evaluates to nil.</pre></div><hr><div class="binding"><span id="macex" class="binding-sym">macex</span> <span class="binding-type">function</span> <pre class="binding-text">(macex x &amp;opt on-binding)
+
+Expand macros completely. on-binding is an optional callback whenever a normal symbolic binding is encounter. This allows macros to easily see all bindings use by their arguments by calling macex on their contents. The binding itself is also replaced by the value returned by on-binding within the expand macro.</pre></div><hr><div class="binding"><span id="macex1" class="binding-sym">macex1</span> <span class="binding-type">function</span> <pre class="binding-text">(macex1 x &amp;opt on-binding)
+
+Expand macros in a form, but do not recursively expand macros. See macex docs for info on on-binding.</pre></div><hr><div class="binding"><span id="make-env" class="binding-sym">make-env</span> <span class="binding-type">function</span> <pre class="binding-text">(make-env &amp;opt parent)
+
+Create a new environment table. The new environment will inherit bindings from the parent environment, but new bindings will not pollute the parent environment.</pre></div><hr><div class="binding"><span id="make-image" class="binding-sym">make-image</span> <span class="binding-type">function</span> <pre class="binding-text">(make-image env)
+
+Create an image from an environment returned by require. Returns the image source as a string.</pre></div><hr><div class="binding"><span id="map" class="binding-sym">map</span> <span class="binding-type">function</span> <pre class="binding-text">(map f &amp; inds)
+
+Map a function over every element in an indexed data structure and return an array of the results.</pre></div><hr><div class="binding"><span id="mapcat" class="binding-sym">mapcat</span> <span class="binding-type">function</span> <pre class="binding-text">(mapcat f ind)
+
+Map a function over every element in an array or tuple and use array to concatenate the results.</pre></div><hr><div class="binding"><span id="marshal" class="binding-sym">marshal</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(marshal x &amp;opt reverse-lookup buffer)
+
+Marshal a janet value into a buffer and return the buffer. The buffer can the later be unmarshalled to reconstruct the initial value. Optionally, one can pass in a reverse lookup table to not marshal aliased values that are found in the table. Then a forwardlookup table can be used to recover the original janet value when unmarshalling.</pre></div><hr><div class="binding"><span id="match" class="binding-sym">match</span> <span class="binding-type">macro</span> <pre class="binding-text">(match x &amp; cases)
+
+Pattern matching. Match an expression x against any number of cases. Easy case is a pattern to match against, followed by an expression to evaluate to if that case is matched. A pattern that is a symbol will match anything, binding x's value to that symbol. An array will match only if all of it's elements match the corresponding elements in x. A table or struct will match if all values match with the corresponding values in x. A tuple pattern will match if it's first element matches, and the following elements are treated as predicates and are true. Any other value pattern will only match if it is equal to x.</pre></div><hr><div class="binding"><span id="math/abs" class="binding-sym">math/abs</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/abs x)
+
+Return the absolute value of x.</pre></div><hr><div class="binding"><span id="math/acos" class="binding-sym">math/acos</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/acos x)
+
+Returns the arccosine of x.</pre></div><hr><div class="binding"><span id="math/asin" class="binding-sym">math/asin</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/asin x)
+
+Returns the arcsine of x.</pre></div><hr><div class="binding"><span id="math/atan" class="binding-sym">math/atan</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/atan x)
+
+Returns the arctangent of x.</pre></div><hr><div class="binding"><span id="math/atan2" class="binding-sym">math/atan2</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/atan2 y x)
+
+Return the arctangent of y/x. Works even when x is 0.</pre></div><hr><div class="binding"><span id="math/ceil" class="binding-sym">math/ceil</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/ceil x)
+
+Returns the smallest integer value number that is not less than x.</pre></div><hr><div class="binding"><span id="math/cos" class="binding-sym">math/cos</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/cos x)
+
+Returns the cosine of x.</pre></div><hr><div class="binding"><span id="math/cosh" class="binding-sym">math/cosh</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/cosh x)
+
+Return the hyperbolic cosine of x.</pre></div><hr><div class="binding"><span id="math/e" class="binding-sym">math/e</span> <span class="binding-type">number</span> <pre class="binding-text">The base of the natural log.</pre></div><hr><div class="binding"><span id="math/exp" class="binding-sym">math/exp</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/exp x)
+
+Returns e to the power of x.</pre></div><hr><div class="binding"><span id="math/floor" class="binding-sym">math/floor</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/floor x)
+
+Returns the largest integer value number that is not greater than x.</pre></div><hr><div class="binding"><span id="math/inf" class="binding-sym">math/inf</span> <span class="binding-type">number</span> <pre class="binding-text">The number representing positive infinity</pre></div><hr><div class="binding"><span id="math/log" class="binding-sym">math/log</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/log x)
+
+Returns log base natural number of x.</pre></div><hr><div class="binding"><span id="math/log10" class="binding-sym">math/log10</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/log10 x)
+
+Returns log base 10 of x.</pre></div><hr><div class="binding"><span id="math/pi" class="binding-sym">math/pi</span> <span class="binding-type">number</span> <pre class="binding-text">The value pi.</pre></div><hr><div class="binding"><span id="math/pow" class="binding-sym">math/pow</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/pow a x)
+
+Return a to the power of x.</pre></div><hr><div class="binding"><span id="math/random" class="binding-sym">math/random</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/random)
+
+Returns a uniformly distributed random number between 0 and 1.</pre></div><hr><div class="binding"><span id="math/seedrandom" class="binding-sym">math/seedrandom</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/seedrandom seed)
+
+Set the seed for the random number generator. 'seed' should be an an integer.</pre></div><hr><div class="binding"><span id="math/sin" class="binding-sym">math/sin</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/sin x)
+
+Returns the sine of x.</pre></div><hr><div class="binding"><span id="math/sinh" class="binding-sym">math/sinh</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/sinh x)
+
+Return the hyperbolic sine of x.</pre></div><hr><div class="binding"><span id="math/sqrt" class="binding-sym">math/sqrt</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/sqrt x)
+
+Returns the square root of x.</pre></div><hr><div class="binding"><span id="math/tan" class="binding-sym">math/tan</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/tan x)
+
+Returns the tangent of x.</pre></div><hr><div class="binding"><span id="math/tanh" class="binding-sym">math/tanh</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(math/tanh x)
+
+Return the hyperbolic tangent of x.</pre></div><hr><div class="binding"><span id="max" class="binding-sym">max</span> <span class="binding-type">function</span> <pre class="binding-text">(max &amp; args)
+
+Returns the numeric maximum of the arguments.</pre></div><hr><div class="binding"><span id="max-order" class="binding-sym">max-order</span> <span class="binding-type">function</span> <pre class="binding-text">(max-order &amp; args)
+
+Returns the maximum of the arguments according to a total order over all values.</pre></div><hr><div class="binding"><span id="mean" class="binding-sym">mean</span> <span class="binding-type">function</span> <pre class="binding-text">(mean xs)
+
+Returns the mean of xs. If empty, returns NaN.</pre></div><hr><div class="binding"><span id="merge" class="binding-sym">merge</span> <span class="binding-type">function</span> <pre class="binding-text">(merge &amp; colls)
+
+Merges multiple tables/structs to one. If a key appears in more than one collection, then later values replace any previous ones. Returns a new table.</pre></div><hr><div class="binding"><span id="merge-into" class="binding-sym">merge-into</span> <span class="binding-type">function</span> <pre class="binding-text">(merge-into tab &amp; colls)
+
+Merges multiple tables/structs into a table. If a key appears in more than one collection, then later values replace any previous ones. Returns the original table.</pre></div><hr><div class="binding"><span id="min" class="binding-sym">min</span> <span class="binding-type">function</span> <pre class="binding-text">(min &amp; args)
+
+Returns the numeric minimum of the arguments.</pre></div><hr><div class="binding"><span id="min-order" class="binding-sym">min-order</span> <span class="binding-type">function</span> <pre class="binding-text">(min-order &amp; args)
+
+Returns the minimum of the arguments according to a total order over all values.</pre></div><hr><div class="binding"><span id="module/cache" class="binding-sym">module/cache</span> <span class="binding-type">table</span> <pre class="binding-text">Table mapping loaded module identifiers to their environments.</pre></div><hr><div class="binding"><span id="module/expand-path" class="binding-sym">module/expand-path</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(module/expand-path path template)
+
+Expands a path template as found in module/paths for module/find. This takes in a path (the argument to require) and a template string, template, to expand the path to a path that can be used for importing files.</pre></div><hr><div class="binding"><span id="module/find" class="binding-sym">module/find</span> <span class="binding-type">function</span> <pre class="binding-text">(module/find path)
+
+Try to match a module or path name from the patterns in module/paths. Returns a tuple (fullpath kind) where the kind is one of :source, :native, or image if the module is found, otherwise a tuple with nil followed by an error message.</pre></div><hr><div class="binding"><span id="module/loaders" class="binding-sym">module/loaders</span> <span class="binding-type">table</span> <pre class="binding-text">A table of loading method names to loading functions. This table lets require and import load many different kinds of files as module.</pre></div><hr><div class="binding"><span id="module/loading" class="binding-sym">module/loading</span> <span class="binding-type">table</span> <pre class="binding-text">Table mapping currently loading modules to true. Used to prevent circular dependencies.</pre></div><hr><div class="binding"><span id="module/paths" class="binding-sym">module/paths</span> <span class="binding-type">array</span> <pre class="binding-text">The list of paths to look for modules, templated for module/expand-path. Each element is a two element tuple, containing the path template and a keyword :source, :native, or :image indicating how require should load files found at these paths.
+
+A tuple can also contain a third element, specifying a filter that prevents module/find from searching that path template if the filter doesn't match the input path. The filter can be a string or a predicate function, and is often a file extension, including the period.</pre></div><hr><div class="binding"><span id="nat?" class="binding-sym">nat?</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(nat? x)
+
+Check if x can be exactly represented as a non-negative 32 bit signed two's complement integer.</pre></div><hr><div class="binding"><span id="native" class="binding-sym">native</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(native path &amp;opt env)
+
+Load a native module from the given path. The path must be an absolute or relative path on the file system, and is usually a .so file on Unix systems, and a .dll file on Windows. Returns an environment table that contains functions and other values from the native module.</pre></div><hr><div class="binding"><span id="neg?" class="binding-sym">neg?</span> <span class="binding-type">function</span> <pre class="binding-text">(neg? x)
+
+Check if x is less than 0.</pre></div><hr><div class="binding"><span id="next" class="binding-sym">next</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(next dict &amp;opt key)
+
+Gets the next key in a struct or table. Can be used to iterate through the keys of a data structure in an unspecified order. Keys are guaranteed to be seen only once per iteration if they data structure is not mutated during iteration. If key is nil, next returns the first key. If next returns nil, there are no more keys to iterate through. </pre></div><hr><div class="binding"><span id="nil?" class="binding-sym">nil?</span> <span class="binding-type">function</span> <pre class="binding-text">(nil? x)
+
+Check if x is nil.</pre></div><hr><div class="binding"><span id="not" class="binding-sym">not</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(not x)
+
+Returns the boolean inverse of x.</pre></div><hr><div class="binding"><span id="not=" class="binding-sym">not=</span> <span class="binding-type">function</span> <pre class="binding-text">(not= &amp; xs)
+
+Return true if any values in xs are not equal, otherwise false.</pre></div><hr><div class="binding"><span id="not==" class="binding-sym">not==</span> <span class="binding-type">function</span> <pre class="binding-text">(not== &amp; xs)
+
+Check if any values in xs are not numerically equal (3.0 not== 4). Returns a boolean.</pre></div><hr><div class="binding"><span id="number?" class="binding-sym">number?</span> <span class="binding-type">function</span> <pre class="binding-text">(number? x)
+
+Check if x is a number.</pre></div><hr><div class="binding"><span id="odd?" class="binding-sym">odd?</span> <span class="binding-type">function</span> <pre class="binding-text">(odd? x)
+
+Check if x is odd.</pre></div><hr><div class="binding"><span id="one?" class="binding-sym">one?</span> <span class="binding-type">function</span> <pre class="binding-text">(one? x)
+
+Check if x is equal to 1.</pre></div><hr><div class="binding"><span id="or" class="binding-sym">or</span> <span class="binding-type">macro</span> <pre class="binding-text">(or &amp; forms)
+
+Evaluates to the last argument if all preceding elements are false, otherwise evaluates to true.</pre></div><hr><div class="binding"><span id="order<" class="binding-sym">order&lt;</span> <span class="binding-type">function</span> <pre class="binding-text">(order&lt; &amp; xs)
+
+Check if xs is strictly increasing according to a total order over all values. Returns a boolean.</pre></div><hr><div class="binding"><span id="order<=" class="binding-sym">order&lt;=</span> <span class="binding-type">function</span> <pre class="binding-text">(order&lt;= &amp; xs)
+
+Check if xs is not decreasing according to a total order over all values. Returns a boolean.</pre></div><hr><div class="binding"><span id="order>" class="binding-sym">order&gt;</span> <span class="binding-type">function</span> <pre class="binding-text">(order&gt; &amp; xs)
+
+Check if xs is strictly descending according to a total order over all values. Returns a boolean.</pre></div><hr><div class="binding"><span id="order>=" class="binding-sym">order&gt;=</span> <span class="binding-type">function</span> <pre class="binding-text">(order&gt;= &amp; xs)
+
+Check if xs is not increasing according to a total order over all values. Returns a boolean.</pre></div><hr><div class="binding"><span id="os/arch" class="binding-sym">os/arch</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/arch)
+
+Check the ISA that janet was compiled for. Returns one of:
+
+	:x86
+	:x86-64
+	:arm
+	:aarch64
+	:sparc
+	:wasm
+	:unknown
+</pre></div><hr><div class="binding"><span id="os/cd" class="binding-sym">os/cd</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/cd path)
+
+Change current directory to path. Returns true on success, false on failure.</pre></div><hr><div class="binding"><span id="os/clock" class="binding-sym">os/clock</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/clock)
+
+Return the number of seconds since some fixed point in time. The clock is guaranteed to be non decreasing in real time.</pre></div><hr><div class="binding"><span id="os/cwd" class="binding-sym">os/cwd</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/cwd)
+
+Returns the current working directory.</pre></div><hr><div class="binding"><span id="os/date" class="binding-sym">os/date</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/date &amp;opt time)
+
+Returns the given time as a date struct, or the current time if no time is given. Returns a struct with following key values. Note that all numbers are 0-indexed.
+
+	:seconds - number of seconds [0-61]
+	:minutes - number of minutes [0-59]
+	:hours - number of hours [0-23]
+	:month-day - day of month [0-30]
+	:month - month of year [0, 11]
+	:year - years since year 0 (e.g. 2019)
+	:week-day - day of the week [0-6]
+	:year-day - day of the year [0-365]
+	:dst - If Day Light Savings is in effect</pre></div><hr><div class="binding"><span id="os/dir" class="binding-sym">os/dir</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/dir dir &amp;opt array)
+
+Iterate over files and subdirectories in a directory. Returns an array of paths parts, with only the filename or directory name and no prefix.</pre></div><hr><div class="binding"><span id="os/execute" class="binding-sym">os/execute</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/execute args &amp;opts flags env)
+
+Execute a program on the system and pass it string arguments. Flags is a keyword that modifies how the program will execute.
+
+	:e - enables passing an environment to the program. Without :e, the current environment is inherited.
+	:p - allows searching the current PATH for the binary to execute. Without this flag, binaries must use absolute paths.
+
+env is a table or struct mapping environment variables to values. Returns the exit status of the program.</pre></div><hr><div class="binding"><span id="os/exit" class="binding-sym">os/exit</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/exit &amp;opt x)
+
+Exit from janet with an exit code equal to x. If x is not an integer, the exit with status equal the hash of x.</pre></div><hr><div class="binding"><span id="os/getenv" class="binding-sym">os/getenv</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/getenv variable)
+
+Get the string value of an environment variable.</pre></div><hr><div class="binding"><span id="os/link" class="binding-sym">os/link</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/link oldpath newpath &amp;opt symlink)
+
+Create a symlink from oldpath to newpath. The 3 optional paramater enables a hard link over a soft link. Does not work on Windows.</pre></div><hr><div class="binding"><span id="os/mkdir" class="binding-sym">os/mkdir</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/mkdir path)
+
+Create a new directory. The path will be relative to the current directory if relative, otherwise it will be an absolute path.</pre></div><hr><div class="binding"><span id="os/rename" class="binding-sym">os/rename</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/rename oldname newname)
+
+Rename a file on disk to a new path. Returns nil.</pre></div><hr><div class="binding"><span id="os/rm" class="binding-sym">os/rm</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/rm path)
+
+Delete a file. Returns nil.</pre></div><hr><div class="binding"><span id="os/rmdir" class="binding-sym">os/rmdir</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/rmdir path)
+
+Delete a directory. The directory must be empty to succeed.</pre></div><hr><div class="binding"><span id="os/setenv" class="binding-sym">os/setenv</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/setenv variable value)
+
+Set an environment variable.</pre></div><hr><div class="binding"><span id="os/shell" class="binding-sym">os/shell</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/shell str)
+
+Pass a command string str directly to the system shell.</pre></div><hr><div class="binding"><span id="os/sleep" class="binding-sym">os/sleep</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/sleep nsec)
+
+Suspend the program for nsec seconds. 'nsec' can be a real number. Returns nil.</pre></div><hr><div class="binding"><span id="os/stat" class="binding-sym">os/stat</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/stat path &amp;opt tab|key)
+
+Gets information about a file or directory. Returns a table If the third argument is a keyword, returns only that information from stat. If the file or directory does not exist, returns nil. The keys are
+
+	:dev - the device that the file is on
+	:mode - the type of file, one of :file, :directory, :block, :character, :fifo, :socket, :link, or :other
+	:permissions - A unix permission string like "rwx--x--x"
+	:uid - File uid
+	:gid - File gid
+	:nlink - number of links to file
+	:rdev - Real device of file. 0 on windows.
+	:size - size of file in bytes
+	:blocks - number of blocks in file. 0 on windows
+	:blocksize - size of blocks in file. 0 on windows
+	:accessed - timestamp when file last accessed
+	:changed - timestamp when file last chnaged (permissions changed)
+	:modified - timestamp when file last modified (content changed)
+</pre></div><hr><div class="binding"><span id="os/time" class="binding-sym">os/time</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/time)
+
+Get the current time expressed as the number of seconds since January 1, 1970, the Unix epoch. Returns a real number.</pre></div><hr><div class="binding"><span id="os/touch" class="binding-sym">os/touch</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/touch path &amp;opt actime modtime)
+
+Update the access time and modification times for a file. By default, sets times to the current time.</pre></div><hr><div class="binding"><span id="os/which" class="binding-sym">os/which</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(os/which)
+
+Check the current operating system. Returns one of:
+
+	:windows
+	:macos
+	:web - Web assembly (emscripten)
+	:linux
+	:freebsd
+	:openbsd
+	:netbsd
+	:posix - A POSIX compatible system (default)</pre></div><hr><div class="binding"><span id="pairs" class="binding-sym">pairs</span> <span class="binding-type">function</span> <pre class="binding-text">(pairs x)
+
+Get the values of an associative data structure.</pre></div><hr><div class="binding"><span id="parser/byte" class="binding-sym">parser/byte</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/byte parser b)
+
+Input a single byte into the parser byte stream. Returns the parser.</pre></div><hr><div class="binding"><span id="parser/clone" class="binding-sym">parser/clone</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/clone p)
+
+Creates a deep clone of a parser that is identical to the input parser. This cloned parser can be used to continue parsing from a good checkpoint if parsing later fails. Returns a new parser.</pre></div><hr><div class="binding"><span id="parser/consume" class="binding-sym">parser/consume</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/consume parser bytes &amp;opt index)
+
+Input bytes into the parser and parse them. Will not throw errors if there is a parse error. Starts at the byte index given by index. Returns the number of bytes read.</pre></div><hr><div class="binding"><span id="parser/eof" class="binding-sym">parser/eof</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/eof parser)
+
+Indicate that the end of file was reached to the parser. This puts the parser in the :dead state.</pre></div><hr><div class="binding"><span id="parser/error" class="binding-sym">parser/error</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/error parser)
+
+If the parser is in the error state, returns the message associated with that error. Otherwise, returns nil. Also flushes the parser state and parser queue, so be sure to handle everything in the queue before calling parser/error.</pre></div><hr><div class="binding"><span id="parser/flush" class="binding-sym">parser/flush</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/flush parser)
+
+Clears the parser state and parse queue. Can be used to reset the parser if an error was encountered. Does not reset the line and column counter, so to begin parsing in a new context, create a new parser.</pre></div><hr><div class="binding"><span id="parser/has-more" class="binding-sym">parser/has-more</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/has-more parser)
+
+Check if the parser has more values in the value queue.</pre></div><hr><div class="binding"><span id="parser/insert" class="binding-sym">parser/insert</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/insert parser value)
+
+Insert a value into the parser. This means that the parser state can be manipulated in between chunks of bytes. This would allow a user to add extra elements to arrays and tuples, for example. Returns the parser.</pre></div><hr><div class="binding"><span id="parser/new" class="binding-sym">parser/new</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/new)
+
+Creates and returns a new parser object. Parsers are state machines that can receive bytes, and generate a stream of janet values.</pre></div><hr><div class="binding"><span id="parser/produce" class="binding-sym">parser/produce</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/produce parser)
+
+Dequeue the next value in the parse queue. Will return nil if no parsed values are in the queue, otherwise will dequeue the next value.</pre></div><hr><div class="binding"><span id="parser/state" class="binding-sym">parser/state</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/state parser &amp;opt key)
+
+Returns a representation of the internal state of the parser. If a key is passed, only that information about the state is returned. Allowed keys are:
+
+	:delimiters - Each byte in the string represents a nested data structure. For example, if the parser state is '(["', then the parser is in the middle of parsing a string inside of square brackets inside parentheses. Can be used to augment a REPL prompt.	:frames - Each table in the array represents a 'frame' in the parser state. Frames contain information about the start of the expression being parsed as well as the type of that expression and some type-specific information.</pre></div><hr><div class="binding"><span id="parser/status" class="binding-sym">parser/status</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/status parser)
+
+Gets the current status of the parser state machine. The status will be one of:
+
+	:pending - a value is being parsed.
+	:error - a parsing error was encountered.
+	:root - the parser can either read more values or safely terminate.</pre></div><hr><div class="binding"><span id="parser/where" class="binding-sym">parser/where</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(parser/where parser &amp;opt offset)
+
+Returns the current line number and column number of the parser's location in the byte stream as an index, counted from 0. If offset is supplied, then the byte offset is updated to that new value.</pre></div><hr><div class="binding"><span id="partial" class="binding-sym">partial</span> <span class="binding-type">function</span> <pre class="binding-text">(partial f &amp; more)
+
+Partial function application.</pre></div><hr><div class="binding"><span id="partition" class="binding-sym">partition</span> <span class="binding-type">function</span> <pre class="binding-text">(partition n ind)
+
+Partition an indexed data structure into tuples of size n. Returns a new array.</pre></div><hr><div class="binding"><span id="peg/compile" class="binding-sym">peg/compile</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(peg/compile peg)
+
+Compiles a peg source data structure into a &lt;core/peg&gt;. This will speed up matching if the same peg will be used multiple times.</pre></div><hr><div class="binding"><span id="peg/match" class="binding-sym">peg/match</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(peg/match peg text &amp;opt start &amp; args)
+
+Match a Parsing Expression Grammar to a byte string and return an array of captured values. Returns nil if text does not match the language defined by peg. The syntax of PEGs are very similar to those defined by LPeg, and have similar capabilities.</pre></div><hr><div class="binding"><span id="pos?" class="binding-sym">pos?</span> <span class="binding-type">function</span> <pre class="binding-text">(pos? x)
+
+Check if x is greater than 0.</pre></div><hr><div class="binding"><span id="postwalk" class="binding-sym">postwalk</span> <span class="binding-type">function</span> <pre class="binding-text">(postwalk f form)
+
+Do a post-order traversal of a data structure and call (f x) on every visitation.</pre></div><hr><div class="binding"><span id="pp" class="binding-sym">pp</span> <span class="binding-type">function</span> <pre class="binding-text">(pp x)
+
+Pretty print to stdout.</pre></div><hr><div class="binding"><span id="prewalk" class="binding-sym">prewalk</span> <span class="binding-type">function</span> <pre class="binding-text">(prewalk f form)
+
+Similar to postwalk, but do pre-order traversal.</pre></div><hr><div class="binding"><span id="print" class="binding-sym">print</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(print &amp; xs)
+
+Print values to the console (standard out). Value are converted to strings if they are not already. After printing all values, a newline character is printed. Returns nil.</pre></div><hr><div class="binding"><span id="printf" class="binding-sym">printf</span> <span class="binding-type">function</span> <pre class="binding-text">(printf f &amp; args)
+
+Print formatted strings to stdout, followed by a new line.</pre></div><hr><div class="binding"><span id="product" class="binding-sym">product</span> <span class="binding-type">function</span> <pre class="binding-text">(product xs)
+
+Returns the product of xs. If xs is empty, returns 1.</pre></div><hr><div class="binding"><span id="propagate" class="binding-sym">propagate</span> <span class="binding-type">function</span> <pre class="binding-text">(propagate x fiber)
+
+Propagate a signal from a fiber to the current fiber. The resulting stack trace from the current fiber will include frames from fiber. If fiber is in a state that can be resumed, resuming the current fiber will first resume fiber.</pre></div><hr><div class="binding"><span id="put" class="binding-sym">put</span> <span class="binding-type">function</span> <pre class="binding-text">(put ds key value)
+
+Associate a key with a value in any mutable associative data structure. Indexed data structures (arrays and buffers) only accept non-negative integer keys, and will expand if an out of bounds value is provided. In an array, extra space will be filled with nils, and in a buffer, extra space will be filled with 0 bytes. In a table, putting a key that is contained in the table prototype will hide the association defined by the prototype, but will not mutate the prototype table. Putting a value nil into a table will remove the key from the table. Returns the data structure ds.</pre></div><hr><div class="binding"><span id="put-in" class="binding-sym">put-in</span> <span class="binding-type">function</span> <pre class="binding-text">(put-in ds ks v)
+
+Put a value into a nested data structure. Looks into the data structure via a sequence of keys. Missing data structures will be replaced with tables. Returns the modified, original data structure.</pre></div><hr><div class="binding"><span id="range" class="binding-sym">range</span> <span class="binding-type">function</span> <pre class="binding-text">(range &amp; args)
+
+Create an array of values [start, end) with a given step. With one argument returns a range [0, end). With two arguments, returns a range [start, end). With three, returns a range with optional step size.</pre></div><hr><div class="binding"><span id="reduce" class="binding-sym">reduce</span> <span class="binding-type">function</span> <pre class="binding-text">(reduce f init ind)
+
+Reduce, also know as fold-left in many languages, transforms an indexed type (array, tuple) with a function to produce a value.</pre></div><hr><div class="binding"><span id="repl" class="binding-sym">repl</span> <span class="binding-type">function</span> <pre class="binding-text">(repl &amp;opt chunks onsignal env)
+
+Run a repl. The first parameter is an optional function to call to get a chunk of source code that should return nil for end of file. The second parameter is a function that is called when a signal is caught.</pre></div><hr><div class="binding"><span id="require" class="binding-sym">require</span> <span class="binding-type">function</span> <pre class="binding-text">(require path &amp; args)
+
+Require a module with the given name. Will search all of the paths in module/paths, then the path as a raw file path. Returns the new environment returned from compiling and running the file.</pre></div><hr><div class="binding"><span id="resume" class="binding-sym">resume</span> <span class="binding-type">function</span> <pre class="binding-text">(resume fiber &amp;opt x)
+
+Resume a new or suspended fiber and optionally pass in a value to the fiber that will be returned to the last yield in the case of a pending fiber, or the argument to the dispatch function in the case of a new fiber. Returns either the return result of the fiber's dispatch function, or the value from the next yield call in fiber.</pre></div><hr><div class="binding"><span id="reverse" class="binding-sym">reverse</span> <span class="binding-type">function</span> <pre class="binding-text">(reverse t)
+
+Reverses the order of the elements in a given array or tuple and returns a new array.</pre></div><hr><div class="binding"><span id="run-context" class="binding-sym">run-context</span> <span class="binding-type">function</span> <pre class="binding-text">(run-context opts)
+
+Run a context. This evaluates expressions of janet in an environment, and is encapsulates the parsing, compilation, and evaluation. opts is a table or struct of options. The options are as follows:
+
+	 :chunks - callback to read into a buffer - default is getline
+	 :on-parse-error - callback when parsing fails - default is bad-parse
+	 :env - the environment to compile against - default is the current env
+	 :source - string path of source for better errors - default is "&lt;anonymous&gt;"
+	 :on-compile-error - callback when compilation fails - default is bad-compile
+	 :compile-only - only compile the source, do not execute it - default is false
+	 :on-status - callback when a value is evaluated - default is debug/stacktrace
+	 :fiber-flags - what flags to wrap the compilation fiber with. Default is :ia.</pre></div><hr><div class="binding"><span id="scan-number" class="binding-sym">scan-number</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(scan-number str)
+
+Parse a number from a byte sequence an return that number, either and integer or a real. The number must be in the same format as numbers in janet source code. Will return nil on an invalid number.</pre></div><hr><div class="binding"><span id="seq" class="binding-sym">seq</span> <span class="binding-type">macro</span> <pre class="binding-text">(seq head &amp; body)
+
+Similar to loop, but accumulates the loop body into an array and returns that. See loop for details.</pre></div><hr><div class="binding"><span id="setdyn" class="binding-sym">setdyn</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(setdyn key value)
+
+Set a dynamic binding. Returns value.</pre></div><hr><div class="binding"><span id="short-fn" class="binding-sym">short-fn</span> <span class="binding-type">macro</span> <pre class="binding-text">(short-fn arg)
+
+fn shorthand.
+
+ usage:
+
+ 	(short-fn (+ $ $)) - A function that double's its arguments.
+ 	(short-fn (string $0 $1)) - accepting multiple args
+ 	|(+ $ $) - use pipe reader macro for terse function literals
+ 	|(+ $&amp;) - variadic functions</pre></div><hr><div class="binding"><span id="slurp" class="binding-sym">slurp</span> <span class="binding-type">function</span> <pre class="binding-text">(slurp path)
+
+Read all data from a file with name path and then close the file.</pre></div><hr><div class="binding"><span id="some" class="binding-sym">some</span> <span class="binding-type">function</span> <pre class="binding-text">(some pred xs)
+
+Returns false if all xs are false or nil, otherwise returns the first true value.</pre></div><hr><div class="binding"><span id="sort" class="binding-sym">sort</span> <span class="binding-type">function</span> <pre class="binding-text">(sort xs [, by])
+
+Sort an array in-place. Uses quick-sort and is not a stable sort.</pre></div><hr><div class="binding"><span id="sorted" class="binding-sym">sorted</span> <span class="binding-type">function</span> <pre class="binding-text">(sorted ind by)
+
+Returns a new sorted array without modifying the old one.</pre></div><hr><div class="binding"><span id="spit" class="binding-sym">spit</span> <span class="binding-type">function</span> <pre class="binding-text">(spit path contents &amp;opt mode)
+
+Write contents to a file at path. Can optionally append to the file.</pre></div><hr><div class="binding"><span id="stderr" class="binding-sym">stderr</span> <span class="binding-type">core/file</span> <pre class="binding-text">The standard error file.</pre></div><hr><div class="binding"><span id="stdin" class="binding-sym">stdin</span> <span class="binding-type">core/file</span> <pre class="binding-text">The standard input file.</pre></div><hr><div class="binding"><span id="stdout" class="binding-sym">stdout</span> <span class="binding-type">core/file</span> <pre class="binding-text">The standard output file.</pre></div><hr><div class="binding"><span id="string" class="binding-sym">string</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string &amp; parts)
+
+Creates a string by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new string.</pre></div><hr><div class="binding"><span id="string/ascii-lower" class="binding-sym">string/ascii-lower</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/ascii-lower str)
+
+Returns a new string where all bytes are replaced with the lowercase version of themselves in ASCII. Does only a very simple case check, meaning no unicode support.</pre></div><hr><div class="binding"><span id="string/ascii-upper" class="binding-sym">string/ascii-upper</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/ascii-upper str)
+
+Returns a new string where all bytes are replaced with the uppercase version of themselves in ASCII. Does only a very simple case check, meaning no unicode support.</pre></div><hr><div class="binding"><span id="string/bytes" class="binding-sym">string/bytes</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/bytes str)
+
+Returns an array of integers that are the byte values of the string.</pre></div><hr><div class="binding"><span id="string/check-set" class="binding-sym">string/check-set</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/check-set set str)
+
+Checks if any of the bytes in the string set appear in the string str. Returns true if some bytes in set do appear in str, false if no bytes do.</pre></div><hr><div class="binding"><span id="string/find" class="binding-sym">string/find</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/find patt str)
+
+Searches for the first instance of pattern patt in string str. Returns the index of the first character in patt if found, otherwise returns nil.</pre></div><hr><div class="binding"><span id="string/find-all" class="binding-sym">string/find-all</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/find patt str)
+
+Searches for all instances of pattern patt in string str. Returns an array of all indices of found patterns. Overlapping instances of the pattern are not counted, meaning a byte in string will only contribute to finding at most on occurrence of pattern. If no occurrences are found, will return an empty array.</pre></div><hr><div class="binding"><span id="string/format" class="binding-sym">string/format</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/format format &amp; values)
+
+Similar to snprintf, but specialized for operating with janet. Returns a new string.</pre></div><hr><div class="binding"><span id="string/from-bytes" class="binding-sym">string/from-bytes</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/from-bytes &amp; byte-vals)
+
+Creates a string from integer params with byte values. All integers will be coerced to the range of 1 byte 0-255.</pre></div><hr><div class="binding"><span id="string/has-prefix?" class="binding-sym">string/has-prefix?</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/has-prefix? pfx str)
+
+Tests whether str starts with pfx.</pre></div><hr><div class="binding"><span id="string/has-suffix?" class="binding-sym">string/has-suffix?</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/has-suffix? sfx str)
+
+Tests whether str ends with sfx.</pre></div><hr><div class="binding"><span id="string/join" class="binding-sym">string/join</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/join parts &amp;opt sep)
+
+Joins an array of strings into one string, optionally separated by a separator string sep.</pre></div><hr><div class="binding"><span id="string/repeat" class="binding-sym">string/repeat</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/repeat bytes n)
+
+Returns a string that is n copies of bytes concatenated.</pre></div><hr><div class="binding"><span id="string/replace" class="binding-sym">string/replace</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/replace patt subst str)
+
+Replace the first occurrence of patt with subst in the string str. Will return the new string if patt is found, otherwise returns str.</pre></div><hr><div class="binding"><span id="string/replace-all" class="binding-sym">string/replace-all</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/replace-all patt subst str)
+
+Replace all instances of patt with subst in the string str. Will return the new string if patt is found, otherwise returns str.</pre></div><hr><div class="binding"><span id="string/reverse" class="binding-sym">string/reverse</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/reverse str)
+
+Returns a string that is the reversed version of str.</pre></div><hr><div class="binding"><span id="string/slice" class="binding-sym">string/slice</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/slice bytes &amp;opt start end)
+
+Returns a substring from a byte sequence. The substring is from index start inclusive to index end exclusive. All indexing is from 0. 'start' and 'end' can also be negative to indicate indexing from the end of the string.</pre></div><hr><div class="binding"><span id="string/split" class="binding-sym">string/split</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/split delim str)
+
+Splits a string str with delimiter delim and returns an array of substrings. The substrings will not contain the delimiter delim. If delim is not found, the returned array will have one element.</pre></div><hr><div class="binding"><span id="string/trim" class="binding-sym">string/trim</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/trim str &amp;opt set)
+
+Trim leading and trailing whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</pre></div><hr><div class="binding"><span id="string/triml" class="binding-sym">string/triml</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/triml str &amp;opt set)
+
+Trim leading whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</pre></div><hr><div class="binding"><span id="string/trimr" class="binding-sym">string/trimr</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(string/trimr str &amp;opt set)
+
+Trim trailing whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</pre></div><hr><div class="binding"><span id="string?" class="binding-sym">string?</span> <span class="binding-type">function</span> <pre class="binding-text">(string? x)
+
+Check if x is a string.</pre></div><hr><div class="binding"><span id="struct" class="binding-sym">struct</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(struct &amp; kvs)
+
+Create a new struct from a sequence of key value pairs. kvs is a sequence k1, v1, k2, v2, k3, v3, ... If kvs has an odd number of elements, an error will be thrown. Returns the new struct.</pre></div><hr><div class="binding"><span id="struct?" class="binding-sym">struct?</span> <span class="binding-type">function</span> <pre class="binding-text">(struct? x)
+
+Check if x a struct.</pre></div><hr><div class="binding"><span id="sum" class="binding-sym">sum</span> <span class="binding-type">function</span> <pre class="binding-text">(sum xs)
+
+Returns the sum of xs. If xs is empty, returns 0.</pre></div><hr><div class="binding"><span id="symbol" class="binding-sym">symbol</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(symbol &amp; xs)
+
+Creates a symbol by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new symbol.</pre></div><hr><div class="binding"><span id="symbol?" class="binding-sym">symbol?</span> <span class="binding-type">function</span> <pre class="binding-text">(symbol? x)
+
+Check if x is a symbol.</pre></div><hr><div class="binding"><span id="table" class="binding-sym">table</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(table &amp; kvs)
+
+Creates a new table from a variadic number of keys and values. kvs is a sequence k1, v1, k2, v2, k3, v3, ... If kvs has an odd number of elements, an error will be thrown. Returns the new table.</pre></div><hr><div class="binding"><span id="table/clone" class="binding-sym">table/clone</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(table/clone tab)
+
+Create a copy of a table. Updates to the new table will not change the old table, and vice versa.</pre></div><hr><div class="binding"><span id="table/getproto" class="binding-sym">table/getproto</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(table/getproto tab)
+
+Get the prototype table of a table. Returns nil if a table has no prototype, otherwise returns the prototype.</pre></div><hr><div class="binding"><span id="table/new" class="binding-sym">table/new</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(table/new capacity)
+
+Creates a new empty table with pre-allocated memory for capacity entries. This means that if one knows the number of entries going to go in a table on creation, extra memory allocation can be avoided. Returns the new table.</pre></div><hr><div class="binding"><span id="table/rawget" class="binding-sym">table/rawget</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(table/rawget tab key)
+
+Gets a value from a table without looking at the prototype table. If a table tab does not contain t directly, the function will return nil without checking the prototype. Returns the value in the table.</pre></div><hr><div class="binding"><span id="table/setproto" class="binding-sym">table/setproto</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(table/setproto tab proto)
+
+Set the prototype of a table. Returns the original table tab.</pre></div><hr><div class="binding"><span id="table/to-struct" class="binding-sym">table/to-struct</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(table/to-struct tab)
+
+Convert a table to a struct. Returns a new struct. This function does not take into account prototype tables.</pre></div><hr><div class="binding"><span id="table?" class="binding-sym">table?</span> <span class="binding-type">function</span> <pre class="binding-text">(table? x)
+
+Check if x a table.</pre></div><hr><div class="binding"><span id="take" class="binding-sym">take</span> <span class="binding-type">function</span> <pre class="binding-text">(take n ind)
+
+Take first n elements in an indexed type. Returns new indexed instance.</pre></div><hr><div class="binding"><span id="take-until" class="binding-sym">take-until</span> <span class="binding-type">function</span> <pre class="binding-text">(take-until pred ind)
+
+Same as (take-while (complement pred) ind).</pre></div><hr><div class="binding"><span id="take-while" class="binding-sym">take-while</span> <span class="binding-type">function</span> <pre class="binding-text">(take-while pred ind)
+
+Given a predicate, take only elements from an indexed type that satisfy the predicate, and abort on first failure. Returns a new array.</pre></div><hr><div class="binding"><span id="tarray/buffer" class="binding-sym">tarray/buffer</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tarray/buffer array|size)
+
+Return typed array buffer or create a new buffer.</pre></div><hr><div class="binding"><span id="tarray/copy-bytes" class="binding-sym">tarray/copy-bytes</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tarray/copy-bytes src sindex dst dindex &amp;opt count)
+
+Copy count elements (default 1) of src array from index sindex to dst array at position dindex memory can overlap.</pre></div><hr><div class="binding"><span id="tarray/length" class="binding-sym">tarray/length</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tarray/length array|buffer)
+
+Return typed array or buffer size.</pre></div><hr><div class="binding"><span id="tarray/new" class="binding-sym">tarray/new</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tarray/new type size &amp;opt stride offset tarray|buffer)
+
+Create new typed array.</pre></div><hr><div class="binding"><span id="tarray/properties" class="binding-sym">tarray/properties</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tarray/properties array)
+
+Return typed array properties as a struct.</pre></div><hr><div class="binding"><span id="tarray/slice" class="binding-sym">tarray/slice</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tarray/slice tarr &amp;opt start end)
+
+Takes a slice of a typed array from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the typed array. By default, start is 0 and end is the size of the typed array. Returns a new janet array.</pre></div><hr><div class="binding"><span id="tarray/swap-bytes" class="binding-sym">tarray/swap-bytes</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tarray/swap-bytes src sindex dst dindex &amp;opt count)
+
+Swap count elements (default 1) between src array from index sindex and dst array at position dindex memory can overlap.</pre></div><hr><div class="binding"><span id="trace" class="binding-sym">trace</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(trace func)
+
+Enable tracing on a function. Returns the function.</pre></div><hr><div class="binding"><span id="true?" class="binding-sym">true?</span> <span class="binding-type">function</span> <pre class="binding-text">(true? x)
+
+Check if x is true.</pre></div><hr><div class="binding"><span id="try" class="binding-sym">try</span> <span class="binding-type">macro</span> <pre class="binding-text">(try body catch)
+
+Try something and catch errors. Body is any expression, and catch should be a form with the first element a tuple. This tuple should contain a binding for errors and an optional binding for the fiber wrapping the body. Returns the result of body if no error, or the result of catch if an error.</pre></div><hr><div class="binding"><span id="tuple" class="binding-sym">tuple</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tuple &amp; items)
+
+Creates a new tuple that contains items. Returns the new tuple.</pre></div><hr><div class="binding"><span id="tuple/brackets" class="binding-sym">tuple/brackets</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tuple/brackets &amp; xs)
+
+Creates a new bracketed tuple containing the elements xs.</pre></div><hr><div class="binding"><span id="tuple/setmap" class="binding-sym">tuple/setmap</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tuple/setmap tup start end)
+
+Set the sourcemap metadata on a tuple. start and end should be integers representing byte offsets into the file. Returns tup.</pre></div><hr><div class="binding"><span id="tuple/slice" class="binding-sym">tuple/slice</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tuple/slice arrtup [,start=0 [,end=(length arrtup)]])
+
+Take a sub sequence of an array or tuple from index start inclusive to index end exclusive. If start or end are not provided, they default to 0 and the length of arrtup respectively.Returns the new tuple.</pre></div><hr><div class="binding"><span id="tuple/sourcemap" class="binding-sym">tuple/sourcemap</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tuple/sourcemap tup)
+
+Returns the sourcemap metadata attached to a tuple. The mapping is represented by a pair of byte offsets into the the source code representing the start and end byte indices where the tuple is. </pre></div><hr><div class="binding"><span id="tuple/type" class="binding-sym">tuple/type</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(tuple/type tup)
+
+Checks how the tuple was constructed. Will return the keyword :brackets if the tuple was parsed with brackets, and :parens otherwise. The two types of tuples will behave the same most of the time, but will print differently and be treated differently by the compiler.</pre></div><hr><div class="binding"><span id="tuple?" class="binding-sym">tuple?</span> <span class="binding-type">function</span> <pre class="binding-text">(tuple? x)
+
+Check if x is a tuple.</pre></div><hr><div class="binding"><span id="type" class="binding-sym">type</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(type x)
+
+Returns the type of x as a keyword symbol. x is one of
+	:nil
+	:boolean
+	:integer
+	:real
+	:array
+	:tuple
+	:table
+	:struct
+	:string
+	:buffer
+	:symbol
+	:keyword
+	:function
+	:cfunction
+
+or another symbol for an abstract type.</pre></div><hr><div class="binding"><span id="unless" class="binding-sym">unless</span> <span class="binding-type">macro</span> <pre class="binding-text">(unless condition &amp; body)
+
+Shorthand for (when (not condition) ;body). </pre></div><hr><div class="binding"><span id="unmarshal" class="binding-sym">unmarshal</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(unmarshal buffer &amp;opt lookup)
+
+Unmarshal a janet value from a buffer. An optional lookup table can be provided to allow for aliases to be resolved. Returns the value unmarshalled from the buffer.</pre></div><hr><div class="binding"><span id="untrace" class="binding-sym">untrace</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(untrace func)
+
+Disables tracing on a function. Returns the function.</pre></div><hr><div class="binding"><span id="update" class="binding-sym">update</span> <span class="binding-type">function</span> <pre class="binding-text">(update ds key func &amp; args)
+
+Accepts a key argument and passes its associated value to a function. The key is the re-associated to the function's return value. Returns the updated data structure ds.</pre></div><hr><div class="binding"><span id="update-in" class="binding-sym">update-in</span> <span class="binding-type">function</span> <pre class="binding-text">(update-in ds ks f &amp; args)
+
+Update a value in a nested data structure by applying f to the current value. Looks into the data structure via a sequence of keys. Missing data structures will be replaced with tables. Returns the modified, original data structure.</pre></div><hr><div class="binding"><span id="use" class="binding-sym">use</span> <span class="binding-type">macro</span> <pre class="binding-text">(use &amp; modules)
+
+Similar to import, but imported bindings are not prefixed with a namespace identifier. Can also import multiple modules in one shot.</pre></div><hr><div class="binding"><span id="values" class="binding-sym">values</span> <span class="binding-type">function</span> <pre class="binding-text">(values x)
+
+Get the values of an associative data structure.</pre></div><hr><div class="binding"><span id="varglobal" class="binding-sym">varglobal</span> <span class="binding-type">function</span> <pre class="binding-text">(varglobal name init)
+
+Dynamically create a global var.</pre></div><hr><div class="binding"><span id="walk" class="binding-sym">walk</span> <span class="binding-type">function</span> <pre class="binding-text">(walk f form)
+
+Iterate over the values in ast and apply f to them. Collect the results in a data structure . If ast is not a table, struct, array, or tuple, returns form.</pre></div><hr><div class="binding"><span id="when" class="binding-sym">when</span> <span class="binding-type">macro</span> <pre class="binding-text">(when condition &amp; body)
+
+Evaluates the body when the condition is true. Otherwise returns nil.</pre></div><hr><div class="binding"><span id="when-let" class="binding-sym">when-let</span> <span class="binding-type">macro</span> <pre class="binding-text">(when-let bindings &amp; body)
+
+Same as (if-let bindings (do ;body)).</pre></div><hr><div class="binding"><span id="with" class="binding-sym">with</span> <span class="binding-type">macro</span> <pre class="binding-text">(with [binding ctor dtor] &amp; body)
+
+Evaluate body with some resource, which will be automatically cleaned up if there is an error in body. binding is bound to the expression ctor, and dtor is a function or callable that is passed the binding. If no destructor (dtor) is given, will call :close on the resource.</pre></div><hr><div class="binding"><span id="with-dyns" class="binding-sym">with-dyns</span> <span class="binding-type">macro</span> <pre class="binding-text">(with-dyns bindings &amp; body)
+
+Run a block of code in a new fiber that has some dynamic bindings set. The fiber will not mask errors or signals, but the dynamic bindings will be properly unset, as dynamic bindings are fiber local.</pre></div><hr><div class="binding"><span id="with-syms" class="binding-sym">with-syms</span> <span class="binding-type">macro</span> <pre class="binding-text">(with-syms syms &amp; body)
+
+Evaluates body with each symbol in syms bound to a generated, unique symbol.</pre></div><hr><div class="binding"><span id="yield" class="binding-sym">yield</span> <span class="binding-type">function</span> <pre class="binding-text">(yield x)
+
+Yield a value to a parent fiber. When a fiber yields, its execution is paused until another thread resumes it. The fiber will then resume, and the last yield call will return the value that was passed to resume.</pre></div><hr><div class="binding"><span id="zero?" class="binding-sym">zero?</span> <span class="binding-type">function</span> <pre class="binding-text">(zero? x)
+
+Check if x is zero.</pre></div><hr><div class="binding"><span id="zipcoll" class="binding-sym">zipcoll</span> <span class="binding-type">function</span> <pre class="binding-text">(zipcoll keys vals)
+
+Creates a table from two arrays/tuples. Returns a new table.</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../docs/jpm.html"><span class="prevnext-text">jpm</span></a></span>
+          <span class="next"><a href="array.html"><span class="prevnext-text">Array Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose 2019
+  <div class="gentag">Generated on October 1, 2019 at 20:32:58 with Janet 1.3.1-7809f89</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

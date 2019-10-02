@@ -26,6 +26,7 @@ deploy: build
 	@echo "Deploying..."
 	aws s3 rm s3://janet-lang.org --recursive
 	aws s3 cp site s3://janet-lang.org --recursive
+	aws s3 cp 1.3.1 s3://janet-lang.org/1.3.1 --recursive
 	aws cloudfront create-invalidation --distribution-id E36S10WSIVPLGB --paths "/*"
 	@echo "Done!"
 

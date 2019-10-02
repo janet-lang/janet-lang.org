@@ -1,3 +1,5 @@
+(use mendoza/template-env)
+
 (defn render-toc
   "Render the table of contents for a page."
   [node]
@@ -6,7 +8,7 @@
    "class" (if (node :pages) "caret")
    :content [{:tag "span" 
               "class" (if (= (dyn :url) url) "selected")
-              :content {:tag "a" "href" url :content (or (node :nav-title) (node :title))}}
+              :content {:tag "a" "href" (relative-url url) :content (or (node :nav-title) (node :title))}}
              (if-let [pages (node :pages)]
                {:tag "ul"
                 :content (map render-toc pages)})]})
