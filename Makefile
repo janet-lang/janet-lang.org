@@ -5,7 +5,6 @@ default: build
 
 build:
 	mdz build
-	cp -r 1.3.1 site
 
 watch:
 	mdz watch

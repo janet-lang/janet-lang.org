@@ -11,7 +11,7 @@ you may override this and structure modules however you like.
 
 ## Installing a Module
 
-Using @code`jpm`, the `path` module can be installed like so from the command line:
+Using @code`jpm`, the @code`path` module can be installed like so from the command line:
 
 @codeblock```
 sudo jpm install https://github.com/janet-lang/path.git
@@ -80,22 +80,22 @@ native to Janet.
 ### @code`module/paths`
 
 This is an array of file paths to search for modules in the
-file system. Each element in this array is a pair @code`[path type predicate]`, where path
+file system. Each element in this array is a tuple @code`[path type predicate]`, where path
 is the a templated file path, which determines what path corresponds to a module name, and
-where type is the loading method used to load the module. @code`type can be one of
+where type is the loading method used to load the module. @code`type` can be one of
 @code`:native`, @code`:source`, @code`:image`, or any key in the @code`module/loaders` table.
 
-@code`predicate` is an optional function
+@p{@code`predicate` is an optional function
 or file extension used to further filter whether or not a module name should match.
-It's mainly useful when @code`path` is a string and you want to further refine the pattern.
+It's mainly useful when @code`path` is a string and you want to further refine the pattern.}
 
-@code`path` can also be a function that checks if a module name matches. If the module name
+@p{@code`path` can also be a function that checks if a module name matches. If the module name
 matches, the function should return a string that will be used as the main identifier for the
 module. Most of the time, this should be the absolute path to the module, but it can be
 any unqiue key that identifies the module such as an absolute url. It is this key that is
 used to determine if a module has been loaded already.
 This mechanism lets @code`./mymod` and @code`mymod`
-refer to the same module even though they are different names passed to import.
+refer to the same module even though they are different names passed to import.}
 
 ### @code`module/loaders`
 
