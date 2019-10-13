@@ -78,7 +78,7 @@ gmake test CC=gcc
     @li{Run @code[build_win] to compile janet.}
     @li{Run @code[build_win test] to make sure everything is working.}}
 
-To install from source, the best way to is use @link[https://sourceforge.net/projects/nsis/]{NSIS} to generate an installer and run that. You will need NSVC (or the Microsoft Build Tools) to build everything, and NSIS to build the installer. From a Developer Command Prompt, run `build_win all` to build, test, and install Janet on your local machine.
+To install from source, the best way to is use @link[https://sourceforge.net/projects/nsis/]{NSIS} to generate an installer and run that. You will need NSVC (or the Microsoft Build Tools) to build everything, and NSIS to build the installer. From a Developer Command Prompt, run @code`build_win all` to build, test, and install Janet on your local machine.
 
 ### Emscripten
 
@@ -94,6 +94,26 @@ Building with emscripten on windows is currently unsupported.
 Janet also has a build file for @link[https://mesonbuild.com/][Meson], a cross platform build
 system. This is not currently the main supported build system, but should work on any
 system that supports meson. Meson also provides much better IDE integration than Make or batch files.
+
+### Small builds
+
+If you want to cut down on the size of the final Janet binary or library, you need to omit features
+and build with @code`-Os`. With meson, this can look something like below:
+
+@codeblock```
+git clone https://github.com/janet-lang/janet.git
+cd janet
+meson setup SmallBuild
+cd SmallBuild
+meson configure -Dsingle_threaded=true -Dassembler=false -Ddocstrings=false \
+    -Dreduced_os=true -Dtyped_array=false -Dsourcemaps=false -Dpeg=false \
+    -Dint_types=false --optimization=s -Ddebug=false
+ninja
+# ./janet should be about 40% smaller than the default build as of 2019-10-13
+```
+
+You can also do this with the Makefile by editing @code`CFLAGS`, and uncommenting some lines
+in @code`src/conf/janetconf.h`.
 
 ## First Program
 
