@@ -111,13 +111,3 @@ For editor support:
 
 Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
 Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}
-
-## Donate
-
-@html```
-<div class="donate-link">
-    <a href="https://liberapay.com/Janet-Language/donate">
-        <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg">
-    </a>
-</div>
-```
