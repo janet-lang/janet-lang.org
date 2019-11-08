@@ -32,7 +32,7 @@ are fairly straight forward. Janet can be easily ported to new platforms.
     @li{REPL}
     @li{Parsing Expression Grammars built in to the core library}
     @li{300+ functions and macros in the core library}
-    @li{Interactive environment with detailed stack traces}}
+    @li{Interactive environment with detailed stack traces}
     @li{Export your projects to standalone executables with a companion build tool, jpm}}
 
 ## Try It
@@ -90,12 +90,15 @@ Options are:
 ## Modules and Libraries
 
 See some auxiliary projects on @link[https://github.com/janet-lang]{GitHub}. Here is a short list of libraries
-for Janet to help you get started with some interesting stuff.
+for Janet to help you get started with some interesting stuff. See @link[https://github.com/janet-lang/pkgs]{the Janet Package Listing}
+for a more complete list. Packages in the listing can be installed via @code`jpm install pkg-name`.
 
 @ul{@li{@link[https://github.com/janet-lang/circlet]{Circlet} - An HTTP server for Janet}
     @li{@link[https://github.com/janet-lang/json]{JSON} - A JSON parser and encoder}
     @li{@link[https://github.com/janet-lang/sqlite3]{SQLite3} - Bindings to SQLite}
     @li{@link[https://github.com/janet-lang/webview]{WebView} - Spawn a browser window for creating HTML+CSS UIs on any platform}
+    @li{@link[https://github.com/janet-lang/jaylib]{Jaylib} - Bindings to Raylib for 2d and 3d game development}
+    @li{@link[https://github.com/janet-lang/jhydro]{JHydro} - Cryptography for Janet}
     @li{@link[https://github.com/janet-lang/janetui]{JanetUI} - Bindings to @link[https://github.com/andlabs/libui]{libui}}}
 
 For editor support:
