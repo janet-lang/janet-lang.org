@@ -40,6 +40,7 @@ syntax (example is translated from a @link[https://www.red-lang.org/2013/11/041-
 (peg/match ip-address "0.0.0.0") # -> @[]
 (peg/match ip-address "elephant") # -> nil
 (peg/match ip-address "256.0.0.0") # -> nil
+(peg/match ip-address "0.0.0.0more text") # -> @[]
 ```
 
 ## The API

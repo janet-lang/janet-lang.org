@@ -1,0 +1,200 @@
+{:title "Writing C Functions"
+ :template "docpage.html"
+ :order 9}
+---
+
+The most common task in creating native extensions for Janet is writing functions
+in C that can be called from Janet. These functions, called C Functions, often follow
+a template to ensure consistent and safe behavior.
+
+@ol{@li{Assert the arity. This prevents callers from calling the function with the wrong arity}
+    @li{Extract arguments. This does type checking on arguments and unwraps Janet values into C values for processing.}
+    @li{Function logic.}
+    @li{Return value or panic}}
+
+While not all C functions need to follow this pattern exactly, many functions can written in this manner, and
+the C API was designed with this use in mind. Most of the core's C functions were written in this style.
+Functions written like this will also give consistent
+error messages when called improperly, creating a better experience for users.
+
+## C Function Signature
+
+All C Functions must conform to the @code`JanetCFunction` type defined in @code`janet.h`. @code`argc`
+is the number of arguments the function was called with, and @code`argv` is an array of arguments with
+length @code`argc`. Any API call that may re-size the stack can invalidate @code`argv`, so calls to
+@code`janet_pcall`, @code`janet_call`, @code`janet_continue`, and @code`janet_fiber_*` should happen
+after all arguments have been extracted from @code`argv`.
+
+@codeblock[c]```
+static Janet cfun_myfunc(int32_t argc, Janet *argv);
+```
+
+## Asserting Arity
+
+Janet comes with 2 arity-asserting API functions. These functions simply
+check the value of argc and provide helpful error messages if it is invalid.
+
+@codeblock[c]```
+void janet_arity(int32_t argc, int32_t min, int32_t max);
+void janet_fixarity(int32_t argc, int32_t arity);
+```
+
+Use @code`janet_arity` to ensure that the arity is in a range between @code`min` and
+@code`max`, inclusive. A value of @code`-1` for max will disable the maximum, allowing
+variadic arguments.
+
+Functions that are single arity should use @code`janet_fixarity`, which is equivalent
+to @code`janet_arity(argc, arity, arity)`, but provides a slightly nicer error message.
+
+## Extracting Arguments
+
+For many wrappers, the most laborious task is safely converting Janet values into C types in a safe
+and flexible manner. We would like to verify that all arguments are of the correct type, and only then
+unwrap them and assign them to C variables. The C API provides a number of utility functions that both typecheck
+and unwrap values in one operation, making this boilerplate a bit more natural.
+
+These utility functions will have the signature @code`type janet_get##type(const Janet *argv, int32_t n)`, and
+extract the nth argument passed to @code`argv` while asserting the argument is a compatible type and converting
+it for you. If the argument is the wrong type, a descriptive error will be raised, indicating a type error in
+the @code`nth` argument. These functions will not bounds check the @code`argv` array, so be sure to check your
+arity before calling these functions.
+
+### Getter functions
+
+@codeblock[c]```
+double janet_getnumber(const Janet *argv, int32_t n);
+JanetArray *janet_getarray(const Janet *argv, int32_t n);
+const Janet *janet_gettuple(const Janet *argv, int32_t n);
+JanetTable *janet_gettable(const Janet *argv, int32_t n);
+const JanetKV *janet_getstruct(const Janet *argv, int32_t n);
+const uint8_t *janet_getstring(const Janet *argv, int32_t n);
+const char *janet_getcstring(const Janet *argv, int32_t n);
+const uint8_t *janet_getsymbol(const Janet *argv, int32_t n);
+const uint8_t *janet_getkeyword(const Janet *argv, int32_t n);
+JanetBuffer *janet_getbuffer(const Janet *argv, int32_t n);
+JanetFiber *janet_getfiber(const Janet *argv, int32_t n);
+JanetFunction *janet_getfunction(const Janet *argv, int32_t n);
+JanetCFunction janet_getcfunction(const Janet *argv, int32_t n);
+int janet_getboolean(const Janet *argv, int32_t n);
+void *janet_getpointer(const Janet *argv, int32_t n);
+
+int32_t janet_getnat(const Janet *argv, int32_t n);
+int32_t janet_getinteger(const Janet *argv, int32_t n);
+int64_t janet_getinteger64(const Janet *argv, int32_t n);
+size_t janet_getsize(const Janet *argv, int32_t n);
+JanetView janet_getindexed(const Janet *argv, int32_t n);
+JanetByteView janet_getbytes(const Janet *argv, int32_t n);
+JanetDictView janet_getdictionary(const Janet *argv, int32_t n);
+void *janet_getabstract(const Janet *argv, int32_t n, const JanetAbstractType *at);
+JanetRange janet_getslice(int32_t argc, const Janet *argv);
+int32_t janet_gethalfrange(const Janet *argv, int32_t n, int32_t length, const char *which);
+int32_t janet_getargindex(const Janet *argv, int32_t n, int32_t length, const char *which);
+uint64_t janet_getflags(const Janet *argv, int32_t n, const char *flags);
+```
+
+Another common pattern is to allow nil for some arguments, and use a default value if nil or no value is provided.
+C Functions should try to be consistent with the idea that not providing an optional argument is the same as
+setting it to nil. API functions in the family @code`type janet_opt##type(const Janet *argv, int32_t argc, int32_t n, type dflt)`
+work similar to the normal argument getter functions. Note that the signature is different as they take in the value of @code`argc`.
+These functions perform bounds checks on the argument array (assuming @code`n >= 0`), which is why they take in @code`argc` as a parameter.
+
+@codeblock[c]```
+double janet_optnumber(const Janet *argv, int32_t argc, int32_t n, double dflt);
+const Janet *janet_opttuple(const Janet *argv, int32_t argc, int32_t n, const Janet *dflt);
+const JanetKV *janet_optstruct(const Janet *argv, int32_t argc, int32_t n, const JanetKV *dflt);
+const uint8_t *janet_optstring(const Janet *argv, int32_t argc, int32_t n, const uint8_t *dflt);
+const char *janet_optcstring(const Janet *argv, int32_t argc, int32_t n, const char *dflt);
+const uint8_t *janet_optsymbol(const Janet *argv, int32_t argc, int32_t n, const uint8_t *dflt);
+const uint8_t *janet_optkeyword(const Janet *argv, int32_t argc, int32_t n, const uint8_t *dflt);
+JanetFiber *janet_optfiber(const Janet *argv, int32_t argc, int32_t n, JanetFiber *dflt);
+JanetFunction *janet_optfunction(const Janet *argv, int32_t argc, int32_t n, JanetFunction *dflt);
+JanetCFunction janet_optcfunction(const Janet *argv, int32_t argc, int32_t n, JanetCFunction dflt);
+int janet_optboolean(const Janet *argv, int32_t argc, int32_t n, int dflt);
+void *janet_optpointer(const Janet *argv, int32_t argc, int32_t n, void *dflt);
+int32_t janet_optnat(const Janet *argv, int32_t argc, int32_t n, int32_t dflt);
+int32_t janet_optinteger(const Janet *argv, int32_t argc, int32_t n, int32_t dflt);
+int64_t janet_optinteger64(const Janet *argv, int32_t argc, int32_t n, int64_t dflt);
+size_t janet_optsize(const Janet *argv, int32_t argc, int32_t n, size_t dflt);
+void *janet_optabstract(const Janet *argv, int32_t argc, int32_t n, const JanetAbstractType *at, void *dflt);
+
+/* Mutable optional types specify a size default, and
+ * construct a new value if none is provided */
+JanetBuffer *janet_optbuffer(const Janet *argv, int32_t argc, int32_t n, int32_t dflt_len);
+JanetTable *janet_opttable(const Janet *argv, int32_t argc, int32_t n, int32_t dflt_len);
+JanetArray *janet_optarray(const Janet *argv, int32_t argc, int32_t n, int32_t dflt_len);
+```
+
+## Panicking
+
+If at any point during execution of the C function an error is hit, you may want to abort execution
+and raise an error. Errors should not be expected to be frequent, but they should not segfault
+the program, leak memory, or invoke undefined behavior. The C API provides a few @code`janet_panic`
+functions that will abort execution and jump back to a specified error point (the last call to @code`janet_continue`).
+
+@codeblock[c]```
+void janet_panicv(Janet message);
+void janet_panic(const char *message);
+void janet_panics(const uint8_t *message);
+void janet_panicf(const char *format, ...);
+```
+
+Use @code`janet_panicf` to create descriptive, formatted error messages for functions. The format string
+is much like that of printf, but takes different escape sequences to make printing errors with Janet values
+possible. In general, it is less flexible that @code`printf` as it is specialized for displaying Janet values.
+Also note that these formatters are different than those used by @code`buffer/format` and @code`string/format`
+inside Janet.
+
+@tag`table`{@tr{@th{Formatter}@th{Description}@th{Type}}
+    @tr{@td{%f} @td{print a double} @td{@code`double`}}
+    @tr{@td{%d} @td{print an integer} @td{@code`long`}}
+    @tr{@td{%S} @td{print a Janet string-like} @td{@code`const uint8_t *`}}
+    @tr{@td{%s} @td{print a NULL-terminated C string} @td{@code`const char *`}}
+    @tr{@td{%c} @td{print a char} @td{@code`long`}}
+    @tr{@td{%q} @td{print a quoted Janet string-like} @td{@code`const uint8_t *`}}
+    @tr{@td{%t} @td{print the type of a Janet value} @td{@code`Janet`}}
+    @tr{@td{%T} @td{print a Janet type} @td{@code`JanetType`}}
+    @tr{@td{%v} @td{print a Janet value with (describe x)} @td{@code`Janet`}}
+    @tr{@td{%V} @td{print a Janet value with (tostring x)} @td{@code`Janet`}}
+    @tr{@td{%p} @td{pretty print a Janet value} @td{@code`Janet`}}
+    @tr{@td{%P} @td{pretty print a Janet value with color} @td{@code`Janet`}}}
+
+## Scratch Memory
+
+Panicking is implement with C's @code`setjmp` and @code`longjmp`, which means that resources are not
+cleaned up when a panic happens. To avoid leaking memory, stick to using Janet's data structures, which
+are garbage collected, or
+use Janet's scratch memory API to allocate memory. The scratch memory API exposes functions similar to @code`malloc` and
+@code`free`, but the memory will be automatically freed on the next garbage collection cycle if @code`janet_sfree` is not called.
+
+@codeblock[c]```
+void *janet_smalloc(size_t size);
+void *janet_srealloc(void *mem, size_t size);
+void janet_sfree(void *mem);
+```
+
+## Example
+
+@codeblock[c]```
+/* Set a value in an array with an index that wraps around */
+static Janet cfun_array_ringset(int32_t argc, Janet *argv) {
+
+    /* Ensure 3 arguments */
+    janet_fixarity(argc, 3);
+
+    /* Extract arguments */
+    JanetArray *array = janet_getarray(argv, 0);
+    int64_t index = janet_getinteger64(argv, 1);
+    if (index < 0) {
+        janet_panicf("expected non-negative 64 bit integer, got %v",
+            argv[1]);
+    }
+
+    /* Set array[index % count] = argv[2] */
+    int64_t count64 = (int64_t) array->count;
+    int64_t mod_index = index % count64;
+    array->data[mod_index] = argv[2];
+
+    /* Return the original array */
+    return janet_wrap_array(array);
+}
+```

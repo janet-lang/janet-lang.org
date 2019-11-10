@@ -68,7 +68,7 @@
    ['sruim '(sruim dest lhs shamt) "$dest = $lhs >>> shamt"]
    ['sub '(sub dest lhs rhs) "$dest = $lhs - $rhs"]
    ['tcall '(tcall callee) "Return call($callee, args)"]
-   ['tchck '(tcheck slot types) "Assert $slot does matches types"]])
+   ['tchck '(tcheck slot types) "Assert $slot matches types"]])
 
 (defn gen
   "Reference table for assembly instructions."

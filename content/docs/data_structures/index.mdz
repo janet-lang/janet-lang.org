@@ -69,26 +69,38 @@ elements at random indices will run in @code[O(n)] time where @code[n] is the nu
 ```)
 
 To read the values in a data structure, use the get function. The first parameter is the data structure
-itself, and the second parameter is the key.
+itself, and the second parameter is the key. An optional third paramter can be used to specify a default
+if the value is not found.
 
-@codeblock[janet](```
+@codeblock[janet]```
 (get @{:a 1} :a) # -> 1
 (get {:a 1} :a) # -> 1
 (get @[:a :b :c] 2) # -> :c
 (get (tuple "a" "b" "c") 1) # -> "b"
 (get @"hello, world" 1) # -> 101
 (get "hello, world" 0) # -> 104
-```)
+(get {:a :b} :a) # -> :b
+(get {:a :b} :c :d) # -> :d
+```
+
+Similar to the `get` function and added in `1.5.0`, the `in` function also get values contained in a data structure
+but will throw errors on bad keys to arrays, tuple, and string-likes. You should prefer `in` going forward as
+it can be used to better detect errors. For tables, structs, and abstract types, `in` behaves identically to `get`.
+
+@codeblock[janet]```
+(in @[:a :b :c] 2) # -> :c
+(in @[:a :b :c] 3) # -> raises error
+```
 
 To update a mutable data structure, use the @code[put] function. It takes 3 arguments, the data structure,
 the key, and the value, and returns the data structure. The allowed types keys and values
 depend on what data structure is passed in.
 
-@codeblock[janet](```
+@codeblock[janet]```
 (put @[] 100 :a)
 (put @{} :key "value")
 (put @"" 100 92)
-```)
+```
 
 Note that for Arrays and Buffers, putting an index that is outside the length of the data structure
 will extend the data structure and fill it with nils in the case of the Array,
