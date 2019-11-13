@@ -52,7 +52,7 @@ JANET_MODULE_ENTRY(JanetTable *env) {
 ```
 
 This module is a very simple module that exposes one
-native function called @code`myfun`. The module is called `mymod`, although
+native function called @code`myfun`. The module is called @code`mymod`, although
 when importing the module, the user can rename it to whatever he or she likes.
 
 ### Compiling the Module
