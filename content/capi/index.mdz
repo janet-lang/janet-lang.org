@@ -58,24 +58,18 @@ when importing the module, the user can rename it to whatever he or she likes.
 ### Compiling the Module
 
 Once you have written you native code a file @code`mymod.c`, you will need to
-compile it with your system's C compiler. Rather than write instructions here for all
-possible systems, we will use the `cook` module, which is included with Janet, to
-compile the native module. In general, native modules should be compiled with the
-same flags that Janet was compiled with, plus anything necessary for shared objects on your system.
-Notably, your module should @strong[NOT] be linked to @code`libjanet.so` or @code`janet.dll` on
-windows. The host interpreter that loads the module will provide the needed symbols and functions
-to the Janet module.
+compile it with your system's C compiler. The easiest way to do this is to use @code`jpm` and write a @code`project.janet` file.
+@code`jpm` will handle all of the linking and flags for you so that you can write portable modules. Since @code`project.janet`
+is just a Janet script, you can detect what platform you are running on and do conditional compilation there if needed.
 
-The easiest way to compile a module is to start up a repl, import @code`cook`, and use
-the function @code`cook/declare-native` to compile your native module.
+Inside @code`project.janet`:
 
 @codeblock[janet]```
-(import cook)
-(cook/declare-project)
-(cook/declare-native :name "mymod" :source @["mymod.c"])
-(cook/do-rule "build")
+(declare-project :name "mymod")
+(declare-native :name "mymod" :source @["mymod.c"])
 ```
 
+Once you have @code`project.janet` written, run @code`jpm build` to build the module.
 If all goes well, cook should have built a file @code`build/mymod.so`. In your repl, you can now
 import your module and use it.
 
@@ -85,13 +79,3 @@ import your module and use it.
 ```
 
 Congratulations, you have a native module.
-
-### A more complex build system
-
-For any project beyond a simple hello world example, you will want to automate the building of
-your native module. The easiest way to do this is to write a script such as @code`build.janet` in
-your project directory that contains the code to build to module. Then, on the command line you
-may use @code`janet build` to build your native module. It is recommended to write similar scripts
-for testing, installing, etc.
-
-In the future, Janet may have a tool to help make this process more declarative.
