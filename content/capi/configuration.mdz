@@ -15,9 +15,13 @@ they can work together.
 ## Defines
 
 ### @code`#define JANET_MAJOR 1`
+
 ### @code`#define JANET_MINOR 2`
+
 ### @code`#define JANET_PATCH 3`
+
 ### @code`#define JANET_EXTRA "-dev"`
+
 ### @code`#define JANET_VERSION "1.2.3-dev"`
 
 Use these defines to set the janet version.
