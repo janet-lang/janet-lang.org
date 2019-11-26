@@ -65,7 +65,7 @@ to use to try and find a given module. The entries in @code`module/paths`
 will be checked in order, as it is possible that multiple entries could match.
 If a module name matches a pattern (which
 usually means that some file exists), then we use the corresponding loader in
-@code`module/loaders` to evaluate that file, source code, url, or whatever else
+@code`module/loaders` to evaluate that file, source code, URL, or whatever else
 we want to derive from the module name. The resulting value, usually an environment
 table, is then cached so that it can be reused later without evaluating a module
 twice.
@@ -92,7 +92,7 @@ It's mainly useful when @code`path` is a string and you want to further refine t
 @p{@code`path` can also be a function that checks if a module name matches. If the module name
 matches, the function should return a string that will be used as the main identifier for the
 module. Most of the time, this should be the absolute path to the module, but it can be
-any unique key that identifies the module such as an absolute url. It is this key that is
+any unique key that identifies the module such as an absolute URL. It is this key that is
 used to determine if a module has been loaded already.
 This mechanism lets @code`./mymod` and @code`mymod`
 refer to the same module even though they are different names passed to import.}
@@ -115,7 +115,7 @@ An example from @code`examples/urlloader.janet` in the source repository shows h
 a loader can be a wrapper around curl and @code`dofile` to load source files from HTTP URLs.
 To use it, simply evaluate this file somewhere in your program before you require code from
 a URL. Don't use this as is in production code, as if @code`url` contains spaces in @code`load-url`
-the module will not load correctly. A more robust solution would quote the url, or better yet
+the module will not load correctly. A more robust solution would quote the URL, or better yet
 use @code`os/execute` and write to a temporary file instead of @code`file/popen`.
 
 @codeblock[janet]```
