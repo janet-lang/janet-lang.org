@@ -92,7 +92,7 @@ It's mainly useful when @code`path` is a string and you want to further refine t
 @p{@code`path` can also be a function that checks if a module name matches. If the module name
 matches, the function should return a string that will be used as the main identifier for the
 module. Most of the time, this should be the absolute path to the module, but it can be
-any unqiue key that identifies the module such as an absolute url. It is this key that is
+any unique key that identifies the module such as an absolute url. It is this key that is
 used to determine if a module has been loaded already.
 This mechanism lets @code`./mymod` and @code`mymod`
 refer to the same module even though they are different names passed to import.}
@@ -151,11 +151,11 @@ mymod/
     dep2.janet
 ```
 
-With the above structre, @code`init.janet` can import @code`dep1` and
+With the above structure, @code`init.janet` can import @code`dep1` and
 @code`dep2` with relative imports. This is less brittle as the entire
 @code`mymod/` directory can be installed without any chance that @code`dep1`
 and @code`dep2` will overwrite other files, or that @code`init.janet` will
-acidentally import a different file named @code`dep1.janet` or
+accidentally import a different file named @code`dep1.janet` or
 @code`dep2.janet`. @code`mymod` can even be a sub directory in another janet
 source tree and work as expected.
 
