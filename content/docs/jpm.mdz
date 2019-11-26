@@ -7,7 +7,7 @@ Most default installs of janet come with a build tool, @code`jpm`, that makes
 managing dependencies, building Janet code, and distributing Janet applications
 easy. While @code`jpm` is not required by Janet, it is a very handy build tool
 that removes much of the boilerplate for creating new Janet projects, and is
-updated in step with Janet. @code`jpm` also works on Windows, linux, and macos
+updated in step with Janet. @code`jpm` also works on Windows, linux, and macOS
 so you don't need to write multiple build scripts and worry about platform
 quirks to make your scripts, binaries, and applications cross-platform.
 
