@@ -172,7 +172,7 @@ init.janet
 Writing a module in Janet is mostly about exposing only the public functions
 that you want users of your module to be able to use. All top level functions defined
 via @code`defn`, macros defined @code`defmacro`, constants defined via @code`def`, and
-and vars defined via @code`var` will be exported in your module. To mark a function or
+vars defined via @code`var` will be exported in your module. To mark a function or
 binding as private to your module, you may use @code`defn-` or @code`def-` at the top level.
 You can also add the @code`:private` metadata to the binding.
 
