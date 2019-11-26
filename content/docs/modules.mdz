@@ -74,7 +74,7 @@ By modifying @code`module/paths` and @code`module/loaders`, you can create
 custom module schemes, handlers for file extensions, or even your own module
 system. It is recommended to not modify existing entries in @code`module/paths`
 or @code`module/loader`, and add on to the existing entries. This is rather
-addvanced usage, but can be incredibly useful in creating DSLs that feel
+advanced usage, but can be incredibly useful in creating DSLs that feel
 native to Janet.
 
 ### @code`module/paths`
