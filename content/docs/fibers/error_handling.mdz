@@ -4,7 +4,7 @@
 ---
 
 One of the main uses of Fibers is to encapsulate and handle errors. Janet offers
-no direct mechanism for try/catch like some language, and instead builds error
+no direct mechanism for try/catch like some languages, and instead builds error
 handling on top of Fibers. When some function throws an error, Janet creates a signal
 and throws that signal in the current fiber. The signal will be propogated up the
 chain of active fibers until it hits a fiber that is ready to handle the error signal.
