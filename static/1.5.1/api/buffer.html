@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Buffer Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Buffer Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/object_oriented.html">Object Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span class="selected"><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="tuple.html">tuple</a></span></li><li><span><a href="tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.5.1-5171dfd Documentation<br>(Other Versions:
+          <a href="../../1.5.0/api/buffer.html">1.5.0</a>
+          <a href="../../1.4.0/api/buffer.html">1.4.0</a>
+          <a href="../../1.3.1/api/buffer.html">1.3.1</a>)</h4>
+        <h1 class="subtitle">Buffer Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="array.html"><span class="prevnext-text">Array Module</span></a></span>
+
+          <span class="next"><a href="debug.html"><span class="prevnext-text">Debug Module</span></a></span>
+        </div>
+        
+
+<h2>Index
+</h2>
+<p><a href="#buffer/bit">buffer/bit</a> <a href="#buffer/bit-clear">buffer/bit-clear</a> <a href="#buffer/bit-set">buffer/bit-set</a> <a href="#buffer/bit-toggle">buffer/bit-toggle</a> <a href="#buffer/blit">buffer/blit</a> <a href="#buffer/clear">buffer/clear</a> <a href="#buffer/format">buffer/format</a> <a href="#buffer/new">buffer/new</a> <a href="#buffer/new-filled">buffer/new-filled</a> <a href="#buffer/popn">buffer/popn</a> <a href="#buffer/push-byte">buffer/push-byte</a> <a href="#buffer/push-string">buffer/push-string</a> <a href="#buffer/push-word">buffer/push-word</a> <a href="#buffer/slice">buffer/slice</a> </p><hr><div class="binding"><span id="buffer/bit" class="binding-sym">buffer/bit</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit buffer index)
+
+Gets the bit at the given bit-index. Returns true if the bit is set, false if not.</pre></div><hr><div class="binding"><span id="buffer/bit-clear" class="binding-sym">buffer/bit-clear</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit-clear buffer index)
+
+Clears the bit at the given bit-index. Returns the buffer.</pre></div><hr><div class="binding"><span id="buffer/bit-set" class="binding-sym">buffer/bit-set</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit-set buffer index)
+
+Sets the bit at the given bit-index. Returns the buffer.</pre></div><hr><div class="binding"><span id="buffer/bit-toggle" class="binding-sym">buffer/bit-toggle</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/bit-toggle buffer index)
+
+Toggles the bit at the given bit index in buffer. Returns the buffer.</pre></div><hr><div class="binding"><span id="buffer/blit" class="binding-sym">buffer/blit</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/blit dest src &amp; opt dest-start src-start src-end)
+
+Insert the contents of src into dest. Can optionally take indices that indicate which part of src to copy into which part of dest. Indices can be negative to index from the end of src or dest. Returns dest.</pre></div><hr><div class="binding"><span id="buffer/clear" class="binding-sym">buffer/clear</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/clear buffer)
+
+Sets the size of a buffer to 0 and empties it. The buffer retains its memory so it can be efficiently refilled. Returns the modified buffer.</pre></div><hr><div class="binding"><span id="buffer/format" class="binding-sym">buffer/format</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/format buffer format &amp; args)
+
+Snprintf like functionality for printing values into a buffer. Returns the modified buffer.</pre></div><hr><div class="binding"><span id="buffer/new" class="binding-sym">buffer/new</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/new capacity)
+
+Creates a new, empty buffer with enough memory for capacity bytes. Returns a new buffer.</pre></div><hr><div class="binding"><span id="buffer/new-filled" class="binding-sym">buffer/new-filled</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/new-filled count &amp;opt byte)
+
+Creates a new buffer of length count filled with byte. By default, byte is 0. Returns the new buffer.</pre></div><hr><div class="binding"><span id="buffer/popn" class="binding-sym">buffer/popn</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/popn buffer n)
+
+Removes the last n bytes from the buffer. Returns the modified buffer.</pre></div><hr><div class="binding"><span id="buffer/push-byte" class="binding-sym">buffer/push-byte</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/push-byte buffer x)
+
+Append a byte to a buffer. Will expand the buffer as necessary. Returns the modified buffer. Will throw an error if the buffer overflows.</pre></div><hr><div class="binding"><span id="buffer/push-string" class="binding-sym">buffer/push-string</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/push-string buffer str)
+
+Push a string onto the end of a buffer. Non string values will be converted to strings before being pushed. Returns the modified buffer. Will throw an error if the buffer overflows.</pre></div><hr><div class="binding"><span id="buffer/push-word" class="binding-sym">buffer/push-word</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/push-word buffer x)
+
+Append a machine word to a buffer. The 4 bytes of the integer are appended in twos complement, big endian order, unsigned. Returns the modified buffer. Will throw an error if the buffer overflows.</pre></div><hr><div class="binding"><span id="buffer/slice" class="binding-sym">buffer/slice</span> <span class="binding-type">cfunction</span> <pre class="binding-text">(buffer/slice bytes &amp;opt start end)
+
+Takes a slice of a byte sequence from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the array. By default, start is 0 and end is the length of the buffer. Returns a new buffer.</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="array.html"><span class="prevnext-text">Array Module</span></a></span>
+          <span class="next"><a href="debug.html"><span class="prevnext-text">Debug Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose 2019
+  <div class="gentag">Generated on December 12, 2019 at 08:21:28 with Janet 1.5.1-5171dfd</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

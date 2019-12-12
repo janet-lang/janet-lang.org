@@ -1,0 +1,1610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Janet Language Documentation</title>
+<meta name="description" content="API Documentation for the janet programming language.">
+<style>
+.docstring {
+  font-family: monospace;
+}
+.binding-type {
+  color: blue;
+}
+.source-map {
+  color: steelblue;
+  font-size: 0.8em;
+}
+</style>
+</head><h1>Janet Core API</h1><p>Version 1.5.0-719f7ba</p><p>Generated November 10, 2019 at 17:36:42</p><hr><h2 class="binding"><a id="%">%</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(% dividend divisor)<br><br>Returns the remainder of dividend &#47; divisor.</p>
+<hr>
+<h2 class="binding"><a id="%=">%=</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(%= x n)<br><br>Shorthand for (set x (% x n)).</p>
+<span class="source-map">boot.janet (130:1)</span><hr>
+<h2 class="binding"><a id="*">*</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(* &amp; xs)<br><br>Returns the product of all elements in xs. If xs is empty, returns 1.</p>
+<hr>
+<h2 class="binding"><a id="*=">*=</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(*= x n)<br><br>Shorthand for (set x (* x n)).</p>
+<span class="source-map">boot.janet (128:1)</span><hr>
+<h2 class="binding"><a id="+">+</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(+ &amp; xs)<br><br>Returns the sum of all xs. xs must be integers or real numbers only. If xs is empty, return 0.</p>
+<hr>
+<h2 class="binding"><a id="++">++</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(++ x)<br><br>Increments the var x by 1.</p>
+<span class="source-map">boot.janet (124:1)</span><hr>
+<h2 class="binding"><a id="+=">+=</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(+= x n)<br><br>Increments the var x by n.</p>
+<span class="source-map">boot.janet (126:1)</span><hr>
+<h2 class="binding"><a id="-">-</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(- &amp; xs)<br><br>Returns the difference of xs. If xs is empty, returns 0. If xs has one element, returns the negative value of that element. Otherwise, returns the first element in xs minus the sum of the rest of the elements.</p>
+<hr>
+<h2 class="binding"><a id="--">--</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(-- x)<br><br>Decrements the var x by 1.</p>
+<span class="source-map">boot.janet (125:1)</span><hr>
+<h2 class="binding"><a id="-=">-=</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(-= x n)<br><br>Decrements the var x by n.</p>
+<span class="source-map">boot.janet (127:1)</span><hr>
+<h2 class="binding"><a id="->">-&gt;</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(-&gt; x &amp; forms)<br><br>Threading macro. Inserts x as the second value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. Useful for expressing pipelines of data.</p>
+<span class="source-map">boot.janet (778:1)</span><hr>
+<h2 class="binding"><a id="->>">-&gt;&gt;</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(-&gt;&gt; x &amp; forms)<br><br>Threading macro. Inserts x as the last value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. Useful for expressing pipelines of data.</p>
+<span class="source-map">boot.janet (791:1)</span><hr>
+<h2 class="binding"><a id="-?>">-?&gt;</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(-?&gt; x &amp; forms)<br><br>Short circuit threading macro. Inserts x as the last value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. The pipeline will return nil  if an intermediate value is nil.  Useful for expressing pipelines of data.</p>
+<span class="source-map">boot.janet (804:1)</span><hr>
+<h2 class="binding"><a id="-?>>">-?&gt;&gt;</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(-?&gt;&gt; x &amp; forms)<br><br>Threading macro. Inserts x as the last value in the first form  in forms, and inserts the modified first form into the second form  in the same manner, and so on. The pipeline will return nil  if an intermediate value is nil.  Useful for expressing pipelines of data.</p>
+<span class="source-map">boot.janet (820:1)</span><hr>
+<h2 class="binding"><a id="/">&#47;</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(&#47; &amp; xs)<br><br>Returns the quotient of xs. If xs is empty, returns 1. If xs has one value x, returns the reciprocal of x. Otherwise return the first value of xs repeatedly divided by the remaining values. Division by two integers uses truncating division.</p>
+<hr>
+<h2 class="binding"><a id="/=">&#47;=</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(&#47;= x n)<br><br>Shorthand for (set x (&#47; x n)).</p>
+<span class="source-map">boot.janet (129:1)</span><hr>
+<h2 class="binding"><a id="<">&lt;</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(&lt; &amp; xs)<br><br>Check if xs is in numerically ascending order. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="<=">&lt;=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(&lt;= &amp; xs)<br><br>Check if xs is in numerically non-descending order. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="=">=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(= &amp; xs)<br><br>Returns true if all values in xs are the same, false otherwise.</p>
+<hr>
+<h2 class="binding"><a id="==">==</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(== &amp; xs)<br><br>Check if all values in xs are numerically equal (4.0 == 4). Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id=">">&gt;</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(&gt; &amp; xs)<br><br>Check if xs is in numerically descending order. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id=">=">&gt;=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(&gt;= &amp; xs)<br><br>Check if xs is in numerically non-ascending order. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="abstract?">abstract?</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(abstract? x)<br><br>Check if x is an abstract type.</p>
+<hr>
+<h2 class="binding"><a id="all">all</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(all pred xs)<br><br>Returns true if all xs are truthy, otherwise the first false or nil value.</p>
+<span class="source-map">boot.janet (1481:1)</span><hr>
+<h2 class="binding"><a id="all-bindings">all-bindings</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(all-bindings &amp;opt env)<br><br>Get all symbols available in an enviroment. Defaults to the current  fiber&#39;s environment.</p>
+<span class="source-map">boot.janet (2055:1)</span><hr>
+<h2 class="binding"><a id="all-dynamics">all-dynamics</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(all-dynamics &amp;opt env)<br><br>Get all dynamic bindings in an environment. Defaults to the current  fiber&#39;s environment.</p>
+<span class="source-map">boot.janet (2061:1)</span><hr>
+<h2 class="binding"><a id="and">and</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(and &amp; forms)<br><br>Evaluates to the last argument if all preceding elements are true, otherwise  evaluates to false.</p>
+<span class="source-map">boot.janet (224:1)</span><hr>
+<h2 class="binding"><a id="apply">apply</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(apply f &amp; args)<br><br>Applies a function to a variable number of arguments. Each element in args is used as an argument to f, except the last element in args, which is expected to be an array-like. Each element in this last argument is then also pushed as an argument to f. For example:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;(apply + 1000 (range 10))<br><br>sums the first 10 integers and 1000.</p>
+<hr>
+<h2 class="binding"><a id="array">array</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array &amp; items)<br><br>Create a new array that contains items. Returns the new array.</p>
+<hr>
+<h2 class="binding"><a id="array/concat">array&#47;concat</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;concat arr &amp; parts)<br><br>Concatenates a variadic number of arrays (and tuples) into the first argument which must an array. If any of the parts are arrays or tuples, their elements will be inserted into the array. Otherwise, each part in parts will be appended to arr in order. Return the modified array arr.</p>
+<hr>
+<h2 class="binding"><a id="array/ensure">array&#47;ensure</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;ensure arr capacity)<br><br>Ensures that the memory backing the array is large enough for capacity items. Capacity must be an integer. If the backing capacity is already enough, then this function does nothing. Otherwise, the backing memory will be reallocated so that there is enough space.</p>
+<hr>
+<h2 class="binding"><a id="array/insert">array&#47;insert</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;insert arr at &amp; xs)<br><br>Insert all of xs into array arr at index at. at should be an integer 0 and the length of the array. A negative value for at will index from the end of the array, such that inserting at -1 appends to the array. Returns the array.</p>
+<hr>
+<h2 class="binding"><a id="array/new">array&#47;new</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;new capacity)<br><br>Creates a new empty array with a pre-allocated capacity. The same as (array) but can be more efficient if the maximum size of an array is known.</p>
+<hr>
+<h2 class="binding"><a id="array/peek">array&#47;peek</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;peek arr)<br><br>Returns the last element of the array. Does not modify the array.</p>
+<hr>
+<h2 class="binding"><a id="array/pop">array&#47;pop</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;pop arr)<br><br>Remove the last element of the array and return it. If the array is empty, will return nil. Modifies the input array.</p>
+<hr>
+<h2 class="binding"><a id="array/push">array&#47;push</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;push arr x)<br><br>Insert an element in the end of an array. Modifies the input array and returns it.</p>
+<hr>
+<h2 class="binding"><a id="array/remove">array&#47;remove</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;remove arr at &amp;opt n)<br><br>Remove up to n elements starting at index at in array arr. at can index from the end of the array with a negative index, and n must be a non-negative integer. By default, n is 1. Returns the array.</p>
+<hr>
+<h2 class="binding"><a id="array/slice">array&#47;slice</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(array&#47;slice arrtup &amp;opt start end)<br><br>Takes a slice of array or tuple from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the array. By default, start is 0 and end is the length of the array. Returns a new array.</p>
+<hr>
+<h2 class="binding"><a id="array?">array?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(array? x)<br><br>Check if x is an array.</p>
+<span class="source-map">boot.janet (93:1)</span><hr>
+<h2 class="binding"><a id="as->">as-&gt;</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(as-&gt; x as &amp; forms)<br><br>Thread forms together, replacing as in forms with the value  of the previous form. The first for is the value x. Returns the  last value.</p>
+<span class="source-map">boot.janet (875:1)</span><hr>
+<h2 class="binding"><a id="as?->">as?-&gt;</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(as?-&gt; x as &amp; forms)<br><br>Thread forms together, replacing as in forms with the value  of the previous form. The first for is the value x. If any  intermediate values are falsey, return nil; otherwise, returns the  last value.</p>
+<span class="source-map">boot.janet (887:1)</span><hr>
+<h2 class="binding"><a id="asm">asm</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(asm assembly)<br><br>Returns a new function that is the compiled result of the assembly.<br>The syntax for the assembly can be found on the janet wiki. Will throw an<br>error on invalid assembly.</p>
+<hr>
+<h2 class="binding"><a id="bad-compile">bad-compile</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(bad-compile msg macrof where)<br><br>Default handler for a compile error.</p>
+<span class="source-map">boot.janet (1651:1)</span><hr>
+<h2 class="binding"><a id="bad-parse">bad-parse</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(bad-parse p where)<br><br>Default handler for a parse error.</p>
+<span class="source-map">boot.janet (1634:1)</span><hr>
+<h2 class="binding"><a id="band">band</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(band &amp; xs)<br><br>Returns the bit-wise and of all values in xs. Each x in xs must be an integer.</p>
+<hr>
+<h2 class="binding"><a id="blshift">blshift</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(blshift x &amp; shifts)<br><br>Returns the value of x bit shifted left by the sum of all values in shifts. x and each element in shift must be an integer.</p>
+<hr>
+<h2 class="binding"><a id="bnot">bnot</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(bnot x)<br><br>Returns the bit-wise inverse of integer x.</p>
+<hr>
+<h2 class="binding"><a id="boolean?">boolean?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(boolean? x)<br><br>Check if x is a boolean.</p>
+<span class="source-map">boot.janet (95:1)</span><hr>
+<h2 class="binding"><a id="bor">bor</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(bor &amp; xs)<br><br>Returns the bit-wise or of all values in xs. Each x in xs must be an integer.</p>
+<hr>
+<h2 class="binding"><a id="brshift">brshift</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(brshift x &amp; shifts)<br><br>Returns the value of x bit shifted right by the sum of all values in shifts. x and each element in shift must be an integer.</p>
+<hr>
+<h2 class="binding"><a id="brushift">brushift</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(brushift x &amp; shifts)<br><br>Returns the value of x bit shifted right by the sum of all values in shifts. x and each element in shift must be an integer. The sign of x is not preserved, so for positive shifts the return value will always be positive.</p>
+<hr>
+<h2 class="binding"><a id="buffer">buffer</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer &amp; xs)<br><br>Creates a new buffer by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/bit">buffer&#47;bit</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;bit buffer index)<br><br>Gets the bit at the given bit-index. Returns true if the bit is set, false if not.</p>
+<hr>
+<h2 class="binding"><a id="buffer/bit-clear">buffer&#47;bit-clear</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;bit-clear buffer index)<br><br>Clears the bit at the given bit-index. Returns the buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/bit-set">buffer&#47;bit-set</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;bit-set buffer index)<br><br>Sets the bit at the given bit-index. Returns the buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/bit-toggle">buffer&#47;bit-toggle</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;bit-toggle buffer index)<br><br>Toggles the bit at the given bit index in buffer. Returns the buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/blit">buffer&#47;blit</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;blit dest src &amp; opt dest-start src-start src-end)<br><br>Insert the contents of src into dest. Can optionally take indices that indicate which part of src to copy into which part of dest. Indices can be negative to index from the end of src or dest. Returns dest.</p>
+<hr>
+<h2 class="binding"><a id="buffer/clear">buffer&#47;clear</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;clear buffer)<br><br>Sets the size of a buffer to 0 and empties it. The buffer retains its memory so it can be efficiently refilled. Returns the modified buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/format">buffer&#47;format</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;format buffer format &amp; args)<br><br>Snprintf like functionality for printing values into a buffer. Returns  the modified buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/new">buffer&#47;new</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;new capacity)<br><br>Creates a new, empty buffer with enough memory for capacity bytes. Returns a new buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/new-filled">buffer&#47;new-filled</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;new-filled count &amp;opt byte)<br><br>Creates a new buffer of length count filled with byte. By default, byte is 0. Returns the new buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/popn">buffer&#47;popn</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;popn buffer n)<br><br>Removes the last n bytes from the buffer. Returns the modified buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer/push-byte">buffer&#47;push-byte</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;push-byte buffer x)<br><br>Append a byte to a buffer. Will expand the buffer as necessary. Returns the modified buffer. Will throw an error if the buffer overflows.</p>
+<hr>
+<h2 class="binding"><a id="buffer/push-string">buffer&#47;push-string</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;push-string buffer str)<br><br>Push a string onto the end of a buffer. Non string values will be converted to strings before being pushed. Returns the modified buffer. Will throw an error if the buffer overflows.</p>
+<hr>
+<h2 class="binding"><a id="buffer/push-word">buffer&#47;push-word</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;push-word buffer x)<br><br>Append a machine word to a buffer. The 4 bytes of the integer are appended in twos complement, big endian order, unsigned. Returns the modified buffer. Will throw an error if the buffer overflows.</p>
+<hr>
+<h2 class="binding"><a id="buffer/slice">buffer&#47;slice</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(buffer&#47;slice bytes &amp;opt start end)<br><br>Takes a slice of a byte sequence from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the array. By default, start is 0 and end is the length of the buffer. Returns a new buffer.</p>
+<hr>
+<h2 class="binding"><a id="buffer?">buffer?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(buffer? x)<br><br>Check if x is a buffer.</p>
+<span class="source-map">boot.janet (87:1)</span><hr>
+<h2 class="binding"><a id="bxor">bxor</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(bxor &amp; xs)<br><br>Returns the bit-wise xor of all values in xs. Each in xs must be an integer.</p>
+<hr>
+<h2 class="binding"><a id="bytes?">bytes?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(bytes? x)<br><br>Check if x is a string, symbol, or buffer.</p>
+<span class="source-map">boot.janet (96:1)</span><hr>
+<h2 class="binding"><a id="case">case</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(case dispatch &amp; pairs)<br><br>Select the body that equals the dispatch value. When pairs  has an odd number of arguments, the last is the default expression.  If no match is found, returns nil.</p>
+<span class="source-map">boot.janet (172:1)</span><hr>
+<h2 class="binding"><a id="cfunction?">cfunction?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(cfunction? x)<br><br>Check if x a cfunction.</p>
+<span class="source-map">boot.janet (90:1)</span><hr>
+<h2 class="binding"><a id="cli-main">cli-main</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(cli-main args)<br><br>Entrance for the Janet CLI tool. Call this functions with the command line  arguments as an array or tuple of strings to invoke the CLI interface.</p>
+<span class="source-map">boot.janet (2078:1)</span><hr>
+<h2 class="binding"><a id="comment">comment</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(comment &amp;)<br><br>Ignores the body of the comment.</p>
+<span class="source-map">boot.janet (138:1)</span><hr>
+<h2 class="binding"><a id="comp">comp</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(comp &amp; functions)<br><br>Takes multiple functions and returns a function that is the composition  of those functions.</p>
+<span class="source-map">boot.janet (495:1)</span><hr>
+<h2 class="binding"><a id="compile">compile</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(compile ast &amp;opt env source)<br><br>Compiles an Abstract Syntax Tree (ast) into a janet function. Pair the compile function with parsing functionality to implement eval. Returns a janet function and does not modify ast. Throws an error if the ast cannot be compiled.</p>
+<hr>
+<h2 class="binding"><a id="complement">complement</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(complement f)<br><br>Returns a function that is the complement to the argument.</p>
+<span class="source-map">boot.janet (514:1)</span><hr>
+<h2 class="binding"><a id="cond">cond</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(cond &amp; pairs)<br><br>Evaluates conditions sequentially until the first true condition  is found, and then executes the corresponding body. If there are an  odd number of forms, the last expression is executed if no forms  are matched. If there are no matches, return nil.</p>
+<span class="source-map">boot.janet (157:1)</span><hr>
+<h2 class="binding"><a id="coro">coro</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(coro &amp; body)<br><br>A wrapper for making fibers. Same as (fiber&#47;new (fn [] ;body) :yi).</p>
+<span class="source-map">boot.janet (435:1)</span><hr>
+<h2 class="binding"><a id="count">count</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(count pred ind)<br><br>Count the number of items in ind for which (pred item)  is true.</p>
+<span class="source-map">boot.janet (647:1)</span><hr>
+<h2 class="binding"><a id="debug">debug</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(debug)<br><br>Throws a debug signal that can be caught by a parent fiber and used to inspect the running state of the current fiber. Returns nil.</p>
+<hr>
+<h2 class="binding"><a id="debug/arg-stack">debug&#47;arg-stack</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;arg-stack fiber)<br><br>Gets all values currently on the fiber&#39;s argument stack. Normally, this should be empty unless the fiber signals while pushing arguments to make a function call. Returns a new array.</p>
+<hr>
+<h2 class="binding"><a id="debug/break">debug&#47;break</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;break source byte-offset)<br><br>Sets a breakpoint with source a key at a given line and column. Will throw an error if the breakpoint location cannot be found. For example<br><br>&nbsp;&nbsp;&nbsp;&nbsp;(debug&#47;break &quot;core.janet&quot; 1000)<br><br>wil set a breakpoint at the 1000th byte of the file core.janet.</p>
+<hr>
+<h2 class="binding"><a id="debug/fbreak">debug&#47;fbreak</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;fbreak fun &amp;opt pc)<br><br>Set a breakpoint in a given function. pc is an optional offset, which is in bytecode instructions. fun is a function value. Will throw an error if the offset is too large or negative.</p>
+<hr>
+<h2 class="binding"><a id="debug/lineage">debug&#47;lineage</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;lineage fib)<br><br>Returns an array of all child fibers from a root fiber. This function is useful when a fiber signals or errors to an ancestor fiber. Using this function, the fiber handling the error can see which fiber raised the signal. This function should be used mostly for debugging purposes.</p>
+<hr>
+<h2 class="binding"><a id="debug/stack">debug&#47;stack</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;stack fib)<br><br>Gets information about the stack as an array of tables. Each table in the array contains information about a stack frame. The top most, current stack frame is the first table in the array, and the bottom most stack frame is the last value. Each stack frame contains some of the following attributes:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:c - true if the stack frame is a c function invocation<br>&nbsp;&nbsp;&nbsp;&nbsp;:column - the current source column of the stack frame<br>&nbsp;&nbsp;&nbsp;&nbsp;:function - the function that the stack frame represents<br>&nbsp;&nbsp;&nbsp;&nbsp;:line - the current source line of the stack frame<br>&nbsp;&nbsp;&nbsp;&nbsp;:name - the human friendly name of the function<br>&nbsp;&nbsp;&nbsp;&nbsp;:pc - integer indicating the location of the program counter<br>&nbsp;&nbsp;&nbsp;&nbsp;:source - string with the file path or other identifier for the source code<br>&nbsp;&nbsp;&nbsp;&nbsp;:slots - array of all values in each slot<br>&nbsp;&nbsp;&nbsp;&nbsp;:tail - boolean indicating a tail call</p>
+<hr>
+<h2 class="binding"><a id="debug/stacktrace">debug&#47;stacktrace</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;stacktrace fiber err)<br><br>Prints a nice looking stacktrace for a fiber. The error message err must be passed to the function as fiber&#39;s do not keep track of the last error they have thrown. Returns the fiber.</p>
+<hr>
+<h2 class="binding"><a id="debug/unbreak">debug&#47;unbreak</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;unbreak source line column)<br><br>Remove a breakpoint with a source key at a given line and column. Will throw an error if the breakpoint cannot be found.</p>
+<hr>
+<h2 class="binding"><a id="debug/unfbreak">debug&#47;unfbreak</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(debug&#47;unfbreak fun &amp;opt pc)<br><br>Unset a breakpoint set with debug&#47;fbreak.</p>
+<hr>
+<h2 class="binding"><a id="dec">dec</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(dec x)<br><br>Returns x - 1.</p>
+<span class="source-map">boot.janet (123:1)</span><hr>
+<h2 class="binding"><a id="deep-not=">deep-not=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(deep-not= x y)<br><br>Like not=, but mutable types (arrays, tables, buffers) are considered  equal if they have identical structure. Much slower than not=.</p>
+<span class="source-map">boot.janet (1495:1)</span><hr>
+<h2 class="binding"><a id="deep=">deep=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(deep= x y)<br><br>Like =, but mutable types (arrays, tables, buffers) are considered  equal if they have identical structure. Much slower than =.</p>
+<span class="source-map">boot.janet (1510:1)</span><hr>
+<h2 class="binding"><a id="def-">def-</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(def- name &amp; more)<br><br>Define a private value that will not be exported.</p>
+<span class="source-map">boot.janet (56:1)</span><hr>
+<h2 class="binding"><a id="default">default</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(default sym val)<br><br>Define a default value for an optional argument.  Expands to (def sym (if (= nil sym) val sym))</p>
+<span class="source-map">boot.janet (132:1)</span><hr>
+<h2 class="binding"><a id="defglobal">defglobal</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(defglobal name value)<br><br>Dynamically create a global def.</p>
+<span class="source-map">boot.janet (61:1)</span><hr>
+<h2 class="binding"><a id="defmacro">defmacro</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(defmacro name &amp; more)<br><br>Define a macro.</p>
+<span class="source-map">boot.janet (41:1)</span><hr>
+<h2 class="binding"><a id="defmacro-">defmacro-</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(defmacro- name &amp; more)<br><br>Define a private macro that will not be exported.</p>
+<span class="source-map">boot.janet (46:1)</span><hr>
+<h2 class="binding"><a id="defn">defn</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(defn name &amp; more)<br><br>Define a function. Equivalent to (def name (fn name [args] ...)).</p>
+<span class="source-map">boot.janet (10:1)</span><hr>
+<h2 class="binding"><a id="defn-">defn-</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(defn- name &amp; more)<br><br>Define a private function that will not be exported.</p>
+<span class="source-map">boot.janet (51:1)</span><hr>
+<h2 class="binding"><a id="describe">describe</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(describe x)<br><br>Returns a string that is a human readable description of a value x.</p>
+<hr>
+<h2 class="binding"><a id="dictionary?">dictionary?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(dictionary? x)<br><br>Check if x a table or struct.</p>
+<span class="source-map">boot.janet (99:1)</span><hr>
+<h2 class="binding"><a id="disasm">disasm</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(disasm func)<br><br>Returns assembly that could be used be compile the given function.<br>func must be a function, not a c function. Will throw on error on a badly<br>typed argument.</p>
+<hr>
+<h2 class="binding"><a id="distinct">distinct</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(distinct xs)<br><br>Returns an array of the deduplicated values in xs.</p>
+<span class="source-map">boot.janet (1111:1)</span><hr>
+<h2 class="binding"><a id="doc">doc</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(doc sym)<br><br>Shows documentation for the given symbol.</p>
+<span class="source-map">boot.janet (1373:1)</span><hr>
+<h2 class="binding"><a id="doc*">doc*</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(doc* sym)<br><br>Get the documentation for a symbol in a given environment.</p>
+<span class="source-map">boot.janet (1349:1)</span><hr>
+<h2 class="binding"><a id="doc-format">doc-format</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(doc-format text)<br><br>Reformat text to wrap at a given line.</p>
+<span class="source-map">boot.janet (1311:1)</span><hr>
+<h2 class="binding"><a id="dofile">dofile</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(dofile path &amp; args)<br><br>Evaluate a file and return the resulting environment.</p>
+<span class="source-map">boot.janet (1900:1)</span><hr>
+<h2 class="binding"><a id="drop">drop</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(drop n ind)<br><br>Drop first n elements in an indexed type. Returns new indexed instance.</p>
+<span class="source-map">boot.janet (734:1)</span><hr>
+<h2 class="binding"><a id="drop-until">drop-until</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(drop-until pred ind)<br><br>Same as (drop-while (complement pred) ind).</p>
+<span class="source-map">boot.janet (743:1)</span><hr>
+<h2 class="binding"><a id="drop-while">drop-while</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(drop-while pred ind)<br><br>Given a predicate, remove elements from an indexed type that satisfy  the predicate, and abort on first failure. Returns a new array.</p>
+<span class="source-map">boot.janet (753:1)</span><hr>
+<h2 class="binding"><a id="dyn">dyn</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(dyn key &amp;opt default)<br><br>Get a dynamic binding. Returns the default value (or nil) if no binding found.</p>
+<hr>
+<h2 class="binding"><a id="each">each</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(each x ind &amp; body)<br><br>Loop over each value in ind. Returns nil.</p>
+<span class="source-map">boot.janet (377:1)</span><hr>
+<h2 class="binding"><a id="empty?">empty?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(empty? xs)<br><br>Check if xs is empty.</p>
+<span class="source-map">boot.janet (108:1)</span><hr>
+<h2 class="binding"><a id="env-lookup">env-lookup</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(env-lookup env)<br><br>Creates a forward lookup table for unmarshalling from an environment. To create a reverse lookup table, use the invert function to swap keys and values in the returned table.</p>
+<hr>
+<h2 class="binding"><a id="eprin">eprin</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(eprin &amp; xs)<br><br>Same as prin, but uses (dyn :err stderr) instead of (dyn :out stdout).</p>
+<hr>
+<h2 class="binding"><a id="eprint">eprint</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(eprint &amp; xs)<br><br>Same as print, but uses (dyn :err stderr) instead of (dyn :out stdout).</p>
+<hr>
+<h2 class="binding"><a id="eprintf">eprintf</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(eprintf fmt &amp; xs)<br><br>Prints output formatted as if with (string&#47;format fmt ;xs) to (dyn :err stderr).</p>
+<hr>
+<h2 class="binding"><a id="error">error</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(error e)<br><br>Throws an error e that can be caught and handled by a parent fiber.</p>
+<hr>
+<h2 class="binding"><a id="eval">eval</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(eval form)<br><br>Evaluates a form in the current environment. If more control over the  environment is needed, use run-context.</p>
+<span class="source-map">boot.janet (1783:1)</span><hr>
+<h2 class="binding"><a id="eval-string">eval-string</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(eval-string str)<br><br>Evaluates a string in the current environment. If more control over the  environment is needed, use run-context.</p>
+<span class="source-map">boot.janet (1758:1)</span><hr>
+<h2 class="binding"><a id="even?">even?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(even? x)<br><br>Check if x is even.</p>
+<span class="source-map">boot.janet (76:1)</span><hr>
+<h2 class="binding"><a id="every?">every?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(every? ind)<br><br>Returns true if each value in is truthy, otherwise the first  falsey value.</p>
+<span class="source-map">boot.janet (936:1)</span><hr>
+<h2 class="binding"><a id="extreme">extreme</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(extreme order args)<br><br>Returns the most extreme value in args based on the function order.  order should take two values and return true or false (a comparison).  Returns nil if args is empty.</p>
+<span class="source-map">boot.janet (519:1)</span><hr>
+<h2 class="binding"><a id="false?">false?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(false? x)<br><br>Check if x is false.</p>
+<span class="source-map">boot.janet (106:1)</span><hr>
+<h2 class="binding"><a id="fiber/current">fiber&#47;current</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(fiber&#47;current)<br><br>Returns the currently running fiber.</p>
+<hr>
+<h2 class="binding"><a id="fiber/getenv">fiber&#47;getenv</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(fiber&#47;getenv fiber)<br><br>Gets the environment for a fiber. Returns nil if no such table is set yet.</p>
+<hr>
+<h2 class="binding"><a id="fiber/maxstack">fiber&#47;maxstack</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(fiber&#47;maxstack fib)<br><br>Gets the maximum stack size in janet values allowed for a fiber. While memory for the fiber&#39;s stack is not allocated up front, the fiber will not allocated more than this amount and will throw a stack-overflow error if more memory is needed. </p>
+<hr>
+<h2 class="binding"><a id="fiber/new">fiber&#47;new</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(fiber&#47;new func &amp;opt sigmask)<br><br>Create a new fiber with function body func. Can optionally take a set of signals to block from the current parent fiber when called. The mask is specified as a keyword where each character is used to indicate a signal to block. The default sigmask is :y. For example, <br><br>&nbsp;&nbsp;&nbsp;&nbsp;(fiber&#47;new myfun :e123)<br><br>blocks error signals and user signals 1, 2 and 3. The signals are as follows: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;a - block all signals<br>&nbsp;&nbsp;&nbsp;&nbsp;d - block debug signals<br>&nbsp;&nbsp;&nbsp;&nbsp;e - block error signals<br>&nbsp;&nbsp;&nbsp;&nbsp;u - block user signals<br>&nbsp;&nbsp;&nbsp;&nbsp;y - block yield signals<br>&nbsp;&nbsp;&nbsp;&nbsp;0-9 - block a specific user signal<br><br>The sigmask argument also can take environment flags. If any mutually exclusive flags are present, the last flag takes precedence.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;i - inherit the environment from the current fiber<br>&nbsp;&nbsp;&nbsp;&nbsp;p - the environment table&#39;s prototype is the current environment table</p>
+<hr>
+<h2 class="binding"><a id="fiber/setenv">fiber&#47;setenv</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(fiber&#47;setenv fiber table)<br><br>Sets the environment table for a fiber. Set to nil to remove the current environment.</p>
+<hr>
+<h2 class="binding"><a id="fiber/setmaxstack">fiber&#47;setmaxstack</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(fiber&#47;setmaxstack fib maxstack)<br><br>Sets the maximum stack size in janet values for a fiber. By default, the maximum stack size is usually 8192.</p>
+<hr>
+<h2 class="binding"><a id="fiber/status">fiber&#47;status</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(fiber&#47;status fib)<br><br>Get the status of a fiber. The status will be one of:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:dead - the fiber has finished<br>&nbsp;&nbsp;&nbsp;&nbsp;:error - the fiber has errored out<br>&nbsp;&nbsp;&nbsp;&nbsp;:debug - the fiber is suspended in debug mode<br>&nbsp;&nbsp;&nbsp;&nbsp;:pending - the fiber has been yielded<br>&nbsp;&nbsp;&nbsp;&nbsp;:user(0-9) - the fiber is suspended by a user signal<br>&nbsp;&nbsp;&nbsp;&nbsp;:alive - the fiber is currently running and cannot be resumed<br>&nbsp;&nbsp;&nbsp;&nbsp;:new - the fiber has just been created and not yet run</p>
+<hr>
+<h2 class="binding"><a id="fiber?">fiber?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(fiber? x)<br><br>Check if x is a fiber.</p>
+<span class="source-map">boot.janet (83:1)</span><hr>
+<h2 class="binding"><a id="file/close">file&#47;close</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;close f)<br><br>Close a file and release all related resources. When you are done reading a file, close it to prevent a resource leak and let other processes read the file.</p>
+<hr>
+<h2 class="binding"><a id="file/fdopen">file&#47;fdopen</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;fdopen fd &amp;opt mode)<br><br>Create a file from an fd. fd is a platform specific file descriptor, and mode is a set of flags indicating the mode to open the file in. mode is a keyword where each character represents a flag. If the file cannot be opened, returns nil, otherwise returns the new file handle. Mode flags:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;r - allow reading from the file<br>&nbsp;&nbsp;&nbsp;&nbsp;w - allow writing to the file<br>&nbsp;&nbsp;&nbsp;&nbsp;a - append to the file<br>&nbsp;&nbsp;&nbsp;&nbsp;b - open the file in binary mode (rather than text mode)<br>&nbsp;&nbsp;&nbsp;&nbsp;+ - append to the file instead of overwriting it</p>
+<hr>
+<h2 class="binding"><a id="file/fileno">file&#47;fileno</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;fileno f)<br><br>Return the underlying file descriptor for the file as a number.The meaning of this number is platform specific.</p>
+<hr>
+<h2 class="binding"><a id="file/flush">file&#47;flush</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;flush f)<br><br>Flush any buffered bytes to the file system. In most files, writes are buffered for efficiency reasons. Returns the file handle.</p>
+<hr>
+<h2 class="binding"><a id="file/open">file&#47;open</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;open path &amp;opt mode)<br><br>Open a file. path is an absolute or relative path, and mode is a set of flags indicating the mode to open the file in. mode is a keyword where each character represents a flag. If the file cannot be opened, returns nil, otherwise returns the new file handle. Mode flags:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;r - allow reading from the file<br>&nbsp;&nbsp;&nbsp;&nbsp;w - allow writing to the file<br>&nbsp;&nbsp;&nbsp;&nbsp;a - append to the file<br>&nbsp;&nbsp;&nbsp;&nbsp;b - open the file in binary mode (rather than text mode)<br>&nbsp;&nbsp;&nbsp;&nbsp;+ - append to the file instead of overwriting it</p>
+<hr>
+<h2 class="binding"><a id="file/popen">file&#47;popen</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;popen path &amp;opt mode)<br><br>Open a file that is backed by a process. The file must be opened in either the :r (read) or the :w (write) mode. In :r mode, the stdout of the process can be read from the file. In :w mode, the stdin of the process can be written to. Returns the new file.</p>
+<hr>
+<h2 class="binding"><a id="file/read">file&#47;read</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;read f what &amp;opt buf)<br><br>Read a number of bytes from a file into a buffer. A buffer can be provided as an optional fourth argument, otherwise a new buffer is created. &#39;what&#39; can either be an integer or a keyword. Returns the buffer with file contents. Values for &#39;what&#39;:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:all - read the whole file<br>&nbsp;&nbsp;&nbsp;&nbsp;:line - read up to and including the next newline character<br>&nbsp;&nbsp;&nbsp;&nbsp;n (integer) - read up to n bytes from the file</p>
+<hr>
+<h2 class="binding"><a id="file/seek">file&#47;seek</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;seek f &amp;opt whence n)<br><br>Jump to a relative location in the file. &#39;whence&#39; must be one of<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:cur - jump relative to the current file location<br>&nbsp;&nbsp;&nbsp;&nbsp;:set - jump relative to the beginning of the file<br>&nbsp;&nbsp;&nbsp;&nbsp;:end - jump relative to the end of the file<br><br>By default, &#39;whence&#39; is :cur. Optionally a value n may be passed for the relative number of bytes to seek in the file. n may be a real number to handle large files of more the 4GB. Returns the file handle.</p>
+<hr>
+<h2 class="binding"><a id="file/write">file&#47;write</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(file&#47;write f bytes)<br><br>Writes to a file. &#39;bytes&#39; must be string, buffer, or symbol. Returns the file.</p>
+<hr>
+<h2 class="binding"><a id="filter">filter</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(filter pred ind)<br><br>Given a predicate, take only elements from an array or tuple for  which (pred element) is truthy. Returns a new array.</p>
+<span class="source-map">boot.janet (637:1)</span><hr>
+<h2 class="binding"><a id="find">find</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(find pred ind)<br><br>Find the first value in an indexed collection that satisfies a predicate. Returns  nil if not found. Note there is no way to differentiate a nil from the indexed collection  and a not found. Consider find-index if this is an issue.</p>
+<span class="source-map">boot.janet (701:1)</span><hr>
+<h2 class="binding"><a id="find-index">find-index</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(find-index pred ind)<br><br>Find the index of indexed type for which pred is true. Returns nil if not found.</p>
+<span class="source-map">boot.janet (690:1)</span><hr>
+<h2 class="binding"><a id="first">first</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(first xs)<br><br>Get the first element from an indexed data structure.</p>
+<span class="source-map">boot.janet (546:1)</span><hr>
+<h2 class="binding"><a id="flatten">flatten</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(flatten xs)<br><br>Takes a nested array (tree), and returns the depth first traversal of  that array. Returns a new array.</p>
+<span class="source-map">boot.janet (1129:1)</span><hr>
+<h2 class="binding"><a id="flatten-into">flatten-into</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(flatten-into into xs)<br><br>Takes a nested array (tree), and appends the depth first traversal of  that array to an array &#39;into&#39;. Returns array into.</p>
+<span class="source-map">boot.janet (1119:1)</span><hr>
+<h2 class="binding"><a id="for">for</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(for i start stop &amp; body)<br><br>Do a c style for loop for side effects. Returns nil.</p>
+<span class="source-map">boot.janet (372:1)</span><hr>
+<h2 class="binding"><a id="freeze">freeze</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(freeze x)<br><br>Freeze an object (make it immutable) and do a deep copy, making  child values also immutable. Closures, fibers, and abstract types  will not be recursively frozen, but all other types will.</p>
+<span class="source-map">boot.janet (1516:1)</span><hr>
+<h2 class="binding"><a id="frequencies">frequencies</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(frequencies ind)<br><br>Get the number of occurrences of each value in a indexed structure.</p>
+<span class="source-map">boot.janet (1089:1)</span><hr>
+<h2 class="binding"><a id="function?">function?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(function? x)<br><br>Check if x is a function (not a cfunction).</p>
+<span class="source-map">boot.janet (88:1)</span><hr>
+<h2 class="binding"><a id="gccollect">gccollect</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(gccollect)<br><br>Run garbage collection. You should probably not call this manually.</p>
+<hr>
+<h2 class="binding"><a id="gcinterval">gcinterval</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(gcinterval)<br><br>Returns the integer number of bytes to allocate before running an iteration of garbage collection.</p>
+<hr>
+<h2 class="binding"><a id="gcsetinterval">gcsetinterval</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(gcsetinterval interval)<br><br>Set an integer number of bytes to allocate before running garbage collection. Low valuesi for interval will be slower but use less memory. High values will be faster but use more memory.</p>
+<hr>
+<h2 class="binding"><a id="generate">generate</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(generate head &amp; body)<br><br>Create a generator expression using the loop syntax. Returns a fiber  that yields all values inside the loop in order. See loop for details.</p>
+<span class="source-map">boot.janet (429:1)</span><hr>
+<h2 class="binding"><a id="gensym">gensym</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(gensym)<br><br>Returns a new symbol that is unique across the runtime. This means it will not collide with any already created symbols during compilation, so it can be used in macros to generate automatic bindings.</p>
+<hr>
+<h2 class="binding"><a id="get">get</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(get ds key &amp;opt dflt)<br><br>Get the value mapped to key in data structure ds, and return dflt or nil if not found. Similar to get, but will not throw an error if the key is invalid for the data structure unless the data structure is an abstract type. In that case, the abstract type getter may throw an error.</p>
+<hr>
+<h2 class="binding"><a id="get-in">get-in</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(get-in ds ks &amp;opt dflt)<br><br>Access a value in a nested data structure. Looks into the data structure via  a sequence of keys.</p>
+<span class="source-map">boot.janet (978:1)</span><hr>
+<h2 class="binding"><a id="getline">getline</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(getline &amp;opt prompt buf)<br><br>Reads a line of input into a buffer, including the newline character, using a prompt. Returns the modified buffer. Use this function to implement a simple interface for a terminal program.</p>
+<hr>
+<h2 class="binding"><a id="hash">hash</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(hash value)<br><br>Gets a hash value for any janet value. The hash is an integer can be used as a cheap hash function for all janet objects. If two values are strictly equal, then they will have the same hash value.</p>
+<hr>
+<h2 class="binding"><a id="idempotent?">idempotent?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(idempotent? x)<br><br>Check if x is a value that evaluates to itself when compiled.</p>
+<span class="source-map">boot.janet (110:1)</span><hr>
+<h2 class="binding"><a id="identity">identity</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(identity x)<br><br>A function that returns its first argument.</p>
+<span class="source-map">boot.janet (509:1)</span><hr>
+<h2 class="binding"><a id="if-let">if-let</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(if-let bindings tru &amp;opt fal)<br><br>Make multiple bindings, and if all are truthy,  evaluate the tru form. If any are false or nil, evaluate  the fal form. Bindings have the same syntax as the let macro.</p>
+<span class="source-map">boot.janet (459:1)</span><hr>
+<h2 class="binding"><a id="if-not">if-not</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(if-not condition then &amp;opt else)<br><br>Shorthand for (if (not condition) else then).</p>
+<span class="source-map">boot.janet (142:1)</span><hr>
+<h2 class="binding"><a id="import">import</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(import path &amp; args)<br><br>Import a module. First requires the module, and then merges its  symbols into the current environment, prepending a given prefix as needed.  (use the :as or :prefix option to set a prefix). If no prefix is provided,  use the name of the module as a prefix. One can also use :export true  to re-export the imported symbols. If :exit true is given as an argument,  any errors encountered at the top level in the module will cause (os&#47;exit 1)  to be called.</p>
+<span class="source-map">boot.janet (1981:1)</span><hr>
+<h2 class="binding"><a id="import*">import*</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(import* path &amp; args)<br><br>Function form of import. Same parameters, but the path  and other symbol parameters should be strings instead.</p>
+<span class="source-map">boot.janet (1967:1)</span><hr>
+<h2 class="binding"><a id="in">in</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(get ds key &amp;opt dflt)<br><br>Get a value from any associative data structure. Arrays, tuples, tables, structs, strings, symbols, and buffers are all associative and can be used with get. Order structures, name arrays, tuples, strings, buffers, and symbols must use integer keys. Structs and tables can take any value as a key except nil and return a value except nil. Byte sequences will return integer representations of bytes as result of a get call. If no values is found, will return dflt or nil if no default is provided.</p>
+<hr>
+<h2 class="binding"><a id="inc">inc</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(inc x)<br><br>Returns x + 1.</p>
+<span class="source-map">boot.janet (122:1)</span><hr>
+<h2 class="binding"><a id="indexed?">indexed?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(indexed? x)<br><br>Check if x is an array or tuple.</p>
+<span class="source-map">boot.janet (102:1)</span><hr>
+<h2 class="binding"><a id="int/s64">int&#47;s64</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(int&#47;s64 value)<br><br>Create a boxed signed 64 bit integer from a string value.</p>
+<hr>
+<h2 class="binding"><a id="int/u64">int&#47;u64</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(int&#47;u64 value)<br><br>Create a boxed unsigned 64 bit integer from a string value.</p>
+<hr>
+<h2 class="binding"><a id="int?">int?</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(int? x)<br><br>Check if x can be exactly represented as a 32 bit signed two&#39;s complement integer.</p>
+<hr>
+<h2 class="binding"><a id="interleave">interleave</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(interleave &amp; cols)<br><br>Returns an array of the first elements of each col,  then the second, etc.</p>
+<span class="source-map">boot.janet (1098:1)</span><hr>
+<h2 class="binding"><a id="interpose">interpose</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(interpose sep ind)<br><br>Returns a sequence of the elements of ind separated by  sep. Returns a new array.</p>
+<span class="source-map">boot.janet (1143:1)</span><hr>
+<h2 class="binding"><a id="invert">invert</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(invert ds)<br><br>Returns a table of where the keys of an associative data structure  are the values, and the values of the keys. If multiple keys have the same  value, one key will be ignored.</p>
+<span class="source-map">boot.janet (956:1)</span><hr>
+<h2 class="binding"><a id="janet/build">janet&#47;build</a></h2>
+<span class="binding-type">string</span>
+<p class="docstring">The build identifier of the running janet program.</p>
+<hr>
+<h2 class="binding"><a id="janet/config-bits">janet&#47;config-bits</a></h2>
+<span class="binding-type">number</span>
+<p class="docstring">The flag set of config options from janetconf.h which is used to check if native modules are compatible with the host program.</p>
+<hr>
+<h2 class="binding"><a id="janet/version">janet&#47;version</a></h2>
+<span class="binding-type">string</span>
+<p class="docstring">The version number of the running janet program.</p>
+<hr>
+<h2 class="binding"><a id="juxt">juxt</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(juxt &amp; funs)<br><br>Macro form of juxt*. Same behavior but more efficient.</p>
+<span class="source-map">boot.janet (769:1)</span><hr>
+<h2 class="binding"><a id="juxt*">juxt*</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(juxt* &amp; funs)<br><br>Returns the juxtaposition of functions. In other words,  ((juxt* a b c) x) evaluates to [(a x) (b x) (c x)].</p>
+<span class="source-map">boot.janet (759:1)</span><hr>
+<h2 class="binding"><a id="keep">keep</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(keep pred ind)<br><br>Given a predicate, take only elements from an array or tuple for  which (pred element) is truthy. Returns a new array of truthy predicate results.</p>
+<span class="source-map">boot.janet (657:1)</span><hr>
+<h2 class="binding"><a id="keys">keys</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(keys x)<br><br>Get the keys of an associative data structure.</p>
+<span class="source-map">boot.janet (1059:1)</span><hr>
+<h2 class="binding"><a id="keyword">keyword</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(keyword &amp; xs)<br><br>Creates a keyword by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new keyword.</p>
+<hr>
+<h2 class="binding"><a id="keyword?">keyword?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(keyword? x)<br><br>Check if x is a keyword.</p>
+<span class="source-map">boot.janet (86:1)</span><hr>
+<h2 class="binding"><a id="kvs">kvs</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(kvs dict)<br><br>Takes a table or struct and returns and array of key value pairs  like @[k v k v ...]. Returns a new array.</p>
+<span class="source-map">boot.janet (1135:1)</span><hr>
+<h2 class="binding"><a id="last">last</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(last xs)<br><br>Get the last element from an indexed data structure.</p>
+<span class="source-map">boot.janet (551:1)</span><hr>
+<h2 class="binding"><a id="length">length</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(length ds)<br><br>Returns the length or count of a data structure in constant time as an integer. For structs and tables, returns the number of key-value pairs in the data structure.</p>
+<hr>
+<h2 class="binding"><a id="let">let</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(let bindings &amp; body)<br><br>Create a scope and bind values to symbols. Each pair in bindings is  assigned as if with def, and the body of the let form returns the last  value.</p>
+<span class="source-map">boot.janet (192:1)</span><hr>
+<h2 class="binding"><a id="load-image">load-image</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(load-image image)<br><br>The inverse operation to make-image. Returns an environment.</p>
+<span class="source-map">boot.janet (1798:1)</span><hr>
+<h2 class="binding"><a id="loop">loop</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(loop head &amp; body)<br><br>A general purpose loop macro. This macro is similar to the Common Lisp  loop macro, although intentionally much smaller in scope.  The head of the loop should be a tuple that contains a sequence of  either bindings or conditionals. A binding is a sequence of three values  that define something to loop over. They are formatted like:<br><br>  &nbsp;&nbsp;&nbsp;&nbsp;binding :verb object&#47;expression<br><br>  Where binding is a binding as passed to def, :verb is one of a set of keywords,  and object is any janet expression. The available verbs are:<br><br>  &nbsp;&nbsp;&nbsp;&nbsp;:iterate - repeatedly evaluate and bind to the expression while it is truthy.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:range - loop over a range. The object should be two element tuple with a start  and end value, and an optional positive step. The range is half open, [start, end).<br>  &nbsp;&nbsp;&nbsp;&nbsp;:down - Same as range, but loops in reverse.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:keys - Iterate over the keys in a data structure.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:pairs - Iterate over the keys value pairs in a data structure.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:in - Iterate over the values in an indexed data structure or byte sequence.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:generate - Iterate over values yielded from a fiber. Can be paired with the generator  function for the producer&#47;consumer pattern.<br><br>  loop also accepts conditionals to refine the looping further. Conditionals are of  the form:<br><br>  &nbsp;&nbsp;&nbsp;&nbsp;:modifier argument<br><br>  where :modifier is one of a set of keywords, and argument is keyword dependent.  :modifier can be one of:<br><br>  &nbsp;&nbsp;&nbsp;&nbsp;:while expression - breaks from the loop if expression is falsey.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:until expression - breaks from the loop if expression is truthy.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:let bindings - defines bindings inside the loop as passed to the let macro.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:before form - evaluates a form for a side effect before of the next inner loop.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:after form - same as :before, but the side effect happens after the next inner loop.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:repeat n - repeats the next inner loop n times.<br>  &nbsp;&nbsp;&nbsp;&nbsp;:when condition - only evaluates the loop body when condition is true.<br><br>  The loop macro always evaluates to nil.</p>
+<span class="source-map">boot.janet (382:1)</span><hr>
+<h2 class="binding"><a id="macex">macex</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(macex x &amp;opt on-binding)<br><br>Expand macros completely.  on-binding is an optional callback whenever a normal symbolic binding  is encounter. This allows macros to easily see all bindings use by their  arguments by calling macex on their contents. The binding itself is also  replaced by the value returned by on-binding within the expand macro.</p>
+<span class="source-map">boot.janet (1531:1)</span><hr>
+<h2 class="binding"><a id="macex1">macex1</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(macex1 x &amp;opt on-binding)<br><br>Expand macros in a form, but do not recursively expand macros.  See macex docs for info on on-binding.</p>
+<span class="source-map">boot.janet (1384:1)</span><hr>
+<h2 class="binding"><a id="make-env">make-env</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(make-env &amp;opt parent)<br><br>Create a new environment table. The new environment  will inherit bindings from the parent environment, but new  bindings will not pollute the parent environment.</p>
+<span class="source-map">boot.janet (1625:1)</span><hr>
+<h2 class="binding"><a id="make-image">make-image</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(make-image env)<br><br>Create an image from an environment returned by require.  Returns the image source as a string.</p>
+<span class="source-map">boot.janet (1792:1)</span><hr>
+<h2 class="binding"><a id="map">map</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(map f &amp; inds)<br><br>Map a function over every element in an indexed data structure and  return an array of the results.</p>
+<span class="source-map">boot.janet (605:1)</span><hr>
+<h2 class="binding"><a id="mapcat">mapcat</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(mapcat f ind)<br><br>Map a function over every element in an array or tuple and  use array to concatenate the results.</p>
+<span class="source-map">boot.janet (628:1)</span><hr>
+<h2 class="binding"><a id="marshal">marshal</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(marshal x &amp;opt reverse-lookup buffer)<br><br>Marshal a janet value into a buffer and return the buffer. The buffer can the later be unmarshalled to reconstruct the initial value. Optionally, one can pass in a reverse lookup table to not marshal aliased values that are found in the table. Then a forwardlookup table can be used to recover the original janet value when unmarshalling.</p>
+<hr>
+<h2 class="binding"><a id="match">match</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(match x &amp; cases)<br><br>Pattern matching. Match an expression x against  any number of cases. Easy case is a pattern to match against, followed  by an expression to evaluate to if that case is matched. A pattern that is  a symbol will match anything, binding x&#39;s value to that symbol. An array  will match only if all of it&#39;s elements match the corresponding elements in  x. A table or struct will match if all values match with the corresponding  values in x. A tuple pattern will match if it&#39;s first element matches, and the following  elements are treated as predicates and are true. Any other value pattern will only  match if it is equal to x.</p>
+<span class="source-map">boot.janet (1279:1)</span><hr>
+<h2 class="binding"><a id="math/abs">math&#47;abs</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;abs x)<br><br>Return the absolute value of x.</p>
+<hr>
+<h2 class="binding"><a id="math/acos">math&#47;acos</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;acos x)<br><br>Returns the arccosine of x.</p>
+<hr>
+<h2 class="binding"><a id="math/asin">math&#47;asin</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;asin x)<br><br>Returns the arcsine of x.</p>
+<hr>
+<h2 class="binding"><a id="math/atan">math&#47;atan</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;atan x)<br><br>Returns the arctangent of x.</p>
+<hr>
+<h2 class="binding"><a id="math/atan2">math&#47;atan2</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;atan2 y x)<br><br>Return the arctangent of y&#47;x. Works even when x is 0.</p>
+<hr>
+<h2 class="binding"><a id="math/ceil">math&#47;ceil</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;ceil x)<br><br>Returns the smallest integer value number that is not less than x.</p>
+<hr>
+<h2 class="binding"><a id="math/cos">math&#47;cos</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;cos x)<br><br>Returns the cosine of x.</p>
+<hr>
+<h2 class="binding"><a id="math/cosh">math&#47;cosh</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;cosh x)<br><br>Return the hyperbolic cosine of x.</p>
+<hr>
+<h2 class="binding"><a id="math/e">math&#47;e</a></h2>
+<span class="binding-type">number</span>
+<p class="docstring">The base of the natural log.</p>
+<hr>
+<h2 class="binding"><a id="math/exp">math&#47;exp</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;exp x)<br><br>Returns e to the power of x.</p>
+<hr>
+<h2 class="binding"><a id="math/floor">math&#47;floor</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;floor x)<br><br>Returns the largest integer value number that is not greater than x.</p>
+<hr>
+<h2 class="binding"><a id="math/inf">math&#47;inf</a></h2>
+<span class="binding-type">number</span>
+<p class="docstring">The number representing positive infinity</p>
+<hr>
+<h2 class="binding"><a id="math/log">math&#47;log</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;log x)<br><br>Returns log base natural number of x.</p>
+<hr>
+<h2 class="binding"><a id="math/log10">math&#47;log10</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;log10 x)<br><br>Returns log base 10 of x.</p>
+<hr>
+<h2 class="binding"><a id="math/pi">math&#47;pi</a></h2>
+<span class="binding-type">number</span>
+<p class="docstring">The value pi.</p>
+<hr>
+<h2 class="binding"><a id="math/pow">math&#47;pow</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;pow a x)<br><br>Return a to the power of x.</p>
+<hr>
+<h2 class="binding"><a id="math/random">math&#47;random</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;random)<br><br>Returns a uniformly distributed random number between 0 and 1.</p>
+<hr>
+<h2 class="binding"><a id="math/rng">math&#47;rng</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;rng &amp;opt seed)<br><br>Creates a Psuedo-Random number generator, with an optional seed. The seed should be an unsigned 32 bit integer. Do not use this for cryptography. Returns a core&#47;rng abstract type.</p>
+<hr>
+<h2 class="binding"><a id="math/rng-int">math&#47;rng-int</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;rng-int rng &amp;opt max)<br><br>Extract a random random integer in the range [0, max] from the RNG. If no max is given, the default is 2^31 - 1.</p>
+<hr>
+<h2 class="binding"><a id="math/rng-uniform">math&#47;rng-uniform</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;rng-seed rng seed)<br><br>Extract a random number in the range [0, 1) from the RNG.</p>
+<hr>
+<h2 class="binding"><a id="math/seedrandom">math&#47;seedrandom</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;seedrandom seed)<br><br>Set the seed for the random number generator. &#39;seed&#39; should be an integer.</p>
+<hr>
+<h2 class="binding"><a id="math/sin">math&#47;sin</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;sin x)<br><br>Returns the sine of x.</p>
+<hr>
+<h2 class="binding"><a id="math/sinh">math&#47;sinh</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;sinh x)<br><br>Return the hyperbolic sine of x.</p>
+<hr>
+<h2 class="binding"><a id="math/sqrt">math&#47;sqrt</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;sqrt x)<br><br>Returns the square root of x.</p>
+<hr>
+<h2 class="binding"><a id="math/tan">math&#47;tan</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;tan x)<br><br>Returns the tangent of x.</p>
+<hr>
+<h2 class="binding"><a id="math/tanh">math&#47;tanh</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(math&#47;tanh x)<br><br>Return the hyperbolic tangent of x.</p>
+<hr>
+<h2 class="binding"><a id="max">max</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(max &amp; args)<br><br>Returns the numeric maximum of the arguments.</p>
+<span class="source-map">boot.janet (528:1)</span><hr>
+<h2 class="binding"><a id="max-order">max-order</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(max-order &amp; args)<br><br>Returns the maximum of the arguments according to a total  order over all values.</p>
+<span class="source-map">boot.janet (536:1)</span><hr>
+<h2 class="binding"><a id="mean">mean</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(mean xs)<br><br>Returns the mean of xs. If empty, returns NaN.</p>
+<span class="source-map">boot.janet (447:1)</span><hr>
+<h2 class="binding"><a id="merge">merge</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(merge &amp; colls)<br><br>Merges multiple tables&#47;structs to one. If a key appears in more than one  collection, then later values replace any previous ones.  Returns a new table.</p>
+<span class="source-map">boot.janet (1048:1)</span><hr>
+<h2 class="binding"><a id="merge-into">merge-into</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(merge-into tab &amp; colls)<br><br>Merges multiple tables&#47;structs into a table. If a key appears in more than one  collection, then later values replace any previous ones.  Returns the original table.</p>
+<span class="source-map">boot.janet (1038:1)</span><hr>
+<h2 class="binding"><a id="min">min</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(min &amp; args)<br><br>Returns the numeric minimum of the arguments.</p>
+<span class="source-map">boot.janet (532:1)</span><hr>
+<h2 class="binding"><a id="min-order">min-order</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(min-order &amp; args)<br><br>Returns the minimum of the arguments according to a total  order over all values.</p>
+<span class="source-map">boot.janet (541:1)</span><hr>
+<h2 class="binding"><a id="module/cache">module&#47;cache</a></h2>
+<span class="binding-type">table</span>
+<p class="docstring">Table mapping loaded module identifiers to their environments.</p>
+<span class="source-map">boot.janet (1891:1)</span><hr>
+<h2 class="binding"><a id="module/expand-path">module&#47;expand-path</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(module&#47;expand-path path template)<br><br>Expands a path template as found in module&#47;paths for module&#47;find. This takes in a path (the argument to require) and a template string, template, to expand the path to a path that can be used for importing files.</p>
+<hr>
+<h2 class="binding"><a id="module/find">module&#47;find</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(module&#47;find path)<br><br>Try to match a module or path name from the patterns in module&#47;paths.  Returns a tuple (fullpath kind) where the kind is one of :source, :native,  or image if the module is found, otherwise a tuple with nil followed by  an error message.</p>
+<span class="source-map">boot.janet (1858:1)</span><hr>
+<h2 class="binding"><a id="module/loaders">module&#47;loaders</a></h2>
+<span class="binding-type">table</span>
+<p class="docstring">A table of loading method names to loading functions.  This table lets require and import load many different kinds  of files as module.</p>
+<span class="source-map">boot.janet (1938:1)</span><hr>
+<h2 class="binding"><a id="module/loading">module&#47;loading</a></h2>
+<span class="binding-type">table</span>
+<p class="docstring">Table mapping currently loading modules to true. Used to prevent  circular dependencies.</p>
+<span class="source-map">boot.janet (1895:1)</span><hr>
+<h2 class="binding"><a id="module/paths">module&#47;paths</a></h2>
+<span class="binding-type">array</span>
+<p class="docstring">The list of paths to look for modules, templated for module&#47;expand-path.  Each element is a two element tuple, containing the path  template and a keyword :source, :native, or :image indicating how  require should load files found at these paths.<br><br>A tuple can also  contain a third element, specifying a filter that prevents module&#47;find  from searching that path template if the filter doesn&#39;t match the input  path. The filter can be a string or a predicate function, and  is often a file extension, including the period.</p>
+<span class="source-map">boot.janet (1807:1)</span><hr>
+<h2 class="binding"><a id="nat?">nat?</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(nat? x)<br><br>Check if x can be exactly represented as a non-negative 32 bit signed two&#39;s complement integer.</p>
+<hr>
+<h2 class="binding"><a id="native">native</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(native path &amp;opt env)<br><br>Load a native module from the given path. The path must be an absolute or relative path on the file system, and is usually a .so file on Unix systems, and a .dll file on Windows. Returns an environment table that contains functions and other values from the native module.</p>
+<hr>
+<h2 class="binding"><a id="neg?">neg?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(neg? x)<br><br>Check if x is less than 0.</p>
+<span class="source-map">boot.janet (80:1)</span><hr>
+<h2 class="binding"><a id="next">next</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(next dict &amp;opt key)<br><br>Gets the next key in a struct or table. Can be used to iterate through the keys of a data structure in an unspecified order. Keys are guaranteed to be seen only once per iteration if they data structure is not mutated during iteration. If key is nil, next returns the first key. If next returns nil, there are no more keys to iterate through. </p>
+<hr>
+<h2 class="binding"><a id="nil?">nil?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(nil? x)<br><br>Check if x is nil.</p>
+<span class="source-map">boot.janet (107:1)</span><hr>
+<h2 class="binding"><a id="not">not</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(not x)<br><br>Returns the boolean inverse of x.</p>
+<hr>
+<h2 class="binding"><a id="not=">not=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(not= &amp; xs)<br><br>Return true if any values in xs are not equal, otherwise false.</p>
+<hr>
+<h2 class="binding"><a id="not==">not==</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(not== &amp; xs)<br><br>Check if any values in xs are not numerically equal (3.0 not== 4). Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="number?">number?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(number? x)<br><br>Check if x is a number.</p>
+<span class="source-map">boot.janet (82:1)</span><hr>
+<h2 class="binding"><a id="odd?">odd?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(odd? x)<br><br>Check if x is odd.</p>
+<span class="source-map">boot.janet (77:1)</span><hr>
+<h2 class="binding"><a id="one?">one?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(one? x)<br><br>Check if x is equal to 1.</p>
+<span class="source-map">boot.janet (81:1)</span><hr>
+<h2 class="binding"><a id="or">or</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(or &amp; forms)<br><br>Evaluates to the last argument if all preceding elements are false, otherwise  evaluates to true.</p>
+<span class="source-map">boot.janet (238:1)</span><hr>
+<h2 class="binding"><a id="order<">order&lt;</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(order&lt; &amp; xs)<br><br>Check if xs is strictly increasing according to a total order over all values. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="order<=">order&lt;=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(order&lt;= &amp; xs)<br><br>Check if xs is not decreasing according to a total order over all values. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="order>">order&gt;</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(order&gt; &amp; xs)<br><br>Check if xs is strictly descending according to a total order over all values. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="order>=">order&gt;=</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(order&gt;= &amp; xs)<br><br>Check if xs is not increasing according to a total order over all values. Returns a boolean.</p>
+<hr>
+<h2 class="binding"><a id="os/arch">os&#47;arch</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;arch)<br><br>Check the ISA that janet was compiled for. Returns one of:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:x86<br>&nbsp;&nbsp;&nbsp;&nbsp;:x86-64<br>&nbsp;&nbsp;&nbsp;&nbsp;:arm<br>&nbsp;&nbsp;&nbsp;&nbsp;:aarch64<br>&nbsp;&nbsp;&nbsp;&nbsp;:sparc<br>&nbsp;&nbsp;&nbsp;&nbsp;:wasm<br>&nbsp;&nbsp;&nbsp;&nbsp;:unknown<br></p>
+<hr>
+<h2 class="binding"><a id="os/cd">os&#47;cd</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;cd path)<br><br>Change current directory to path. Returns true on success, false on failure.</p>
+<hr>
+<h2 class="binding"><a id="os/clock">os&#47;clock</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;clock)<br><br>Return the number of seconds since some fixed point in time. The clock is guaranteed to be non decreasing in real time.</p>
+<hr>
+<h2 class="binding"><a id="os/cwd">os&#47;cwd</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;cwd)<br><br>Returns the current working directory.</p>
+<hr>
+<h2 class="binding"><a id="os/date">os&#47;date</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;date &amp;opt time local)<br><br>Returns the given time as a date struct, or the current time if no time is given. Returns a struct with following key values. Note that all numbers are 0-indexed. Date is given in UTC unless local is truthy, in which case the date is formated for the local timezone.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:seconds - number of seconds [0-61]<br>&nbsp;&nbsp;&nbsp;&nbsp;:minutes - number of minutes [0-59]<br>&nbsp;&nbsp;&nbsp;&nbsp;:hours - number of hours [0-23]<br>&nbsp;&nbsp;&nbsp;&nbsp;:month-day - day of month [0-30]<br>&nbsp;&nbsp;&nbsp;&nbsp;:month - month of year [0, 11]<br>&nbsp;&nbsp;&nbsp;&nbsp;:year - years since year 0 (e.g. 2019)<br>&nbsp;&nbsp;&nbsp;&nbsp;:week-day - day of the week [0-6]<br>&nbsp;&nbsp;&nbsp;&nbsp;:year-day - day of the year [0-365]<br>&nbsp;&nbsp;&nbsp;&nbsp;:dst - If Day Light Savings is in effect</p>
+<hr>
+<h2 class="binding"><a id="os/dir">os&#47;dir</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;dir dir &amp;opt array)<br><br>Iterate over files and subdirectories in a directory. Returns an array of paths parts, with only the filename or directory name and no prefix.</p>
+<hr>
+<h2 class="binding"><a id="os/execute">os&#47;execute</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;execute args &amp;opts flags env)<br><br>Execute a program on the system and pass it string arguments. Flags is a keyword that modifies how the program will execute.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:e - enables passing an environment to the program. Without :e, the current environment is inherited.<br>&nbsp;&nbsp;&nbsp;&nbsp;:p - allows searching the current PATH for the binary to execute. Without this flag, binaries must use absolute paths.<br><br>env is a table or struct mapping environment variables to values. Returns the exit status of the program.</p>
+<hr>
+<h2 class="binding"><a id="os/exit">os&#47;exit</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;exit &amp;opt x)<br><br>Exit from janet with an exit code equal to x. If x is not an integer, the exit with status equal the hash of x.</p>
+<hr>
+<h2 class="binding"><a id="os/getenv">os&#47;getenv</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;getenv variable)<br><br>Get the string value of an environment variable.</p>
+<hr>
+<h2 class="binding"><a id="os/link">os&#47;link</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;link oldpath newpath &amp;opt symlink)<br><br>Create a symlink from oldpath to newpath. The 3 optional paramater enables a hard link over a soft link. Does not work on Windows.</p>
+<hr>
+<h2 class="binding"><a id="os/mkdir">os&#47;mkdir</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;mkdir path)<br><br>Create a new directory. The path will be relative to the current directory if relative, otherwise it will be an absolute path.</p>
+<hr>
+<h2 class="binding"><a id="os/rename">os&#47;rename</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;rename oldname newname)<br><br>Rename a file on disk to a new path. Returns nil.</p>
+<hr>
+<h2 class="binding"><a id="os/rm">os&#47;rm</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;rm path)<br><br>Delete a file. Returns nil.</p>
+<hr>
+<h2 class="binding"><a id="os/rmdir">os&#47;rmdir</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;rmdir path)<br><br>Delete a directory. The directory must be empty to succeed.</p>
+<hr>
+<h2 class="binding"><a id="os/setenv">os&#47;setenv</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;setenv variable value)<br><br>Set an environment variable.</p>
+<hr>
+<h2 class="binding"><a id="os/shell">os&#47;shell</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;shell str)<br><br>Pass a command string str directly to the system shell.</p>
+<hr>
+<h2 class="binding"><a id="os/sleep">os&#47;sleep</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;sleep nsec)<br><br>Suspend the program for nsec seconds. &#39;nsec&#39; can be a real number. Returns nil.</p>
+<hr>
+<h2 class="binding"><a id="os/stat">os&#47;stat</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;stat path &amp;opt tab|key)<br><br>Gets information about a file or directory. Returns a table If the third argument is a keyword, returns  only that information from stat. If the file or directory does not exist, returns nil. The keys are<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:dev - the device that the file is on<br>&nbsp;&nbsp;&nbsp;&nbsp;:mode - the type of file, one of :file, :directory, :block, :character, :fifo, :socket, :link, or :other<br>&nbsp;&nbsp;&nbsp;&nbsp;:permissions - A unix permission string like &quot;rwx--x--x&quot;<br>&nbsp;&nbsp;&nbsp;&nbsp;:uid - File uid<br>&nbsp;&nbsp;&nbsp;&nbsp;:gid - File gid<br>&nbsp;&nbsp;&nbsp;&nbsp;:nlink - number of links to file<br>&nbsp;&nbsp;&nbsp;&nbsp;:rdev - Real device of file. 0 on windows.<br>&nbsp;&nbsp;&nbsp;&nbsp;:size - size of file in bytes<br>&nbsp;&nbsp;&nbsp;&nbsp;:blocks - number of blocks in file. 0 on windows<br>&nbsp;&nbsp;&nbsp;&nbsp;:blocksize - size of blocks in file. 0 on windows<br>&nbsp;&nbsp;&nbsp;&nbsp;:accessed - timestamp when file last accessed<br>&nbsp;&nbsp;&nbsp;&nbsp;:changed - timestamp when file last chnaged (permissions changed)<br>&nbsp;&nbsp;&nbsp;&nbsp;:modified - timestamp when file last modified (content changed)<br></p>
+<hr>
+<h2 class="binding"><a id="os/time">os&#47;time</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;time)<br><br>Get the current time expressed as the number of seconds since January 1, 1970, the Unix epoch. Returns a real number.</p>
+<hr>
+<h2 class="binding"><a id="os/touch">os&#47;touch</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;touch path &amp;opt actime modtime)<br><br>Update the access time and modification times for a file. By default, sets times to the current time.</p>
+<hr>
+<h2 class="binding"><a id="os/which">os&#47;which</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(os&#47;which)<br><br>Check the current operating system. Returns one of:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:windows<br>&nbsp;&nbsp;&nbsp;&nbsp;:macos<br>&nbsp;&nbsp;&nbsp;&nbsp;:web - Web assembly (emscripten)<br>&nbsp;&nbsp;&nbsp;&nbsp;:linux<br>&nbsp;&nbsp;&nbsp;&nbsp;:freebsd<br>&nbsp;&nbsp;&nbsp;&nbsp;:openbsd<br>&nbsp;&nbsp;&nbsp;&nbsp;:netbsd<br>&nbsp;&nbsp;&nbsp;&nbsp;:posix - A POSIX compatible system (default)</p>
+<hr>
+<h2 class="binding"><a id="pairs">pairs</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(pairs x)<br><br>Get the values of an associative data structure.</p>
+<span class="source-map">boot.janet (1079:1)</span><hr>
+<h2 class="binding"><a id="parser/byte">parser&#47;byte</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;byte parser b)<br><br>Input a single byte into the parser byte stream. Returns the parser.</p>
+<hr>
+<h2 class="binding"><a id="parser/clone">parser&#47;clone</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;clone p)<br><br>Creates a deep clone of a parser that is identical to the input parser. This cloned parser can be used to continue parsing from a good checkpoint if parsing later fails. Returns a new parser.</p>
+<hr>
+<h2 class="binding"><a id="parser/consume">parser&#47;consume</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;consume parser bytes &amp;opt index)<br><br>Input bytes into the parser and parse them. Will not throw errors if there is a parse error. Starts at the byte index given by index. Returns the number of bytes read.</p>
+<hr>
+<h2 class="binding"><a id="parser/eof">parser&#47;eof</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;eof parser)<br><br>Indicate that the end of file was reached to the parser. This puts the parser in the :dead state.</p>
+<hr>
+<h2 class="binding"><a id="parser/error">parser&#47;error</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;error parser)<br><br>If the parser is in the error state, returns the message associated with that error. Otherwise, returns nil. Also flushes the parser state and parser queue, so be sure to handle everything in the queue before calling parser&#47;error.</p>
+<hr>
+<h2 class="binding"><a id="parser/flush">parser&#47;flush</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;flush parser)<br><br>Clears the parser state and parse queue. Can be used to reset the parser if an error was encountered. Does not reset the line and column counter, so to begin parsing in a new context, create a new parser.</p>
+<hr>
+<h2 class="binding"><a id="parser/has-more">parser&#47;has-more</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;has-more parser)<br><br>Check if the parser has more values in the value queue.</p>
+<hr>
+<h2 class="binding"><a id="parser/insert">parser&#47;insert</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;insert parser value)<br><br>Insert a value into the parser. This means that the parser state can be manipulated in between chunks of bytes. This would allow a user to add extra elements to arrays and tuples, for example. Returns the parser.</p>
+<hr>
+<h2 class="binding"><a id="parser/new">parser&#47;new</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;new)<br><br>Creates and returns a new parser object. Parsers are state machines that can receive bytes, and generate a stream of janet values.</p>
+<hr>
+<h2 class="binding"><a id="parser/produce">parser&#47;produce</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;produce parser)<br><br>Dequeue the next value in the parse queue. Will return nil if no parsed values are in the queue, otherwise will dequeue the next value.</p>
+<hr>
+<h2 class="binding"><a id="parser/state">parser&#47;state</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;state parser &amp;opt key)<br><br>Returns a representation of the internal state of the parser. If a key is passed, only that information about the state is returned. Allowed keys are:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:delimiters - Each byte in the string represents a nested data structure. For example, if the parser state is &#39;([&quot;&#39;, then the parser is in the middle of parsing a string inside of square brackets inside parentheses. Can be used to augment a REPL prompt.&nbsp;&nbsp;&nbsp;&nbsp;:frames - Each table in the array represents a &#39;frame&#39; in the parser state. Frames contain information about the start of the expression being parsed as well as the type of that expression and some type-specific information.</p>
+<hr>
+<h2 class="binding"><a id="parser/status">parser&#47;status</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;status parser)<br><br>Gets the current status of the parser state machine. The status will be one of:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;:pending - a value is being parsed.<br>&nbsp;&nbsp;&nbsp;&nbsp;:error - a parsing error was encountered.<br>&nbsp;&nbsp;&nbsp;&nbsp;:root - the parser can either read more values or safely terminate.</p>
+<hr>
+<h2 class="binding"><a id="parser/where">parser&#47;where</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(parser&#47;where parser)<br><br>Returns the current line number and column of the parser&#39;s internal state.</p>
+<hr>
+<h2 class="binding"><a id="partial">partial</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(partial f &amp; more)<br><br>Partial function application.</p>
+<span class="source-map">boot.janet (930:1)</span><hr>
+<h2 class="binding"><a id="partition">partition</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(partition n ind)<br><br>Partition an indexed data structure into tuples  of size n. Returns a new array.</p>
+<span class="source-map">boot.janet (1156:1)</span><hr>
+<h2 class="binding"><a id="peg/compile">peg&#47;compile</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(peg&#47;compile peg)<br><br>Compiles a peg source data structure into a &lt;core&#47;peg&gt;. This will speed up matching if the same peg will be used multiple times.</p>
+<hr>
+<h2 class="binding"><a id="peg/match">peg&#47;match</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(peg&#47;match peg text &amp;opt start &amp; args)<br><br>Match a Parsing Expression Grammar to a byte string and return an array of captured values. Returns nil if text does not match the language defined by peg. The syntax of PEGs are very similar to those defined by LPeg, and have similar capabilities.</p>
+<hr>
+<h2 class="binding"><a id="pos?">pos?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(pos? x)<br><br>Check if x is greater than 0.</p>
+<span class="source-map">boot.janet (79:1)</span><hr>
+<h2 class="binding"><a id="postwalk">postwalk</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(postwalk f form)<br><br>Do a post-order traversal of a data structure and call (f x)  on every visitation.</p>
+<span class="source-map">boot.janet (864:1)</span><hr>
+<h2 class="binding"><a id="pp">pp</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(pp x)<br><br>Pretty print to stdout or (dyn :out).</p>
+<span class="source-map">boot.janet (1198:1)</span><hr>
+<h2 class="binding"><a id="prewalk">prewalk</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(prewalk f form)<br><br>Similar to postwalk, but do pre-order traversal.</p>
+<span class="source-map">boot.janet (870:1)</span><hr>
+<h2 class="binding"><a id="prin">prin</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(prin &amp; xs)<br><br>Same as print, but does not add trailing newline.</p>
+<hr>
+<h2 class="binding"><a id="print">print</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(print &amp; xs)<br><br>Print values to the console (standard out). Value are converted to strings if they are not already. After printing all values, a newline character is printed. Use the value of (dyn :out stdout) to determine what to push characters to. Expects (dyn :out stdout) to be either a core&#47;file or a buffer. Returns nil.</p>
+<hr>
+<h2 class="binding"><a id="printf">printf</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(printf fmt &amp; xs)<br><br>Prints output formatted as if with (string&#47;format fmt ;xs) to (dyn :out stdout).</p>
+<hr>
+<h2 class="binding"><a id="product">product</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(product xs)<br><br>Returns the product of xs. If xs is empty, returns 1.</p>
+<span class="source-map">boot.janet (452:1)</span><hr>
+<h2 class="binding"><a id="propagate">propagate</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(propagate x fiber)<br><br>Propagate a signal from a fiber to the current fiber. The resulting stack trace from the current fiber will include frames from fiber. If fiber is in a state that can be resumed, resuming the current fiber will first resume fiber.</p>
+<hr>
+<h2 class="binding"><a id="put">put</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(put ds key value)<br><br>Associate a key with a value in any mutable associative data structure. Indexed data structures (arrays and buffers) only accept non-negative integer keys, and will expand if an out of bounds value is provided. In an array, extra space will be filled with nils, and in a buffer, extra space will be filled with 0 bytes. In a table, putting a key that is contained in the table prototype will hide the association defined by the prototype, but will not mutate the prototype table. Putting a value nil into a table will remove the key from the table. Returns the data structure ds.</p>
+<hr>
+<h2 class="binding"><a id="put-in">put-in</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(put-in ds ks v)<br><br>Put a value into a nested data structure.  Looks into the data structure via  a sequence of keys. Missing data structures will be replaced with tables. Returns  the modified, original data structure.</p>
+<span class="source-map">boot.janet (1008:1)</span><hr>
+<h2 class="binding"><a id="quit">quit</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(quit)<br><br>Tries to exit from the current repl or context. Does not always exit the application.  Works by setting the :exit dynamic binding to true.</p>
+<span class="source-map">boot.janet (1751:1)</span><hr>
+<h2 class="binding"><a id="range">range</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(range &amp; args)<br><br>Create an array of values [start, end) with a given step.  With one argument returns a range [0, end). With two arguments, returns  a range [start, end). With three, returns a range with optional step size.</p>
+<span class="source-map">boot.janet (667:1)</span><hr>
+<h2 class="binding"><a id="reduce">reduce</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(reduce f init ind)<br><br>Reduce, also know as fold-left in many languages, transforms  an indexed type (array, tuple) with a function to produce a value.</p>
+<span class="source-map">boot.janet (597:1)</span><hr>
+<h2 class="binding"><a id="repl">repl</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(repl &amp;opt chunks onsignal env)<br><br>Run a repl. The first parameter is an optional function to call to  get a chunk of source code that should return nil for end of file.  The second parameter is a function that is called when a signal is  caught.</p>
+<span class="source-map">boot.janet (2003:1)</span><hr>
+<h2 class="binding"><a id="require">require</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(require path &amp; args)<br><br>Require a module with the given name. Will search all of the paths in  module&#47;paths, then the path as a raw file path. Returns the new environment  returned from compiling and running the file.</p>
+<span class="source-map">boot.janet (1951:1)</span><hr>
+<h2 class="binding"><a id="resume">resume</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(resume fiber &amp;opt x)<br><br>Resume a new or suspended fiber and optionally pass in a value to the fiber that will be returned to the last yield in the case of a pending fiber, or the argument to the dispatch function in the case of a new fiber. Returns either the return result of the fiber&#39;s dispatch function, or the value from the next yield call in fiber.</p>
+<hr>
+<h2 class="binding"><a id="reverse">reverse</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(reverse t)<br><br>Reverses the order of the elements in a given array or tuple and returns a new array.</p>
+<span class="source-map">boot.janet (945:1)</span><hr>
+<h2 class="binding"><a id="run-context">run-context</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(run-context opts)<br><br>Run a context. This evaluates expressions of janet in an environment,  and is encapsulates the parsing, compilation, and evaluation.  opts is a table or struct of options. The options are as follows:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;  :chunks - callback to read into a buffer - default is getline<br>&nbsp;&nbsp;&nbsp;&nbsp;  :on-parse-error - callback when parsing fails - default is bad-parse<br>&nbsp;&nbsp;&nbsp;&nbsp;  :env - the environment to compile against - default is the current env<br>&nbsp;&nbsp;&nbsp;&nbsp;  :source - string path of source for better errors - default is &quot;&lt;anonymous&gt;&quot;<br>&nbsp;&nbsp;&nbsp;&nbsp;  :on-compile-error - callback when compilation fails - default is bad-compile<br>&nbsp;&nbsp;&nbsp;&nbsp;  :evaluator - callback that executes thunks. Signature is (evaluator thunk source env where)<br>&nbsp;&nbsp;&nbsp;&nbsp;  :on-status - callback when a value is evaluated - default is debug&#47;stacktrace<br>&nbsp;&nbsp;&nbsp;&nbsp;  :fiber-flags - what flags to wrap the compilation fiber with. Default is :ia.<br>&nbsp;&nbsp;&nbsp;&nbsp;  :expander - an optional function that is called on each top level form before being compiled.</p>
+<span class="source-map">boot.janet (1664:1)</span><hr>
+<h2 class="binding"><a id="scan-number">scan-number</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(scan-number str)<br><br>Parse a number from a byte sequence an return that number, either and integer or a real. The number must be in the same format as numbers in janet source code. Will return nil on an invalid number.</p>
+<hr>
+<h2 class="binding"><a id="seq">seq</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(seq head &amp; body)<br><br>Similar to loop, but accumulates the loop body into an array and returns that.  See loop for details.</p>
+<span class="source-map">boot.janet (422:1)</span><hr>
+<h2 class="binding"><a id="setdyn">setdyn</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(setdyn key value)<br><br>Set a dynamic binding. Returns value.</p>
+<hr>
+<h2 class="binding"><a id="short-fn">short-fn</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(short-fn arg)<br><br>fn shorthand.<br><br>  usage:<br><br>  &nbsp;&nbsp;&nbsp;&nbsp;(short-fn (+ $ $)) - A function that double&#39;s its arguments.<br>  &nbsp;&nbsp;&nbsp;&nbsp;(short-fn (string $0 $1)) - accepting multiple args<br>  &nbsp;&nbsp;&nbsp;&nbsp;|(+ $ $) - use pipe reader macro for terse function literals<br>  &nbsp;&nbsp;&nbsp;&nbsp;|(+ $&amp;) - variadic functions</p>
+<span class="source-map">boot.janet (1578:1)</span><hr>
+<h2 class="binding"><a id="slice">slice</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(slice x &amp;opt start end)<br><br>Extract a sub-range of an indexed data strutrue or byte sequence.</p>
+<hr>
+<h2 class="binding"><a id="slurp">slurp</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(slurp path)<br><br>Read all data from a file with name path  and then close the file.</p>
+<span class="source-map">boot.janet (1177:1)</span><hr>
+<h2 class="binding"><a id="some">some</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(some pred xs)<br><br>Returns false if all xs are false or nil, otherwise returns the first true value.</p>
+<span class="source-map">boot.janet (1488:1)</span><hr>
+<h2 class="binding"><a id="sort">sort</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(sort xs [, by])<br><br>Sort an array in-place. Uses quick-sort and is not a stable sort.</p>
+<span class="source-map">boot.janet (562:1)</span><hr>
+<h2 class="binding"><a id="sorted">sorted</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(sorted ind by)<br><br>Returns a new sorted array without modifying the old one.</p>
+<span class="source-map">boot.janet (592:1)</span><hr>
+<h2 class="binding"><a id="spit">spit</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(spit path contents &amp;opt mode)<br><br>Write contents to a file at path.  Can optionally append to the file.</p>
+<span class="source-map">boot.janet (1187:1)</span><hr>
+<h2 class="binding"><a id="stderr">stderr</a></h2>
+<span class="binding-type">core/file</span>
+<p class="docstring">The standard error file.</p>
+<hr>
+<h2 class="binding"><a id="stdin">stdin</a></h2>
+<span class="binding-type">core/file</span>
+<p class="docstring">The standard input file.</p>
+<hr>
+<h2 class="binding"><a id="stdout">stdout</a></h2>
+<span class="binding-type">core/file</span>
+<p class="docstring">The standard output file.</p>
+<hr>
+<h2 class="binding"><a id="string">string</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string &amp; parts)<br><br>Creates a string by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new string.</p>
+<hr>
+<h2 class="binding"><a id="string/ascii-lower">string&#47;ascii-lower</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;ascii-lower str)<br><br>Returns a new string where all bytes are replaced with the lowercase version of themselves in ASCII. Does only a very simple case check, meaning no unicode support.</p>
+<hr>
+<h2 class="binding"><a id="string/ascii-upper">string&#47;ascii-upper</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;ascii-upper str)<br><br>Returns a new string where all bytes are replaced with the uppercase version of themselves in ASCII. Does only a very simple case check, meaning no unicode support.</p>
+<hr>
+<h2 class="binding"><a id="string/bytes">string&#47;bytes</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;bytes str)<br><br>Returns an array of integers that are the byte values of the string.</p>
+<hr>
+<h2 class="binding"><a id="string/check-set">string&#47;check-set</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;check-set set str)<br><br>Checks if any of the bytes in the string set appear in the string str. Returns true if some bytes in set do appear in str, false if no bytes do.</p>
+<hr>
+<h2 class="binding"><a id="string/find">string&#47;find</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;find patt str)<br><br>Searches for the first instance of pattern patt in string str. Returns the index of the first character in patt if found, otherwise returns nil.</p>
+<hr>
+<h2 class="binding"><a id="string/find-all">string&#47;find-all</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;find patt str)<br><br>Searches for all instances of pattern patt in string str. Returns an array of all indices of found patterns. Overlapping instances of the pattern are not counted, meaning a byte in string will only contribute to finding at most on occurrence of pattern. If no occurrences are found, will return an empty array.</p>
+<hr>
+<h2 class="binding"><a id="string/format">string&#47;format</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;format format &amp; values)<br><br>Similar to snprintf, but specialized for operating with janet. Returns a new string.</p>
+<hr>
+<h2 class="binding"><a id="string/from-bytes">string&#47;from-bytes</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;from-bytes &amp; byte-vals)<br><br>Creates a string from integer params with byte values. All integers will be coerced to the range of 1 byte 0-255.</p>
+<hr>
+<h2 class="binding"><a id="string/has-prefix?">string&#47;has-prefix?</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;has-prefix? pfx str)<br><br>Tests whether str starts with pfx.</p>
+<hr>
+<h2 class="binding"><a id="string/has-suffix?">string&#47;has-suffix?</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;has-suffix? sfx str)<br><br>Tests whether str ends with sfx.</p>
+<hr>
+<h2 class="binding"><a id="string/join">string&#47;join</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;join parts &amp;opt sep)<br><br>Joins an array of strings into one string, optionally separated by a separator string sep.</p>
+<hr>
+<h2 class="binding"><a id="string/repeat">string&#47;repeat</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;repeat bytes n)<br><br>Returns a string that is n copies of bytes concatenated.</p>
+<hr>
+<h2 class="binding"><a id="string/replace">string&#47;replace</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;replace patt subst str)<br><br>Replace the first occurrence of patt with subst in the string str. Will return the new string if patt is found, otherwise returns str.</p>
+<hr>
+<h2 class="binding"><a id="string/replace-all">string&#47;replace-all</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;replace-all patt subst str)<br><br>Replace all instances of patt with subst in the string str. Will return the new string if patt is found, otherwise returns str.</p>
+<hr>
+<h2 class="binding"><a id="string/reverse">string&#47;reverse</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;reverse str)<br><br>Returns a string that is the reversed version of str.</p>
+<hr>
+<h2 class="binding"><a id="string/slice">string&#47;slice</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;slice bytes &amp;opt start end)<br><br>Returns a substring from a byte sequence. The substring is from index start inclusive to index end exclusive. All indexing is from 0. &#39;start&#39; and &#39;end&#39; can also be negative to indicate indexing from the end of the string.</p>
+<hr>
+<h2 class="binding"><a id="string/split">string&#47;split</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;split delim str &amp;opt start limit)<br><br>Splits a string str with delimiter delim and returns an array of substrings. The substrings will not contain the delimiter delim. If delim is not found, the returned array will have one element. Will start searching for delim at the index start (if provided), and return up to a maximum of limit results (if provided).</p>
+<hr>
+<h2 class="binding"><a id="string/trim">string&#47;trim</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;trim str &amp;opt set)<br><br>Trim leading and trailing whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</p>
+<hr>
+<h2 class="binding"><a id="string/triml">string&#47;triml</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;triml str &amp;opt set)<br><br>Trim leading whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</p>
+<hr>
+<h2 class="binding"><a id="string/trimr">string&#47;trimr</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(string&#47;trimr str &amp;opt set)<br><br>Trim trailing whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</p>
+<hr>
+<h2 class="binding"><a id="string?">string?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(string? x)<br><br>Check if x is a string.</p>
+<span class="source-map">boot.janet (84:1)</span><hr>
+<h2 class="binding"><a id="struct">struct</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(struct &amp; kvs)<br><br>Create a new struct from a sequence of key value pairs. kvs is a sequence k1, v1, k2, v2, k3, v3, ... If kvs has an odd number of elements, an error will be thrown. Returns the new struct.</p>
+<hr>
+<h2 class="binding"><a id="struct?">struct?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(struct? x)<br><br>Check if x a struct.</p>
+<span class="source-map">boot.janet (92:1)</span><hr>
+<h2 class="binding"><a id="sum">sum</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(sum xs)<br><br>Returns the sum of xs. If xs is empty, returns 0.</p>
+<span class="source-map">boot.janet (440:1)</span><hr>
+<h2 class="binding"><a id="symbol">symbol</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(symbol &amp; xs)<br><br>Creates a symbol by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new symbol.</p>
+<hr>
+<h2 class="binding"><a id="symbol?">symbol?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(symbol? x)<br><br>Check if x is a symbol.</p>
+<span class="source-map">boot.janet (85:1)</span><hr>
+<h2 class="binding"><a id="table">table</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(table &amp; kvs)<br><br>Creates a new table from a variadic number of keys and values. kvs is a sequence k1, v1, k2, v2, k3, v3, ... If kvs has an odd number of elements, an error will be thrown. Returns the new table.</p>
+<hr>
+<h2 class="binding"><a id="table/clone">table&#47;clone</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(table&#47;clone tab)<br><br>Create a copy of a table. Updates to the new table will not change the old table, and vice versa.</p>
+<hr>
+<h2 class="binding"><a id="table/getproto">table&#47;getproto</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(table&#47;getproto tab)<br><br>Get the prototype table of a table. Returns nil if a table has no prototype, otherwise returns the prototype.</p>
+<hr>
+<h2 class="binding"><a id="table/new">table&#47;new</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(table&#47;new capacity)<br><br>Creates a new empty table with pre-allocated memory for capacity entries. This means that if one knows the number of entries going to go in a table on creation, extra memory allocation can be avoided. Returns the new table.</p>
+<hr>
+<h2 class="binding"><a id="table/rawget">table&#47;rawget</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(table&#47;rawget tab key)<br><br>Gets a value from a table without looking at the prototype table. If a table tab does not contain t directly, the function will return nil without checking the prototype. Returns the value in the table.</p>
+<hr>
+<h2 class="binding"><a id="table/setproto">table&#47;setproto</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(table&#47;setproto tab proto)<br><br>Set the prototype of a table. Returns the original table tab.</p>
+<hr>
+<h2 class="binding"><a id="table/to-struct">table&#47;to-struct</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(table&#47;to-struct tab)<br><br>Convert a table to a struct. Returns a new struct. This function does not take into account prototype tables.</p>
+<hr>
+<h2 class="binding"><a id="table?">table?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(table? x)<br><br>Check if x a table.</p>
+<span class="source-map">boot.janet (91:1)</span><hr>
+<h2 class="binding"><a id="take">take</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(take n ind)<br><br>Take first n elements in an indexed type. Returns new indexed instance.</p>
+<span class="source-map">boot.janet (709:1)</span><hr>
+<h2 class="binding"><a id="take-until">take-until</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(take-until pred ind)<br><br>Same as (take-while (complement pred) ind).</p>
+<span class="source-map">boot.janet (718:1)</span><hr>
+<h2 class="binding"><a id="take-while">take-while</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(take-while pred ind)<br><br>Given a predicate, take only elements from an indexed type that satisfy  the predicate, and abort on first failure. Returns a new array.</p>
+<span class="source-map">boot.janet (728:1)</span><hr>
+<h2 class="binding"><a id="tarray/buffer">tarray&#47;buffer</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tarray&#47;buffer array|size)<br><br>Return typed array buffer or create a new buffer.</p>
+<hr>
+<h2 class="binding"><a id="tarray/copy-bytes">tarray&#47;copy-bytes</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tarray&#47;copy-bytes src sindex dst dindex &amp;opt count)<br><br>Copy count elements (default 1) of src array from index sindex to dst array at position dindex memory can overlap.</p>
+<hr>
+<h2 class="binding"><a id="tarray/length">tarray&#47;length</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tarray&#47;length array|buffer)<br><br>Return typed array or buffer size.</p>
+<hr>
+<h2 class="binding"><a id="tarray/new">tarray&#47;new</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tarray&#47;new type size &amp;opt stride offset tarray|buffer)<br><br>Create new typed array.</p>
+<hr>
+<h2 class="binding"><a id="tarray/properties">tarray&#47;properties</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tarray&#47;properties array)<br><br>Return typed array properties as a struct.</p>
+<hr>
+<h2 class="binding"><a id="tarray/slice">tarray&#47;slice</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tarray&#47;slice tarr &amp;opt start end)<br><br>Takes a slice of a typed array from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the typed array. By default, start is 0 and end is the size of the typed array. Returns a new janet array.</p>
+<hr>
+<h2 class="binding"><a id="tarray/swap-bytes">tarray&#47;swap-bytes</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tarray&#47;swap-bytes src sindex dst dindex &amp;opt count)<br><br>Swap count elements (default 1) between src array from index sindex and dst array at position dindex memory can overlap.</p>
+<hr>
+<h2 class="binding"><a id="trace">trace</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(trace func)<br><br>Enable tracing on a function. Returns the function.</p>
+<hr>
+<h2 class="binding"><a id="true?">true?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(true? x)<br><br>Check if x is true.</p>
+<span class="source-map">boot.janet (105:1)</span><hr>
+<h2 class="binding"><a id="try">try</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(try body catch)<br><br>Try something and catch errors. Body is any expression,  and catch should be a form with the first element a tuple. This tuple  should contain a binding for errors and an optional binding for  the fiber wrapping the body. Returns the result of body if no error,  or the result of catch if an error.</p>
+<span class="source-map">boot.janet (208:1)</span><hr>
+<h2 class="binding"><a id="tuple">tuple</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tuple &amp; items)<br><br>Creates a new tuple that contains items. Returns the new tuple.</p>
+<hr>
+<h2 class="binding"><a id="tuple/brackets">tuple&#47;brackets</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tuple&#47;brackets &amp; xs)<br><br>Creates a new bracketed tuple containing the elements xs.</p>
+<hr>
+<h2 class="binding"><a id="tuple/setmap">tuple&#47;setmap</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tuple&#47;setmap tup line column)<br><br>Set the sourcemap metadata on a tuple. line and column indicate should be integers.</p>
+<hr>
+<h2 class="binding"><a id="tuple/slice">tuple&#47;slice</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tuple&#47;slice arrtup [,start=0 [,end=(length arrtup)]])<br><br>Take a sub sequence of an array or tuple from index start inclusive to index end exclusive. If start or end are not provided, they default to 0 and the length of arrtup respectively.Returns the new tuple.</p>
+<hr>
+<h2 class="binding"><a id="tuple/sourcemap">tuple&#47;sourcemap</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tuple&#47;sourcemap tup)<br><br>Returns the sourcemap metadata attached to a tuple,  which is another tuple (line, column).</p>
+<hr>
+<h2 class="binding"><a id="tuple/type">tuple&#47;type</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(tuple&#47;type tup)<br><br>Checks how the tuple was constructed. Will return the keyword :brackets if the tuple was parsed with brackets, and :parens otherwise. The two types of tuples will behave the same most of the time, but will print differently and be treated differently by the compiler.</p>
+<hr>
+<h2 class="binding"><a id="tuple?">tuple?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(tuple? x)<br><br>Check if x is a tuple.</p>
+<span class="source-map">boot.janet (94:1)</span><hr>
+<h2 class="binding"><a id="type">type</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(type x)<br><br>Returns the type of x as a keyword symbol. x is one of<br>&nbsp;&nbsp;&nbsp;&nbsp;:nil<br>&nbsp;&nbsp;&nbsp;&nbsp;:boolean<br>&nbsp;&nbsp;&nbsp;&nbsp;:integer<br>&nbsp;&nbsp;&nbsp;&nbsp;:real<br>&nbsp;&nbsp;&nbsp;&nbsp;:array<br>&nbsp;&nbsp;&nbsp;&nbsp;:tuple<br>&nbsp;&nbsp;&nbsp;&nbsp;:table<br>&nbsp;&nbsp;&nbsp;&nbsp;:struct<br>&nbsp;&nbsp;&nbsp;&nbsp;:string<br>&nbsp;&nbsp;&nbsp;&nbsp;:buffer<br>&nbsp;&nbsp;&nbsp;&nbsp;:symbol<br>&nbsp;&nbsp;&nbsp;&nbsp;:keyword<br>&nbsp;&nbsp;&nbsp;&nbsp;:function<br>&nbsp;&nbsp;&nbsp;&nbsp;:cfunction<br><br>or another symbol for an abstract type.</p>
+<hr>
+<h2 class="binding"><a id="unless">unless</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(unless condition &amp; body)<br><br>Shorthand for (when (not condition) ;body). </p>
+<span class="source-map">boot.janet (152:1)</span><hr>
+<h2 class="binding"><a id="unmarshal">unmarshal</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(unmarshal buffer &amp;opt lookup)<br><br>Unmarshal a janet value from a buffer. An optional lookup table can be provided to allow for aliases to be resolved. Returns the value unmarshalled from the buffer.</p>
+<hr>
+<h2 class="binding"><a id="untrace">untrace</a></h2>
+<span class="binding-type">cfunction</span>
+<p class="docstring">(untrace func)<br><br>Disables tracing on a function. Returns the function.</p>
+<hr>
+<h2 class="binding"><a id="update">update</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(update ds key func &amp; args)<br><br>Accepts a key argument and passes its associated value to a function.  The key is the re-associated to the function&#39;s return value. Returns the updated  data structure ds.</p>
+<span class="source-map">boot.janet (1030:1)</span><hr>
+<h2 class="binding"><a id="update-in">update-in</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(update-in ds ks f &amp; args)<br><br>Update a value in a nested data structure by applying f to the current value.  Looks into the data structure via  a sequence of keys. Missing data structures will be replaced with tables. Returns  the modified, original data structure.</p>
+<span class="source-map">boot.janet (986:1)</span><hr>
+<h2 class="binding"><a id="use">use</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(use &amp; modules)<br><br>Similar to import, but imported bindings are not prefixed with a namespace  identifier. Can also import multiple modules in one shot.</p>
+<span class="source-map">boot.janet (1997:1)</span><hr>
+<h2 class="binding"><a id="values">values</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(values x)<br><br>Get the values of an associative data structure.</p>
+<span class="source-map">boot.janet (1069:1)</span><hr>
+<h2 class="binding"><a id="varfn">varfn</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(varfn name &amp; body)<br><br>Create a function that can be rebound. varfn has the same signature  as defn, but defines functions in the environment as vars. If a var &#39;name&#39;  already exists in the environment, it is rebound to the new function. Returns  a function.</p>
+<span class="source-map">boot.janet (1548:1)</span><hr>
+<h2 class="binding"><a id="varglobal">varglobal</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(varglobal name init)<br><br>Dynamically create a global var.</p>
+<span class="source-map">boot.janet (68:1)</span><hr>
+<h2 class="binding"><a id="walk">walk</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(walk f form)<br><br>Iterate over the values in ast and apply f  to them. Collect the results in a data structure . If ast is not a  table, struct, array, or tuple,  returns form.</p>
+<span class="source-map">boot.janet (848:1)</span><hr>
+<h2 class="binding"><a id="when">when</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(when condition &amp; body)<br><br>Evaluates the body when the condition is true. Otherwise returns nil.</p>
+<span class="source-map">boot.janet (147:1)</span><hr>
+<h2 class="binding"><a id="when-let">when-let</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(when-let bindings &amp; body)<br><br>Same as (if-let bindings (do ;body)).</p>
+<span class="source-map">boot.janet (490:1)</span><hr>
+<h2 class="binding"><a id="with">with</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(with [binding ctor dtor] &amp; body)<br><br>Evaluate body with some resource, which will be automatically cleaned up  if there is an error in body. binding is bound to the expression ctor, and  dtor is a function or callable that is passed the binding. If no destructor  (dtor) is given, will call :close on the resource.</p>
+<span class="source-map">boot.janet (267:1)</span><hr>
+<h2 class="binding"><a id="with-dyns">with-dyns</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(with-dyns bindings &amp; body)<br><br>Run a block of code in a new fiber that has some  dynamic bindings set. The fiber will not mask errors  or signals, but the dynamic bindings will be properly  unset, as dynamic bindings are fiber local.</p>
+<span class="source-map">boot.janet (900:1)</span><hr>
+<h2 class="binding"><a id="with-syms">with-syms</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(with-syms syms &amp; body)<br><br>Evaluates body with each symbol in syms bound to a generated, unique symbol.</p>
+<span class="source-map">boot.janet (256:1)</span><hr>
+<h2 class="binding"><a id="with-vars">with-vars</a></h2>
+<span class="binding-type">macro</span>
+<p class="docstring">(with-vars vars &amp; body)<br><br>Evaluates body with each var in vars temporarily bound. Similar signature to  let, but each binding must be a var.</p>
+<span class="source-map">boot.janet (911:1)</span><hr>
+<h2 class="binding"><a id="yield">yield</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(yield x)<br><br>Yield a value to a parent fiber. When a fiber yields, its execution is paused until another thread resumes it. The fiber will then resume, and the last yield call will return the value that was passed to resume.</p>
+<hr>
+<h2 class="binding"><a id="zero?">zero?</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(zero? x)<br><br>Check if x is zero.</p>
+<span class="source-map">boot.janet (78:1)</span><hr>
+<h2 class="binding"><a id="zipcoll">zipcoll</a></h2>
+<span class="binding-type">function</span>
+<p class="docstring">(zipcoll keys vals)<br><br>Creates a table from two arrays&#47;tuples.  Returns a new table.</p>
+<span class="source-map">boot.janet (966:1)</span></html>

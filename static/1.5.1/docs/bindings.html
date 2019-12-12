@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Bindings (def and var)</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Bindings (def and var)" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span class="selected"><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="object_oriented.html">Object Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.5.1-5171dfd Documentation<br>(Other Versions:
+          <a href="../../1.5.0/docs/bindings.html">1.5.0</a>
+          <a href="../../1.4.0/docs/bindings.html">1.4.0</a>
+          <a href="../../1.3.1/docs/bindings.html">1.3.1</a>)</h4>
+        <h1 class="subtitle">Bindings (def and var)</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="numbers.html"><span class="prevnext-text">Numbers and Arithmetic</span></a></span>
+
+          <span class="next"><a href="flow.html"><span class="prevnext-text">Flow</span></a></span>
+        </div>
+        
+
+<p>Values can be bound to symbols for later use using the keyword <code class="mendoza-code">def</code>. Using undefined
+symbols will raise an error.
+</p>
+
+    Hello
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">100</span>)
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">b</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-symbol">a</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">c</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">b</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">d</span> (<span class="mdzsyn-coresym">-</span> <span class="mdzsyn-symbol">c</span> <span class="mdzsyn-number">100</span>))</code></pre><p>Bindings created with def have lexical scoping. Also, bindings created with def are immutable; they
+cannot be changed after definition. For mutable bindings, like variables in other programming
+languages, use the <code class="mendoza-code">var</code> keyword. The assignment special form <code class="mendoza-code">set</code> can then be used to update
+a var.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">100</span>)
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">myvar</span> <span class="mdzsyn-number">1</span>)
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">myvar</span>)
+(<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">myvar</span> <span class="mdzsyn-number">10</span>)
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">myvar</span>)</code></pre><p>In the global scope, you can use the <code class="mendoza-code">:private</code> option on a def or var to prevent it from
+being exported to code that imports your current module. You can also add documentation to
+a function by passing a string the def or var command.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mydef</span> <span class="mdzsyn-keyword">:private</span> <span class="mdzsyn-string">"This will have private scope. My doc here."</span> <span class="mdzsyn-number">123</span>)
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">myvar</span> <span class="mdzsyn-string">"docstring here"</span> <span class="mdzsyn-number">321</span>)</code></pre><h3>Scopes
+</h3>
+<p>Defs and vars (collectively known as bindings) live inside what is called a scope. A scope is
+simply where the bindings are valid. If a binding is referenced outside of its scope, the compiler
+will throw an error. Scopes are useful for organizing your bindings and they can expand your programs.
+There are two main ways to create a scope in Janet.
+</p>
+<p>The first is to use the <code class="mendoza-code">do</code> special form. <code class="mendoza-code">do</code> executes a series of statements in a scope
+and evaluates to the last statement. Bindings create inside the form do not escape outside
+of its scope.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:outera</span>)
+
+(<span class="mdzsyn-coresym">do</span>
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">1</span>)
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-number">2</span>)
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">c</span> <span class="mdzsyn-number">3</span>)
+ (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">c</span>)) <span class="mdzsyn-comment"># -&gt; 6</span>
+
+<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-comment"># -&gt; :outera</span>
+<span class="mdzsyn-symbol">b</span> <span class="mdzsyn-comment"># -&gt; compile error: "unknown symbol \"b\""</span>
+<span class="mdzsyn-symbol">c</span> <span class="mdzsyn-comment"># -&gt; compile error: "unknown symbol \"c\""</span></code></pre><p>Any attempt to reference the bindings from the do form after it has finished
+executing will fail. Also notice who defining <code class="mendoza-code">a</code> inside the do form did not
+overwrite the original definition of <code class="mendoza-code">a</code> for the global scope.
+</p>
+<p>The second way to create a scope is to create a closure.
+The <code class="mendoza-code">fn</code> special form also introduces a scope just like
+the <code class="mendoza-code">do</code> special form.
+</p>
+<p>There is another built in macro, <code class="mendoza-code">let</code>, that does multiple defs at once, and then introduces a scope.
+<code class="mendoza-code">let</code> is a wrapper around a combination of defs and dos, and is the most "functional" way of
+creating bindings.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">let</span> [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">1</span>
+      <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-number">2</span>
+      <span class="mdzsyn-symbol">c</span> <span class="mdzsyn-number">3</span>]
+      (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">c</span>)) <span class="mdzsyn-comment"># -&gt; 6</span></code></pre><p>The above is equivalent to the example using <code class="mendoza-code">do</code> and <code class="mendoza-code">def</code>.
+This is the preferable form in most cases,
+but using do with multiple defs is fine as well.
+</p>
+
+        <div class="prevnext-bar">
+          <span class="prev"><a href="numbers.html"><span class="prevnext-text">Numbers and Arithmetic</span></a></span>
+          <span class="next"><a href="flow.html"><span class="prevnext-text">Flow</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose 2019
+  <div class="gentag">Generated on December 12, 2019 at 08:21:28 with Janet 1.5.1-5171dfd</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

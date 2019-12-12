@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Introduction</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Introduction" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span class="selected"><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="object_oriented.html">Object Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.5.1-5171dfd Documentation<br>(Other Versions:
+          <a href="../../1.5.0/docs/index.html">1.5.0</a>
+          <a href="../../1.4.0/docs/index.html">1.4.0</a>
+          <a href="../../1.3.1/docs/index.html">1.3.1</a>)</h4>
+        <h1 class="subtitle">Introduction</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../index.html"><span class="prevnext-text">The Janet Programming Language</span></a></span>
+
+          <span class="next"><a href="syntax.html"><span class="prevnext-text">Syntax and the Parser</span></a></span>
+        </div>
+        
+
+<h2>Installation
+</h2>
+<p>Install a stable version of janet from the <a href="https://github.com/janet-lang/janet/releases">releases page</a>.
+Janet is prebuilt for a few systems, but if you want to develop janet, run janet on a non-x86 system, or
+get the latest, you must build janet from source.
+</p>
+<h3>Windows
+</h3>
+<p>On Windows, the easiest way to install is via the <a href="https://scoop.sh">scoop</a>
+package manager. You will first need to add the janet-lang bucket, and then you can install janet
+normally.
+</p>
+<pre class="mendoza-codeblock"><code>scoop bucket add janet-lang https://github.com/janet-lang/scoop
+scoop install janet</code></pre><h3>AUR
+</h3>
+<p>You can install either the latest git verion or the latest stable version for Arch Linux
+from the Arch user repositories with <a href="https://aur.archlinux.org/packages/janet-lang-git/">janet-lang-git</a> or <a href="https://aur.archlinux.org/packages/janet-lang">janet-lang</a>.
+</p>
+<h3>macOS
+</h3>
+<p>Janet is available for installation through the <a href="https://brew.sh/">homebrew</a> package
+manager as <code class="mendoza-code">janet</code>. The latest version from git can be installed by adding the
+<code class="mendoza-code">--HEAD</code> flag.
+</p>
+<pre class="mendoza-codeblock"><code>brew install janet</code></pre><h2>Compiling and Running from Source
+</h2>
+<p>If you would like the latest version of Janet, are trying to run Janet on
+a platform that is not macOS or Windows, or would like to help develop
+Janet, you can build janet from source.
+Janet only uses Make and batch files to compile on Posix and windows
+respectively. To configure janet, edit the header file src/conf/janetconf.h
+before compilation.
+</p>
+<h3>macOS and Unix-like
+</h3>
+<p>On most platforms, use Make to build janet. The resulting binary will be in <code class="mendoza-code">build/janet</code>.
+</p>
+<pre class="mendoza-codeblock"><code>cd somewhere/my/projects/janet
+make
+make test</code></pre><p>After building, run <code class="mendoza-code">make install</code> to install the janet binary and libs.
+Will install in <code class="mendoza-code">/usr/local</code> by default, see the Makefile to customize.
+</p>
+<h3>FreeBSD
+</h3>
+<p>FreeBSD build instructions are the same as the unix-like build instuctions,
+but you need <code class="mendoza-code">gmake</code> and <code class="mendoza-code">gcc</code> to compile.
+</p>
+<pre class="mendoza-codeblock"><code>cd somewhere/my/projects/janet
+gmake CC=gcc
+gmake test CC=gcc</code></pre><h3>Windows
+</h3>
+<ol><li>Install <a href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#">Visual Studio</a> or
+    <a href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15#">Visual Studio Build Tools</a></li>
+    <li>Run a Visual Studio Command Prompt (cl.exe and link.exe need to be on the PATH) and cd to the directory with janet.</li>
+    <li>Run <code class="mendoza-code">build_win</code> to compile janet.</li>
+    <li>Run <code class="mendoza-code">build_win test</code> to make sure everything is working.</li></ol><p>To install from source, the best way to is use <a href="https://sourceforge.net/projects/nsis/">NSIS</a> to generate an installer and run that. You will need NSVC (or the Microsoft Build Tools) to build everything, and NSIS to build the installer. From a Developer Command Prompt, run <code class="mendoza-code">build_win all</code> to build, test, and install Janet on your local machine.
+</p>
+<h3>Emscripten
+</h3>
+<p>To build janet for the web via <a href="https://kripken.github.io/emscripten-site/">Emscripten</a>, make sure you
+have <code class="mendoza-code">emcc</code> installed and on your path. On a linux or macOS system, use <code class="mendoza-code">make emscripten</code> to build
+<code class="mendoza-code">janet.js</code> and <code class="mendoza-code">janet.wasm</code> - both are needed to run janet in a browser or in node.
+The JavaScript build is what runs the repl on the main website,
+but really serves mainly as a proof of concept. Janet will run slower in a browser.
+Building with emscripten on windows is currently unsupported.
+</p>
+<h3>Meson
+</h3>
+<p>Janet also has a build file for <a href="https://mesonbuild.com/">Meson</a>, a cross platform build
+system. This is not currently the main supported build system, but should work on any
+system that supports meson. Meson also provides much better IDE integration than Make or batch files.
+</p>
+<h3>Small builds
+</h3>
+<p>If you want to cut down on the size of the final Janet binary or library, you need to omit features
+and build with <code class="mendoza-code">-Os</code>. With meson, this can look something like below:
+</p>
+<pre class="mendoza-codeblock"><code>git clone https://github.com/janet-lang/janet.git
+cd janet
+meson setup SmallBuild
+cd SmallBuild
+meson configure -Dsingle_threaded=true -Dassembler=false -Ddocstrings=false \
+    -Dreduced_os=true -Dtyped_array=false -Dsourcemaps=false -Dpeg=false \
+    -Dint_types=false --optimization=s -Ddebug=false
+ninja
+# ./janet should be about 40% smaller than the default build as of 2019-10-13</code></pre><p>You can also do this with the Makefile by editing <code class="mendoza-code">CFLAGS</code>, and uncommenting some lines
+in <code class="mendoza-code">src/conf/janetconf.h</code>.
+</p>
+<h2>First Program
+</h2>
+<p>Following tradition, a simple Janet program will print "Hello, world!".
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"Hello, world!"</span>)</code></pre><p>Put the following code in a file named <code class="mendoza-code">hello.janet</code>, and run <code class="mendoza-code">janet hello.janet</code>.
+The words "Hello, world!" should be printed to the console, and then the program
+should immediately exit. You now have a working janet program!
+</p>
+<p>Alternatively, run the program <code class="mendoza-code">janet</code> without any arguments to enter a REPL,
+or read eval print loop. This is a mode where Janet works like a calculator,
+reading some input from the user, evaluating it, and printing out the result, all
+in an infinite loop. This is a useful mode for exploring or prototyping in Janet.
+</p>
+<p>This hello world program is about the simplest program one can write, and consists of only
+a few pieces of syntax. This first element is the <code class="mendoza-code">print</code> symbol. This is a function
+that simply prints its arguments to the console. The second argument is the
+string literal "Hello, world!", which is the one and only argument to the
+print function. Lastly, the <code class="mendoza-code">print</code> symbol and the string literal are wrapped
+in parentheses, forming a tuple. In Janet, parentheses and brackets are interchangeable,
+brackets are used mostly when the resulting tuple is not a function call. The tuple
+above indicates that the function <code class="mendoza-code">print</code> is to be called with one argument, <code class="mendoza-code">"Hello, world"</code>.
+</p>
+<p>Like all lisps, all operations in Janet are in prefix notation; the name of the
+operator is the first value in the tuple, and the arguments passed to it are
+in the rest of the tuple.
+</p>
+<h2>The Core Library
+</h2>
+<p>Janet has a built in core library of over 300 functions and macros at the time of writing.
+For efficient programming in Janet, it is good to be able to make use of many of these
+functions.
+</p>
+<p>If at any time you want to see short documentation on
+a binding, use the <code class="mendoza-code">doc</code> macro to view the documentation for it in the REPL.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">doc</span> <span class="mdzsyn-coresym">defn</span>) <span class="mdzsyn-comment"># -&gt; Prints the documentation for "defn"</span></code></pre><p>To see a list of all global functions in the REPL, type the command
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">all-bindings</span>)</code></pre><p>Which will print out every global binding in the janet REPL. You can also
+browse the <a href="/doc.html">Core Library API on the website</a>.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../index.html"><span class="prevnext-text">The Janet Programming Language</span></a></span>
+          <span class="next"><a href="syntax.html"><span class="prevnext-text">Syntax and the Parser</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose 2019
+  <div class="gentag">Generated on December 12, 2019 at 08:21:28 with Janet 1.5.1-5171dfd</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
