@@ -24,6 +24,25 @@ like C and C++, as there is no need to pass around a context object to all api f
 The C API is defined by the header @code`janet.h`, which should be included
 by programs to both embed Janet in a larger program, or to write a Janet module.
 
+## Using The Amalgamation
+
+When integrating Janet into a host project (usually some larger application, but it could be
+a small wrapper around Janet), it is convenient to be able to add only a few source files
+to your project rather than a large dependency. The amalgamated source, @code`janet.c`, contains
+all of the source code for Janet concatenated into one file. This file can be added to the host project, along
+with @code`janet.h` and @code`janetconf.h`. There is also the option of including @code`shell.c`, which is
+used in the standalone interpretter, but not usually needed for host programs.
+
+On a POSIX system, building the amalgamated source is straightforward. With @code`janet.c`, @code`janet.h`, @code`janetconf.h`, and
+@code`shell.c` in the current directory, building is as follows:
+
+@codeblock```
+cc -std=c99 -Wall -Werror -O2 -fPIC -shared janet.c shell.c -o janet -lm -ldl -lrt -lpthread
+```
+
+The exact flags required will depend on the system and on the configuration of the amalgamation.
+For example, linking to pthreads is not needed if JANET_SINGLE_THREADED is defined in @code`janetconf.h`.
+
 ## Writing a Module
 
 The easiest way to get started with the Janet C API is to write a Janet native
