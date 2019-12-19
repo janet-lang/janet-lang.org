@@ -1,0 +1,11 @@
+(import ./gen-docs :as gen-docs)
+
+{:title "Threads"
+ :nav-title "thread"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix[thread/]
+

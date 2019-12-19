@@ -3,7 +3,8 @@
 ---
 
 Tuples are immutable, sequential types that are similar to arrays. They also
-represent forms so are the main data structure in source code. Like all data structres, their
+represent both parenteized and bracket in source code (as opposed to traditional Lisps, where
+source forms are reprented by lists). Like all data structres, their
 contents can be retrieved with the @code`get` function, and their length retrieved with
 the @code`length` function.
 

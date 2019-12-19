@@ -36,7 +36,6 @@ time regarding the number of items in the data structure.
     @tr{@td{Struct} @td{O(1)} @td{-} @td{-} @td{O(n)} @td{No}}
     @tr{@td{Buffer} @td{O(1)} @td{O(1)} @td{O(1)} @td{O(n)} @td{Yes}}
     @tr{@td{String/Keyword/Symbol} @td{-} @td{-} @td{-} @td{O(n)} @td{No}}}
-
 }
 
 *: Append and delete for an array correspond to @code[array/push] and @code[array/pop]. Removing or inserting
@@ -85,7 +84,7 @@ if the value is not found.
 
 Similar to the `get` function and added in `1.5.0`, the `in` function also get values contained in a data structure
 but will throw errors on bad keys to arrays, tuple, and string-likes. You should prefer `in` going forward as
-it can be used to better detect errors. For tables, structs, and abstract types, `in` behaves identically to `get`.
+it can be used to better detect errors. For tables and structs, `in` behaves identically to `get`.
 
 @codeblock[janet]```
 (in @[:a :b :c] 2) # -> :c
