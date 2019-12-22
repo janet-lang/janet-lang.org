@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Numbers and Arithmetic</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Numbers and Arithmetic" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span class="selected"><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="object_oriented.html">Object Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/thread.html">thread</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.6.0-da93a73 Documentation<br>(Other Versions:
+          <a href="../../1.5.1/docs/numbers.html">1.5.1</a>
+          <a href="../../1.5.0/docs/numbers.html">1.5.0</a>
+          <a href="../../1.4.0/docs/numbers.html">1.4.0</a>
+          <a href="../../1.3.1/docs/numbers.html">1.3.1</a>)</h4>
+        <h1 class="subtitle">Numbers and Arithmetic</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="specials.html"><span class="prevnext-text">Special Forms</span></a></span>
+
+          <span class="next"><a href="bindings.html"><span class="prevnext-text">Bindings (def and var)</span></a></span>
+        </div>
+        
+
+<p>Any programming language will have some way to do arithmetic. Janet is no exception,
+and supports the basic arithmetic operators
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Prints 13</span>
+<span class="mdzsyn-comment"># (1 + (2*2) + (10/5) + 3 + 4 + (5 - 6))</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">2</span>) (<span class="mdzsyn-coresym">/</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">5</span>) <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> (<span class="mdzsyn-coresym">-</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span>)))</code></pre><p>Just like the print function, all arithmetic operators are entered in
+prefix notation. Janet also supports the remainder operator, or <code class="mendoza-code">%</code>, which returns
+the remainder of division. For example, <code class="mendoza-code">(% 10 3)</code> is 1, and <code class="mendoza-code">(% 10.5 3)</code> is
+1.5. The lines that begin with <code class="mendoza-code">#</code> are comments.
+</p>
+<p>All janet numbers are IEEE 754 double precision floating point numbers. They can be used to represent
+both integers and real numbers to a finite precision.
+</p>
+<h2>Numeric literals
+</h2>
+<p>Numeric literals can be written in many ways. Numbers can be written in base 10, with
+underscores used to separate digits into groups. A decimal point can be used for floating
+point numbers. Numbers can also be written in other bases by prefixing the number with the desired
+base and the character 'r'. For example, 16 can be written as <code class="mendoza-code">16</code>, <code class="mendoza-code">1_6</code>, <code class="mendoza-code">16r10</code>, <code class="mendoza-code">4r100</code>, or <code class="mendoza-code">0x10</code>. The
+<code class="mendoza-code">0x</code> prefix can be used for hexadecimal as it is so common. The radix must be themselves written in base 10, and
+can be any integer from 2 to 36. For any radix above 10, use the letters as digits (not case sensitive).
+</p>
+<p>Numbers can also be in scientific notation such as <code class="mendoza-code">3e10</code>. A custom radix can be used as well
+as for scientific notation numbers, (the exponent will share the radix). For numbers in scientific
+notation with a radix besides 10, use the <code class="mendoza-code">&amp;</code> symbol to indicate the exponent rather then <code class="mendoza-code">e</code>.
+</p>
+<p>Some example numbers:
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-number">0</span>
+<span class="mdzsyn-number">+0.0</span>
+<span class="mdzsyn-number">-10_000</span>
+<span class="mdzsyn-number">16r1234abcd</span>
+<span class="mdzsyn-number">0x23.23</span>
+<span class="mdzsyn-number">1e10</span>
+<span class="mdzsyn-number">1.6e-4</span>
+<span class="mdzsyn-number">7r343_111_266.6&amp;+10</span> <span class="mdzsyn-comment"># a base 7 number in scientific notation.</span>
+<span class="mdzsyn-comment"># evaluates to 1.72625e+13 in base 10</span></code></pre>
+</p>
+<p>Janet will allow some pretty wacky formats for numbers. However, no matter what format
+you write your number in, the resulting value will always be a double precision
+floating point number. 
+</p>
+<h2>Arithmetic Functions
+</h2>
+<p>Besides the 5 main arithmetic functions, janet also supports a number of math functions
+taken from the C library <code class="mendoza-code">&lt;math.h&gt;</code>, as well as bit-wise operators that behave like they
+do in C or Java. Functions like <code class="mendoza-code">math/sin</code>, <code class="mendoza-code">math/cos</code>, <code class="mendoza-code">math/log</code>, and <code class="mendoza-code">math/exp</code> will
+behave as expected to a C programmer. They all take either 1 or 2 numeric arguments and
+return a real number (never an integer!) Bit-wise functions are all prefixed with b.
+They are <code class="mendoza-code">bnot</code>, <code class="mendoza-code">bor</code>, <code class="mendoza-code">bxor</code>, <code class="mendoza-code">band</code>, <code class="mendoza-code">blshift</code>, <code class="mendoza-code">brshift</code>, and <code class="mendoza-code">brushift</code>. Bit-wise
+functions only work on integers.
+</p>
+<p>See the <a href="doc.html#math/acos">Core Library API</a> for info on functions in the <code class="mendoza-code">math/</code> namespace.
+</p>
+
+        <div class="prevnext-bar">
+          <span class="prev"><a href="specials.html"><span class="prevnext-text">Special Forms</span></a></span>
+          <span class="next"><a href="bindings.html"><span class="prevnext-text">Bindings (def and var)</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose 2019
+  <div class="gentag">Generated on December 22, 2019 at 17:33:11 with Janet 1.6.0-da93a73</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
