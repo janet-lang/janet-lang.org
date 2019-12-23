@@ -5,15 +5,15 @@
 
 Starting in version 1.6.0, Janet has the ability to do true, non-cooperative multithreading with the @code`thread/`
 functions. Janet threads correspond to native threads on the host operating system, which may be either pthreads on
-posix systems or Windows threads. Each thread has it's own Janet heap, which means threads behave more like processes
+posix systems or Windows threads. Each thread has its own Janet heap, which means threads behave more like processes
 that communicate by message passing. However, this does not prevent native code from sharing memory across these threads.
-Without native extensions, however, the only for two Janet threads to communicate directly is through message passing.
+Without native extensions, however, the only way for two Janet threads to communicate directly is through message passing.
 
 ## Creating Threads
 
 Use `(thread/new func &opt capacity)` to create a new thread. This thread will start and wait for a message containing a function
 that it will run as the main body. This function must also be able to take 1 parameter, the parent thread.
-Each thread has it's own mailbox, which can asynchronously receive messages. These messages are added to a queue, which has
+Each thread has its own mailbox, which can asynchronously receive messages. These messages are added to a queue, which has
 a configurable maximum capacity according to the second optional argument passed to @code`thread/new`. If unspecified, the mailbox
 will have an initial capacity of 10.
 
@@ -68,7 +68,7 @@ cannot be marshalled.
 ```
 
 The fix here is to move the file creation inside the worker function, since every worker thread is going to have
-it's own copy of the file handle.
+its own copy of the file handle.
 
 @codeblock[janet]```
 (defn worker
@@ -83,7 +83,7 @@ it's own copy of the file handle.
 
 ## Blocking and Non-blocking Sends and Receives
 
-All sends and receives can be blocking or non-blocking by providing and optional timeout value. A timeout
+All sends and receives can be blocking or non-blocking by providing an optional timeout value. A timeout
 of 0 makes @code`(thread/send to msg &opt timeout)` and @code`(thread/receive &opt timeout)` non-blocking, while a positive timeout value
 indicates and blocking send or receive, that will resume the current thread by throwing an error after
 timeout seconds. Timeouts are limited to 30 days, with exception the using @code`math/inf` for a timeout means that
