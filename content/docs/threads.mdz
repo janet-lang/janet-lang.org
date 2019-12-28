@@ -77,7 +77,7 @@ it's own copy of the file handle.
   (with-dyns [:out file]
     (print "Writing to file.")))
 
-# Will throw an error, as worker contains a reference to file, which cannot be marshalled.
+# No error
 (thread/new worker)
 ```
 
