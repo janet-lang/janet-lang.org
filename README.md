@@ -6,32 +6,22 @@ static site generator.
 
 ## Prereqs
 
-The recommended way to build this website is to first install both Janet and mendoza. Below
-is one way to do that for Linux systems.
-
-### Installing Janet
+Build this website using the bundled janet amalgamated source.
 
 ```sh
-git clone https://github.com/janet-lang/janet
-cd janet
-make -j 12
-sudo make install
-```
-
-### Installing Mendoza
-
-```sh
-sudo jpm install https://github.com/bakpakin/mendoza.git
+git clone https://github.com/janet-lang/janet-lang.org
+cd janet-lang.org
+make setup
 ```
 
 ## Building
 
-To build, simply use `make` or `mdz`
+To build, simply use `make` or `make build`.
 
 ## Watch for changes
 
 This requires first installing `inotify-tools`, which can be installed easily on most Linux distros.
-To watch for changes, use `make watch` or `mdz watch`.
+To watch for changes, use `make watch`.
 
 ## Serve on localhost:8000
 
