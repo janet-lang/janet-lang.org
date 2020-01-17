@@ -23,7 +23,7 @@
   </head>
   <body>
 
-    {{ {:template "ribbon.html"} }}
+    {{ {:template (require "ribbon.html")} }}
 
     <div class="top">
       <div class="content-wrapper">
@@ -52,7 +52,7 @@
 
     </div>
 
-    {{ {:template "footer.html"} }}
+    {{ {:template (require "footer.html")} }}
 
     <!-- Set up emscripten runtime -->
     <script type="text/javascript" src="js/ansi_up.js"></script>
