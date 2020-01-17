@@ -1,13 +1,14 @@
 /* Amalgamated build - DO NOT EDIT */
-/* Generated from janet version 1.6.1-dev-022be21 */
-#define JANET_BUILD "022be21"
+/* Generated from janet version 1.6.1-dev-23c7c3b */
+#define JANET_BUILD "23c7c3b"
 #define JANET_AMALG
+#define _POSIX_C_SOURCE 200112L
 #include "janet.h"
 
 /* src/mainclient/line.h */
 
 /*
-* Copyright (c) 2019 Calvin Rose
+* Copyright (c) 2020 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -31,6 +32,10 @@
 #ifndef JANET_LINE_H_defined
 #define JANET_LINE_H_defined
 
+#if !defined(_POSIX_C_SOURCE)
+#define _POSIX_C_SOURCE 200112L
+#endif
+
 #ifndef JANET_AMALG
 #include <janet.h>
 #endif
@@ -47,7 +52,7 @@ Janet janet_line_getter(int32_t argc, Janet *argv);
 /* src/mainclient/line.c */
 
 /*
-* Copyright (c) 2019 Calvin Rose
+* Copyright (c) 2020 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -67,6 +72,10 @@ Janet janet_line_getter(int32_t argc, Janet *argv);
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 * IN THE SOFTWARE.
 */
+
+#if !defined(_POSIX_C_SOURCE)
+#define _POSIX_C_SOURCE 200112L
+#endif
 
 #ifndef JANET_AMALG
 #include "line.h"
@@ -408,8 +417,16 @@ static int line() {
                 break;
             case 4:     /* ctrl-d, eof */
                 return -1;
+            case 1:     /* ctrl-a */
+                gbl_pos = 0;
+                refresh();
+                break;
             case 2:     /* ctrl-b */
                 kleft();
+                break;
+            case 5:     /* ctrl-e */
+                gbl_pos = gbl_len;
+                refresh();
                 break;
             case 6:     /* ctrl-f */
                 kright();
@@ -553,7 +570,7 @@ void janet_line_get(const char *p, JanetBuffer *buffer) {
 /* src/mainclient/main.c */
 
 /*
-* Copyright (c) 2019 Calvin Rose
+* Copyright (c) 2020 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -573,6 +590,10 @@ void janet_line_get(const char *p, JanetBuffer *buffer) {
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 * IN THE SOFTWARE.
 */
+
+#if !defined(_POSIX_C_SOURCE)
+#define _POSIX_C_SOURCE 200112L
+#endif
 
 #ifndef JANET_AMALG
 #include <janet.h>

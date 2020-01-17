@@ -29,7 +29,7 @@
 
 (defn- rule-impl
   [target deps thunk &opt phony]
-  (put (getrules) target @[(array/slice deps) thunk phony]))
+  (put (getrules) target @[(array/slice deps) @[thunk] phony]))
 
 (defmacro rule
   "Add a rule to the rule graph."
@@ -53,8 +53,9 @@
 (defn- add-thunk
   [target more]
   (def item (gettarget target))
-  (def [_ thunk] item)
-  (put item 1 (fn [] (more) (thunk))))
+  (def [_ thunks] item)
+  (array/push thunks more)
+  item)
 
 (defmacro add-body
   "Add recipe code to an existing rule. This makes existing rules do more but
@@ -83,10 +84,10 @@
     (if (os/stat target :mode)
       (break target)
       (error (string "No rule for file " target " found."))))
-  (def [deps thunk phony] item)
+  (def [deps thunks phony] item)
   (def realdeps (seq [dep :in deps :let [x (do-rule dep)] :when x] x))
   (when (or phony (needs-build-some target realdeps))
-    (thunk))
+    (each thunk thunks (thunk)))
   (unless phony target))
 
 #
@@ -587,16 +588,20 @@ int main(int argc, const char **argv) {
   (rm manifest)
   (print "Uninstalled."))
 
+(defn- rimraf
+  "Hard delete directory tree"
+  [path]
+  (if is-win
+    # windows get rid of read-only files
+    (os/shell `rmdir /S /Q "` path `"`))
+    (rm path))
+
 (defn clear-cache
   "Clear the global git cache."
   []
   (def cache (find-cache))
   (print "clearing " cache "...")
-  (if is-win
-    # Git for windows decided that .git should be hidden and everything in it read-only.
-    # This means we can't delete things easily.
-    (os/shell (string `rmdir /S /Q "` cache `"`))
-    (rm cache)))
+  (rimraf cache))
 
 (def- default-pkglist (or (os/getenv "JANET_PKGLIST") "https://github.com/janet-lang/pkgs.git"))
 
@@ -631,7 +636,9 @@ int main(int argc, const char **argv) {
   (when (mkdir module-dir)
       (set fresh true)
       (print "cloning repository " repo " to " module-dir)
-      (os/execute ["git" "clone" repo module-dir] :p))
+      (unless (zero? (os/execute ["git" "clone" repo module-dir] :p))
+        (rimraf module-dir)
+        (error (string "could not clone git dependency " repo))))
   (def olddir (os/cwd))
   (try
     (with-dyns [:rules @{}

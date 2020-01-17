@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2019 Calvin Rose
+* Copyright (c) 2020 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -49,7 +49,6 @@ extern "C" {
 #if defined(__FreeBSD__) || defined(__DragonFly__) || \
     defined(__NetBSD__) || defined(__OpenBSD__)
 #define JANET_BSD 1
-#define _BSD_SOURCE 1
 #endif
 
 /* Check for Mac */
@@ -76,7 +75,6 @@ extern "C" {
     || defined(sun) || defined(__sun) /* Solaris */ \
     || defined(unix) || defined(__unix) || defined(__unix__)
 #define JANET_POSIX 1
-#define _POSIX_C_SOURCE 200112L
 #elif defined(__EMSCRIPTEN__)
 #define JANET_WEB 1
 #elif defined(WIN32) || defined(_WIN32)
@@ -255,6 +253,11 @@ typedef struct {
 #include <setjmp.h>
 #include <stddef.h>
 #include <stdio.h>
+
+#ifdef JANET_BSD
+int _setjmp(jmp_buf);
+JANET_NO_RETURN void _longjmp(jmp_buf, int);
+#endif
 
 /* Names of all of the types */
 JANET_API extern const char *const janet_type_names[16];
@@ -692,28 +695,6 @@ struct JanetGCObject {
     int32_t flags;
     JanetGCObject *next;
 };
-
-/* Fiber signal masks. */
-#define JANET_FIBER_MASK_ERROR 2
-#define JANET_FIBER_MASK_DEBUG 4
-#define JANET_FIBER_MASK_YIELD 8
-
-#define JANET_FIBER_MASK_USER0 (16 << 0)
-#define JANET_FIBER_MASK_USER1 (16 << 1)
-#define JANET_FIBER_MASK_USER2 (16 << 2)
-#define JANET_FIBER_MASK_USER3 (16 << 3)
-#define JANET_FIBER_MASK_USER4 (16 << 4)
-#define JANET_FIBER_MASK_USER5 (16 << 5)
-#define JANET_FIBER_MASK_USER6 (16 << 6)
-#define JANET_FIBER_MASK_USER7 (16 << 7)
-#define JANET_FIBER_MASK_USER8 (16 << 8)
-#define JANET_FIBER_MASK_USER9 (16 << 9)
-
-#define JANET_FIBER_MASK_USERN(N) (16 << (N))
-#define JANET_FIBER_MASK_USER 0x3FF0
-
-#define JANET_FIBER_STATUS_MASK 0xFF0000
-#define JANET_FIBER_STATUS_OFFSET 16
 
 /* A lightweight green thread in janet. Does not correspond to
  * operating system threads. */
@@ -1321,6 +1302,9 @@ JANET_API int janet_verify(JanetFuncDef *def);
 JANET_API JanetBuffer *janet_pretty(JanetBuffer *buffer, int depth, int flags, Janet x);
 
 /* Misc */
+#ifndef JANET_NO_PRF
+JANET_API void janet_init_hash_key(uint8_t key[16]);
+#endif
 JANET_API int janet_equals(Janet x, Janet y);
 JANET_API int32_t janet_hash(Janet x);
 JANET_API int janet_compare(Janet x, Janet y);
@@ -1352,6 +1336,7 @@ JANET_API void janet_stacktrace(JanetFiber *fiber, Janet err);
 typedef void (*ScratchFinalizer)(void *);
 JANET_API void *janet_smalloc(size_t size);
 JANET_API void *janet_srealloc(void *mem, size_t size);
+JANET_API void *janet_scalloc(size_t nmemb, size_t size);
 JANET_API void janet_sfinalizer(void *mem, ScratchFinalizer finalizer);
 JANET_API void janet_sfree(void *mem);
 
@@ -1375,15 +1360,16 @@ JANET_API Janet janet_resolve_core(const char *name);
 
 /* Allow setting entry name for static libraries */
 #ifndef JANET_ENTRY_NAME
-#define JANET_ENTRY_NAME _janet_init
-#endif
-
 #define JANET_MODULE_ENTRY \
     JANET_API JanetBuildConfig _janet_mod_config(void) { \
         return janet_config_current(); \
     } \
-    JANET_API void JANET_ENTRY_NAME
+    JANET_API void _janet_init
+#else
+#define JANET_MODULE_ENTRY JANET_API void JANET_ENTRY_NAME
+#endif
 
+JANET_NO_RETURN JANET_API void janet_signalv(JanetSignal signal, Janet message);
 JANET_NO_RETURN JANET_API void janet_panicv(Janet message);
 JANET_NO_RETURN JANET_API void janet_panic(const char *message);
 JANET_NO_RETURN JANET_API void janet_panics(JanetString message);
@@ -1464,8 +1450,11 @@ JANET_API void janet_setdyn(const char *name, Janet value);
 #define JANET_FILE_SERIALIZABLE 128
 #define JANET_FILE_PIPED 256
 
+JANET_API Janet janet_makefile(FILE *f, int flags);
 JANET_API FILE *janet_getfile(const Janet *argv, int32_t n, int *flags);
 JANET_API FILE *janet_dynfile(const char *name, FILE *def);
+JANET_API JanetAbstract janet_checkfile(Janet j);
+JANET_API FILE *janet_unwrapfile(Janet j, int *flags);
 
 /* Marshal API */
 JANET_API void janet_marshal_size(JanetMarshalContext *ctx, size_t value);
