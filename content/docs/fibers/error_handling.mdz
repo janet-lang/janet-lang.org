@@ -4,9 +4,9 @@
 ---
 
 One of the main uses of Fibers is to encapsulate and handle errors. Janet offers
-no direct mechanism for try/catch like some language, and instead builds error
+no direct mechanism for try/catch like some languages, and instead builds error
 handling on top of Fibers. When some function throws an error, Janet creates a signal
-and throws that signal in the current fiber. The signal will be propogated up the
+and throws that signal in the current fiber. The signal will be propagated up the
 chain of active fibers until it hits a fiber that is ready to handle the error signal.
 This fiber will trap the signal and return the error from the last call to @code`resume`.
 
@@ -17,7 +17,7 @@ This fiber will trap the signal and return the error from the last call to @code
   (error "oops"))
 
 # Pass the :e flag to trap errors (and only errors).
-# All other signals will be propogated up the fiber stack.
+# All other signals will be propagated up the fiber stack.
 (def f (fiber/new block :e)) 
 
 # Get result of resuming the fiber in res.

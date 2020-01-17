@@ -13,14 +13,14 @@ get the latest, you must build janet from source.
 
 ### Windows
 
-On Windows, the easiest way to install is via the @link[https://scoop.sh][scoop]
-package manager. You will first need to add the janet-lang bucket, and then you can install janet
-normally.
+The recommended way to install on windows is just to run the installer from the releases page.
+A scoop package was maintained previously, but ongoing support is being dropped.
 
-@codeblock(```
-scoop bucket add janet-lang https://github.com/janet-lang/scoop
-scoop install janet
-```)
+If you want to use @code`jpm` to install native extensions, you will also need to install Visual Studio, ideally
+a recent release (2019 and 2017 should work well). Then, running @code`jpm` from the x64 Native Tools
+command prompt should work for a 64 bit build, and the Developer Command Prompt should work for 32 bit builds.
+Using these specific command prompts for jpm simply lets jpm use the Microsoft Compiler to compile native modules
+on install.
 
 ### AUR
 

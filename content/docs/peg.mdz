@@ -188,6 +188,40 @@ can overflow the stack. The compiler is able to turn some recursion into iterati
 may fail on large inputs. It is also possible to construct (very poorly written) patterns that will result in long loops and be very
 slow in general.
 
+## Built-in Patterns
+
+Besides the primitive patterns and pattern combinators given above, the @code`peg` module also
+provides a default grammar with a handful of commonly used patterns. All of these shorthands
+can be defined with the combinators above and primitive patterns, but these aliases may come up
+a lot when writing grammars.
+
+@tag[table]{
+    @tr{@th{Name} @th{Expanded} @th{Description}}
+    @tr{@td{@code`:d`} @td{@code`(range "09")`} @td{Matches an ASCII digit.}}
+    @tr{@td{@code`:a`} @td{@code`(range "az" "AZ")`} @td{Matches an ASCII letter.}}
+    @tr{@td{@code`:w`} @td{@code`(range "az" "AZ" "09")`} @td{Matches an ASCII digit or letter.}}
+    @tr{@td{@code`:s`} @td{@code`(set " \t\r\n\0\f")`} @td{Matches an ASCII whitespace character.}}
+
+    @tr{@td{@code`:D`} @td{@code`(if-not :d 1)`} @td{Matches a character that is not an ASCII digit.}}
+    @tr{@td{@code`:A`} @td{@code`(if-not :a 1)`} @td{Matches a character that is not an ASCII letter.}}
+    @tr{@td{@code`:W`} @td{@code`(if-not :w 1)`} @td{Matches a character that is not an ASCII digit or letter.}}
+    @tr{@td{@code`:S`} @td{@code`(if-not :s 1)`} @td{Matches a character that is not ASCII whitespace.}}
+
+    @tr{@td{@code`:d+`} @td{@code`(some :d)`} @td{Matches 1 or more ASCII digits.}}
+    @tr{@td{@code`:a+`} @td{@code`(some :a)`} @td{Matches 1 or more ASCII letters.}}
+    @tr{@td{@code`:w+`} @td{@code`(some :w)`} @td{Matches 1 or more ASCII digits and lettes.}}
+    @tr{@td{@code`:s+`} @td{@code`(some :s)`} @td{Matches 1 ore mote ASCII whitespace characters.}}
+
+    @tr{@td{@code`:d*`} @td{@code`(any :d)`} @td{Matches 0 or more ASCII digits.}}
+    @tr{@td{@code`:a*`} @td{@code`(any :a)`} @td{Matches 0 or more ASCII letters.}}
+    @tr{@td{@code`:w*`} @td{@code`(any :w)`} @td{Matches 0 or more ASCII digits and lettes.}}
+    @tr{@td{@code`:s*`} @td{@code`(any :s)`} @td{Matches 0 ore mote ASCII whitespace characters.}}
+}
+
+All of these aliases are defined in @code`default-peg-grammar`, which is a table that maps
+from the alias name to the expanded form. You can even add your own aliases here which are then
+available for all pegs in the program. Modifiying this table will not affect already compiled pegs.
+
 ## String Searching and other Idioms
 
 Although all pattern matching is done in anchored mode, operations like global substitution

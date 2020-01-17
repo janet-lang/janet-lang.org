@@ -38,6 +38,8 @@ Define this if you know the interpreter will only run in a single threaded progr
 this define is set, global Janet state will use normal global C variables rather than thread local
 variables.
 
+Setting this also disables the @code`thread/` module.
+
 ### @code`#define JANET_NO_DYNAMIC_MODULES`
 
 Define this to disable loading of dynamic modules via the @code`native` function. This also lets
