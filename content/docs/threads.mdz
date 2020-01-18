@@ -23,7 +23,7 @@ will have an initial capacity of 10.
   (print "New thread started!"))
 
 # New thread's mailbox has capacity for 32 messages.
-(def thread (new/thread worker 32))
+(def thread (thread/new worker 32))
 ```
 
 ## Sending and Receiving Messages
