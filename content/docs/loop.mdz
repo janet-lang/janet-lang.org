@@ -13,7 +13,7 @@ iterate over a collection like an array.
 
 Suppose you want to calculate the sum of the first 10 natural numbers
 0 through 9. There are many ways to carry out this explicit calculation
-even with taking shortcuts. A succinct way in janet is
+even with taking shortcuts. A succinct way in Janet is
 
 @codeblock[janet]```
 (+ ;(range 10))
@@ -130,6 +130,10 @@ array.
 (map print names)
 ```
 
+The @code`each` macro is actually more flexible than the normal loop, as it is able to iterate over
+data structures that are not like arrays. For example, @code`each` will iterate over the values in a
+table.
+
 ## Iterating a Dictionary
 
 In the previous example, we iterated over the values in an array. Another common
@@ -151,7 +155,10 @@ will print out the words to our simple children's book.
     "E" "Elephant"})
 ```
 
-As before, we can evaluate this loop using only a while loop and the @code[next] function.
+As before, we can evaluate this loop using only a while loop and the @code[next] function. The
+@code `next` function is the primary way to iterate in Janet, and is overloaded to
+support all iterable types. Given a data structure and a key, it returns the next key in
+the data structure. If there are no more keys left, it returns nil.
 
 @codeblock[janet]```
 (var key (next alphabook nil))
@@ -174,6 +181,10 @@ a data structure.
 (loop [letter :keys alphabook]
   (print letter " is for " (alphabook letter)))
 ```
+
+As an alternative to the loop macro here, we can also use the macros @code`eachk` and
+@code`eachp`, which behave like @code`each` but loop over the keys of a data structure and
+the key-value pairs in a data structure respectively.
 
 Data structures like tables and structs can be called like functions that look up their
 arguments. This allows for writing shorter code than what

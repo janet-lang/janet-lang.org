@@ -28,11 +28,13 @@
         var wrapper = document.querySelector('.toc');
         wrapper.classList.toggle('toc-hidden');
         toggler.classList.toggle('open');
-        window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
       }
       function addTocToggle() {
         var el = document.getElementById('toc-toggle');
-        if (window.localStorage.getItem('show-toc') === 'true') {
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
           toggleToc()
         }
         el.addEventListener('click', toggleToc);
@@ -53,6 +55,7 @@
       </div>
       <div class="content-wrapper main-content">
         <h4 class="subtitle">Janet {{janet/version}}-{{janet/build}} Documentation<br>(Other Versions:
+          <a href="{{ (relative-url (string `1.6.0` url)) }}">1.6.0</a>
           <a href="{{ (relative-url (string `1.5.1` url)) }}">1.5.1</a>
           <a href="{{ (relative-url (string `1.5.0` url)) }}">1.5.0</a>
           <a href="{{ (relative-url (string `1.4.0` url)) }}">1.4.0</a>

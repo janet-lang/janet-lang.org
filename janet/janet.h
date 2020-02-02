@@ -907,7 +907,26 @@ struct JanetAbstractType {
     void (*tostring)(void *p, JanetBuffer *buffer);
     int (*compare)(void *lhs, void *rhs);
     int32_t (*hash)(void *p, size_t len);
+    Janet(*next)(void *p, Janet key);
+    Janet(*call)(void *p, int32_t argc, Janet *argv);
 };
+
+/* Some macros to let us add extra types to JanetAbstract types without
+ * needing to changing native modules that declare them as static const
+ * structures. If more fields are added, these macros are modified to include
+ * default values (usually NULL). This silences missing field warnings. */
+#define JANET_ATEND_NAME        NULL,JANET_ATEND_GC
+#define JANET_ATEND_GC          NULL,JANET_ATEND_GCMARK
+#define JANET_ATEND_GCMARK      NULL,JANET_ATEND_GET
+#define JANET_ATEND_GET         NULL,JANET_ATEND_PUT
+#define JANET_ATEND_PUT         NULL,JANET_ATEND_MARSHAL
+#define JANET_ATEND_MARSHAL     NULL,JANET_ATEND_UNMARSHAL
+#define JANET_ATEND_UNMARSHAL   NULL,JANET_ATEND_TOSTRING
+#define JANET_ATEND_TOSTRING    NULL,JANET_ATEND_COMPARE
+#define JANET_ATEND_COMPARE     NULL,JANET_ATEND_HASH
+#define JANET_ATEND_HASH        NULL,JANET_ATEND_NEXT
+#define JANET_ATEND_NEXT        NULL,JANET_ATEND_CALL
+#define JANET_ATEND_CALL
 
 struct JanetReg {
     const char *name;
@@ -1005,6 +1024,8 @@ enum JanetOpCode {
     JOP_MULTIPLY,
     JOP_DIVIDE_IMMEDIATE,
     JOP_DIVIDE,
+    JOP_MODULO,
+    JOP_REMAINDER,
     JOP_BAND,
     JOP_BOR,
     JOP_BXOR,
@@ -1020,6 +1041,8 @@ enum JanetOpCode {
     JOP_JUMP,
     JOP_JUMP_IF,
     JOP_JUMP_IF_NOT,
+    JOP_JUMP_IF_NIL,
+    JOP_JUMP_IF_NOT_NIL,
     JOP_GREATER_THAN,
     JOP_GREATER_THAN_IMMEDIATE,
     JOP_LESS_THAN,
@@ -1060,6 +1083,7 @@ enum JanetOpCode {
     JOP_MAKE_BRACKET_TUPLE,
     JOP_GREATER_THAN_EQUAL,
     JOP_LESS_THAN_EQUAL,
+    JOP_NEXT,
     JOP_INSTRUCTION_COUNT
 };
 
@@ -1290,6 +1314,7 @@ JANET_API int janet_gcunroot(Janet root);
 JANET_API int janet_gcunrootall(Janet root);
 JANET_API int janet_gclock(void);
 JANET_API void janet_gcunlock(int handle);
+JANET_API void janet_gcpressure(size_t s);
 
 /* Functions */
 JANET_API JanetFuncDef *janet_funcdef_alloc(void);
@@ -1303,7 +1328,8 @@ JANET_API JanetBuffer *janet_pretty(JanetBuffer *buffer, int depth, int flags, J
 
 /* Misc */
 #ifndef JANET_NO_PRF
-JANET_API void janet_init_hash_key(uint8_t key[16]);
+#define JANET_HASH_KEY_SIZE 16
+JANET_API void janet_init_hash_key(uint8_t key[JANET_HASH_KEY_SIZE]);
 #endif
 JANET_API int janet_equals(Janet x, Janet y);
 JANET_API int32_t janet_hash(Janet x);
@@ -1311,6 +1337,7 @@ JANET_API int janet_compare(Janet x, Janet y);
 JANET_API int janet_cstrcmp(JanetString str, const char *other);
 JANET_API Janet janet_in(Janet ds, Janet key);
 JANET_API Janet janet_get(Janet ds, Janet key);
+JANET_API Janet janet_next(Janet ds, Janet key);
 JANET_API Janet janet_getindex(Janet ds, int32_t index);
 JANET_API int32_t janet_length(Janet x);
 JANET_API Janet janet_lengthv(Janet x);
@@ -1333,11 +1360,12 @@ JANET_API Janet janet_mcall(const char *name, int32_t argc, Janet *argv);
 JANET_API void janet_stacktrace(JanetFiber *fiber, Janet err);
 
 /* Scratch Memory API */
-typedef void (*ScratchFinalizer)(void *);
+typedef void (*JanetScratchFinalizer)(void *);
+
 JANET_API void *janet_smalloc(size_t size);
 JANET_API void *janet_srealloc(void *mem, size_t size);
 JANET_API void *janet_scalloc(size_t nmemb, size_t size);
-JANET_API void janet_sfinalizer(void *mem, ScratchFinalizer finalizer);
+JANET_API void janet_sfinalizer(void *mem, JanetScratchFinalizer finalizer);
 JANET_API void janet_sfree(void *mem);
 
 /* C Library helpers */
