@@ -6,12 +6,6 @@
 Values can be bound to symbols for later use using the keyword @code[def]. Using undefined
 symbols will raise an error.
 
-@if((= 4 (+ 5 6))){
-    Yup
-}{
-    Hello
-}
-
 @codeblock[janet](```
 (def a 100)
 (def b (+ 1 a))
