@@ -53,8 +53,8 @@ are simply propagated to the next fiber.
 Besides being used as coroutines, fibers can be used to implement error handling (exceptions).
 
 @codeblock[janet](```
-(defn my-function-that-errors [x]
- (print "start function with " x)
+(defn my-function-that-errors []
+ (print "start function")
  (error "oops!")
  (print "never gets here"))
 
