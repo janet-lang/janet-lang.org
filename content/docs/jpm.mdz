@@ -124,7 +124,7 @@ dependencies on other Janet projects here.
   :description "a library that does things" # some example metadata.
 
   # Optional urls to git repositories that contain required artifacts.
-  :dependencies ["https://github.com/janet-lang.json.git"])
+  :dependencies ["https://github.com/janet-lang/json.git"])
 ```
 
 ### Creating a Module
