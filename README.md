@@ -11,7 +11,8 @@ Build this website using the bundled janet amalgamated source.
 ```sh
 git clone https://github.com/janet-lang/janet-lang.org
 cd janet-lang.org
-make setup
+make
+make run
 ```
 
 ## Building
@@ -26,7 +27,7 @@ To watch for changes, use `make watch`.
 ## Serve on localhost:8000
 
 ```
-make serve
+make run
 ```
 
 ## Authoring Content
