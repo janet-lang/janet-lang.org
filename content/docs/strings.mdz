@@ -101,7 +101,7 @@ integers can be used to index from the end of the string.
 Janet has multiple functions for finding and replacing strings. The
 Janet string finding functions do not work on patterns or regular expressions;
 they only work on string literals. For more flexible searching and replacing, see
-the @link[/peg.html][peg module].
+the @link[/docs/peg.html][peg module].
 
 @codeblock[janet]```
 (string/find "h" "h h h h") #-> 0
