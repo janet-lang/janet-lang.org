@@ -194,7 +194,8 @@
   (loop [k :keys currenv :when (keyword? k)]
     (put env k (currenv k)))
   (dofile path :env env :exit true)
-  (when-let [rules (env :rules)] (merge-into (getrules) rules)))
+  (when-let [rules (env :rules)] (merge-into (getrules) rules))
+  env)
 
 #
 # OS and shell helpers
@@ -251,11 +252,7 @@
   If we can't create it, give a friendly error. Return true if created, false if
   existing. Throw an error if we can't create it."
   [dir]
-  (if (os/mkdir dir)
-    true
-    (if (os/stat dir :mode)
-      false
-      (error (string "Could not create " dir " - this could be a permission issue.")))))
+  (os/mkdir dir))
 
 #
 # C Compilation
@@ -554,6 +551,15 @@ int main(int argc, const char **argv) {
 # Public utilities
 #
 
+(defn parse
+  "Read a string of Janet source and parse out the first expression."
+  [src]
+  (let [p (parser/new)]
+    (:consume p src)
+    (if (= :error (:status p))
+      (error (string "Could not parse: " (parser/error p))))
+    (:produce p)))
+
 (defn find-manifest-dir
   "Get the path to the directory containing manifests for installed
   packages."
@@ -563,7 +569,7 @@ int main(int argc, const char **argv) {
 (defn find-manifest
   "Get the full path of a manifest file given a package name."
   [name]
-  (string (find-manifest-dir) sep name ".txt"))
+  (string (find-manifest-dir) sep name ".jdn"))
 
 (defn find-cache
   "Return the path to the global cache."
@@ -575,17 +581,14 @@ int main(int argc, const char **argv) {
   "Uninstall bundle named name"
   [name]
   (def manifest (find-manifest name))
-  (def f (file/open manifest :r))
-  (unless f (print manifest " does not exist") (break))
-  (loop [line :iterate (:read f :line)]
-    (def path ((string/split "\n" line) 0))
-    (def path ((string/split "\r" path) 0))
-    (print "removing " path)
-    (rm path))
-  (:close f)
-  (print "removing " manifest)
-  (rm manifest)
-  (print "Uninstalled."))
+  (when-with [f (file/open manifest)]
+    (def man (parse (:read f :all)))
+    (each path (get man :paths [])
+      (print "removing " path)
+      (rm path))
+    (print "removing " manifest)
+    (rm manifest)
+    (print "Uninstalled.")))
 
 (defn- rimraf
   "Hard delete directory tree"
@@ -607,7 +610,7 @@ int main(int argc, const char **argv) {
 (defn install-git
   "Install a bundle from git. If the bundle is already installed, the bundle
    is reinistalled (but not rebuilt if artifacts are cached)."
-  [repotab &opt recurse]
+  [repotab &opt recurse no-deps]
   (def repo (if (string? repotab) repotab (repotab :repo)))
   (def tag (unless (string? repotab) (repotab :tag)))
   # prevent infinite recursion (very unlikely, but consider
@@ -652,7 +655,7 @@ int main(int argc, const char **argv) {
         (os/execute ["git" "reset" "--hard" tag] :p))
       (os/execute ["git" "submodule" "update" "--init" "--recursive"] :p)
       (import-rules "./project.janet")
-      (do-rule "install-deps")
+      (unless no-deps (do-rule "install-deps"))
       (do-rule "build")
       (do-rule "install"))
     ([err] (print "Error building git repository dependency: " err)))
@@ -668,6 +671,49 @@ int main(int argc, const char **argv) {
   (add-body "install"
             (mkdir destdir)
             (copy src destdir)))
+
+(defn- pslurp
+  "Like slurp, but with file/popen instead file/open. Also trims output"
+  [cmd]
+  (string/trim (with [f (file/popen cmd)] (:read f :all))))
+
+(defn- make-lockfile
+  [&opt filename]
+  (default filename "lockfile.janet")
+  (def cwd (os/cwd))
+  (def packages @[])
+  # Read installed modules from manifests
+  (def mdir (find-manifest-dir))
+  (each man (os/dir mdir)
+    (def package (parse (slurp (string mdir sep man))))
+    (if (and (dictionary? package) (package :repo) (package :sha))
+      (array/push packages package)
+      (print "Cannot add local or malformed package " mdir sep man " to lockfile, skipping...")))
+  # Put in correct order, such that a package is preceded by all of its dependencies
+  (def ordered-packages @[])
+  (def resolved @{})
+  (while (< (length ordered-packages) (length packages))
+    (var made-progress false)
+    (each p packages
+      (def {:repo r :sha s :dependencies d} p)
+      (def dep-urls (map |(if (string? $) $ ($ :repo)) d))
+      (unless (resolved r)
+        (when (all resolved dep-urls)
+          (array/push ordered-packages p)
+          (set made-progress true)
+          (put resolved r true))))
+    (unless made-progress
+      (error (string/format "could not resolve package order for: %j"
+                            (filter (complement resolved) (map |($ :repo) packages))))))
+  # Write to file
+  (with [f (file/open filename :w)] (with-dyns [:out f] (printf "%j" ordered-packages))))
+
+(defn- load-lockfile
+  [&opt filename]
+  (default filename "lockfile.janet")
+  (def lockarray (parse (slurp filename)))
+  (each {:repo url :sha sha} lockarray
+    (install-git {:repo url :tag sha} nil true)))
 
 #
 # Declaring Artifacts - used in project.janet, targets specifically
@@ -814,7 +860,15 @@ int main(int argc, const char **argv) {
   (phony "manifest" []
          (print "generating " manifest "...")
          (mkdir manifests)
-         (spit manifest (string (string/join installed-files "\n") "\n")))
+         (def sha (pslurp "git rev-parse HEAD"))
+         (def url (pslurp "git remote get-url origin"))
+         (def man
+           {:sha (if-not (empty? sha) sha)
+            :repo (if-not (empty? url) url)
+            :dependencies (array/slice (get meta :dependencies []))
+            :paths installed-files})
+         (spit manifest (string/format "%j\n" man)))
+
   (phony "install" ["uninstall" "build" "manifest"]
          (when (dyn :test)
            (do-rule "test"))
@@ -888,6 +942,12 @@ Subcommands are:
   rules : list rules available with run.
   update-pkgs : Update the current package listing from the remote git repository selected.
   quickbin entry executable : Create an executable from a janet script with a main function.
+  make-lockfile (lockfile) : Create a lockfile based on repositories in the cache. The
+            lockfile will record the exact versions of dependencies used to ensure a reproducible
+            build. Lockfiles are best used with applications, not libraries. The default lockfile
+            name is lockfile.janet.
+  load-lockfile (lockfile) : Install modules from a lockfile in a reproducible way. The
+                             default lockfile name is lockfile.janet.
 
 Keys are:
   --modpath : The directory to install modules to. Defaults to $JANET_MODPATH, $JANET_PATH, or (dyn :syspath)
@@ -974,6 +1034,8 @@ Flags are:
    "rules" list-rules
    "update-pkgs" update-pkgs
    "uninstall" uninstall-cmd
+   "make-lockfile" make-lockfile
+   "load-lockfile" load-lockfile
    "quickbin" quickbin})
 
 (def- args (tuple/slice (dyn :args) 1))

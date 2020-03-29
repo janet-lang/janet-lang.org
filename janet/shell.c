@@ -1,12 +1,3 @@
-/* Amalgamated build - DO NOT EDIT */
-/* Generated from janet version 1.6.1-dev-23c7c3b */
-#define JANET_BUILD "23c7c3b"
-#define JANET_AMALG
-#define _POSIX_C_SOURCE 200112L
-#include "janet.h"
-
-/* src/mainclient/line.h */
-
 /*
 * Copyright (c) 2020 Calvin Rose
 *
@@ -29,15 +20,18 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef JANET_LINE_H_defined
-#define JANET_LINE_H_defined
-
 #if !defined(_POSIX_C_SOURCE)
 #define _POSIX_C_SOURCE 200112L
 #endif
 
-#ifndef JANET_AMALG
 #include <janet.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <shlwapi.h>
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
 #endif
 
 void janet_line_init();
@@ -46,47 +40,20 @@ void janet_line_deinit();
 void janet_line_get(const char *p, JanetBuffer *buffer);
 Janet janet_line_getter(int32_t argc, Janet *argv);
 
-#endif
-
-
-/* src/mainclient/line.c */
-
 /*
-* Copyright (c) 2020 Calvin Rose
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to
-* deal in the Software without restriction, including without limitation the
-* rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-* sell copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-* IN THE SOFTWARE.
-*/
+ * Line Editing
+ */
 
-#if !defined(_POSIX_C_SOURCE)
-#define _POSIX_C_SOURCE 200112L
-#endif
-
-#ifndef JANET_AMALG
-#include "line.h"
-#endif
+static JANET_THREAD_LOCAL JanetTable *gbl_complete_env;
 
 /* Common */
 Janet janet_line_getter(int32_t argc, Janet *argv) {
-    janet_arity(argc, 0, 2);
+    janet_arity(argc, 0, 3);
     const char *str = (argc >= 1) ? (const char *) janet_getstring(argv, 0) : "";
     JanetBuffer *buf = (argc >= 2) ? janet_getbuffer(argv, 1) : janet_buffer(10);
+    gbl_complete_env = (argc >= 3) ? janet_gettable(argv, 2) : NULL;
     janet_line_get(str, buf);
+    gbl_complete_env = NULL;
     return janet_wrap_buffer(buf);
 }
 
@@ -116,7 +83,7 @@ void janet_line_deinit() {
 }
 
 void janet_line_get(const char *p, JanetBuffer *buffer) {
-    FILE *out = janet_dynfile("out", stdout);
+    FILE *out = janet_dynfile("err", stderr);
     fputs(p, out);
     fflush(out);
     simpleline(buffer);
@@ -145,6 +112,7 @@ https://github.com/antirez/linenoise/blob/master/linenoise.c
 
 /* static state */
 #define JANET_LINE_MAX 1024
+#define JANET_MATCH_MAX 256
 #define JANET_HISTORY_MAX 100
 static JANET_THREAD_LOCAL int gbl_israwmode = 0;
 static JANET_THREAD_LOCAL const char *gbl_prompt = "> ";
@@ -158,6 +126,9 @@ static JANET_THREAD_LOCAL int gbl_history_count = 0;
 static JANET_THREAD_LOCAL int gbl_historyi = 0;
 static JANET_THREAD_LOCAL int gbl_sigint_flag = 0;
 static JANET_THREAD_LOCAL struct termios gbl_termios_start;
+static JANET_THREAD_LOCAL JanetByteView gbl_matches[JANET_MATCH_MAX];
+static JANET_THREAD_LOCAL int gbl_match_count = 0;
+static JANET_THREAD_LOCAL int gbl_lines_below = 0;
 
 /* Unsupported terminal list from linenoise */
 static const char *badterms[] = {
@@ -177,7 +148,7 @@ static char *sdup(const char *s) {
 }
 
 /* Ansi terminal raw mode */
-static int rawmode() {
+static int rawmode(void) {
     struct termios t;
     if (!isatty(STDIN_FILENO)) goto fatal;
     if (tcgetattr(STDIN_FILENO, &gbl_termios_start) == -1) goto fatal;
@@ -196,12 +167,12 @@ fatal:
 }
 
 /* Disable raw mode */
-static void norawmode() {
+static void norawmode(void) {
     if (gbl_israwmode && tcsetattr(STDIN_FILENO, TCSAFLUSH, &gbl_termios_start) != -1)
         gbl_israwmode = 0;
 }
 
-static int curpos() {
+static int curpos(void) {
     char buf[32];
     int cols, rows;
     unsigned int i = 0;
@@ -217,7 +188,7 @@ static int curpos() {
     return cols;
 }
 
-static int getcols() {
+static int getcols(void) {
     struct winsize ws;
     if (ioctl(1, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
         int start, cols;
@@ -241,13 +212,13 @@ failed:
     return 80;
 }
 
-static void clear() {
+static void clear(void) {
     if (write(STDOUT_FILENO, "\x1b[H\x1b[2J", 7) <= 0) {
         exit(1);
     }
 }
 
-static void refresh() {
+static void refresh(void) {
     char seq[64];
     JanetBuffer b;
 
@@ -280,23 +251,36 @@ static void refresh() {
     janet_buffer_deinit(&b);
 }
 
-static int insert(char c) {
+static void clearlines(void) {
+    for (int i = 0; i < gbl_lines_below; i++) {
+        fprintf(stderr, "\x1b[1B\x1b[999D\x1b[K");
+    }
+    if (gbl_lines_below) {
+        fprintf(stderr, "\x1b[%dA\x1b[999D", gbl_lines_below);
+        fflush(stderr);
+        gbl_lines_below = 0;
+    }
+}
+
+static int insert(char c, int draw) {
     if (gbl_len < JANET_LINE_MAX - 1) {
         if (gbl_len == gbl_pos) {
             gbl_buf[gbl_pos++] = c;
             gbl_buf[++gbl_len] = '\0';
-            if (gbl_plen + gbl_len < gbl_cols) {
-                /* Avoid a full update of the line in the
-                 * trivial case. */
-                if (write(STDOUT_FILENO, &c, 1) == -1) return -1;
-            } else {
-                refresh();
+            if (draw) {
+                if (gbl_plen + gbl_len < gbl_cols) {
+                    /* Avoid a full update of the line in the
+                     * trivial case. */
+                    if (write(STDOUT_FILENO, &c, 1) == -1) return -1;
+                } else {
+                    refresh();
+                }
             }
         } else {
             memmove(gbl_buf + gbl_pos + 1, gbl_buf + gbl_pos, gbl_len - gbl_pos);
             gbl_buf[gbl_pos++] = c;
             gbl_buf[++gbl_len] = '\0';
-            refresh();
+            if (draw) refresh();
         }
     }
     return 0;
@@ -310,10 +294,8 @@ static void historymove(int delta) {
         gbl_historyi += delta;
         if (gbl_historyi < 0) {
             gbl_historyi = 0;
-            return;
         } else if (gbl_historyi >= gbl_history_count) {
             gbl_historyi = gbl_history_count - 1;
-            return;
         }
         strncpy(gbl_buf, gbl_history[gbl_historyi], JANET_LINE_MAX - 1);
         gbl_pos = gbl_len = strlen(gbl_buf);
@@ -323,7 +305,7 @@ static void historymove(int delta) {
     }
 }
 
-static void addhistory() {
+static void addhistory(void) {
     int i, len;
     char *newline = sdup(gbl_buf);
     if (!newline) return;
@@ -340,41 +322,266 @@ static void addhistory() {
     gbl_history[0] = newline;
 }
 
-static void replacehistory() {
-    char *newline = sdup(gbl_buf);
-    if (!newline) return;
-    free(gbl_history[0]);
-    gbl_history[0] = newline;
+static void replacehistory(void) {
+    /* History count is always > 0 here */
+    if (gbl_len == 0 || (gbl_history_count > 1 && !strcmp(gbl_buf, gbl_history[1]))) {
+        /* Delete history */
+        free(gbl_history[0]);
+        for (int i = 1; i < gbl_history_count; i++) {
+            gbl_history[i - 1] = gbl_history[i];
+        }
+        gbl_history_count--;
+    } else {
+        char *newline = sdup(gbl_buf);
+        if (!newline) return;
+        free(gbl_history[0]);
+        gbl_history[0] = newline;
+    }
 }
 
-static void kleft() {
+static void kleft(void) {
     if (gbl_pos > 0) {
         gbl_pos--;
         refresh();
     }
 }
 
-static void kright() {
+static void kleftw(void) {
+    while (gbl_pos > 0 && isspace(gbl_buf[gbl_pos - 1])) {
+        gbl_pos--;
+    }
+    while (gbl_pos > 0 && !isspace(gbl_buf[gbl_pos - 1])) {
+        gbl_pos--;
+    }
+    refresh();
+}
+
+static void kright(void) {
     if (gbl_pos != gbl_len) {
         gbl_pos++;
         refresh();
     }
 }
 
-static void kbackspace() {
+static void krightw(void) {
+    while (gbl_pos != gbl_len && !isspace(gbl_buf[gbl_pos])) {
+        gbl_pos++;
+    }
+    while (gbl_pos != gbl_len && isspace(gbl_buf[gbl_pos])) {
+        gbl_pos++;
+    }
+    refresh();
+}
+
+static void kbackspace(int draw) {
     if (gbl_pos > 0) {
         memmove(gbl_buf + gbl_pos - 1, gbl_buf + gbl_pos, gbl_len - gbl_pos);
         gbl_pos--;
         gbl_buf[--gbl_len] = '\0';
-        refresh();
+        if (draw) refresh();
     }
 }
 
-static void kdelete() {
+static void kdelete(int draw) {
     if (gbl_pos != gbl_len) {
         memmove(gbl_buf + gbl_pos, gbl_buf + gbl_pos + 1, gbl_len - gbl_pos);
         gbl_buf[--gbl_len] = '\0';
-        refresh();
+        if (draw) refresh();
+    }
+}
+
+static void kbackspacew(void) {
+    while (gbl_pos && isspace(gbl_buf[gbl_pos - 1])) {
+        kbackspace(0);
+    }
+    while (gbl_pos && !isspace(gbl_buf[gbl_pos - 1])) {
+        kbackspace(0);
+    }
+    refresh();
+}
+
+static void kdeletew(void) {
+    while (gbl_pos < gbl_len && isspace(gbl_buf[gbl_pos])) {
+        kdelete(0);
+    }
+    while (gbl_pos < gbl_len && !isspace(gbl_buf[gbl_pos])) {
+        kdelete(0);
+    }
+    refresh();
+}
+
+
+/* See tools/symchargen.c */
+static int is_symbol_char_gen(uint8_t c) {
+    if (c & 0x80) return 1;
+    if (c >= 'a' && c <= 'z') return 1;
+    if (c >= 'A' && c <= 'Z') return 1;
+    if (c >= '0' && c <= '9') return 1;
+    return (c == '!' ||
+            c == '$' ||
+            c == '%' ||
+            c == '&' ||
+            c == '*' ||
+            c == '+' ||
+            c == '-' ||
+            c == '.' ||
+            c == '/' ||
+            c == ':' ||
+            c == '<' ||
+            c == '?' ||
+            c == '=' ||
+            c == '>' ||
+            c == '@' ||
+            c == '^' ||
+            c == '_');
+}
+
+static JanetByteView get_symprefix(void) {
+    /* Calculate current partial symbol. Maybe we could actually hook up the Janet
+     * parser here...*/
+    int i;
+    JanetByteView ret;
+    ret.len = 0;
+    for (i = gbl_pos - 1; i >= 0; i--) {
+        uint8_t c = (uint8_t) gbl_buf[i];
+        if (!is_symbol_char_gen(c)) break;
+        ret.len++;
+    }
+    /* Will be const for duration of match checking */
+    ret.bytes = (const uint8_t *)(gbl_buf + i + 1);
+    return ret;
+}
+
+static int compare_bytes(JanetByteView a, JanetByteView b) {
+    int32_t minlen = a.len < b.len ? a.len : b.len;
+    int result = strncmp((const char *) a.bytes, (const char *) b.bytes, minlen);
+    if (result) return result;
+    return a.len < b.len ? -1 : a.len > b.len ? 1 : 0;
+}
+
+static void check_match(JanetByteView src, const uint8_t *testsym, int32_t testlen) {
+    JanetByteView test;
+    test.bytes = testsym;
+    test.len = testlen;
+    if (src.len > test.len || strncmp((const char *) src.bytes, (const char *) test.bytes, src.len)) return;
+    JanetByteView mm = test;
+    for (int i = 0; i < gbl_match_count; i++) {
+        if (compare_bytes(mm, gbl_matches[i]) < 0) {
+            JanetByteView temp = mm;
+            mm = gbl_matches[i];
+            gbl_matches[i] = temp;
+        }
+    }
+    if (gbl_match_count == JANET_MATCH_MAX) return;
+    gbl_matches[gbl_match_count++] = mm;
+}
+
+static void check_cmatch(JanetByteView src, const char *cstr) {
+    check_match(src, (const uint8_t *) cstr, (int32_t) strlen(cstr));
+}
+
+static JanetByteView longest_common_prefix(void) {
+    JanetByteView bv;
+    if (gbl_match_count == 0) {
+        bv.len = 0;
+        bv.bytes = NULL;
+    } else {
+        bv = gbl_matches[0];
+        for (int i = 0; i < gbl_match_count; i++) {
+            JanetByteView other = gbl_matches[i];
+            int32_t minlen = other.len < bv.len ? other.len : bv.len;
+            for (bv.len = 0; bv.len < minlen; bv.len++) {
+                if (bv.bytes[bv.len] != other.bytes[bv.len]) {
+                    break;
+                }
+            }
+        }
+    }
+    return bv;
+}
+
+static void check_specials(JanetByteView src) {
+    check_cmatch(src, "break");
+    check_cmatch(src, "def");
+    check_cmatch(src, "do");
+    check_cmatch(src, "fn");
+    check_cmatch(src, "if");
+    check_cmatch(src, "quasiquote");
+    check_cmatch(src, "quote");
+    check_cmatch(src, "set");
+    check_cmatch(src, "splice");
+    check_cmatch(src, "unquote");
+    check_cmatch(src, "var");
+    check_cmatch(src, "while");
+}
+
+static void kshowcomp(void) {
+    JanetTable *env = gbl_complete_env;
+    if (env == NULL) {
+        insert(' ', 0);
+        insert(' ', 0);
+        return;
+    }
+
+    /* Advance while on symbol char */
+    while (is_symbol_char_gen(gbl_buf[gbl_pos]))
+        gbl_pos++;
+
+    JanetByteView prefix = get_symprefix();
+    if (prefix.len  == 0) return;
+
+    /* Find all matches */
+    gbl_match_count = 0;
+    while (NULL != env) {
+        JanetKV *kvend = env->data + env->capacity;
+        for (JanetKV *kv = env->data; kv < kvend; kv++) {
+            if (!janet_checktype(kv->key, JANET_SYMBOL)) continue;
+            const uint8_t *sym = janet_unwrap_symbol(kv->key);
+            check_match(prefix, sym, janet_string_length(sym));
+        }
+        env = env->proto;
+    }
+
+    check_specials(prefix);
+
+    JanetByteView lcp = longest_common_prefix();
+    for (int i = prefix.len; i < lcp.len; i++) {
+        insert(lcp.bytes[i], 0);
+    }
+
+    if (!gbl_lines_below && prefix.len != lcp.len) return;
+
+    int32_t maxlen = 0;
+    for (int i = 0; i < gbl_match_count; i++)
+        if (gbl_matches[i].len > maxlen)
+            maxlen = gbl_matches[i].len;
+
+    int num_cols = getcols();
+    clearlines();
+    if (gbl_match_count >= 2) {
+
+        /* Second pass, print */
+        int col_width = maxlen + 4;
+        int cols = num_cols / col_width;
+        if (cols == 0) cols = 1;
+        int current_col = 0;
+        for (int i = 0; i < gbl_match_count; i++) {
+            if (current_col == 0) {
+                putc('\n', stderr);
+                gbl_lines_below++;
+            }
+            JanetByteView s = gbl_matches[i];
+            fprintf(stderr, "%s", (const char *) s.bytes);
+            for (int j = s.len; j < col_width; j++) {
+                putc(' ', stderr);
+            }
+            current_col = (current_col + 1) % cols;
+        }
+
+        /* Go up to original line (zsh-like autocompletion) */
+        fprintf(stderr, "\x1B[%dA", gbl_lines_below);
+
+        fflush(stderr);
     }
 }
 
@@ -391,38 +598,33 @@ static int line() {
     if (write(STDOUT_FILENO, gbl_prompt, gbl_plen) == -1) return -1;
     for (;;) {
         char c;
-        int nread;
         char seq[3];
 
-        nread = read(STDIN_FILENO, &c, 1);
-        if (nread <= 0) return -1;
+        if (read(STDIN_FILENO, &c, 1) <= 0) return -1;
 
         switch (c) {
             default:
-                if (insert(c)) return -1;
+                if (c < 0x20) break;
+                if (insert(c, 1)) return -1;
                 break;
-            case 9:     /* tab */
-                if (insert(' ')) return -1;
-                if (insert(' ')) return -1;
-                break;
-            case 13:    /* enter */
-                return 0;
-            case 3:     /* ctrl-c */
-                errno = EAGAIN;
-                gbl_sigint_flag = 1;
-                return -1;
-            case 127:   /* backspace */
-            case 8:     /* ctrl-h */
-                kbackspace();
-                break;
-            case 4:     /* ctrl-d, eof */
-                return -1;
             case 1:     /* ctrl-a */
                 gbl_pos = 0;
                 refresh();
                 break;
             case 2:     /* ctrl-b */
                 kleft();
+                break;
+            case 3:     /* ctrl-c */
+                errno = EAGAIN;
+                gbl_sigint_flag = 1;
+                clearlines();
+                return -1;
+            case 4:     /* ctrl-d, eof */
+                if (gbl_len == 0) {   /* quit on empty line */
+                    clearlines();
+                    return -1;
+                }
+                kdelete(1);
                 break;
             case 5:     /* ctrl-e */
                 gbl_pos = gbl_len;
@@ -431,10 +633,42 @@ static int line() {
             case 6:     /* ctrl-f */
                 kright();
                 break;
-            case 21:
-                gbl_buf[0] = '\0';
-                gbl_pos = gbl_len = 0;
+            case 127:   /* backspace */
+            case 8:     /* ctrl-h */
+                kbackspace(1);
+                break;
+            case 9:     /* tab */
+                kshowcomp();
                 refresh();
+                break;
+            case 11: /* ctrl-k */
+                gbl_buf[gbl_pos] = '\0';
+                gbl_len = gbl_pos;
+                refresh();
+                break;
+            case 12:    /* ctrl-l */
+                clear();
+                refresh();
+                break;
+            case 13:    /* enter */
+                clearlines();
+                return 0;
+            case 14: /* ctrl-n */
+                historymove(-1);
+                break;
+            case 16: /* ctrl-p */
+                historymove(1);
+                break;
+            case 21: { /* ctrl-u */
+                memmove(gbl_buf, gbl_buf + gbl_pos, gbl_len - gbl_pos);
+                gbl_len -= gbl_pos;
+                gbl_buf[gbl_len] = '\0';
+                gbl_pos = 0;
+                refresh();
+                break;
+            }
+            case 23: /* ctrl-w */
+                kbackspacew();
                 break;
             case 26: /* ctrl-z */
                 norawmode();
@@ -442,37 +676,57 @@ static int line() {
                 rawmode();
                 refresh();
                 break;
-            case 12:
-                clear();
-                refresh();
-                break;
             case 27:    /* escape sequence */
                 /* Read the next two bytes representing the escape sequence.
                  * Use two calls to handle slow terminals returning the two
                  * chars at different times. */
                 if (read(STDIN_FILENO, seq, 1) == -1) break;
-                if (read(STDIN_FILENO, seq + 1, 1) == -1) break;
+                /* Esc[ = Control Sequence Introducer (CSI) */
                 if (seq[0] == '[') {
+                    if (read(STDIN_FILENO, seq + 1, 1) == -1) break;
                     if (seq[1] >= '0' && seq[1] <= '9') {
                         /* Extended escape, read additional byte. */
                         if (read(STDIN_FILENO, seq + 2, 1) == -1) break;
                         if (seq[2] == '~') {
                             switch (seq[1]) {
+                                case '1': /* Home */
+                                    gbl_pos = 0;
+                                    refresh();
+                                    break;
                                 case '3': /* delete */
-                                    kdelete();
+                                    kdelete(1);
+                                    break;
+                                case '4': /* End */
+                                    gbl_pos = gbl_len;
+                                    refresh();
                                     break;
                                 default:
                                     break;
                             }
                         }
-                    } else {
+                    } else if (seq[0] == 'O') {
+                        if (read(STDIN_FILENO, seq + 1, 1) == -1) break;
                         switch (seq[1]) {
                             default:
                                 break;
-                            case 'A':
+                            case 'H': /* Home (some keyboards) */
+                                gbl_pos = 0;
+                                refresh();
+                                break;
+                            case 'F': /* End (some keyboards) */
+                                gbl_pos = gbl_len;
+                                refresh();
+                                break;
+                        }
+                    } else {
+                        switch (seq[1]) {
+                            /* Single escape sequences */
+                            default:
+                                break;
+                            case 'A': /* Up */
                                 historymove(1);
                                 break;
-                            case 'B':
+                            case 'B': /* Down */
                                 historymove(-1);
                                 break;
                             case 'C': /* Right */
@@ -481,27 +735,38 @@ static int line() {
                             case 'D': /* Left */
                                 kleft();
                                 break;
-                            case 'H':
+                            case 'H': /* Home */
                                 gbl_pos = 0;
                                 refresh();
                                 break;
-                            case 'F':
+                            case 'F': /* End */
                                 gbl_pos = gbl_len;
                                 refresh();
                                 break;
                         }
                     }
-                } else if (seq[0] == 'O') {
-                    switch (seq[1]) {
+                } else {
+                    /* Check alt-(shift) bindings */
+                    switch (seq[0]) {
                         default:
                             break;
-                        case 'H':
-                            gbl_pos = 0;
-                            refresh();
+                        case 'd': /* Alt-d */
+                            kdeletew();
                             break;
-                        case 'F':
-                            gbl_pos = gbl_len;
-                            refresh();
+                        case 'b': /* Alt-b */
+                            kleftw();
+                            break;
+                        case 'f': /* Alt-f */
+                            krightw();
+                            break;
+                        case ',': /* Alt-, */
+                            historymove(JANET_HISTORY_MAX);
+                            break;
+                        case '.': /* Alt-. */
+                            historymove(-JANET_HISTORY_MAX);
+                            break;
+                        case 127: /* Alt-backspace */
+                            kbackspacew();
                             break;
                     }
                 }
@@ -536,7 +801,7 @@ void janet_line_get(const char *p, JanetBuffer *buffer) {
     gbl_prompt = p;
     buffer->count = 0;
     gbl_historyi = 0;
-    FILE *out = janet_dynfile("out", stdout);
+    FILE *out = janet_dynfile("err", stderr);
     if (!isatty(STDIN_FILENO) || !checktermsupport()) {
         simpleline(buffer);
         return;
@@ -566,47 +831,9 @@ void janet_line_get(const char *p, JanetBuffer *buffer) {
 
 #endif
 
-
-/* src/mainclient/main.c */
-
 /*
-* Copyright (c) 2020 Calvin Rose
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to
-* deal in the Software without restriction, including without limitation the
-* rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-* sell copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-* IN THE SOFTWARE.
-*/
-
-#if !defined(_POSIX_C_SOURCE)
-#define _POSIX_C_SOURCE 200112L
-#endif
-
-#ifndef JANET_AMALG
-#include <janet.h>
-#include "line.h"
-#endif
-
-#ifdef _WIN32
-#include <windows.h>
-#include <shlwapi.h>
-#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
-#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
-#endif
-#endif
+ * Entry
+ */
 
 int main(int argc, char **argv) {
     int i, status;
@@ -659,4 +886,3 @@ int main(int argc, char **argv) {
 
     return status;
 }
-
