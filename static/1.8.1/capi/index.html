@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>The Janet C API</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="The Janet C API" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/object_oriented.html">Object Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/thread.html">thread</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span class="selected"><a href="index.html">C API</a></span><ul><li><span><a href="wrapping.html">Wrapping Types</a></span></li><li><span><a href="embedding.html">Embedding</a></span></li><li><span><a href="configuration.html">Configuration</a></span></li><li><span><a href="array.html">Array C API</a></span></li><li><span><a href="buffer.html">Buffer C API</a></span></li><li><span><a href="table.html">Table C API</a></span></li><li><span><a href="fiber.html">Fiber C API</a></span></li><li><span><a href="memory-model.html">Memory Model</a></span></li><li><span><a href="writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.8.1-5b6b9f1 Documentation<br>(Other Versions:
+          
+          <a href="../../1.7.0/capi/index.html">1.7.0</a>
+          
+          <a href="../../1.6.0/capi/index.html">1.6.0</a>
+          
+          <a href="../../1.5.1/capi/index.html">1.5.1</a>
+          
+          <a href="../../1.5.0/capi/index.html">1.5.0</a>
+          
+          <a href="../../1.4.0/capi/index.html">1.4.0</a>
+          
+          <a href="../../1.3.1/capi/index.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">The Janet C API</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../api/tarray.html"><span class="prevnext-text">Type Array Module</span></a></span>
+
+          <span class="next"><a href="wrapping.html"><span class="prevnext-text">Wrapping Types</span></a></span>
+        </div>
+        
+
+<p>One of the fundamental design goals of Janet is to extend it via the C programming
+language, as well as embed the interpreter in a larger program. To this end, Janet
+exposes most of it's low level functionality in well defined C API. Unlike Janet, the
+Janet C API is not safe &mdash; it's possible to write programs in C that will
+crash, use memory after freeing it, or simply cause undefined behavior. However, using the
+C API will let you use high performance libraries on almost any system and access native
+functionality that is not possible in pure Janet.
+</p>
+<p>Janet's C API assumes that you will have one Janet interpreter per OS thread
+(if the system you are on has threads). The means
+that Janet must have some global, thread local state. This is a problem for some
+host languages, like Go, that expect all code to be fully re-entrant on any thread.
+This design choice, however, makes the Janet APIs more pleasant to use in languages
+like C and C++, as there is no need to pass around a context object to all api functions.
+</p>
+<h2>What defines the C API?
+</h2>
+<p>The C API is defined by the header <code class="mendoza-code">janet.h</code>, which should be included
+by programs to both embed Janet in a larger program, or to write a Janet module.
+</p>
+<h2>Using The Amalgamation
+</h2>
+<p>When integrating Janet into a host project (usually some larger application, but it could be
+a small wrapper around Janet), it is convenient to be able to add only a few source files
+to your project rather than a large dependency. The amalgamated source, <code class="mendoza-code">janet.c</code>, contains
+all of the source code for Janet concatenated into one file. This file can be added to the host project, along
+with <code class="mendoza-code">janet.h</code> and <code class="mendoza-code">janetconf.h</code>. There is also the option of including <code class="mendoza-code">shell.c</code>, which is
+used in the standalone interpretter, but not usually needed for host programs.
+</p>
+<p>On a POSIX system, building the amalgamated source is straightforward. With <code class="mendoza-code">janet.c</code>, <code class="mendoza-code">janet.h</code>, <code class="mendoza-code">janetconf.h</code>, and
+<code class="mendoza-code">shell.c</code> in the current directory, building is as follows:
+</p>
+<pre class="mendoza-codeblock"><code>cc -std=c99 -Wall -Werror -O2 -fPIC -shared janet.c shell.c -o janet -lm -ldl -lrt -lpthread</code></pre><p>The exact flags required will depend on the system and on the configuration of the amalgamation.
+For example, linking to pthreads is not needed if JANET_SINGLE_THREADED is defined in <code class="mendoza-code">janetconf.h</code>.
+</p>
+<h2>Writing a Module
+</h2>
+<p>The easiest way to get started with the Janet C API is to write a Janet native
+module. A native module is native code that can be loaded dynamically at runtime
+in the interpreter.
+</p>
+<p>A basic skeleton for a native module in C is below.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-line">#include &lt;janet.h&gt;</span>
+
+<span class="mdzsyn-keyword">static</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">myfun</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-identifier">janet_fixarity</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-identifier">printf</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-string">"hello from a module!\n"</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-keyword">return</span> <span class="mdzsyn-identifier">janet_wrap_nil</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-operator">}</span>
+
+<span class="mdzsyn-keyword">static</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">JanetReg</span> <span class="mdzsyn-identifier">cfuns</span><span class="mdzsyn-operator">[</span><span class="mdzsyn-operator">]</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-operator">{</span><span class="mdzsyn-string">"myfun"</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">myfun</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-string">"(mymod/myfun)\n\nPrints a hello message."</span><span class="mdzsyn-operator">}</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-operator">{</span><span class="mdzsyn-constant">NULL</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-constant">NULL</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-constant">NULL</span><span class="mdzsyn-operator">}</span>
+<span class="mdzsyn-operator">}</span><span class="mdzsyn-operator">;</span>
+
+<span class="mdzsyn-identifier">JANET_MODULE_ENTRY</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">env</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-identifier">janet_cfuns</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">env</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-string">"mymod"</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">cfuns</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-operator">}</span></code></pre><p>This module is a very simple module that exposes one
+native function called <code class="mendoza-code">myfun</code>. The module is called <code class="mendoza-code">mymod</code>, although
+when importing the module, the user can rename it to whatever he or she likes.
+</p>
+<h3>Compiling the Module
+</h3>
+<p>Once you have written you native code a file <code class="mendoza-code">mymod.c</code>, you will need to
+compile it with your system's C compiler. The easiest way to do this is to use <code class="mendoza-code">jpm</code> and write a <code class="mendoza-code">project.janet</code> file.
+<code class="mendoza-code">jpm</code> will handle all of the linking and flags for you so that you can write portable modules. Since <code class="mendoza-code">project.janet</code>
+is just a Janet script, you can detect what platform you are running on and do conditional compilation there if needed.
+</p>
+<p>Inside <code class="mendoza-code">project.janet</code>:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">declare-project</span> <span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"mymod"</span>)
+(<span class="mdzsyn-symbol">declare-native</span> <span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"mymod"</span> <span class="mdzsyn-keyword">:source</span> @[<span class="mdzsyn-string">"mymod.c"</span>])</code></pre><p>Once you have <code class="mendoza-code">project.janet</code> written, run <code class="mendoza-code">jpm build</code> to build the module.
+If all goes well, cook should have built a file <code class="mendoza-code">build/mymod.so</code>. In your repl, you can now
+import your module and use it.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">build/mymod</span> <span class="mdzsyn-keyword">:as</span> <span class="mdzsyn-symbol">mymod</span>)
+(<span class="mdzsyn-symbol">mymod/myfun</span>) <span class="mdzsyn-comment"># Prints the hello message</span></code></pre><p>Congratulations, you have a native module.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../api/tarray.html"><span class="prevnext-text">Type Array Module</span></a></span>
+          <span class="next"><a href="wrapping.html"><span class="prevnext-text">Wrapping Types</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose 2020
+  <div class="gentag">Generated on April 11, 2020 at 17:28:14 with Janet 1.8.1-5b6b9f1</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

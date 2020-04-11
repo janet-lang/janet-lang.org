@@ -40,3 +40,10 @@
   (def my-index (find-index (fn [x] (= url (x :url))) order))
   (def index (% (+ my-index len offset) len))
   (order index))
+
+(defn find-old-versions
+  "Get old versions of this documentation for link purposes."
+  []
+  (sort (seq [d :in (os/dir "static") :when (peg/match '(* :d+ "." :d+ "." :d+) d) :when (not= d janet/version)] d) >))
+
+(def other-versions (find-old-versions))
