@@ -136,3 +136,109 @@ by adding @code`&` as the last parameter in the function.
 
 (ignore-extra 1 2 3 4 5) # -> 2
 ```
+
+## Keyword Style Arguments
+
+Sometimes, you want a function to have many arguments, and calling
+such a function can get confusing without naming the arguments in the call.
+One solution to this problem is passing a table or struct with all of the
+arguments you want to use. This is in general a good approach, as now your
+original arguments can be identified by the keys in the struct.
+
+@codeblock[janet]```
+(defn make-recipe
+  "Create some kind of cake recipe..."
+  [args]
+  (def dry [(args :flour) (args :sugar) (args :baking-soda)])
+  (def wet [(args :water) (args :eggs) (args :vanilla-extract)])
+  {:name "underspecified-cake" :wet wet :dry dry})
+
+# Call with an argument struct
+(make-recipe
+ {:flour 1
+  :sugar 1
+  :baking-soda 0.5
+  :water 2
+  :eggs 2
+  :vanilla-extract 0.5})
+```
+
+This is often good enough, but there are a couple downsides. The first is that
+our semantic arguments are not documented, the docstring will just have a single argument "args" which is not helpful. The docstring should have some indication of they keys that we expect in the struct.
+We also need to write out an extra pair of brackets for the struct - this isn't a huge deal, but it would be nice if we didn't need to write this out explicitly.
+
+We can solve this first problem by using destructuring in the argument.
+
+@codeblock[janet]```
+(defn make-recipe-2
+  "Create some kind of cake recipe with destructuring..."
+ [{:flour flour
+   :sugar sugar
+   :baking-soda soda
+   :water water
+   :eggs eggs
+   :vanilla-extract vanilla}]
+ (def dry [flour sugar soda])
+ (def wet [water eggs vanilla])
+ {:name "underspecified-cake" :wet wet :dry dry})
+
+# We can call the function in the same manner as before.
+(make-recipe-2
+ {:flour 1
+  :sugar 1
+  :baking-soda 0.5
+  :water 2
+  :eggs 2
+  :vanilla-extract 0.5})
+```
+
+The docstring of the improved function will contain a list of arguments that our function takes.
+To fix the second issue, we can use the &keys symbol in a function parameter list to automatically
+create our big argument struct for use on invocation.
+
+@codeblock[janet]```
+(defn make-recipe-3
+  "Create some kind of recipe using &keys..."
+  [&keys {:flour flour
+          :sugar sugar
+          :baking-soda soda
+          :water water
+          :eggs eggs
+          :vanilla-extract vanilla}]
+  (def dry [flour sugar soda])
+  (def wet [water eggs vanilla])
+  {:name "underspecified-cake" :wet wet :dry dry})
+
+# Calling this function is a bit different now - no struct
+(make-recipe-3
+  :flour 1
+  :sugar 1
+  :baking-soda 0.5
+  :water 2
+  :eggs 2
+  :vanilla-extract 0.5)
+```
+
+Usage of this last variant looks cleaner than the previous two recipe making functions, but
+there is a caveat. Having all of the arguments packaged as a struct is often useful, as the 
+struct can be passed around and threaded through an application efficiently. Functions that
+require many arguments often pass those arguments to subroutines, so in practice this issue is quite
+common. The @code`&keys` syntax
+is therefor most useful where terseness and visual clarity is more important.
+
+It is not difficult to convert between the two calling styles, if need be. To pass a struct to a function that expects @code`&keys`-style arguments, the @code`kvs` function works well. To convert
+arguments in the other direction, from @code`&keys`-style to a single struct argument, is trivial -
+just wrap your arguments in curly brackets!
+
+@codeblock[janet]```
+(def args
+  {:flour 1
+   :sugar 1
+   :baking-soda 0.5
+   :water 2
+   :eggs 2
+   :vanilla-extract 0.5})
+
+# Turn struct into an array key,value,key,value,... and splice into a call
+(make-recipe-3 ;(kvs args))
+```
