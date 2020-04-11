@@ -1,0 +1,12 @@
+#!/bin/bash
+LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/janet-lang/janet/releases/latest)
+LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
+ARTIFACT_URL="https://github.com/janet-lang/janet/releases/download/$LATEST_VERSION/"
+get_one_artifact() {
+    echo "Getting Janet version $LATEST_VERSION, artifact $1..."
+    curl -sL "$ARTIFACT_URL"/"$1" > janet/"$1"
+}
+get_one_artifact janet.c
+get_one_artifact janet.h
+get_one_artifact janetconf.h
+get_one_artifact shell.c

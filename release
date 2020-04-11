@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [ "$1" = "" ]; then
     echo "usage: ./release JANET_VERSION"
     exit 1
@@ -14,4 +13,3 @@ echo "Moving site into static..."
 cp -r site/* "$RELEASE"
 echo "Removing nested extra releases..."
 rm -rf "$RELEASE"/?.?.?
-
