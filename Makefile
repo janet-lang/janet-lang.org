@@ -23,6 +23,8 @@ build/bin/janet: janet/janet.c janet/janet.h janet/janetconf.h janet/shell.c
 	cc $(CFLAGS) -fPIC -o build/bin/janet -Ijanet janet/janet.c janet/shell.c $(LDFLAGS) $(CLIBS)
 	$(JSETTINGS) build/bin/janet build/bin/jpm install mendoza
 
+.PHONY: wasm
+wasm: static/js/janet.js
 static/js/janet.js: janet/janet.c janet/janet.h janet/janetconf.h janet/webrepl.c build/bin/janet
 	mkdir -p build
 	emcc $(CFLAGS) -o static/js/janet.js -Ijanet janet/janet.c janet/webrepl.c \
