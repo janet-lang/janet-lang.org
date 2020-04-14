@@ -11,11 +11,11 @@
         HH (date :hours)
         MM (date :minutes)
         SS (date :seconds)]
-    (string/format "%s %d, %d at %.2d:%.2d:%.2d"
+    (string/format "%s %d, %d at %.2d:%.2d:%.2d (UTC)"
 M D Y HH MM SS)))
 $}
 <footer>
-  &copy; Calvin Rose {{ ((os/date) :year) }}
+  &copy; Calvin Rose &amp; contributors {{ ((os/date) :year) }}
   <div class="gentag">{{ (string "Generated on " (nice-date) " with Janet " janet/version "-" janet/build) }}</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>

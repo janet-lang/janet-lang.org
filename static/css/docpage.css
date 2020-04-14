@@ -109,6 +109,12 @@
     font-family: 'Dosis','Helvetica', sans-serif;
 }
 
+.example-title {
+    margin-top: 28px;
+    color: #888;
+    font-family: 'Dosis','Helvetica', sans-serif;
+}
+
 /* Toc Toggle */
 
 #toc-toggle {

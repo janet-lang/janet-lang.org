@@ -11,6 +11,16 @@
     (set ret (string/replace "  " " " ret)))
   ret)
 
+(defn- check-example
+  "Check if a binding has related examples. If so, load them
+  and get their content."
+  [sym]
+  (def path (string "examples/" (string/replace "/" "_" sym) ".janet"))
+  (when (= :file (os/stat path :mode))
+    (def src (slurp path))
+    (print src)
+    src))
+
 (defn- emit-item
   "Generate documentation for one entry."
   [key env-entry]
@@ -23,11 +33,15 @@
                        macro :macro
                        ref (string :var " (" (type (get ref 0)) ")")
                        (type val))
-        docstring (remove-extra-spaces docstring)]
+        docstring (remove-extra-spaces docstring)
+        example (check-example key)]
     {:tag "div" "class" "binding"
      :content [{:tag "span" "class" "binding-sym" "id" key :content key} " "
                {:tag "span" "class" "binding-type" :content binding-type} " "
-               {:tag "pre" "class" "binding-text" :content (or docstring "")}]}))
+               {:tag "pre" "class" "binding-text" :content (or docstring "")}
+               ;(if example [{:tag "div" "class" "example-title" :content "EXAMPLES"}
+                             {:tag "pre" "class" "mendoza-codeblock"
+                              :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])]}))
 
 (def- all-entries 
   (sort (pairs (table/getproto (fiber/getenv (fiber/current))))))
