@@ -81,6 +81,10 @@ its own copy of the file handle.
 (thread/new worker)
 ```
 
+This limitation has been removed for some values (C Functions and raw pointers) in
+version 1.9.0, to make use of threads with native modules more seamless, although certain abstract
+types like open files can still not be sent to threads via @code`thread/send` or @code`thread/new`.
+
 ## Blocking and Non-blocking Sends and Receives
 
 All sends and receives can be blocking or non-blocking by providing an optional timeout value. A timeout
