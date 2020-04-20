@@ -16,7 +16,7 @@ Special forms can be thought of as forming the real 'core' language of janet.
 ## @code`(def name meta... value)`
 
 This special form binds a value to a symbol. The symbol can be substituted
-for the value in subsequent expression for the same result. A binding made by def
+for the value in subsequent expressions for the same result. A binding made by def
 is a constant and cannot be updated. A symbol can be redefined to a new value, but previous
 uses of the binding will refer to the previous value of the binding.
 
@@ -78,7 +78,7 @@ more easily be recursive. The argument list is a tuple of named parameters, and 
 is 0 or more forms. The function will evaluate to the last form in the body. The other forms
 will only be evaluated for side effects.
 
-Functions also introduced a new lexical scope, meaning the defs and vars inside a function
+Functions also introduce a new lexical scope, meaning the defs and vars inside a function
 body will not escape outside the body.
 
 @codeblock[janet]```
@@ -159,7 +159,7 @@ are considered true.
 The splice special form is an interesting form that doesn't have an analog in most lisps.
 It only has an effect in two places - as an argument in a function call, or as the argument
 to the unquote form. Outside of these two settings, the splice special form simply evaluates
-directly to it's argument x. The shorthand for splice is prefixing a form with a semicolon.
+directly to its argument x. The shorthand for splice is prefixing a form with a semicolon.
 
 In the context of a function call, splice will insert @em{the contents} of x in the parameter list.
 
@@ -185,8 +185,8 @@ an @code`unquote-splicing` special in other lisps.
 ## @code`(while condition body...)`
 
 The while special form compiles to a C-like while loop. The body of the form will be continuously evaluated
-until the condition is false or nil. Therefor, it is expected that the body will contain some side effects
-of the loop will go on for ever. The while loop always evaluates to nil.
+until the condition is false or nil. Therefore, it is expected that the body will contain some side effects
+or the loop will go on forever. The while loop always evaluates to nil.
 
 @codeblock[janet]```
 (var i 0)
@@ -200,7 +200,7 @@ of the loop will go on for ever. The while loop always evaluates to nil.
 Break from a while loop or return early from a function. The break special form can only
 break from the inner-most loop. Since a while loop always returns nil, the optional `value`
 parameter has no effect when used in a while loop, but when returning from a function, the
-value parameter is function's return value.
+value parameter is the function's return value.
 
 The @code`break` special form is most useful as a low level construct for macros. You should
 try to avoid using it in hand written code, although it can be very useful for handling
