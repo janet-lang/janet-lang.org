@@ -8,7 +8,7 @@ A Janet program begins life as a text file, just a sequence of bytes like any
 other file on the system. Janet source files should be UTF-8 or ASCII encoded.
 Before Janet can compile or run the program, it must transform the source code
 into a data structure. Janet is a lisp, which means it is homoiconic - code is
-data -  thus all the facilities in the language for manipulation of tuples,
+data - thus all the facilities in the language for manipulation of tuples,
 strings and tables are used for manipulation of the source code as well.
 
 However, before Janet code transforms to a data structure, it must be read, or
@@ -23,7 +23,7 @@ philosophy is to extend the language via macros rather than reader macros.
 
 ## Nil, True and False
 
-Nil, true and false are all literals than can be entered as such
+Nil, true and false are all literals that can be entered as such
 in the parser.
 
 @codeblock[janet]```
@@ -120,9 +120,9 @@ Strings can also contain literal newline characters that will be ignored.
 This lets one define a multiline string that does not contain newline characters.
 
 An alternative way of representing strings in janet is the long string, or the backquote
-delimited string. A string can also be define to start with a certain number of
+delimited string. A string can also be defined to start with a certain number of
 backquotes, and will end the same number of backquotes. Long strings
-do not contain escape sequences; all bytes will be parsed literally until
+do not contain escape sequences; all bytes will be parsed literally until the
 ending delimiter is found. This is useful
 for defining multi-line strings with literal newline characters, unprintable
 characters, or strings that would otherwise require many escape sequences.
@@ -140,12 +140,16 @@ is
 a
 string
 ``
+`
+This is
+a string.
+`
 ```
 
 ## Buffers
 
 Buffers are similar to strings except they are mutable data structures. Strings in janet
-cannot be mutated after being created, where a buffer can be changed after creation.
+cannot be mutated after being created, whereas a buffer can be changed after creation.
 The syntax for a buffer is the same as that for a string or long string, but
 the buffer must be prefixed with the '\@' character.
 
@@ -153,6 +157,9 @@ the buffer must be prefixed with the '\@' character.
 @""
 @"Buffer."
 @``Another buffer``
+@`
+Yet another buffer
+`
 ```
 
 ## Tuples
@@ -199,7 +206,7 @@ pair from the parsed struct
 ```
 ## Tables
 
-Table have the same syntax as structs, except they have the \@ prefix to indicate
+Tables have the same syntax as structs, except they have the \@ prefix to indicate
 that they are mutable.
 
 @codeblock[janet]```
