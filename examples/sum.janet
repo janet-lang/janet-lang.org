@@ -1,6 +1,6 @@
 (sum []) # -> 0
 (sum @[1]) # -> 1
-(sum (range 100)) # -> 5050
+(sum (range 100)) # -> 4950
 
 # Sum over bytes values [0-255] in a string
 (sum "hello") # -> 532
