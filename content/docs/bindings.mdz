@@ -28,7 +28,7 @@ a var.
 
 In the global scope, you can use the @code[:private] option on a def or var to prevent it from
 being exported to code that imports your current module. You can also add documentation to
-a function by passing a string the def or var command.
+a function by passing a string to the def or var command.
 
 @codeblock[janet](```
 (def mydef :private "This will have private scope. My doc here." 123)
@@ -43,17 +43,17 @@ will throw an error. Scopes are useful for organizing your bindings and they can
 There are two main ways to create a scope in Janet.
 
 The first is to use the @code[do] special form. @code[do] executes a series of statements in a scope
-and evaluates to the last statement. Bindings create inside the form do not escape outside
+and evaluates to the last statement. Bindings created inside the form do not escape outside
 of its scope.
 
 @codeblock[janet](```
 (def a :outera)
 
 (do
- (def a 1)
- (def b 2)
- (def c 3)
- (+ a b c)) # -> 6
+  (def a 1)
+  (def b 2)
+  (def c 3)
+  (+ a b c)) # -> 6
 
 a # -> :outera
 b # -> compile error: "unknown symbol \"b\""
@@ -61,7 +61,7 @@ c # -> compile error: "unknown symbol \"c\""
 ```)
 
 Any attempt to reference the bindings from the do form after it has finished
-executing will fail. Also notice who defining @code[a] inside the do form did not
+executing will fail. Also notice that defining @code[a] inside the do form did not
 overwrite the original definition of @code[a] for the global scope.
 
 The second way to create a scope is to create a closure.
@@ -76,7 +76,7 @@ creating bindings.
 (let [a 1
       b 2
       c 3]
-      (+ a b c)) # -> 6
+  (+ a b c)) # -> 6
 ```)
 
 The above is equivalent to the example using @code[do] and @code[def].
