@@ -42,9 +42,9 @@ of the loop.
 ```)
 
 Besides these special forms, Janet has many macros for both conditional testing and looping
-that are much better for the majority of cases. For conditional testing, the @code[cond], @code[switch], and
+that are much better for the majority of cases. For conditional testing, the @code[cond], @code[case], and
 @code[when] macros can be used to great effect. @code[cond] can be used for making an if-else chain, where using
-just raw if forms would result in many parentheses. @code[case] For looping, the @code[loop], @code[seq], and @code[generate]
+just raw if forms would result in many parentheses. @code[case] is similar to switch in C without fall-through, or case in some Lisps, though simpler.  @code[when] is like if, but returns nil if the condition evaluates to nil or false, similar to the macro of the same name in Common Lisp and Clojure. For looping, @code[loop], @code[seq], and @code[generate]
 implement janet's form of list comprehension, as in Python or Clojure.
 
 
