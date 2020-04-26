@@ -34,7 +34,7 @@
 (defmacro rule
   "Add a rule to the rule graph."
   [target deps & body]
-  ~(,rule-impl ,target ,deps (fn [] nil ,;body)))
+  ~(,rule-impl ,target ,deps (fn [] ,;body)))
 
 (defmacro phony
   "Add a phony rule to the rule graph. A phony rule will run every time
@@ -42,6 +42,16 @@
   user facing tasks."
   [target deps & body]
   ~(,rule-impl ,target ,deps (fn [] nil ,;body) true))
+
+(defmacro sh-rule
+  "Add a rule that invokes a shell command, and fails if the command returns non-zero."
+  [target deps & body]
+  ~(,rule-impl ,target ,deps (fn [] (,assert (,zero? (,os/shell (,string ,;body)))))))
+
+(defmacro sh-phony
+  "Add a phony rule that invokes a shell command, and fails if the command returns non-zero."
+  [target deps & body]
+  ~(,rule-impl ,target ,deps (fn [] (,assert (,zero? (,os/shell (,string ,;body))))) true))
 
 (defn add-dep
   "Add a dependency to an existing rule. Useful for extending phony
@@ -157,7 +167,7 @@
   ret)
 
 (defn check-cc
-  "Ensure we have a c compiler"
+  "Ensure we have a c compiler."
   []
   (if is-win
     (do
@@ -177,25 +187,46 @@
   [into x]
   (when x
     (proto-flatten into (table/getproto x))
-    (loop [k :keys x]
-      (put into k (x k))))
+    (merge-into into x))
   into)
 
-(defn import-rules
-  "Import another file that defines more rules. This ruleset
-  is merged into the current ruleset."
-  [path]
+(defn make-jpm-env
+  "Build an environment table with jpm functions preloaded."
+  [&opt no-deps]
   (def env (make-env))
-  (unless (os/stat path :mode)
-    (error (string "cannot open " path)))
+  (put env :jpm-no-deps no-deps)
   (loop [k :keys _env :when (symbol? k)]
      (unless ((_env k) :private) (put env k (_env k))))
+  env)
+
+(defn require-jpm
+  "Require a jpm file project file. This is different from a normal require
+  in that code is loaded in the jpm environment."
+  [path &opt no-deps]
+  (unless (os/stat path :mode)
+    (error (string "cannot open " path)))
+  (def env (make-jpm-env no-deps))
   (def currenv (proto-flatten @{} (fiber/getenv (fiber/current))))
   (loop [k :keys currenv :when (keyword? k)]
     (put env k (currenv k)))
   (dofile path :env env :exit true)
+  env)
+
+(defn import-rules
+  "Import another file that defines more rules. This ruleset
+  is merged into the current ruleset."
+  [path &opt no-deps]
+  (def env (require-jpm path no-deps))
   (when-let [rules (env :rules)] (merge-into (getrules) rules))
   env)
+
+(defmacro post-deps
+  "Run code at the top level if jpm dependencies are installed. Build
+  code that imports dependencies should be wrapped with this macro, as project.janet
+  needs to be able to run successfully even without dependencies installed."
+  [& body]
+  (unless (dyn :jpm-no-deps)
+    ~',(reduce |(eval $1) nil body)))
 
 #
 # OS and shell helpers
@@ -204,6 +235,14 @@
 (def- path-splitter
   "split paths on / and \\."
   (peg/compile ~(any (* '(any (if-not (set `\/`) 1)) (+ (set `\/`) -1)))))
+
+(defn create-dirs
+  "Create all directories needed for a file (mkdir -p)."
+  [dest]
+  (def segs (peg/match path-splitter dest))
+  (for i 1 (length segs)
+    (def path (string/join (slice segs 0 i) sep))
+    (unless (empty? path) (os/mkdir path))))
 
 (def- filepath-replacer
   "Convert url with potential bad characters into a file path element."
@@ -227,15 +266,12 @@
 (defn rm
   "Remove a directory and all sub directories."
   [path]
-  (try
-    (if (= (os/stat path :mode) :directory)
-      (do
-        (each subpath (os/dir path)
-          (rm (string path sep subpath)))
-        (os/rmdir path))
-      (os/rm path))
-    ([err f] (unless (string/has-prefix? "No such file or directory" err)
-               (propagate err f)))))
+  (if (= (os/lstat path :mode) :directory)
+    (do
+      (each subpath (os/dir path)
+        (rm (string path sep subpath)))
+      (os/rmdir path))
+    (os/rm path)))
 
 (defn copy
   "Copy a file or directory recursively from one location to another."
@@ -313,6 +349,7 @@
   (rule dest [src ;headers]
         (check-cc)
         (print "compiling " dest "...")
+        (create-dirs dest)
         (if is-win
           (shell cc ;defines "/c" ;cflags (string "/Fo" dest) src)
           (shell cc "-c" src ;defines ;cflags "-o" dest))))
@@ -345,6 +382,7 @@
   (rule target objects
         (check-cc)
         (print "linking " target "...")
+        (create-dirs target)
         (if is-win
           (shell linker ;lflags (string "/OUT:" target) ;objects (win-import-library))
           (shell linker ;cflags `-o` target ;objects ;lflags))))
@@ -356,12 +394,14 @@
   (rule target objects
         (check-cc)
         (print "creating static library " target "...")
+        (create-dirs target)
         (if is-win
           (shell ar "/nologo" (string "/out:" target) ;objects)
           (shell ar "rcs" target ;objects))))
 
 (defn- create-buffer-c-impl
   [bytes dest name]
+  (create-dirs dest)
   (def out (file/open dest :w))
   (def chunks (seq [b :in bytes] (string b)))
   (file/write out
@@ -378,6 +418,7 @@
   [source dest name]
   (rule dest [source]
         (print "generating " dest "...")
+        (create-dirs dest)
         (with [f (file/open source :r)]
           (create-buffer-c-impl (:read f :all) dest name))))
 
@@ -393,6 +434,80 @@
   [path]
   (string (string/slice path 0 (- -1 (length modext))) statext))
 
+(defn- make-bin-source
+  [declarations lookup-into-invocations]
+  (dedent
+    ```
+    ```
+    declarations
+    ```
+
+    int main(int argc, const char **argv) {
+        janet_init();
+
+        /* Get core env */
+        JanetTable *env = janet_core_env(NULL);
+        JanetTable *lookup = janet_env_lookup(env);
+        JanetTable *temptab;
+        int handle = janet_gclock();
+
+        /* Load natives into unmarshalling dictionary */
+
+    ```
+    lookup-into-invocations
+    ```
+        /* Unmarshal bytecode */
+        Janet marsh_out = janet_unmarshal(
+          janet_payload_image_embed,
+          janet_payload_image_embed_size,
+          0,
+          lookup,
+          NULL);
+
+        /* Verify the marshalled object is a function */
+        if (!janet_checktype(marsh_out, JANET_FUNCTION)) {
+            fprintf(stderr, "invalid bytecode image - expected function.");
+            return 1;
+        }
+        JanetFunction *jfunc = janet_unwrap_function(marsh_out);
+
+        /* Check arity */
+        janet_arity(argc, jfunc->def->min_arity, jfunc->def->max_arity);
+
+        /* Collect command line arguments */
+        JanetArray *args = janet_array(argc);
+        for (int i = 0; i < argc; i++) {
+            janet_array_push(args, janet_cstringv(argv[i]));
+        }
+
+        /* Create enviornment */
+        temptab = janet_table(0);
+        temptab = env;
+        janet_table_put(temptab, janet_ckeywordv("args"), janet_wrap_array(args));
+        janet_gcroot(janet_wrap_table(temptab));
+
+        /* Unlock GC */
+        janet_gcunlock(handle);
+
+        /* Run everything */
+        JanetFiber *fiber = janet_fiber(jfunc, 64, argc, argc ? args->data : NULL);
+        fiber->env = temptab;
+        Janet out;
+        JanetSignal result = janet_continue(fiber, janet_wrap_nil(), &out);
+        if (result != JANET_SIGNAL_OK && result != JANET_SIGNAL_EVENT) {
+          janet_stacktrace(fiber, out);
+          janet_deinit();
+          return result;
+        }
+    #ifdef JANET_NET
+        janet_loop();
+    #endif
+        janet_deinit();
+        return 0;
+    }
+
+    ```))
+
 (defn- create-executable
   "Links an image with libjanet.a (or .lib) to produce an
   executable. Also will try to link native modules into the
@@ -404,6 +519,7 @@
   (rule dest [source]
         (check-cc)
         (print "generating executable c source...")
+        (create-dirs dest)
         # Load entry environment and get main function.
         (def entry-env (dofile source))
         (def main ((entry-env 'main) :value))
@@ -440,7 +556,7 @@
                               prefix
                               "\", 0);\n\n")
           (when-let [lfs (meta :lflags)]
-            (array/concat dep-lflags lfs))
+                    (array/concat dep-lflags lfs))
           (buffer/push-string declarations
                               "extern void "
                               (meta :static-entry)
@@ -452,90 +568,23 @@
         # Make image byte buffer
         (create-buffer-c-impl image cimage_dest "janet_payload_image")
         # Append main function
-        (spit cimage_dest (string
-                            "\n"
-                            declarations
-```
-
-int main(int argc, const char **argv) {
-    janet_init();
-
-    /* Get core env */
-    JanetTable *env = janet_core_env(NULL);
-    JanetTable *lookup = janet_env_lookup(env);
-    JanetTable *temptab;
-    int handle = janet_gclock();
-
-    /* Load natives into unmarshalling dictionary */
-
-```
-                            lookup-into-invocations
-```
-    /* Unmarshal bytecode */
-    Janet marsh_out = janet_unmarshal(
-      janet_payload_image_embed,
-      janet_payload_image_embed_size,
-      0,
-      lookup,
-      NULL);
-
-    /* Verify the marshalled object is a function */
-    if (!janet_checktype(marsh_out, JANET_FUNCTION)) {
-      fprintf(stderr, "invalid bytecode image - expected function.");
-      return 1;
-    }
-    JanetFunction *jfunc = janet_unwrap_function(marsh_out);
-
-    /* Check arity */
-    janet_arity(argc, jfunc->def->min_arity, jfunc->def->max_arity);
-
-    /* Collect command line arguments */
-    JanetArray *args = janet_array(argc);
-    for (int i = 0; i < argc; i++) {
-      janet_array_push(args, janet_cstringv(argv[i]));
-    }
-
-    /* Create enviornment */
-    temptab = janet_table(0);
-    temptab = env;
-    janet_table_put(temptab, janet_ckeywordv("args"), janet_wrap_array(args));
-    janet_gcroot(janet_wrap_table(temptab));
-
-    /* Unlock GC */
-    janet_gcunlock(handle);
-
-    /* Run everything */
-    JanetFiber *fiber = janet_fiber(jfunc, 64, argc, argc ? args->data : NULL);
-    fiber->env = temptab;
-    Janet out;
-    JanetSignal result = janet_continue(fiber, janet_wrap_nil(), &out);
-    if (result) {
-      janet_stacktrace(fiber, out);
-      janet_deinit();
-      return result;
-    }
-    janet_deinit();
-    return 0;
-}
-
-```) :ab)
-
-# Compile and link final exectable
-(do
-  (def extra-lflags (case (os/which)
-                      :macos ["-ldl" "-lm" ;thread-flags]
-                      :windows [;thread-flags]
-                      :linux ["-lm" "-ldl" "-lrt" ;thread-flags]
-                      #default
-                      ["-lm" ;thread-flags]))
-  (def cc (opt opts :compiler default-compiler))
-  (def lflags [;dep-lflags ;(opt opts :lflags default-lflags) ;extra-lflags])
-  (def cflags (getcflags opts))
-  (def defines (make-defines (opt opts :defines {})))
-  (print "compiling and linking " dest "...")
-  (if is-win
-    (shell cc ;cflags cimage_dest ;static-libs (libjanet) ;lflags `/link` (string "/OUT:" dest))
-    (shell cc ;cflags `-o` dest cimage_dest ;static-libs (libjanet) ;lflags)))))
+        (spit cimage_dest (make-bin-source declarations lookup-into-invocations) :ab)
+        # Compile and link final exectable
+        (do
+          (def extra-lflags (case (os/which)
+                              :macos ["-ldl" "-lm" ;thread-flags]
+                              :windows [;thread-flags]
+                              :linux ["-lm" "-ldl" "-lrt" ;thread-flags]
+                              #default
+                              ["-lm" ;thread-flags]))
+          (def cc (opt opts :compiler default-compiler))
+          (def lflags [;dep-lflags ;(opt opts :lflags default-lflags) ;extra-lflags])
+          (def cflags (getcflags opts))
+          (def defines (make-defines (opt opts :defines {})))
+          (print "compiling and linking " dest "...")
+          (if is-win
+            (shell cc ;cflags cimage_dest ;static-libs (libjanet) ;lflags `/link` (string "/OUT:" dest))
+            (shell cc ;cflags `-o` dest cimage_dest ;static-libs (libjanet) ;lflags)))))
 
 (defn- abspath
   "Create an absolute path. Does not resolve . and .. (useful for
@@ -635,12 +684,16 @@ int main(int argc, const char **argv) {
   (def id (filepath-replace repo))
   (def module-dir (string cache sep id))
   (var fresh false)
-  (when (mkdir module-dir)
-      (set fresh true)
-      (print "cloning repository " repo " to " module-dir)
-      (unless (zero? (os/execute ["git" "clone" repo module-dir] :p))
-        (rimraf module-dir)
-        (error (string "could not clone git dependency " repo))))
+  (if (dyn :offline)
+    (if (not= :directory (os/stat module-dir :mode))
+      (error (string "did not find cached repo for dependency " repo))
+      (set fresh true))
+    (when (mkdir module-dir)
+        (set fresh true)
+        (print "cloning repository " repo " to " module-dir)
+        (unless (zero? (os/execute ["git" "clone" repo module-dir] :p))
+          (rimraf module-dir)
+          (error (string "could not clone git dependency " repo)))))
   (def olddir (os/cwd))
   (try
     (with-dyns [:rules @{}
@@ -653,7 +706,8 @@ int main(int argc, const char **argv) {
         (os/execute ["git" "pull" "origin" "master"] :p))
       (when tag
         (os/execute ["git" "reset" "--hard" tag] :p))
-      (os/execute ["git" "submodule" "update" "--init" "--recursive"] :p)
+      (unless (dyn :offline)
+        (os/execute ["git" "submodule" "update" "--init" "--recursive"] :p))
       (import-rules "./project.janet")
       (unless no-deps (do-rule "install-deps"))
       (do-rule "build")
@@ -679,7 +733,7 @@ int main(int argc, const char **argv) {
 
 (defn- make-lockfile
   [&opt filename]
-  (default filename "lockfile.janet")
+  (default filename "lockfile.jdn")
   (def cwd (os/cwd))
   (def packages @[])
   # Read installed modules from manifests
@@ -699,7 +753,7 @@ int main(int argc, const char **argv) {
       (def dep-urls (map |(if (string? $) $ ($ :repo)) d))
       (unless (resolved r)
         (when (all resolved dep-urls)
-          (array/push ordered-packages p)
+          (array/push ordered-packages {:repo r :sha s})
           (set made-progress true)
           (put resolved r true))))
     (unless made-progress
@@ -710,7 +764,7 @@ int main(int argc, const char **argv) {
 
 (defn- load-lockfile
   [&opt filename]
-  (default filename "lockfile.janet")
+  (default filename "lockfile.jdn")
   (def lockarray (parse (slurp filename)))
   (each {:repo url :sha sha} lockarray
     (install-git {:repo url :tag sha} nil true)))
@@ -799,13 +853,15 @@ int main(int argc, const char **argv) {
   is marshalled into bytecode which is then embedded in a final executable for distribution.\n\n
   This executable can be installed as well to the --binpath given."
   [&keys {:install install :name name :entry entry :headers headers
-          :cflags cflags :lflags lflags}]
+          :cflags cflags :lflags lflags :deps deps}]
   (def name (if is-win (string name ".exe") name))
   (def dest (string "build" sep name))
   (create-executable @{:cflags cflags :lflags lflags} entry dest)
   (add-dep "build" dest)
   (when headers
     (each h headers (add-dep dest h)))
+  (when deps
+    (each d deps (add-dep dest d)))
   (when install
     (install-rule dest (dyn :binpath JANET_BINPATH))))
 
@@ -826,6 +882,19 @@ int main(int argc, const char **argv) {
     (add-body "install"
               (spit newname bat))))
 
+(defn- print-rule-tree
+  "Show dependencies for a given rule recursively in a nice tree."
+  [root depth prefix prefix-part]
+  (print prefix root)
+  (when-let [[root-deps] ((getrules) root)]
+    (when (pos? depth)
+      (def l (-> root-deps length dec))
+      (eachp [i d] (sorted root-deps)
+        (print-rule-tree
+          d (dec depth)
+          (string prefix-part (if (= i l) " └─"  " ├─"))
+          (string prefix-part (if (= i l) "   "  " │ ")))))))
+
 (defn declare-archive
   "Build a janet archive. This is a file that bundles together many janet
   scripts into a janet image. This file can the be moved to any machine with
@@ -835,6 +904,7 @@ int main(int argc, const char **argv) {
   (def name (opts :name))
   (def iname (string "build" sep name ".jimage"))
   (rule iname (or (opts :deps) [])
+        (create-dirs iname)
         (spit iname (make-image (require entry))))
   (def path (dyn :modpath JANET_MODPATH))
   (add-dep "build" iname)
@@ -854,8 +924,7 @@ int main(int argc, const char **argv) {
   (setdyn :manifest-dir manifests)
   (setdyn :installed-files installed-files)
 
-  (rule "./build" [] (mkdir "build"))
-  (phony "build" ["./build"])
+  (phony "build" [])
 
   (phony "manifest" []
          (print "generating " manifest "...")
@@ -912,8 +981,8 @@ int main(int argc, const char **argv) {
     '(* "--" '(some (if-not "=" 1)) (+ (* "=" '(any 1)) -1))))
 
 (defn- local-rule
-  [rule]
-  (import-rules "./project.janet")
+  [rule &opt no-deps]
+  (import-rules "./project.janet" no-deps)
   (do-rule rule))
 
 (defn- help
@@ -940,14 +1009,20 @@ Subcommands are:
   run rule : run a rule. Can also run custom rules added via (phony "task" [deps...] ...)
              or (rule "ouput.file" [deps...] ...).
   rules : list rules available with run.
+  rule-tree (root rule) (depth) : Print a nice tree to see what rules depend on other rules.
+                                  Optinally provide a root rule to start printing from, and a
+                                  max depth to print. Without these options, all rules will print
+                                  their full dependency tree.
   update-pkgs : Update the current package listing from the remote git repository selected.
   quickbin entry executable : Create an executable from a janet script with a main function.
   make-lockfile (lockfile) : Create a lockfile based on repositories in the cache. The
             lockfile will record the exact versions of dependencies used to ensure a reproducible
             build. Lockfiles are best used with applications, not libraries. The default lockfile
-            name is lockfile.janet.
+            name is lockfile.jdn.
   load-lockfile (lockfile) : Install modules from a lockfile in a reproducible way. The
-                             default lockfile name is lockfile.janet.
+                             default lockfile name is lockfile.jdn.
+  repl : Run a repl in the context of the current project.janet file. This lets you run rules and
+         otherwise debug the current project.janet file.
 
 Keys are:
   --modpath : The directory to install modules to. Defaults to $JANET_MODPATH, $JANET_PATH, or (dyn :syspath)
@@ -961,15 +1036,17 @@ Keys are:
   --pkglist : URL of git repository for package listing. Defaults to $JANET_PKGLIST or https://github.com/janet-lang/pkgs.git
 
 Flags are:
+  --nocolor : Disable color in the jpm repl.
   --verbose : Print shell commands as they are executed.
   --test : If passed to jpm install, runs tests before installing. Will run tests recursively on dependencies.
+  --offline : Prevents jpm from going to network to get dependencies - all dependencies should be in the cache or this command will fail.
     `))
 
-(defn- show-help
+(defn show-help
   []
   (print help))
 
-(defn- show-paths
+(defn show-paths
   []
   (print "binpath:    " (dyn :binpath JANET_BINPATH))
   (print "modpath:    " (dyn :modpath JANET_MODPATH))
@@ -977,21 +1054,21 @@ Flags are:
   (print "headerpath: " (dyn :headerpath JANET_HEADERPATH))
   (print "syspath:    " (dyn :syspath)))
 
-(defn- build
+(defn build
   []
   (local-rule "build"))
 
-(defn- clean
+(defn clean
   []
   (local-rule "clean"))
 
-(defn- install
+(defn install
   [&opt repo]
   (if repo
     (install-git repo)
     (local-rule "install")))
 
-(defn- test
+(defn test
   []
   (local-rule "test"))
 
@@ -1001,24 +1078,54 @@ Flags are:
     (uninstall what)
     (local-rule "uninstall")))
 
-(defn- deps
+(defn deps
   []
-  (local-rule "install-deps"))
+  (local-rule "install-deps" true))
 
-(defn- list-rules
-  []
+(defn show-rule-tree
+  [&opt root depth]
   (import-rules "./project.janet")
+  (def max-depth (if depth (scan-number depth) math/inf))
+  (if root
+    (print-rule-tree root max-depth "" "")
+    (let [ks (sort (seq [k :keys (dyn :rules)] k))]
+      (each k ks (print-rule-tree k max-depth "" "")))))
+
+(defn list-rules
+  [&opt ctx]
+  (import-rules "./project.janet" true)
   (def ks (sort (seq [k :keys (dyn :rules)] k)))
   (each k ks (print k)))
 
-(defn- update-pkgs
+(defn update-pkgs
   []
   (install-git (dyn :pkglist default-pkglist)))
 
-(defn- quickbin
+(defn quickbin
   [input output]
   (create-executable @{} input output)
   (do-rule output))
+
+(defn jpm-repl
+  []
+  (def env
+    (try
+      (require-jpm "./project.janet")
+    ([err f]
+     (if (= "cannot open ./project.janet" err)
+       (put (make-jpm-env) :project {})
+       (propagate err f)))))
+  (setdyn :pretty-format (if-not (dyn :nocolor) "%.20Q" "%.20q"))
+  (setdyn :err-color (if-not (dyn :nocolor) true))
+  (def p (env :project))
+  (def name (p :name))
+  (if name (print "Project:     " name))
+  (if-let [r (p :repo)] (print "Repository:  " r))
+  (if-let [a (p :author)] (print "Author:      " a))
+  (defn getchunk [buf p]
+    (def [line] (parser/where p))
+    (getline (string "jpm[" (or name "repl") "]:" line ":" (parser/state p :delimiters) "> ") buf env))
+  (repl getchunk nil env))
 
 (def- subcommands
   {"build" build
@@ -1028,6 +1135,8 @@ Flags are:
    "test" test
    "help" help
    "deps" deps
+   "repl" jpm-repl
+   "rule-tree" show-rule-tree
    "show-paths" show-paths
    "clear-cache" clear-cache
    "run" local-rule

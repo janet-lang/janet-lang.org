@@ -27,10 +27,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 8
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 9
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.8.1"
+#define JANET_VERSION "1.9.0-dev"
 
 /* #define JANET_BUILD "local" */
 
@@ -49,6 +49,7 @@
 /* Other settings */
 /* #define JANET_NO_ASSEMBLER */
 /* #define JANET_NO_PEG */
+/* #define JANET_NO_NET */
 /* #define JANET_NO_TYPED_ARRAY */
 /* #define JANET_NO_INT_TYPES */
 /* #define JANET_NO_PRF */

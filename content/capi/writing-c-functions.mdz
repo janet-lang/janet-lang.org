@@ -139,24 +139,39 @@ void janet_panicf(const char *format, ...);
 ```
 
 Use @code`janet_panicf` to create descriptive, formatted error messages for functions. The format string
-is much like that of printf, but takes different escape sequences to make printing errors with Janet values
-possible. In general, it is less flexible that @code`printf` as it is specialized for displaying Janet values.
-Also note that these formatters are different than those used by @code`buffer/format` and @code`string/format`
-inside Janet.
+is much like that of printf, but is specialized for working with Janet values.
+The pretty printing formatters can take a precision argument
+to specify the maximum nesting depth to print.
 
 @tag`table`{@tr{@th{Formatter}@th{Description}@th{Type}}
+    @tr{@td{%o} @td{print an octal integer} @td{@code`long`}}
+    @tr{@td{%x} @td{print a hexidecimal integer (lowercase)} @td{@code`long`}}
+    @tr{@td{%X} @td{print a hexidecimal integer (uppercase)} @td{@code`long`}}
     @tr{@td{%f} @td{print a double} @td{@code`double`}}
     @tr{@td{%d} @td{print an integer} @td{@code`long`}}
-    @tr{@td{%S} @td{print a Janet string-like} @td{@code`const uint8_t *`}}
+    @tr{@td{%i} @td{print an integer (same as d)} @td{@code`long`}}
     @tr{@td{%s} @td{print a NULL-terminated C string} @td{@code`const char *`}}
-    @tr{@td{%c} @td{print a char} @td{@code`long`}}
-    @tr{@td{%q} @td{print a quoted Janet string-like} @td{@code`const uint8_t *`}}
+    @tr{@td{%f} @td{print a floating point number} @td{@code`double`}}
+    @tr{@td{%A} @td{print a hexidecimal floating point number (uppercase)} @td{@code`double`}}
+    @tr{@td{%a} @td{print a hexidecimal floating point number (lowercase)} @td{@code`double`}}
+    @tr{@td{%E} @td{print a number in scientifc notation} @td{@code`double`}}
+    @tr{@td{%g} @td{print a number in its shortest form} @td{@code`double`}}
+    @tr{@td{%G} @td{print a number in its shortest form (uppercase)} @td{@code`double`}}
+
+    @tr{@td{%S} @td{print a Janet string-like} @td{@code`const uint8_t *`}}
     @tr{@td{%t} @td{print the type of a Janet value} @td{@code`Janet`}}
     @tr{@td{%T} @td{print a Janet type} @td{@code`JanetType`}}
     @tr{@td{%v} @td{print a Janet value with (describe x)} @td{@code`Janet`}}
     @tr{@td{%V} @td{print a Janet value with (tostring x)} @td{@code`Janet`}}
+    @tr{@td{%j} @td{print a Janet value in jdn format. Will fail on cyclic structures and special types} @td{@code`Janet`}}
     @tr{@td{%p} @td{pretty print a Janet value} @td{@code`Janet`}}
-    @tr{@td{%P} @td{pretty print a Janet value with color} @td{@code`Janet`}}}
+    @tr{@td{%P} @td{pretty print a Janet value with color} @td{@code`Janet`}}
+    @tr{@td{%q} @td{pretty print a Janet value on one line} @td{@code`Janet`}}
+    @tr{@td{%Q} @td{pretty print a Janet value on one line with color} @td{@code`Janet`}}
+    @tr{@td{%m} @td{pretty print a Janet value (no truncation)} @td{@code`Janet`}}
+    @tr{@td{%M} @td{pretty print a Janet value (no truncation) with color} @td{@code`Janet`}}
+    @tr{@td{%n} @td{pretty print a Janet value (no truncation) on one line} @td{@code`Janet`}}
+    @tr{@td{%N} @td{pretty print a Janet value (no truncation) on one line with color} @td{@code`Janet`}}}
 
 ## Scratch Memory
 

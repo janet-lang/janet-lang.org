@@ -1,0 +1,10 @@
+(import ./gen-docs :as gen-docs)
+
+{:title "Net Module"
+ :nav-title "net"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix[net/]
