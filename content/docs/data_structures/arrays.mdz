@@ -3,7 +3,7 @@
  :order 2}
 ---
 
-Arrays are a fundemental datatype in Janet. Arrays are values that contain
+Arrays are a fundamental datatype in Janet. Arrays are values that contain
 a sequence of other values, indexed from 0. Arrays are also mutable, meaning
 that values can be added or removed in place. Many functions in the Janet core
 library will also create arrays, such as @code`map`, @code`filter`, and @code`interpose`.
