@@ -3,7 +3,7 @@
  :order 2}
 ---
 
-Arrays are a fundemental datatype in Janet. Arrays are values that contain
+Arrays are a fundamental datatype in Janet. Arrays are values that contain
 a sequence of other values, indexed from 0. Arrays are also mutable, meaning
 that values can be added or removed in place. Many functions in the Janet core
 library will also create arrays, such as @code`map`, @code`filter`, and @code`interpose`.
@@ -47,21 +47,29 @@ arr # -> @[:one :two :three :four]
 
 ## Getting values
 
-Arrays are not much use without being able to get and set values
-inside them. To get values from an array, use the `get` function
-or call the array as a function with the index as an argument. You can
-also call the index as a function with the array as the first argument.
+Arrays are not of much use without being able to get and set values inside
+them. To get values from an array, use the `in` or `get` function.  `in`
+will require an index within bounds and will throw an error otherwise. `get`
+requires an index and an optional default value. If the index is out of
+bounds it will return `nil` or the given default value.
 
 @codeblock[janet](```
 (def arr @[:a :b :c :d])
+(in arr 1) # -> :b
 (get arr 1) # -> :b
-(arr 2) # -> :c
-(0 arr) # -> :a
-(arr 100) # -> nil
+(get arr 100) # -> nil
+(get arr 100 :default) # -> :default
 ```)
 
-Note that indexing outside of the array bounds will return nil. A non-integer
-key, however, will throw an error.
+Instead of `in` you can also use the array as a function with the index as an
+argument or call the index as a function with the array as the first argument.
+
+@codeblock[janet](```
+(arr 2) # -> :c
+(0 arr) # -> :a
+```)
+
+Note that a non-integer key will throw an error when using `in`.
 
 ## Setting values
 
