@@ -6,10 +6,10 @@
 
 ## Use Cases
 
-Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototying, dynamic systems, and other domains
-where lisp shines. Implemented in mostly standard C99, janet runs on Windows, Linux and macOS.
+Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototyping, dynamic systems, and other domains
+where Lisp shines. Implemented mostly in standard C99, Janet runs on Windows, Linux and macOS.
 The few features that are not standard C (dynamic library loading, compiler specific optimizations),
-are fairly straight forward. Janet can be easily ported to new platforms.
+are fairly straightforward. Janet can be easily ported to new platforms.
 
 ## Features
 
@@ -28,7 +28,7 @@ are fairly straight forward. Janet can be easily ported to new platforms.
     @li{Dynamically load C libraries}
     @li{Functional and imperative standard library}
     @li{Lexical scoping}
-    @li{Imperative programming as well as functional}
+    @li{Imperative and functional programming}
     @li{REPL}
     @li{Parsing Expression Grammars built in to the core library}
     @li{300+ functions and macros in the core library}
@@ -50,11 +50,11 @@ are fairly straight forward. Janet can be easily ported to new platforms.
 
 ## Usage
 
-A repl is launched when the binary is invoked with no arguments. Pass the -h flag
+A REPL is launched when the binary is invoked with no arguments. Pass the -h flag
 to display the usage information. Individual scripts can be run with @code`janet myscript.janet`
 
 If you are looking to explore, you can print a list of all available macros, functions, and constants
-by entering the command @code[all-bindings] into the repl.
+by entering the command @code[all-bindings] into the REPL.
 
 @codeblock(```
 $ janet
@@ -113,4 +113,4 @@ For editor support:
 ## Discussion
 
 Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
-Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}
+Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}.
