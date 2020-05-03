@@ -31,9 +31,9 @@ We could write such a macro like so:
 There are a couple of issues with this macro, but it will work for simple functions
 quite well.
 
-The first issue is that our defn2 macro can't define functions with multiple expressions
+The first issue is that our defn1 macro can't define functions with multiple expressions
 in the body. We can make the macro variadic, just like a function. Here is a second version
-of this macro.
+of this macro:
 
 @codeblock[janet](```
 (defmacro defn2 [name args & body]
@@ -76,7 +76,7 @@ There is an extra set of parentheses around the body of our function! We don't
 want to put the body @strong{inside} the form @code[(fn args ...)], we want to @strong{splice} it
 into the form. Luckily, janet has the @code[(splice x)] special form for this purpose,
 and a shorthand for it, the ; character.
-When combined with the unquote special, we get the desired output.
+When combined with the unquote special, we get the desired output:
 
 @codeblock[janet](```
 ~(def ,name (fn ,name ,args ,;body))
@@ -85,9 +85,8 @@ When combined with the unquote special, we get the desired output.
 
 ## Hygiene
 
-Sometime when we write macros, we must generate symbols for local bindings. Ignoring that
-it could be written as a function, consider
-the following macro
+Sometimes when we write macros, we must generate symbols for local bindings. Ignoring that
+this could be written as a function, consider the following macro:
 
 @codeblock[janet](```
 (defmacro max1
@@ -162,7 +161,7 @@ provides a macro @code[with-syms] to make this definition a bit terser.
       (if (> ,$x ,$y) ,$x ,$y))))
 ```)
 
-As you can see, macros are very powerful but also are prone to subtle bugs. You must remember that
+As you can see, macros are very powerful but are also prone to subtle bugs. You must remember that
 at their core, macros are just functions that output code, and the code that they return must
 work in many contexts! Many times a function will suffice and be more useful that a macro, as
 functions can be more easily passed around and used as first class values.
