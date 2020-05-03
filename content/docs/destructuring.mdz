@@ -4,7 +4,7 @@
 ---
 
 Janet uses the @code[get] function to retrieve values from inside data
-structures.  In many cases, however, you do not need the @code[get]
+structures. In many cases, however, you do not need the @code[get]
 function at all. Janet supports destructuring, which means both the
 @code[def] and @code[var] special forms can extract values from inside
 structures themselves.
@@ -24,8 +24,10 @@ structures themselves.
 (def
   {:name person-name
    :age person-age} person)
+(print person-name) # Prints "Bob Dylan"
+(print person-age)  # Prints 77
 ```)
 
-Destructuring will work in many places in Janet, including in @code`let` expressions, function
-parameters, and @code`var`. It is a useful shorthand for extracting values from data structures, and
+Destructuring works in many places in Janet, including @code`let` expressions, function
+parameters, and @code`var`. It is a useful shorthand for extracting values from data structures and
 is the recommended way to get values out of small structures.
