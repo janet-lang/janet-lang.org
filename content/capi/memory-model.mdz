@@ -7,13 +7,13 @@
 In order to write a functional and correct C extension to Janet, it
 is necessary to have a good understanding of Janet's memory model. Code
 that does not follow this model may leak memory, especially on errors (panics), and
-may trigger use after free bugs. It is the author's recomendation to test your
+may trigger use after free bugs. It is the author's recommendation to test your
 extension with a tool like @link[http://www.valgrind.org/]{valgrind} or an address sanitizer
 to ensure that your extension does not access memory in an invalid way.
 
 ## Janet's Garbage Collector
 
-Like most dyanmic languages, Janet has a garbage collector cleans up unused
+Like most dynamic languages, Janet has a garbage collector to clean up unused
 objects. The garbage collector cannot "see" objects allocated via @code`malloc`/@code`free`, only
 memory allocated through the function @code`janet_gcalloc`. It is recommended to not use this function
 at all, and instead use the Janet C API functions for creating Janet data structures that will
@@ -30,10 +30,10 @@ for convenience. Other re-entrant functions, like @code`janet_pcall`, @code`jane
 Janet keeps a global list of objects that are considered reachable. To determine
 all reachable objects, the garbage collector will traverse this list when needed.
 Any value not in this list, or not accessible via traversing this list, is considered
-garabge (with the exception of a few values, such as the current fiber). Notably, this
-means that values allocated in a C function, by default, considered garbage and will
+garbage (with the exception of a few values, such as the current fiber). Notably, this
+means that values allocated in a C function, by default, are considered garbage and will
 be collected at the next collection. Most C functions take advantage of the fact that the
-GC will not run until the interpreter is resumed. Sometimes, however, it is necessary to
+GC will not run until the interpreter is resumed. However, sometimes it is necessary to
 add a value to the root list so that a temporary value isn't collected before you are finished with it.
 
 Below is an example C function that adds a value to the root list to prevent the garbage collector
@@ -56,24 +56,24 @@ Janet make_some_table(int32_t argc, Janet *argv) {
 
 This does have some downsides, though. First, it may leak memory if the code between @code`janet_gcroot` and
 @code`janet_gcunroot` can panic. This isn't as bad as it sounds, as most if not all of the functions in the
-Janet API that can enter the interpretter cannot panic, or will swallow panics and return a signal code instead.
+Janet API that can enter the interpreter cannot panic, or will swallow panics and return a signal code instead.
 It is then up to the user to rethrow any panics caught after releasing (or unrooting) the values. Basically, if you use this
 method, you MUST clean up after yourself!
 
 This is also why it is recommended to use @code`janet_call` over @code`janet_pcall` if you can. Since @code`janet_call` suspends
 the garbage collector (including all nested calls to things like @code`janet_pcall`), there is not need modify the gcroot
-list on regular basis. It is also recommened to not use too much re-entrant code, as it will often suspend the garbage collector.
+list on regular basis. It is also recommended to not use too much re-entrant code, as it will often suspend the garbage collector.
 For example, if you run your entire application inside call to @code`janet_call`, the garbage collector will never run.
 
 ## The @code`argv` array
 
 Another gotcha in the memory model for the C API is the argument stack to native functions. This
-pointer to a seqeunce of Janet values is a pointer into the current fiber where the function arguments
+pointer to a sequence of Janet values is a pointer into the current fiber where the function arguments
 were pushed, and has a short lifespan. Any function that may cause the stack to resize invalidates this pointer, and
-the pointer should be considered invlaid after the function returns.
+the pointer should be considered invalid after the function returns.
 
 Functions that may cause the stack to resize are any function that modifies a fiber in the fiber API, as
-well as any function that invokes the interpretter. This means functions like @code`janet_call` will invalidate
+well as any function that invokes the interpreter. This means functions like @code`janet_call` will invalidate
 the @code`argv` pointer to your function!
 
 Example of buggy code:
@@ -88,7 +88,7 @@ Janet my_bad_cfunc(int32_t argc, Janet *argv) {
 ```
 
 This code is incorrect because it tries to access the @code`argv` pointer
-after @code`janet_call` has be called. This usual fix to this is to copy the argv
+after @code`janet_call` has been called. The usual fix to this is to copy the argv
 data into a new array that will not be resized if the stack is. A tuple can
 handily be used for this.
 
@@ -106,10 +106,10 @@ Janet my_bad_cfunc(int32_t argc, Janet *argv) {
 
 ## Scratch Memory
 
-Many algorithms will need to allocated memory, but cleaning up the memory can be difficult to
+Many algorithms will need to allocate memory, but cleaning up the memory can be difficult to
 correctly integrate with Janet's memory model, considering that many functions in Janet's API
-can panic, longjumping over your clean up code. Rather tan trying to prevent panics, it's much
-easier to accept that they can happen and allocate resources that be automatically clean up for your.
+can panic, longjumping over your clean up code. Rather than trying to prevent panics, it is much
+easier to accept that they can happen and allocate resources that can automatically be cleaned up for you.
 
 Janet brings the concept of scratch memory for this purpose, or memory that will certainly
 be cleaned up at the next collection. This memory can also be freed manually if no error is encountered, making
