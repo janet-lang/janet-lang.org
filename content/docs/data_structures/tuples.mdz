@@ -2,27 +2,48 @@
  :template "docpage.html"}
 ---
 
-Tuples are immutable, sequential types that are similar to arrays. They also
-represent both parenteized and bracket in source code (as opposed to traditional Lisps, where
-source forms are reprented by lists). Like all data structres, their
-contents can be retrieved with the @code`get` function, and their length retrieved with
-the @code`length` function.
+Tuples are immutable, sequential types that are similar to arrays. They are
+represented in the source code with either parenthesis or brackets surrounding
+their items. Note that Janet differs from traditional Lisps here, which commonly
+use the term "lists" to describe forms wrapped in parenthesis. Like all data
+structures, tuple contents can be retrieved with the @code`get` function and
+their length retrieved with the @code`length` function.
 
-There are many ways to create tuples, but the two most common are the
-@code`tuple` function and tuple literals.
+The two most common ways to create a tuple is using the literal form with
+bracket characters @code`[]` or calling the @code`tuple` function directly.
 
 @codeblock[janet]```
-# Use brackets to indicate a tuple constructor
-(def mytup [1 2 3 4])
-(def mytup2 (tuple 1 2 3 4))
+# Four ways to create the same tuple:
+
+(def mytup1 [1 2 3 4])       # using bracket literals
+(def mytup2 (tuple 1 2 3 4)) # using the (tuple) function
+
+# the quote prevents form evaluation and returns the tuple directly
 (def mytup3 '(1 2 3 4))
+
+# quasiquote works similarly to quote, but allows for some
+# forms to be evaluated inside via the , character
 (def mytup4 ~(1 2 3 ,(+ 2 2)))
+
+# these all result in the same tuple:
+(assert (= mytup1 mytup2 mytup3 mytup4)) # true
 ```
 
 ## As Table Keys
 
-Tuples can be conveniently used as table keys because two tuples with the same
-contents are considered equal.
+Tuples can be used as table keys because two tuples with the same
+contents are considered equal:
+
+@codeblock[janet]```
+(def points @{[0 0] "A"
+              [1 3] "B"
+              [7 5] "C"})
+
+(get points [0 0])       # "A"
+(get points (tuple 0 0)) # "A"
+(get points [1 3])       # "B"
+(get points [8 5])       # nil (ie: not found)
+```
 
 ## Sorting Tuples
 
@@ -53,19 +74,21 @@ to sort all sorts of data, or sort one array by the contents of another array.
 
 ## Bracketed Tuples
 
-There are actually two kinds of tuples, bracketed an non bracketed. We've seen early that bracket
-tuples are used to write a tuple literal constructor. The way the tuple is interpreted by the compiler
-is in fact one of the very few ways that bracketed tuples are different from normal tuples.
+Under the hood there are two kinds of tuples: bracketed and non-bracketed. We have seen above
+that bracket tuples are used to create a tuple constructor with @code`[]` characters (ie: a tuple literal).
+The way a tuple literal is interpreted by the compiler is one of the few ways in which bracket tuples
+and non-bracketed tuples differ:
 
-@ul{@li{Bracket tuples, when printed via @code`pp`, are printed with square brackets instead of parentheses}
-    @li{Bracket tuples are interpreter as a tuple constructor rather than a function call by the compiler.}
-    @li{When passed as an argument to @code`tuple/type`, bracket tuples will returns @code`:brackets` instead of @code`:parens`}}
+@ul{@li{Bracket tuples are interpreted as a tuple constructor rather than a function call by the compiler.}
+    @li{When printed via @code`pp`, bracket tuples are printed with square brackets instead of parentheses.}
+    @li{When passed as an argument to @code`tuple/type`, bracket tuples will returns @code`:brackets` instead of @code`:parens`.}}
 
-In al other ways, bracket tuples should behave identically to normal tuples. It is not recommended to use them for
-anything but macros and tuple constructors.
+In all other ways, bracket tuples behave identically to normal tuples. It is not
+recommended to use bracket tuples for anything outside of macros and tuple
+constructors (ie: tuple literals).
 
 ## More Functions
 
-Most functions in the core libary that work on arrays will also work
-on tuples, or have an analgous function for tuples. For all functions
-in the @code`tuple` module, see the @link[/doc.html#tuple][Core Library API].
+Most functions in the core library that work on arrays also work on tuples, or have
+an analogous function for tuples. See the @link[/doc.html#tuple][tuple section] in
+the Core Library API for a comprehensive list of functions that operate on tuples.
