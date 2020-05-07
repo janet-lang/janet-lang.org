@@ -158,7 +158,8 @@ that can make many grammars simpler.
     @tr{@td{@code`(backref tag ?tag)` } @td{ Duplicates the last capture with the tag @code`tag`. If no such capture exists then the match fails. }}
     @tr{@td{@code`(-> tag ?tag)` } @td{ Alias for @code`(backref tag)`. }}
     @tr{@td{@code`(error patt)` } @td{ Throws a Janet error if patt matches. The error thrown will be the last capture of patt, or a generic error if patt produces no captures. }}
-    @tr{@td{@code`(drop patt)` } @td{ Ignores (drops) all captures from patt. }}}
+    @tr{@td{@code`(drop patt)` } @td{ Ignores (drops) all captures from patt. }}
+    @tr{@td{@code`(lenprefix n patt)` } @td{ Matches n repetitions of a pattern, where n is supplied from other parsed input and is not a constant. }}}
 
 ## Grammars and Recursion
 
