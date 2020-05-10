@@ -130,6 +130,12 @@ extern "C" {
 /* Check emscripten */
 #ifdef __EMSCRIPTEN__
 #define JANET_NO_DYNAMIC_MODULES
+#define JANET_NO_PROCESSES
+#endif
+
+/* Check sun */
+#ifdef __sun
+#define JANET_NO_UTC_MKTIME
 #endif
 
 /* Define how global janet state is declared */
