@@ -1,7 +1,7 @@
 CWD:=$(shell pwd)$(pwd:sh)
 UNAME:=$(shell uname -s)$(uname -s:sh)
 JSETTINGS=PATH=$(CWD)/build/bin:$(PATH) JANET_PATH=$(CWD)/build JANET_HEADERPATH=$(CWD)/janet
-CFLAGS=-std=c99 -Wall -Wextra -O2 -fvisibility=hidden
+CFLAGS=-std=c99 -Wall -Wextra -Og -fvisibility=hidden
 CLIBS=-lm -lpthread
 LDFLAGS=-rdynamic
 ifeq ($(UNAME), Darwin)
@@ -20,8 +20,9 @@ build/bin/janet: janet/janet.c janet/janet.h janet/janetconf.h janet/shell.c
 	mkdir -p build/bin
 	mkdir -p build/lib
 	cp janet/jpm build/bin
-	cc $(CFLAGS) -fPIC -o build/bin/janet -Ijanet janet/janet.c janet/shell.c $(LDFLAGS) $(CLIBS)
+	cc $(CFLAGS) -fPIC -g -o build/bin/janet -Ijanet janet/janet.c janet/shell.c $(LDFLAGS) $(CLIBS)
 	$(JSETTINGS) build/bin/janet build/bin/jpm install mendoza
+	$(JSETTINGS) build/bin/janet build/bin/jpm install https://github.com/andrewchambers/janet-where-defined
 
 .PHONY: wasm
 wasm: static/js/janet.js
