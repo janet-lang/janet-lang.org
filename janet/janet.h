@@ -138,6 +138,11 @@ extern "C" {
 #define JANET_NO_UTC_MKTIME
 #endif
 
+/* Add some windows flags */
+#ifdef JANET_WINDOWS
+#define JANET_NO_REALPATH
+#endif
+
 /* Define how global janet state is declared */
 #ifdef JANET_SINGLE_THREADED
 #define JANET_THREAD_LOCAL
@@ -359,6 +364,26 @@ typedef struct JanetDictView JanetDictView;
 typedef struct JanetRange JanetRange;
 typedef struct JanetRNG JanetRNG;
 
+/* Basic types for all Janet Values */
+typedef enum JanetType {
+    JANET_NUMBER,
+    JANET_NIL,
+    JANET_BOOLEAN,
+    JANET_FIBER,
+    JANET_STRING,
+    JANET_SYMBOL,
+    JANET_KEYWORD,
+    JANET_ARRAY,
+    JANET_TUPLE,
+    JANET_TABLE,
+    JANET_STRUCT,
+    JANET_BUFFER,
+    JANET_FUNCTION,
+    JANET_CFUNCTION,
+    JANET_ABSTRACT,
+    JANET_POINTER
+} JanetType;
+
 /* Recursive type (Janet) */
 #ifdef JANET_NANBOX_64
 typedef union Janet Janet;
@@ -413,26 +438,6 @@ typedef const uint8_t *JanetKeyword;
 typedef const Janet *JanetTuple;
 typedef const JanetKV *JanetStruct;
 typedef void *JanetAbstract;
-
-/* Basic types for all Janet Values */
-typedef enum JanetType {
-    JANET_NUMBER,
-    JANET_NIL,
-    JANET_BOOLEAN,
-    JANET_FIBER,
-    JANET_STRING,
-    JANET_SYMBOL,
-    JANET_KEYWORD,
-    JANET_ARRAY,
-    JANET_TUPLE,
-    JANET_TABLE,
-    JANET_STRUCT,
-    JANET_BUFFER,
-    JANET_FUNCTION,
-    JANET_CFUNCTION,
-    JANET_ABSTRACT,
-    JANET_POINTER
-} JanetType;
 
 #define JANET_COUNT_TYPES (JANET_POINTER + 1)
 
