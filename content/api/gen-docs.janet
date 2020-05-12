@@ -1,5 +1,6 @@
 # Generate documentation
 
+(use where-defined)
 (import mendoza/markup-env :as mdz)
 
 (defn- remove-extra-spaces
@@ -31,6 +32,7 @@
          :ref ref
          :source-map sm
          :doc docstring} env-entry
+        csm (and (= (type val) :cfunction) (where-defined val))
         binding-type (cond
                        macro :macro
                        ref (string :var " (" (type (get ref 0)) ")")
@@ -40,11 +42,18 @@
     {:tag "div" "class" "binding"
      :content [{:tag "span" "class" "binding-sym" "id" key :content key} " "
                {:tag "span" "class" "binding-type" :content binding-type} " "
-               ;(if sm [{:tag "span" "class" "binding-type"
-                         :content {:tag "a"
-                                   "href" (string "https://github.com/janet-lang/janet/blob/"
-                                                  ver "/src/boot/boot.janet#L" (sm 1))
-                                   :content "source"}}] []) " "
+               ;(cond
+                  sm [{:tag "span" "class" "binding-type"
+                       :content {:tag "a"
+                                 "href" (string "https://github.com/janet-lang/janet/blob/"
+                                                 ver "/src/boot/boot.janet#L" (sm 1))
+                                   :content "source"}}]
+                  csm [{:tag "span" "class" "binding-type"
+                        :content {:tag "a"
+                                  "href" (string "https://github.com/janet-lang/janet/blob/"
+                                                  ver "/" (csm 0) "#L" (csm 1))
+                                  :content "source"}}]
+                  []) " "
                {:tag "pre" "class" "binding-text" :content (or docstring "")}
                ;(if example [{:tag "div" "class" "example-title" :content "EXAMPLES"}
                              {:tag "pre" "class" "mendoza-codeblock"
