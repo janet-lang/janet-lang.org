@@ -121,7 +121,7 @@ and only expands as needed. This means that setting this value to a lower value 
 Internally, Janet uses a technique called nanboxing to make each Janet value take less memory and allow the VM to be faster
 (although Janet mainly uses the technique for the first reason). This technique, however, is not valid C of any kind, and will
 only work correctly on some architectures. Many 64 bit architectures will have trouble with the nanboxing code, so it is by
-default turned of on 64 bit, non x86 architectures. However, one may also want to turn off nanboxing for other reasons, so
+default turned off on 64 bit, non x86 architectures. However, one may also want to turn off nanboxing for other reasons, so
 this flag is exposed for that reason. If an unsupported architecture mistakenly tries to use nanboxing, this could be
 considered a bug and the platform detection
 macros in @code`janet.h` should be updated to disable nanboxing for that platform.
