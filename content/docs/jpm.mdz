@@ -101,9 +101,6 @@ To create your own software in Janet, it is a good idea to understand what
 the @code`project.janet` file is and how it defines rules for building, testing, and
 installing software. The code in
 @code`project.janet` is normal Janet source code that is run in a special environment.
-Functions and macros from the @code`cook` library have been imported, making then
-easier and more natural to use. For example, @code`cook/declare-project` can be referenced
-as simply @code`declare-project`.
 
 A @code`project.janet` file is loaded by @code`jpm` and evaluated to create
 various recipes, or rules. For example, @code`declare-project` creates
