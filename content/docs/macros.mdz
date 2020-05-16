@@ -3,8 +3,10 @@
  :order 9}
 ---
 
-Janet supports macros like most lisps. A macro is like a function, but transforms
-the code itself rather than data. They let you extend the syntax of the language itself.
+Janet supports macros, routines that take code as input and returned transformed code
+as output. A macro is like a function, but transforms
+the code itself rather than data, so is more flexible in what it can do than a macro.
+They let you extend the syntax of the language itself.
 
 You have seen some macros already. The @code[let], @code[loop], and @code[defn] forms are macros. When the compiler
 sees a macro, it evaluates the macro and then compiles the result. We say the macro has been
