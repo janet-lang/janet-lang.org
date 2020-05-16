@@ -7,19 +7,19 @@
 A Janet program begins life as a text file, just a sequence of bytes like any
 other file on the system. Janet source files should be UTF-8 or ASCII encoded.
 Before Janet can compile or run the program, it must transform the source code
-into a data structure. Janet is a lisp, which means it is homoiconic - code is
-data - thus all the facilities in the language for manipulation of tuples,
-strings and tables are used for manipulation of the source code as well.
+into a data structure. Like Lisp, Janet source code is homoiconic - code is
+represented as Janet's core data structures - thus all the facilities in the
+language for manipulation of tuples, strings and tables can easily be used for
+manipulation of the source code as well.
 
 However, before Janet code transforms to a data structure, it must be read, or
-parsed, by the Janet parser. The parser, called the reader in many other lisps,
+parsed, by the Janet parser. The parser, often called the reader in Lisp,
 is a machine that takes in plain text and outputs data structures which can be
 used by both the compiler and macros. In Janet, it is a parser rather than a
 reader because there is no code execution at reading time. This approach is
-safer and more straightforward, and also lets Janet syntax serve as a robust
-data interchange format. While a parser is not extensible, in Janet the
+safer and more straightforward, and makes syntax higlighting, formatting, and other
+syntax analysis simpler. While a parser is not extensible, in Janet the
 philosophy is to extend the language via macros rather than reader macros.
-
 
 ## Nil, True and False
 
@@ -224,8 +224,9 @@ There are no multi-line comments.
 
 ## Shorthand
 
-Often called reader macros in other lisps, Janet provides several shorthand
-notations for some forms.
+Often called reader macros in other programming languages, Janet provides several shorthand
+notations for some forms. In Janet, this syntax is refered to a prefix forms and they are not
+extensible.
 
 ### @code`'x`
 

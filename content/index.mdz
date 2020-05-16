@@ -7,7 +7,7 @@
 ## Use Cases
 
 Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototyping, dynamic systems, and other domains
-where Lisp shines. Implemented mostly in standard C99, Janet runs on Windows, Linux and macOS.
+where dynamic languages shine. Implemented mostly in standard C99, Janet runs on Windows, Linux and macOS.
 The few features that are not standard C (dynamic library loading, compiler specific optimizations),
 are fairly straightforward. Janet can be easily ported to new platforms.
 
@@ -21,7 +21,7 @@ are fairly straightforward. Janet can be easily ported to new platforms.
     @li{Mutable and immutable arrays (array/tuple)}
     @li{Mutable and immutable hashtables (table/struct)}
     @li{Mutable and immutable strings (buffer/string)}
-    @li{Lisp Macros}
+    @li{Macros}
     @li{Byte code interpreter with an assembly interface, as well as bytecode verification}
     @li{Tailcall Optimization}
     @li{Direct interop with C via abstract types and C functions}

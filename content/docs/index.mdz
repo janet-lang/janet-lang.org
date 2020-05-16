@@ -139,9 +139,10 @@ in parentheses, forming a tuple. In Janet, parentheses and brackets are intercha
 brackets are used mostly when the resulting tuple is not a function call. The tuple
 above indicates that the function @code[print] is to be called with one argument, @code["Hello, world"].
 
-Like all lisps, all operations in Janet are in prefix notation; the name of the
+All operations in Janet are in prefix notation; the name of the
 operator is the first value in the tuple, and the arguments passed to it are
-in the rest of the tuple.
+in the rest of the tuple. While this may be familiar in function calls, in Janet this
+idea extends to arithmetic and all control forms.
 
 ## The Core Library
 

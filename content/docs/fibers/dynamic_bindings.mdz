@@ -2,7 +2,10 @@
  :template "docpage.html"}
 ---
 
-Many lisps, especially traditional lisps, support dynamically scoped bindings.
+There are situations where the programmer would like to thread a parameter through
+multiple function calls, without passing that argument to every function explicitly.
+This can make code more concise, easier to read, and easier to extend. Dynamic bindings
+are a mechanism that provide this in a safe and easy to use way.
 This is in contrast to lexically scoped bindings, which are usually superior to
 dynamically scoped bindings in terms of clarity, composability, and
 performance. However, dynamic scoping can be used to great effect for implicit
@@ -102,7 +105,7 @@ and unset context. Consider the following example code, written once with a glob
 This example is a bit verbose, but most importantly it fails to reset @code`*my-binding*` if an error is thrown. We could fix
 this with a @code`try`, but even that may have subtle bugs if the fiber yields but is never resumed. However, there is a better solution with dynamic bindings.
 
-### Using a Dynamic Binding 
+### Using a Dynamic Binding
 
 @codeblock[janet]```
 (defn may-error
@@ -119,4 +122,37 @@ this with a @code`try`, but even that may have subtle bugs if the fiber yields b
 This looks much cleaner, thanks to a macro, but is also correct in handling errors and any other signal that a fiber may emit.
 In general, prefer dynamic bindings over global vars. Global vars are mainly
 useful for scripts or truly program global configuration.
+
+## Advanced use cases
+
+Dynamic bindings work by a table associated with each fiber, called the fiber
+environment (often "env" for short). This table can be accessed by all functions
+in the fiber, so serves as place to store implicit context. During compilation, this
+table is also contains top level bindings available for use, and is what is returned
+from a @code`(require ...)` expression.
+
+With this in mind, there is no requirement that the first argument to @code`(setdyn name value)` and
+@code`(dyn name)` are keywords these functions can be used to quickly put values into and
+get values from the current environment. As such, these can be used for getting metadata for a given symbol.
+
+@codeblock[janet]```
+(dyn 'pp) # -> prints all metadata in the current environment for pp.
+(setdyn 'pp nil) # -> will not work, as 'pp is defined in the current environments prototype table.
+(setdyn 'pp @{}) # -> will define 'pp as nil.
+(def a 10)
+(setdyn 'a nil) # -> will remove the binding to 'a in the current environment.
+```
+
+Macros can modify this table to do things
+that are otherwise not possible in a macro.
+
+@codeblock[janet]```
+(defmacro make-defs
+  "Add many defs at the top level, binding them to random numbers determined at compile time."
+  [x]
+  (each name ['a 'b 'c 'd 'e 'f 'g]
+    (setdyn name @{:value (math/random)}))
+  nil)
+```
+
 
