@@ -89,7 +89,7 @@ Inside @code`project.janet`:
 ```
 
 Once you have @code`project.janet` written, run @code`jpm build` to build the module.
-If all goes well, cook should have built a file @code`build/mymod.so`. In your repl, you can now
+If all goes well, @code`jpm` should have built a file @code`build/mymod.so`. In your repl, you can now
 import your module and use it.
 
 @codeblock[janet]```
