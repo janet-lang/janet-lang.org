@@ -225,7 +225,7 @@ There are no multi-line comments.
 ## Shorthand
 
 Often called reader macros in other programming languages, Janet provides several shorthand
-notations for some forms. In Janet, this syntax is refered to a prefix forms and they are not
+notations for some forms. In Janet, this syntax is referred to as prefix forms and they are not
 extensible.
 
 ### @code`'x`

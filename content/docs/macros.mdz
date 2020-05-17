@@ -3,7 +3,7 @@
  :order 9}
 ---
 
-Janet supports macros, routines that take code as input and returned transformed code
+Janet supports macros, routines that take code as input and return transformed code
 as output. A macro is like a function, but transforms
 the code itself rather than data, so is more flexible in what it can do than a macro.
 They let you extend the syntax of the language itself.

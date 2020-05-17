@@ -56,7 +56,7 @@ If not in the global scope, the extra metadata will be ignored.
 
 ## @code`(var name meta... value)`
 
-Similar to def, but bindings set in this manner can be updated using set. In all other respects is the
+Similar to def, but bindings set in this manner can be updated using set. In all other respects it is the
 same as def.
 
 @codeblock[janet]```
