@@ -73,7 +73,7 @@ is a useful function.
 int janet_dostring(JanetTable *env, const char *str, const char *sourcePath, Janet *out);
 ```
 
-Similar to @code`janet_dobytes`, runs a null-terminated C string of Janet soruce code.
+Similar to @code`janet_dobytes`, runs a null-terminated C string of Janet source code.
 
 @codeblock[c]```
 JanetSignal janet_continue(JanetFiber *fiber, Janet in, Janet *out);
