@@ -5,8 +5,8 @@
 
 Janet supports macros, routines that take code as input and return transformed code
 as output. A macro is like a function, but transforms
-the code itself rather than data, so is more flexible in what it can do than a macro.
-They let you extend the syntax of the language itself.
+the code itself rather than data, so it is more flexible in what it can do than a function.
+Macros let you extend the syntax of the language itself.
 
 You have seen some macros already. The @code[let], @code[loop], and @code[defn] forms are macros. When the compiler
 sees a macro, it evaluates the macro and then compiles the result. We say the macro has been
@@ -60,7 +60,7 @@ a way that the macro output is more clear. The leading tilde @code[~] is shortha
 expressions inside it. The comma in front of @code[name] and @code[args] is an unquote, which
 allows us to put a value in the quasiquote. Without the unquote, the symbol \'name\'
 would be put in the returned tuple, and every function we defined
-would be called \'name\'!.
+would be called \'name\'!
 
 Similar to name, we must also unquote body. However, a normal unquote doesn't work.
 See what happens if we use a normal unquote for body as well.

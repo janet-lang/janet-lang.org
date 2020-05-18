@@ -134,7 +134,7 @@ The @code`each` macro is actually more flexible than the normal loop, as it is a
 data structures that are not like arrays. For example, @code`each` will iterate over the values in a
 table.
 
-## Iterating a Struct
+## Iterating a Dictionary
 
 In the previous example, we iterated over the values in an array. Another common
 use of looping in a Janet program is iterating over the keys or values in a table.
