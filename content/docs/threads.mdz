@@ -90,8 +90,7 @@ types like open files can still not be sent to threads via @code`thread/send` or
 All sends and receives can be blocking or non-blocking by providing an optional timeout value. A timeout
 of 0 makes @code`(thread/send to msg &opt timeout)` and @code`(thread/receive &opt timeout)` non-blocking, while a positive timeout value
 indicates a blocking send or receive that will resume the current thread by throwing an error after
-timeout seconds. Timeouts are limited to 30 days, with exception the using @code`math/inf` for a timeout means that
-a timeout will never occur.
+timeout seconds. Timeouts are limited to 30 days, with the exception that using @code`math/inf` for a timeout means that a timeout will never occur.
 
 @codeblock[janet]```
 (defn worker

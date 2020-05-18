@@ -127,13 +127,13 @@ useful for scripts or truly program global configuration.
 
 Dynamic bindings work by a table associated with each fiber, called the fiber
 environment (often "env" for short). This table can be accessed by all functions
-in the fiber, so serves as place to store implicit context. During compilation, this
-table is also contains top level bindings available for use, and is what is returned
+in the fiber, so it serves as a place to store implicit context. During compilation, this
+table also contains top level bindings available for use, and is what is returned
 from a @code`(require ...)` expression.
 
 With this in mind, there is no requirement that the first argument to @code`(setdyn name value)` and
-@code`(dyn name)` are keywords these functions can be used to quickly put values into and
-get values from the current environment. As such, these can be used for getting metadata for a given symbol.
+@code`(dyn name)` are keywords. These functions can be used to quickly put values into and
+get values from the current environment. As such, they can be used for getting metadata for a given symbol.
 
 @codeblock[janet]```
 (dyn 'pp) # -> prints all metadata in the current environment for pp.

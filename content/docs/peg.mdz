@@ -247,7 +247,7 @@ can be used to embed values in patterns.
 (peg/match find-cats "cat ct caat caaaaat cat") # -> @[0 7 12 20]
 ```
 
-We can also wrap a peg to turn it into a global substituion grammar with
+We can also wrap a peg to turn it into a global substitution grammar with
 the accumulate special @code`(%)`.
 
 @codeblock[janet]```
