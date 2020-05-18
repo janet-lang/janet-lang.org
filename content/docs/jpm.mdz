@@ -36,15 +36,27 @@ distributed or installed on the end user or developer's machine.
 Once you have the project to your machine, building the
 various artifacts should be pretty simple.
 
+#### Global install
+
 @codeblock```
 sudo jpm deps
 jpm build
 jpm test
-jpm install
+sudo jpm install
 ```
 
 \(On windows, sudo is not required. Use of sudo on posix systems depends if you installed
  janet to a directory owned by the root user.)
+
+#### Local install
+
+@codeblock```
+export JANET_PATH=/home/me/janet
+jpm deps
+jpm build
+jpm test
+jpm install
+```
 
 ### Dependencies
 
@@ -88,7 +100,7 @@ directory of the project and return a non-zero exit code if any fail.
 Finally, once we have built our software and tested that it works, we can
 install it on our system. For an executable, this means copying it to the
 @code`bin` directory, and for libraries it means copying them to the global
-syspath. You can optionally install into any directory if you don't wan to
+syspath. You can optionally install into any directory if you don't want to
 pollute your system or you don't have permission to write the directory
 where janet itself was installed.  You can specify the path to install modules
 to via the @code`--modpath` option, and the path to install binaries to with
