@@ -4,6 +4,12 @@
  :order 1}
  ---
 
+## Community
+
+Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
+Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}.
+For help, you can also checkout @link[https://janetdocs.com]{Janet Docs} for the Janet documentation with user provided examples.
+
 ## Use Cases
 
 Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototyping, dynamic systems, and other domains
@@ -83,10 +89,6 @@ Options are:
   -- : Stop handling options
 ```)
 
-## Projects using Janet
-
-@ul{@li{@link[https://joyframework.com/]{Joy Web Framework}}}
-
 ## Modules and Libraries
 
 See some auxiliary projects on @link[https://github.com/janet-lang]{GitHub}. Here is a short list of libraries
@@ -94,6 +96,7 @@ for Janet to help you get started with some interesting stuff. See @link[https:/
 for a more complete list. Packages in the listing can be installed via @code`jpm install pkg-name`.
 
 @ul{@li{@link[https://github.com/janet-lang/circlet]{Circlet} - An HTTP server for Janet}
+    @li{@link[https://joyframework.com/]{Joy Web Framework} - Framework for web development in Janet}
     @li{@link[https://github.com/janet-lang/json]{JSON} - A JSON parser and encoder}
     @li{@link[https://github.com/janet-lang/sqlite3]{SQLite3} - Bindings to SQLite}
     @li{@link[https://github.com/janet-lang/webview]{WebView} - Spawn a browser window for creating HTML+CSS UIs on any platform}
@@ -109,8 +112,3 @@ For editor support:
     @li{@link[https://github.com/ALSchwalm/janet-mode]{janet-mode} - Janet major mode for Emacs}
     @li{@link[https://github.com/velkyel/inf-janet]{inf-janet} - Inferior lisp Janet mode for Emacs}
     @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}}
-
-## Discussion
-
-Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
-Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}.
