@@ -106,7 +106,8 @@ for a more complete list. Packages in the listing can be installed via @code`jpm
 
 For editor support:
 
-@ul{@li{@link[https://github.com/janet-lang/janet.vim]{janet.vim} - Support for Janet syntax in Vim}
+@ul{@li{@link[https://github.com/Olical/conjure]{Conjure} - Interactive evaluation for Neovim (Clojure, Fennel, Janet)}
+    @li{@link[https://github.com/janet-lang/janet.vim]{janet.vim} - Support for Janet syntax in Vim}
     @li{@link[https://github.com/janet-lang/vscode-janet]{vscode-janet} - VSCode plugin for Janet}
     @li{@link[https://github.com/SerialDev/ijanet-mode]{ijanet-mode} - Emacs interactive Janet mode}
     @li{@link[https://github.com/ALSchwalm/janet-mode]{janet-mode} - Janet major mode for Emacs}
