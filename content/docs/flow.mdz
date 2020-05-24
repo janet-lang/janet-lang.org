@@ -3,11 +3,13 @@
  :order 5}
 ---
 
-Janet has only two built in primitives to change flow while inside a function. The first is the
-@code[if] special form, which behaves as expected in most functional languages. It takes two or three parameters:
-a condition, an expression to evaluate to if the condition is true (not nil or false),
-and an optional condition to evaluate to when the condition is nil or false. If the optional parameter
-is omitted, the if form evaluates to nil.
+Janet has only two built in primitives to change flow while inside a function.
+The first is the @code[if] special form, which behaves as expected in most
+functional languages. It takes two or three parameters: a condition, an
+expression to evaluate to if the condition is Boolean true (ie: not @code`nil`
+or @code`false`), and an optional condition to evaluate to when the condition is
+@code`nil` or @code`false`. If the optional parameter is omitted, the @code`if`
+form evaluates to @code`nil`.
 
 @codeblock[janet](```
 (if (> 4 3)
@@ -21,12 +23,14 @@ is omitted, the if form evaluates to nil.
   (print "Oy!")) # Will not print
 ```)
 
-The second primitive control flow construct is the while loop. The while behaves much the same
-as in many other programming languages, including C, Java, and Python. The while loop takes
-two or more parameters: the first is a condition (like in the `if` statement), that is checked before
-every iteration of the loop. If it is nil or false, the while loop ends and evaluates to nil. Otherwise,
-the rest of the parameters will be evaluated sequentially and then the program will return to the beginning
-of the loop.
+The second primitive control flow construct is the @code`while` loop. The
+@code`while` form behaves much the same as in many other programming languages,
+including C, Java, and Python. The @code`while` loop takes two or more
+parameters: the first is a condition (like in the @code`if` statement), that is
+checked before every iteration of the loop. If it is @code`nil` or @code`false`,
+the @code`while` loop ends and evaluates to @code`nil`. Otherwise, the rest of
+the parameters will be evaluated sequentially and then the program will return
+to the beginning of the loop.
 
 @codeblock[janet](```
 # Loop from 100 down to 1 and print each time
@@ -41,10 +45,14 @@ of the loop.
   (print "..."))
 ```)
 
-Besides these special forms, Janet has many macros for both conditional testing and looping
-that are much better for the majority of cases. For conditional testing, the @code[cond], @code[case], and
-@code[when] macros can be used to great effect. @code[cond] can be used for making an if-else chain, where using
-just raw if forms would result in many parentheses. @code[case] is similar to switch in C without fall-through, or case in some Lisps, though simpler.  @code[when] is like if, but returns nil if the condition evaluates to nil or false, similar to the macro of the same name in Common Lisp and Clojure. For looping, @code[loop], @code[seq], and @code[generate]
-implement janet's form of list comprehension, as in Python or Clojure.
-
-
+Besides these special forms, Janet has many macros for both conditional testing
+and looping that are much better for the majority of cases. For conditional
+testing, the @code[cond], @code[case], and @code[when] macros can be used to
+great effect. @code[cond] can be used for making an if-else chain, where using
+just raw @code`if` forms would result in many parentheses. @code[case] is
+similar to @code`switch` in C without fall-through, or @code`case` in some
+Lisps, though simpler.  @code[when] is like @code`if`, but returns @code`nil` if
+the condition evaluates to @code`nil` or @code`false`, similar to the macro of
+the same name in Common Lisp and Clojure. For looping, @code[loop], @code[seq],
+and @code[generate] implement Janet's form of list comprehension, as in Python
+or Clojure.
