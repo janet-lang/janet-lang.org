@@ -3,20 +3,20 @@
  :order 19}
 ---
 
-Most default installs of janet come with a build tool, @code`jpm`, that makes
+Most default installs of Janet come with a build tool, @code`jpm`, that makes
 managing dependencies, building Janet code, and distributing Janet applications
 easy. While @code`jpm` is not required by Janet, it is a very handy build tool
 that removes much of the boilerplate for creating new Janet projects, and is
-updated in step with Janet. @code`jpm` also works on Windows, linux, and macOS
+updated in step with Janet. @code`jpm` also works on Windows, Linux, and macOS
 so you don't need to write multiple build scripts and worry about platform
 quirks to make your scripts, binaries, and applications cross-platform.
 
 @p{
-@code`jpm`'s main functions are installing dependencies and building native janet
-    modules, but it is meant to be used for much of the life-cycle for janet
+@code`jpm`'s main functions are installing dependencies and building native Janet
+    modules, but it is meant to be used for much of the life-cycle for Janet
     projects. Since Janet code doesn't usually need to
     be compiled, you don't always need @code`jpm`, especially for scripts, but @code`jpm`
-    comes with some functionality that is difficult to duplicate, like compiling janet source code
+    comes with some functionality that is difficult to duplicate, like compiling Janet source code
     and all imported modules into a statically linked executable for distribution.
 }
 
@@ -29,9 +29,9 @@ correspond to a single git repository, and contain a single library. However, a
 project's @code`project.janet` file can contain build recipes for as many
 libraries, native extensions, and executables as it wants. Each of these
 recipes builds an artifact. Artifacts are the output files that will either be
-distributed or installed on the end user or developer's machine.
+distributed or installed on the end-user or developer's machine.
 
-## Building Projects with @code`jpm`
+## Building projects with @code`jpm`
 
 Once you have the project on your machine, building the
 various artifacts should be pretty simple.
@@ -45,8 +45,8 @@ jpm test
 sudo jpm install
 ```
 
-\(On windows, sudo is not required. Use of sudo on posix systems depends if you installed
- janet to a directory owned by the root user.)
+\(On Windows, @code`sudo` is not required. Use of @code`sudo` on POSIX systems
+depends on whether you installed @code`janet` to a directory owned by the root user.)
 
 #### Local install
 
@@ -61,7 +61,7 @@ jpm install
 ### Dependencies
 
 @p{
-@code`jpm deps` is a command that installs Janet libraries that this software depends on recursively.
+@code`jpm deps` is a command that installs Janet libraries that the project depends on recursively.
     It will automatically fetch, build, and install all required dependencies for you.
     As of August 2019, this only works with git, which you need to have installed on your
     machine to install dependencies. If you don't have git you are free to manually
@@ -72,18 +72,18 @@ jpm install
 
 Next, we use the @code`jpm build` command to build artifacts. All built
 artifacts will be created in the @code`build` subdirectory of the current
-project. Therefore, it is probably a good idea to exclude the build directory
+project. Therefore, it is probably a good idea to exclude the @code`build` directory
 from source control. For building executables and native modules, you will need
-to have a C compiler on your PATH where you ran @code`jpm build`. For posix
+to have a C compiler on your PATH where you run @code`jpm build`. For POSIX
 systems, the compiler is @code`cc`.
 
 If you make changes to the source code after building once, @code`jpm` will
 try to only rebuild what is needed on a rebuild. If this fails for any reason, you
 can delete the entire build directory with @code`jpm clean` to reset things.
 
-### Windows
+#### Windows
 
-For windows, the C compiler used by @code`jpm` is @code`cl.exe` , which is
+For Windows, the C compiler used by @code`jpm` is @code`cl.exe`, which is
 part of MSVC. You can get it with Visual Studio, or standalone with the C and C++
 Build Tools from Microsoft. You will then need to run @code`jpm build` in
 a Developer Command Prompt, or source @code`vcvars64.bat` in your shell to add
@@ -92,7 +92,7 @@ a Developer Command Prompt, or source @code`vcvars64.bat` in your shell to add
 ### Testing
 
 Once we have built our software, it is a good idea to test it to verify that it works
-on the current machine. @code`jpm test` will run all test scripts in the @code`test`
+on the current machine. @code`jpm test` will run all Janet scripts in the @code`test`
 directory of the project and return a non-zero exit code if any fail.
 
 ### Installing
@@ -101,8 +101,8 @@ Finally, once we have built our software and tested that it works, we can
 install it on our system. For an executable, this means copying it to the
 @code`bin` directory, and for libraries it means copying them to the global
 syspath. You can optionally install into any directory if you don't want to
-pollute your system or you don't have permission to write the directory
-where janet itself was installed.  You can specify the path to install modules
+pollute your system or you don't have permission to write to the directory
+where @code`janet` itself was installed.  You can specify the path to install modules
 to via the @code`--modpath` option, and the path to install binaries to with
 the @code`--binpath` option. These need to given before the subcommand
 @code`install`.
@@ -120,7 +120,7 @@ several rules, including @code`"install"`, @code`"build"`, @code`"clean"`, and
 @code`"test"`. These are a few of the rules that @code`jpm` expects @code`project.janet`
 to create when executed.
 
-### Declaring a Project
+### Declaring a project
 
 Use the @code`declare-project` as the first @code`declare-` macro
 towards the beginning of your @code`project.janet` file. You can also
@@ -136,12 +136,12 @@ dependencies on other Janet projects here.
   :dependencies ["https://github.com/janet-lang/json.git"])
 ```
 
-### Creating a Module
+### Creating a module
 
-A 100% janet library is the easiest kind of software to distribute in Janet.
-Since it does not need to be built, and installing it is simply moving
+A 100% Janet library is the easiest kind of software to distribute in Janet.
+Since it does not need to be built and since installing it means simply moving
 the files to a system directory, we only need to specify the files that
-comprise the library in @code`project.janet`
+comprise the library in @code`project.janet`.
 
 @codeblock[janet]```
 (declare-source
@@ -153,7 +153,7 @@ comprise the library in @code`project.janet`
 
 For information on writing modules, see @link[/docs/modules.html]{the modules docpage}.
 
-### Creating a Native Module
+### Creating a native module
 
 Once you have written your C code that defines your native module
 (see the @link[/capi/embedding.html]{embedding} page on how to do this), you
@@ -167,14 +167,14 @@ the native modules for you.
  :embedded ["extra-functions.janet"])
 ```
 
-This makes @code`jpm` create a native module called @code`mynative` when build
-is run, and the arguments should be pretty straight forward. The
+This makes @code`jpm` create a native module called @code`mynative` when @code`jpm build`
+is run, the arguments for which should be pretty straightforward. The
 @code`:embedded` argument is Janet source code that will be embedded as an array
 of bytes directly into the C source code. It is not recommended to use the
 @code`:embedded` argument, as one can simply create multiple artifacts, one for
 a pure C native module and one for Janet source code.
 
-### Creating an Executable
+### Creating an executable
 
 The declaration for an executable file is pretty simple.
 
@@ -187,12 +187,12 @@ The declaration for an executable file is pretty simple.
 @p{@code`jpm` is smart enough to figure out from the one entry file what libraries
     and other code your executable depends on, and bundles them into the final application
     for you. The final executable will be located at @code`build/myexec`, or @code`build\myexec.exe`
-    on windows.}
+    on Windows.}
 
 Also note that the entry of an executable file should look different than a
-normal janet script.  It should define a @code`main` function that can receive
+normal Janet script.  It should define a @code`main` function that can receive
 a variable number of parameters, the command-line arguments. It will be called
-as the entry to your executable.
+as the entry point to your executable.
 
 @codeblock[janet]```
 (import mylib1)
@@ -219,7 +219,7 @@ This has a number of benefits, but the largest is that we only include bytecode
 for the functions that our application uses. If we only use one function from
 a library of 1000 functions, our final executable will not include the bytecode
 for the other 999 functions (unless our one function references some of those
-        other functions, of course). This feature, called tree-shaking, only works
+other functions, of course). This feature, called tree-shaking, only works
 for Janet code. Native modules will be linked to the final executable statically
 in full if they are used at all. A native module is considered "used" if is imported
 at any time during @code`jpm build`. This may change, but it is currently the most reliable
