@@ -13,7 +13,7 @@ symbols will raise an error.
 (def d (- c 100))
 ```)
 
-Bindings created with def have lexical scoping. Also, bindings created with def are immutable; they
+Bindings created with @code`def` have lexical scoping. Additionally, bindings created with @code`def` are immutable; they
 cannot be changed after definition. For mutable bindings, like variables in other programming
 languages, use the @code[var] keyword. The assignment special form @code[set] can then be used to update
 a var.
@@ -28,7 +28,7 @@ a var.
 
 In the global scope, you can use the @code[:private] option on a def or var to prevent it from
 being exported to code that imports your current module. You can also add documentation to
-a function by passing a string to the def or var command.
+a function by passing a string to the @code`def` or @code`var` command.
 
 @codeblock[janet](```
 (def mydef :private "This will have private scope. My doc here." 123)
@@ -60,16 +60,16 @@ b # -> compile error: "unknown symbol \"b\""
 c # -> compile error: "unknown symbol \"c\""
 ```)
 
-Any attempt to reference the bindings from the do form after it has finished
-executing will fail. Also notice that defining @code[a] inside the do form did not
+Any attempt to reference the bindings from the @code`do` form after it has finished
+executing will fail. Also notice that defining @code[a] inside the @code`do` form did not
 overwrite the original definition of @code[a] for the global scope.
 
 The second way to create a scope is to create a closure.
 The @code[fn] special form also introduces a scope just like
 the @code[do] special form.
 
-There is another built in macro, @code[let], that does multiple defs at once, and then introduces a scope.
-@code[let] is a wrapper around a combination of defs and dos, and is the most "functional" way of
+There is another built in macro, @code[let], that does multiple @code`def`s at once, and then introduces a scope.
+@code[let] is a wrapper around a combination of @code`def`s and @code`do`s, and is the most "functional" way of
 creating bindings.
 
 @codeblock[janet](```
@@ -80,6 +80,5 @@ creating bindings.
 ```)
 
 The above is equivalent to the example using @code[do] and @code[def].
-This is the preferable form in most cases,
-but using do with multiple defs is fine as well.
-
+This is the preferable form in most cases. That said,
+using @code`do` with multiple @code`def`s is fine as well.
