@@ -6,11 +6,11 @@ There are situations where the programmer would like to thread a parameter throu
 multiple function calls, without passing that argument to every function explicitly.
 This can make code more concise, easier to read, and easier to extend. Dynamic bindings
 are a mechanism that provide this in a safe and easy to use way.
-This is in contrast to lexically scoped bindings, which are usually superior to
-dynamically scoped bindings in terms of clarity, composability, and
+This is in contrast to lexically-scoped bindings, which are usually superior to
+dynamically-scoped bindings in terms of clarity, composability, and
 performance. However, dynamic scoping can be used to great effect for implicit
 contexts, configuration, and testing. Janet supports dynamic scoping as of
-version 0.5.0 on a per fiber basis @html[&mdash;] each fiber contains an
+version 0.5.0 on a per-fiber basis @html[&mdash;] each fiber contains an
 environment table that can be queried for values. Using table prototypes, we
 can easily emulate dynamic scoping.
 
@@ -25,7 +25,7 @@ To set a dynamic binding, use the @code`setdyn` function.
 
 ## Getting a value
 
-To get a dynamically scoped binding, use the @code`dyn` function.
+To get a dynamically-scoped binding, use the @code`dyn` function.
 
 @codeblock[janet]```
 (dyn :my-var) # returns nil
@@ -33,7 +33,7 @@ To get a dynamically scoped binding, use the @code`dyn` function.
 (dyn :my-var) # returns 10
 ```
 
-## Creating a Dynamic Scope
+## Creating a dynamic scope
 
 Now that we can get and set dynamic bindings, we need to know how to create
 dynamic scopes themselves. To do this, we can create a new fiber and then use
@@ -66,7 +66,8 @@ print function @code`pp`.
 (pp [1 2 3]) # prints "[1 2 3]"
 ```
 
-This is verbose so the core library provides a macro, @code`with-dyns`, that makes it much clearer in the common case.
+This is verbose so the core library provides a macro, @code`with-dyns`, that
+makes it much clearer in the common case.
 
 @codeblock[janet]```
 (pp [1 2 3]) # prints "[1 2 3]"
@@ -76,14 +77,17 @@ This is verbose so the core library provides a macro, @code`with-dyns`, that mak
 (pp [1 2 3]) # prints "[1 2 3]"
 ```
 
-## When to Use Dynamic Bindings
+## When to use dynamic bindings
 
-Dynamic bindings should be used when you want to pass around an implicit, global context, especially when you want to
-automatically reset the context if an error is raised. Since a dynamic binding is tied to the current fiber, when a fiber
-exits the context is automatically unset. This is much easier and often more efficient than manually trying to detect errors
-and unset context. Consider the following example code, written once with a global var and once with a dynamic binding.
+Dynamic bindings should be used when you want to pass around an implicit, global
+context, especially when you want to automatically reset the context if an error
+is raised. Since a dynamic binding is tied to the current fiber, when a fiber
+exits the context is automatically unset. This is much easier and often more
+efficient than manually trying to detect errors and unset context. Consider the
+following example code, written once with a global var and once with a dynamic
+binding.
 
-### Using a Global Var
+### Using a global var
 
 @codeblock[janet]```
 (var *my-binding* 10)
@@ -102,10 +106,12 @@ and unset context. Consider the following example code, written once with a glob
  (set *my-binding* oldx))
 ```
 
-This example is a bit verbose, but most importantly it fails to reset @code`*my-binding*` if an error is thrown. We could fix
-this with a @code`try`, but even that may have subtle bugs if the fiber yields but is never resumed. However, there is a better solution with dynamic bindings.
+This example is a bit verbose, but most importantly it fails to reset
+@code`*my-binding*` if an error is thrown. We could fix this with a @code`try`,
+but even that may have subtle bugs if the fiber yields but is never resumed.
+However, there is a better solution with dynamic bindings.
 
-### Using a Dynamic Binding
+### Using a dynamic binding
 
 @codeblock[janet]```
 (defn may-error
@@ -119,9 +125,10 @@ this with a @code`try`, but even that may have subtle bugs if the fiber yields b
    (may-error)))
 ```
 
-This looks much cleaner, thanks to a macro, but is also correct in handling errors and any other signal that a fiber may emit.
-In general, prefer dynamic bindings over global vars. Global vars are mainly
-useful for scripts or truly program global configuration.
+This looks much cleaner, thanks to a macro, but is also correct in handling
+errors and any other signal that a fiber may emit.  In general, prefer dynamic
+bindings over global vars. Global vars are mainly useful for scripts or truly
+program-global configuration.
 
 ## Advanced use cases
 
@@ -131,9 +138,10 @@ in the fiber, so it serves as a place to store implicit context. During compilat
 table also contains top level bindings available for use, and is what is returned
 from a @code`(require ...)` expression.
 
-With this in mind, there is no requirement that the first argument to @code`(setdyn name value)` and
-@code`(dyn name)` are keywords. These functions can be used to quickly put values into and
-get values from the current environment. As such, they can be used for getting metadata for a given symbol.
+With this in mind, there is no requirement that the first argument to
+@code`(setdyn name value)` and @code`(dyn name)` be keywords. These functions
+can be used to quickly put values in and get values from the current
+environment. As such, these can be used for getting metadata for a given symbol.
 
 @codeblock[janet]```
 (dyn 'pp) # -> prints all metadata in the current environment for pp.
@@ -154,5 +162,3 @@ that are otherwise not possible in a macro.
     (setdyn name @{:value (math/random)}))
   nil)
 ```
-
-
