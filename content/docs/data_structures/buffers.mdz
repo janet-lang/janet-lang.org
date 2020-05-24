@@ -10,9 +10,9 @@ makes them very simple but versatile data structures. They can be
 used to accumulate small strings into a large string, to implement
 a bitset, or to represent sound or images in a program.
 
-## Creating Buffers
+## Creating buffers
 
-A Buffer literal looks like a string literal, but prefixed with an
+A buffer literal looks like a string literal, but prefixed with an
 at symbol @code[@].
 
 @codeblock[janet](```

@@ -8,13 +8,13 @@ a sequence of other values, indexed from 0. Arrays are also mutable, meaning
 that values can be added or removed in place. Many functions in the Janet core
 library will also create arrays, such as @code`map`, @code`filter`, and @code`interpose`.
 
-## Array Length
+## Array length
 
 The length of an array is the number of elements in the array. The last element
-of the array is therefor at index length - 1. To get the length of an array, use
+of the array is therefore at index length - 1. To get the length of an array, use
 the @code[(length x)] function.
 
-## Creating Arrays
+## Creating arrays
 
 There are many ways to create arrays in Janet, but the easiest is
 the array literal.
@@ -25,11 +25,10 @@ the array literal.
 ```)
 
 An array literal begins with an at symbol, @code[@], followed by
-square brackets or parentheses with 0 or more
-values inside.
+square brackets or parentheses with 0 or more values inside.
 
 To create an empty array that you will fill later,
-use the `(array/new capacity)` function. This creates an array with a reserved
+use the @code`(array/new capacity)` function. This creates an array with a reserved
 capacity for a number of elements. This means that appending
 elements to the array will not re-allocate the memory in the array. Using
 an empty array literal would not pre-allocate any space, so the resulting
@@ -48,10 +47,10 @@ arr # -> @[:one :two :three :four]
 ## Getting values
 
 Arrays are not of much use without being able to get and set values inside
-them. To get values from an array, use the `in` or `get` function.  `in`
-will require an index within bounds and will throw an error otherwise. `get`
+them. To get values from an array, use the @code`in` or @code`get` function. @code`in`
+will require an index within bounds and will throw an error otherwise. @code`get`
 requires an index and an optional default value. If the index is out of
-bounds it will return `nil` or the given default value.
+bounds it will return @code`nil` or the given default value.
 
 @codeblock[janet](```
 (def arr @[:a :b :c :d])
@@ -61,7 +60,7 @@ bounds it will return `nil` or the given default value.
 (get arr 100 :default) # -> :default
 ```)
 
-Instead of `in` you can also use the array as a function with the index as an
+Instead of @code`in` you can also use the array as a function with the index as an
 argument or call the index as a function with the array as the first argument.
 
 @codeblock[janet](```
@@ -69,15 +68,15 @@ argument or call the index as a function with the array as the first argument.
 (0 arr) # -> :a
 ```)
 
-Note that a non-integer key will throw an error when using `in`.
+Note that a non-integer key will throw an error when using @code`in`.
 
 ## Setting values
 
-To set values in an array, use either the `put` function or the `set` special.
-The put function is a function that allows putting values in any associative
+To set values in an array, use either the @code`put` function or the @code`set` special.
+The @code`put` function is a function that allows putting values in any associative
 data structure. This means that it can associate keys with values for
 arrays, tables, and buffers. If an index is given that is past the
-end of the array, the array is first padded with nils so that it is large
+end of the array, the array is first padded with @code`nil`s so that it is large
 enough to accommodate the new element.
 
 @codeblock[janet](```
@@ -89,12 +88,12 @@ enough to accommodate the new element.
 arr # -> @[:hi nil :hello]
 ```)
 
-The syntax for the set special is slightly different, as it is
+The syntax for the @code`set` special is slightly different, as it is
 meant to mirror the syntax for getting an element out of a data structure.
 Another difference is that while `put` returns the data structure, `set` evaluates
 to the new value.
 
-## Using an Array as a Stack
+## Using an array as a stack
 
 Arrays can also be used for implementing efficient stacks. The
 Janet core library provides three functions that can be used
@@ -111,18 +110,18 @@ Appends a value to the end of the array and returns the array.
 ### @code[(array/pop stack)]
 
 Removes the last value from stack and returns it. If the array
-is empty, returns nil.
+is empty, returns @code'nil`.
 
 ### @code[(array/peek stack)]
 
 Returns the last element in stack but does not remove it. Returns
-nil if the stack is empty.
+@code`nil` if the stack is empty.
 
 ## More array functions
 
 There are several more functions in the @code[array/] namespace
 and many more functions that create or manipulate arrays in the core
-library. A short list of the author's favorite are below:
+library. A short list of the author's favorites are below:
 
 @ul{@li{@code[array/slice]}
     @li{@code[map]}
