@@ -7,22 +7,24 @@
 
 ## Installation
 
-Install a stable version of janet from the @link[https://github.com/janet-lang/janet/releases][releases page].
-Janet is prebuilt for a few systems, but if you want to develop janet, run janet on a non-x86 system, or
-get the latest, you must build janet from source.
+Install a stable version of Janet from the @link[https://github.com/janet-lang/janet/releases][releases page].
+Janet is prebuilt for a few systems, but if you want to develop Janet, run Janet on a non-x86 system, or
+get the latest, you must build Janet from source.
 
 ### Windows
 
-The recommended way to install on windows is just to run the installer from the releases page.
-A scoop package was maintained previously, but ongoing support is being dropped.
+The recommended way to install on Windows is just to run the installer from the releases page.
+A Scoop package was maintained previously, but ongoing support is being dropped.
 
 If you want to use @code`jpm` to install native extensions, you will also need to install Visual Studio, ideally
-a recent release (2019 and 2017 should work well). Then, running @code`jpm` from the x64 Native Tools
-command prompt should work for a 64 bit build, and the Developer Command Prompt should work for 32 bit builds.
-Using these specific command prompts for jpm simply lets jpm use the Microsoft Compiler to compile native modules
+a recent release (2019 or 2017 should work well). Then, running @code`jpm` from the x64 Native Tools
+Command Prompt should work for a 64-bit build, and from the Developer Command Prompt should work for 32-bit builds.
+Using these specific command prompts for @code`jpm` simply lets @code`jpm` use the Microsoft compiler to compile native modules
 on install.
 
-### AUR
+### Linux
+
+#### Arch Linux
 
 You can install either the latest git verion or the latest stable version for Arch Linux
 from the Arch user repositories with @link[https://aur.archlinux.org/packages/janet-lang-git/][janet-lang-git] or @link[https://aur.archlinux.org/packages/janet-lang][janet-lang].
@@ -37,18 +39,19 @@ manager as @code[janet]. The latest version from git can be installed by adding 
 brew install janet
 ```)
 
-## Compiling and Running from Source
+## Compiling and running from source
 
 If you would like the latest version of Janet, are trying to run Janet on
 a platform that is not macOS or Windows, or would like to help develop
-Janet, you can build janet from source.
-Janet only uses Make and batch files to compile on Posix and windows
-respectively. To configure janet, edit the header file src/conf/janetconf.h
+Janet, you can build Janet from source.
+Janet only uses Make and batch files to compile on POSIX and Windows
+respectively. To configure Janet, edit the header file @code`src/conf/janetconf.h`
 before compilation.
 
 ### macOS and Unix-like
 
-On most platforms, use Make to build janet. The resulting binary will be in @code[build/janet].
+On most platforms, use Make to build Janet. The resulting files (including the
+@code`janet` binary) will be in the @code[build/] directory.
 
 @codeblock(```
 cd somewhere/my/projects/janet
@@ -56,12 +59,12 @@ make
 make test
 ```)
 
-After building, run @code[make install] to install the janet binary and libs.
-Will install in @code[/usr/local] by default, see the Makefile to customize.
+After building, run @code[make install] to install the @code`janet` binary and libraries.
+This will install in @code[/usr/local] by default, see the Makefile to customize.
 
 ### FreeBSD
 
-FreeBSD build instructions are the same as the unix-like build instuctions,
+FreeBSD build instructions are the same as the Unix-like build instuctions,
 but you need @code[gmake] and @code[gcc] to compile.
 
 @codeblock(```
@@ -74,38 +77,38 @@ gmake test CC=gcc
 
 @ol{@li{Install @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#][Visual Studio] or
     @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15#][Visual Studio Build Tools]}
-    @li{Run a Visual Studio Command Prompt (cl.exe and link.exe need to be on the PATH)}
-    @li{@code[cd] to the directory with janet}
-    @li{Run @code[build_win] to compile janet.}
+    @li{Run a Visual Studio Command Prompt (@code`cl.exe` and @code`link.exe` need to be on the PATH)}
+    @li{@code[cd] to the directory with Janet}
+    @li{Run @code[build_win] to compile Janet.}
     @li{Run @code[build_win test] to make sure everything is working.}}
 
 To install from source, first follow the steps above, then you will need to
 
 @ol{@li{Install, or otherwise add to your PATH, the @link[https://github.com/wixtoolset/wix3/releases]{WiX 3.11 Toolset}}
-    @li{Run a Visual Studio Command Prompt (cl.exe and link.exe need to be on the PATH)}
-    @li{@code[cd] to the directory with janet}
+    @li{Run a Visual Studio Command Prompt (@code`cl.exe` and @code`link.exe` need to be on the PATH)}
+    @li{@code[cd] to the directory with Janet}
     @li{Run @code[build_win dist]}
     @li{Then, lastly, execute the resulting @code[.msi] executable}}
 
 ### Emscripten
 
-To build janet for the web via @link[https://kripken.github.io/emscripten-site/][Emscripten], make sure you
-have @code[emcc] installed and on your path. On a linux or macOS system, use @code[make emscripten] to build
-@code[janet.js] and @code[janet.wasm] - both are needed to run janet in a browser or in node.
-The JavaScript build is what runs the repl on the main website,
+To build Janet for the web via @link[https://kripken.github.io/emscripten-site/][Emscripten], make sure you
+have @code[emcc] installed and on your path. On a Linux or macOS system, use @code[make emscripten] to build
+@code[janet.js] and @code[janet.wasm] - both are needed to run Janet in a browser or in Node.js.
+The JavaScript build is what runs the REPL on the main website,
 but really serves mainly as a proof of concept. Janet will run slower in a browser.
-Building with emscripten on windows is currently unsupported.
+Building with Emscripten on Windows is currently unsupported.
 
 ### Meson
 
-Janet also has a build file for @link[https://mesonbuild.com/][Meson], a cross platform build
+Janet also has a build file for @link[https://mesonbuild.com/][Meson], a cross-platform build
 system. This is not currently the main supported build system, but should work on any
-system that supports meson. Meson also provides much better IDE integration than Make or batch files.
+system that supports Meson. Meson also provides much better IDE integration than Make or batch files.
 
 ### Small builds
 
 If you want to cut down on the size of the final Janet binary or library, you need to omit features
-and build with @code`-Os`. With meson, this can look something like below:
+and build with @code`-Os`. With Meson, this can look something like below:
 
 @codeblock```
 git clone https://github.com/janet-lang/janet.git
@@ -122,7 +125,7 @@ ninja
 You can also do this with the Makefile by editing @code`CFLAGS`, and uncommenting some lines
 in @code`src/conf/janetconf.h`.
 
-## First Program
+## First program
 
 Following tradition, a simple Janet program will print "Hello, world!".
 
@@ -130,15 +133,15 @@ Following tradition, a simple Janet program will print "Hello, world!".
 
 Put the following code in a file named @code[hello.janet], and run @code[janet hello.janet].
 The words "Hello, world!" should be printed to the console, and then the program
-should immediately exit. You now have a working janet program!
+should immediately exit. You now have a working Janet program!
 
 Alternatively, run the program @code[janet] without any arguments to enter a REPL,
-or read eval print loop. This is a mode where Janet works like a calculator,
+or read-eval-print-loop. This is a mode where Janet works like a calculator,
 reading some input from the user, evaluating it, and printing out the result, all
 in an infinite loop. This is a useful mode for exploring or prototyping in Janet.
 
 This hello world program is about the simplest program one can write, and consists of only
-a few pieces of syntax. This first element is the @code[print] symbol. This is a function
+a few pieces of syntax. The first element is the @code[print] symbol. This is a function
 that simply prints its arguments to the console. The second argument is the
 string literal "Hello, world!", which is the one and only argument to the
 print function. Lastly, the @code[print] symbol and the string literal are wrapped
@@ -146,12 +149,12 @@ in parentheses, forming a tuple. In Janet, parentheses and brackets are intercha
 brackets are used mostly when the resulting tuple is not a function call. The tuple
 above indicates that the function @code[print] is to be called with one argument, @code["Hello, world"].
 
-All operations in Janet are in prefix notation; the name of the
+All operations in Janet are in prefix notation: the name of the
 operator is the first value in the tuple, and the arguments passed to it are
 in the rest of the tuple. While this may be familiar in function calls, in Janet this
 idea extends to arithmetic and all control forms.
 
-## The Core Library
+## The core library
 
 Janet has a built in core library of over 300 functions and macros at the time of writing.
 For efficient programming in Janet, it is good to be able to make use of many of these
@@ -166,5 +169,5 @@ To see a list of all global functions in the REPL, type the command
 
 @codeblock[janet](```(all-bindings)```)
 
-Which will print out every global binding in the janet REPL. You can also
-browse the @link[/doc.html][Core Library API on the website].
+Which will print out every global binding in the Janet REPL. You can also
+browse the @link[/doc.html][core library API] on the website.
