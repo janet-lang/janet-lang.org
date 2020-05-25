@@ -1,16 +1,16 @@
-{:title "Object Oriented Programming"
+{:title "Object-Oriented Programming"
  :template "docpage.html"
  :order 14}
 ---
 
 Although Janet is primarily a functional language, it has support for
-Object Oriented programming as well, where objects and classes are
-represented by tables. Object oriented programming can be very useful
+object-oriented programming as well, where objects and classes are
+represented by tables. Object-oriented programming can be very useful
 in domains that are less analytical and more about modeling, such as
 some simulations, GUIs, and game scripting. More specifically, Janet supports
-a form of Object Oriented programming via prototypical inheritance, which was pioneered in the
+a form of object-oriented programming via prototypical inheritance, which was pioneered in the
 @link[http://www.selflanguage.org/][Self] language and is used in languages like Lua
-and JavaScript. Janet's implementation of Object Oriented programming is
+and JavaScript. Janet's implementation of object-oriented programming is
 designed to be simple, terse, flexible, and efficient in that order of priority.
 
 Please see the @link[/docs/prototypes.html][prototypes section] for more information
@@ -88,11 +88,11 @@ would work for the first object @code`Car`, but @code`RedCar` could not inherit 
 (:say Car "hello!") # prints "Car says: hello!"
 ```
 
-## Abstract Types
+## Abstract types
 
 While tables make good objects, Janet also strives for good interoperation with C.
-Many C libraries expose pseudo Object Oriented interfaces to their libraries, so
-Janet allows adding methods to abstract types. The built in abstract type
+Many C libraries expose pseudo object-oriented interfaces to their libraries, so
+Janet allows methods to be added to abstract types. The built in abstract type
 @code`:core/file` can be manipulated with methods as well as the @code`file/` functions.
 
 @codeblock[janet]```
