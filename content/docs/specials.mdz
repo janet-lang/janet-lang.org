@@ -9,14 +9,14 @@ Tuples are used to represent function calls, macros,
 and special forms. Most functionality is exposed through functions, some
 through macros, and a minimal amount through special forms. Special forms
 are neither functions nor macros @html`&mdash;` they are used by the compiler to directly
-express a low level construct that can not be expressed through macros or functions.
+express a low-level construct that cannot be expressed through macros or functions.
 Special forms can be thought of as forming the real 'core' language of Janet. There are
 only 12 special forms in Janet.
 
 ## @code`(def name meta... value)`
 
 This special form binds a value to a symbol. The symbol can be substituted
-for the value in subsequent expressions for the same result. A binding made by def
+for the value in subsequent expressions for the same result. A binding made by @code`def`
 is a constant and cannot be updated. A symbol can be redefined to a new value, but previous
 uses of the binding will refer to the previous value of the binding.
 
@@ -26,8 +26,8 @@ uses of the binding will refer to the previous value of the binding.
 (print anumber) # prints 15
 ```
 
-Def can also take a tuple, array, table or struct to perform destructuring
-on the value. This allows us to do multiple assignments in one def.
+@p{@code`def` can also take a tuple, array, table or struct to perform destructuring
+on the value. This allows us to do multiple assignments in one @code`def`.}
 
 @codeblock[janet]```
 (def [a b c] (range 10))
@@ -40,8 +40,8 @@ on the value. This allows us to do multiple assignments in one def.
 (print y x) # prints hi3
 ```
 
-Def can also append metadata and a docstring to the symbol when in the global scope.
-If not in the global scope, the extra metadata will be ignored.
+@p{@code`def` can also append metadata and a docstring to the symbol when in the global scope.
+If not in the global scope, the extra metadata will be ignored.}
 
 @codeblock[janet]```
 (def mydef :private 3) # Adds the :private key to the metadata table.
@@ -56,8 +56,8 @@ If not in the global scope, the extra metadata will be ignored.
 
 ## @code`(var name meta... value)`
 
-Similar to def, but bindings set in this manner can be updated using set. In all other respects it is the
-same as def.
+Similar to @code`def`, but bindings set in this manner can be updated using set. In all other respects it is the
+same as @code`def`.
 
 @codeblock[janet]```
 (var a 1)
@@ -78,7 +78,7 @@ more easily be recursive. The argument list is a tuple of named parameters, and 
 is 0 or more forms. The function will evaluate to the last form in the body. The other forms
 will only be evaluated for side effects.
 
-Functions also introduce a new lexical scope, meaning the defs and vars inside a function
+Functions also introduce a new lexical scope, meaning the @code`def`s and @code`var`s inside a function
 body will not escape outside the body.
 
 @codeblock[janet]```
@@ -95,7 +95,8 @@ body will not escape outside the body.
 (fn [w x y z &] (tuple w w x x y y z z))
 ```
 
-For more information on functions, see @link[/docs/functions.html][/docs/functions.html].
+For more information on functions, see the @link[/docs/functions.html][Functions
+section].
 
 ## @code`(do body...)`
 
@@ -121,7 +122,7 @@ a
 
 Evaluates to the literal value of the first argument. The argument is not compiled
 and is simply used as a constant value in the compiled code. Preceding a form with a
-single quote is shorthand for `(quote expression)`.
+single quote is shorthand for @code`(quote expression)`.
 
 @codeblock[janet]```
 (quote 1) # evaluates to 1
@@ -137,13 +138,13 @@ single quote is shorthand for `(quote expression)`.
 Introduce a branching construct. The first form is the condition, the second
 form is the form to evaluate when the condition is true, and the optional
 third form is the form to evaluate when the condition is false. If no third
-form is provided it defaults to nil.
+form is provided it defaults to @code`nil`.
 
-The if special form will not evaluate the when-true or when-false forms unless
+The @code`if` special form will not evaluate the when-true or when-false forms unless
 it needs to - it is a lazy form, which is why it cannot be a function or macro.
 
-The condition is considered false only if it evaluates to nil or false - all other values
-are considered true.
+The condition is considered false only if it evaluates to @code`nil` or @code`false` - all other values
+are considered @code`true`.
 
 @codeblock[janet]```
 (if true 10) # evaluates to 10
@@ -156,16 +157,17 @@ are considered true.
 
 ## @code`(splice x)`
 
-The splice special form is an interesting form that allows putting an array or tuple
-into a form inline.
+The @code`splice` special form is an interesting form that allows an array or tuple
+to be put into another form inline.
 It only has an effect in two places - as an argument in a function call or literal
 constructor, or as the argument
 to the unquote form. Outside of these two settings, the splice special form simply evaluates
-directly to its argument x. The shorthand for splice is prefixing a form with a semicolon. The
-splice special form will also have no effect in the behavior of other special forms, except as an
+directly to its argument @code`x`. The shorthand for @code`splice` is prefixing a form with a semicolon. The
+@code`splice` special form has no effect on the behavior of other special forms, except as an
 argument to @code`unquote`.
 
-In the context of a function call, splice will insert @em{the contents} of x in the parameter list.
+In the context of a function call, @code`splice` will insert @em{the contents}
+of @code`x` in the parameter list.
 
 @codeblock[janet]```
 (+ 1 2 3) # evaluates to 6
@@ -185,17 +187,17 @@ In the context of a function call, splice will insert @em{the contents} of x in 
 (def ;[a 10]) # this will not work as def is a special form.
 ```
 
-Notice that this means we rarely will need the @code`apply` function, as the splice operator is more flexible.
+Notice that this means we rarely need the @code`apply` function, as the @code`splice` operator is more flexible.
 
-A splice form can also be used as the argument to an unquote form, where it will behave like
+A @code`splice` form can also be used as the argument to an @code`unquote` form, where it will behave like
 an @code`unquote-splicing` special in Common Lisp. Using the short form of both of these
 specials, this can be abbreviated @code`,;some-array-expression`.
 
 ## @code`(while condition body...)`
 
-The while special form compiles to a C-like while loop. The body of the form will be continuously evaluated
-until the condition is false or nil. Therefore, it is expected that the body will contain some side effects
-or the loop will go on forever. The while loop always evaluates to nil.
+The @code`while` special form compiles to a C-like @code`while` loop. The body of the form will be continuously evaluated
+until the condition is @code`false` or @code`nil`. Therefore, it is expected that the body will contain some side effects
+or the loop will go on forever. The @code`while` loop always evaluates to @code`nil`.
 
 @codeblock[janet]```
 (var i 0)
@@ -206,13 +208,13 @@ or the loop will go on forever. The while loop always evaluates to nil.
 
 ## @code`(break value?)`
 
-Break from a while loop or return early from a function. The break special form can only
-break from the inner-most loop. Since a while loop always returns nil, the optional `value`
-parameter has no effect when used in a while loop, but when returning from a function, the
-value parameter is the function's return value.
+Break from a @code`while` loop or return early from a function. The @code`break` special form can only
+break from the inner-most loop. Since a @code`while` loop always returns @code`nil`, the optional `value`
+parameter has no effect when used in a @code`while` loop, but when returning from a function, the
+@code`value` parameter is the function's return value.
 
 The @code`break` special form is most useful as a low level construct for macros. You should
-try to avoid using it in hand written code, although it can be very useful for handling
+try to avoid using it in handwritten code, although it can be very useful for handling
 early exit conditions without requiring deeply indented code (try the @code`cond` macro first, though).
 
 @codeblock[janet]```
@@ -247,9 +249,10 @@ early exit conditions without requiring deeply indented code (try the @code`cond
 
 ## @code`(set l-value r-value)`
 
-Update the value of a var l-value to a new value r-value. The set special form will then evaluate to r-value.
+Update the value of the var @code`l-value` with the new @code`r-value`. The
+@code`set` special form will then evaluate to @code`r-value`.
 
-The r-value can be any expression, and the l-value should be a bound var or a pair of
+The @code`r-value` can be any expression, and the @code`l-value` should be a bound var or a pair of
 a data structure and key. This allows set to behave like @code`setf` or @code`setq` in Common Lisp.
 
 @codeblock[janet]```
@@ -268,12 +271,12 @@ a data structure and key. This allows set to behave like @code`setf` or @code`se
 
 ## @code`(quasiquote x)`
 
-Similar to @code`(quote x)`, but allows for unquoting within x. This makes quasiquote useful for
+Similar to @code`(quote x)`, but allows for unquoting within @code`x`. This makes @code`quasiquote` useful for
 writing macros, as a macro definition often generates a lot of templated code with a
 few custom values. The shorthand for quasiquote is a leading tilde @code`~` before a form. With
-that form, @code`(unquote x)` will evaluate and insert x into the unquote form. The shorthand for
+that form, @code`(unquote x)` will evaluate and insert @code`x` into the @code`unquote` form. The shorthand for
 @code`(unquote x)` is @code`,x`.
 
 ## @code`(unquote x)`
 
-Unquote a form within a quasiquote. Outside of a quasiquote, unquote is invalid.
+Unquote a form within a @code`quasiquote`. Outside of a @code`quasiquote`, @code`unquote` is invalid.
