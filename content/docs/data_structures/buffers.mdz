@@ -3,17 +3,17 @@
  :order 2}
 ---
 
-Buffers in Janet are the mutable version of strings. Since strings
-in Janet can hold any sequence of bytes, including zeros, buffers share
-this same property and can be used to hold any arbitrary memory, which
-makes them very simple but versatile data structures. They can be
-used to accumulate small strings into a large string, to implement
-a bitset, or to represent sound or images in a program.
+Buffers in Janet are the mutable version of strings. Since strings in Janet can
+hold any sequence of bytes, including zeros, buffers share this same property
+and can be used to hold any arbitrary memory, which makes them very simple but
+versatile data structures. They can be used to accumulate small strings into a
+large string, to implement a bitset, or to represent sound or images in a
+program.
 
 ## Creating buffers
 
-A buffer literal looks like a string literal, but prefixed with an
-at symbol @code[@].
+A buffer literal looks like a string literal, but prefixed with an at symbol
+@code[@].
 
 @codeblock[janet](```
 (def my-buf @"This is a buffer.")
@@ -30,9 +30,9 @@ at symbol @code[@].
 
 ## Getting bytes from a buffer
 
-To get bytes from a buffer, use the @code[get] function that works
-on all built-in data structures. Bytes in a buffer are indexed from
-0, and each byte is considered an integer from 0 to 255.
+To get bytes from a buffer, use the @code[get] function that works on all
+built-in data structures. Bytes in a buffer are indexed from 0, and each byte is
+considered an integer from 0 to 255.
 
 @codeblock[janet](```
 (def buf @"abcd")
@@ -49,8 +49,8 @@ on all built-in data structures. Bytes in a buffer are indexed from
  (print b4))
 ```)
 
-One can also use the @code`string/slice` or @code`buffer/slice` functions
-to get sub strings (or sub buffers) from inside any sequence of bytes.
+One can also use the @code`string/slice` or @code`buffer/slice` functions to get
+sub strings (or sub buffers) from inside any sequence of bytes.
 
 @codeblock[janet](```
 (def buf @"abcdefg")
@@ -63,10 +63,10 @@ to get sub strings (or sub buffers) from inside any sequence of bytes.
 
 ## Setting bytes in a buffer
 
-Buffers are mutable, meaning we can add bytes or change bytes in
-an already created buffer. Use the @code`put` function to set individual
-bytes in a buffer at a given byte index. Buffers will be expanded
-as needed if an index out of the range provided.
+Buffers are mutable, meaning we can add bytes or change bytes in an already
+created buffer. Use the @code`put` function to set individual bytes in a buffer
+at a given byte index. Buffers will be expanded as needed if an index out of the
+range provided.
 
 @codeblock[janet](```
 (def b @"")
@@ -82,14 +82,14 @@ The @code[set] special form also works for setting bytes in a buffer.
 (set (b 10) 97) #-> @"a\0\0\0\0\0\0\0\0\0a"
 ```)
 
-The main difference between @code[set] and @code[put] is that @code[set] will return the byte
-value, whereas @code[put] will return the buffer value.
+The main difference between @code[set] and @code[put] is that @code[set] will
+return the byte value, whereas @code[put] will return the buffer value.
 
 ## Pushing bytes to a buffer
 
-There are also many functions to push data into a buffer. Since buffers
-are commonly used to accumulate data, there are a variety of functions
-for pushing data into a buffer.
+There are also many functions to push data into a buffer. Since buffers are
+commonly used to accumulate data, there are a variety of functions for pushing
+data into a buffer.
 
 @ul{@li{@code[buffer/push-byte]}
     @li{@code[buffer/push-word]}

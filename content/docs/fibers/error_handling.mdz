@@ -5,10 +5,11 @@
 
 One of the main uses of fibers is to encapsulate and handle errors. Janet offers
 no direct try/catch mechanism like some languages, and instead builds error
-handling on top of fibers. When a function throws an error, Janet creates a signal
-and throws that signal in the current fiber. The signal will be propagated up the
-chain of active fibers until it hits a fiber that is ready to handle the error signal.
-This fiber will trap the signal and return the error from the last call to @code`resume`.
+handling on top of fibers. When a function throws an error, Janet creates a
+signal and throws that signal in the current fiber. The signal will be
+propagated up the chain of active fibers until it hits a fiber that is ready to
+handle the error signal.  This fiber will trap the signal and return the error
+from the last call to @code`resume`.
 
 @codeblock[janet]```
 (defn block
@@ -31,8 +32,8 @@ This fiber will trap the signal and return the error from the last call to @code
  (print "value returned: " res))
 ```
 
-Janet also provides a simple macro @code`try` to make this
-a bit easier in the common case.
+Janet also provides a simple macro @code`try` to make this a bit easier in the
+common case.
 
 @codeblock[janet]```
 (try

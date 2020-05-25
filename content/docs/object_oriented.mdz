@@ -4,17 +4,17 @@
 ---
 
 Although Janet is primarily a functional language, it has support for
-object-oriented programming as well, where objects and classes are
-represented by tables. Object-oriented programming can be very useful
-in domains that are less analytical and more about modeling, such as
-some simulations, GUIs, and game scripting. More specifically, Janet supports
-a form of object-oriented programming via prototypical inheritance, which was pioneered in the
-@link[http://www.selflanguage.org/][Self] language and is used in languages like Lua
-and JavaScript. Janet's implementation of object-oriented programming is
+object-oriented programming as well, where objects and classes are represented
+by tables. Object-oriented programming can be very useful in domains that are
+less analytical and more about modeling, such as some simulations, GUIs, and
+game scripting. More specifically, Janet supports a form of object-oriented
+programming via prototypical inheritance, which was pioneered in the
+@link[http://www.selflanguage.org/][Self] language and is used in languages like
+Lua and JavaScript. Janet's implementation of object-oriented programming is
 designed to be simple, terse, flexible, and efficient in that order of priority.
 
-Please see the @link[/docs/prototypes.html][prototypes section] for more information
-on table prototypes.
+Please see the @link[/docs/prototypes.html][prototypes section] for more
+information on table prototypes.
 
 For example:
 
@@ -46,8 +46,8 @@ when it is not used in the function body.
 
 ## Factory functions
 
-Rather than constructors, creating objects in Janet can usually be done with
-a factory function. One can wrap the boilerplate of initializing fields and
+Rather than constructors, creating objects in Janet can usually be done with a
+factory function. One can wrap the boilerplate of initializing fields and
 setting the table prototype using a single function to create a nice interface.
 
 @codeblock[janet]```
@@ -64,15 +64,16 @@ setting the table prototype using a single function to create a nice interface.
 (c3 :serial-number) # 0.783099
 ```
 
-One could also define a set of macros for creating objects with useful factory functions, methods, and
-properties. The core library does not currently provide such functionality, as it should be fairly simple
-to customize.
+One could also define a set of macros for creating objects with useful factory
+functions, methods, and properties. The core library does not currently provide
+such functionality, as it should be fairly simple to customize.
 
 ## Structs
 
-In addition to tables, Structs may also be used as objects. Structs are of limited use, however, because
-they do not have prototypes. This means that they cannot implement any form of inheritance. The above example
-would work for the first object @code`Car`, but @code`RedCar` could not inherit from @code`Car`.
+In addition to tables, Structs may also be used as objects. Structs are of
+limited use, however, because they do not have prototypes. This means that they
+cannot implement any form of inheritance. The above example would work for the
+first object @code`Car`, but @code`RedCar` could not inherit from @code`Car`.
 
 @codeblock[janet]```
 # Create a new struct object called Car with two methods, :say and :honk.
@@ -90,10 +91,11 @@ would work for the first object @code`Car`, but @code`RedCar` could not inherit 
 
 ## Abstract types
 
-While tables make good objects, Janet also strives for good interoperation with C.
-Many C libraries expose pseudo object-oriented interfaces to their libraries, so
-Janet allows methods to be added to abstract types. The built in abstract type
-@code`:core/file` can be manipulated with methods as well as the @code`file/` functions.
+While tables make good objects, Janet also strives for good interoperation with
+C.  Many C libraries expose pseudo object-oriented interfaces to their
+libraries, so Janet allows methods to be added to abstract types. The built in
+abstract type @code`:core/file` can be manipulated with methods as well as the
+@code`file/` functions.
 
 @codeblock[janet]```
 (file/read stdin :line)

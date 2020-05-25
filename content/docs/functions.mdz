@@ -3,10 +3,10 @@
  :order 6}
 ---
 
-Janet is a functional language - that means that one of the basic building blocks of your
-program will be defining functions (the other is using data structures). Because Janet
-is a Lisp-like language, functions are values just like numbers or strings - they can be passed around and
-created as needed.
+Janet is a functional language - that means that one of the basic building
+blocks of your program will be defining functions (the other is using data
+structures). Because Janet is a Lisp-like language, functions are values just
+like numbers or strings - they can be passed around and created as needed.
 
 Functions can be defined with the @code[defn] macro, like so:
 
@@ -18,24 +18,26 @@ Functions can be defined with the @code[defn] macro, like so:
  (* base height 0.5))
 ```)
 
-A function defined with @code[defn] consists of a name, a number of optional flags for @code`def`, and
-finally a function body. The example above is named triangle-area and takes two parameters named
-base and height. The body of the function will print a message and then evaluate to the area of the triangle.
+A function defined with @code[defn] consists of a name, a number of optional
+flags for @code`def`, and finally a function body. The example above is named
+triangle-area and takes two parameters named base and height. The body of the
+function will print a message and then evaluate to the area of the triangle.
 
-Once a function like the above one is defined, the programmer can use the @code[triangle-area]
-function just like any other, say @code[print] or @code[+].
+Once a function like the above one is defined, the programmer can use the
+@code[triangle-area] function just like any other, say @code[print] or @code[+].
 
 @codeblock[janet](```
 # Prints "calculating area of a triangle..." and then "25"
 (print (triangle-area 5 10))
 ```)
 
-Note that when nesting function calls in other function calls like above (a call to @code`triangle-area` is
-nested inside a call to @code`print`), the inner function calls are evaluated first. Additionally, arguments to
-a function call are evaluated in order, from first argument to last argument).
+Note that when nesting function calls in other function calls like above (a call
+to @code`triangle-area` is nested inside a call to @code`print`), the inner
+function calls are evaluated first. Additionally, arguments to a function call
+are evaluated in order, from first argument to last argument).
 
-Because functions are first-class values like numbers or strings, they can be passed
-as arguments to other functions as well.
+Because functions are first-class values like numbers or strings, they can be
+passed as arguments to other functions as well.
 
 @codeblock[janet](```
 (print triangle-area)
@@ -43,8 +45,8 @@ as arguments to other functions as well.
 
 This prints the location in memory of the function @code`triangle-area`.
 
-Functions don't need to have names. The @code[fn] keyword can be used to introduce function
-literals without binding them to a symbol.
+Functions don't need to have names. The @code[fn] keyword can be used to
+introduce function literals without binding them to a symbol.
 
 @codeblock[janet](```
 # Evaluates to 40
@@ -58,13 +60,14 @@ literals without binding them to a symbol.
 ((fn [x &] x) 1 2)
 ```)
 
-The first expression creates an anonymous function that adds twice
-the first argument to the second, and then calls that function with arguments 10 and 20.
+The first expression creates an anonymous function that adds twice the first
+argument to the second, and then calls that function with arguments 10 and 20.
 This will return (10 + 10 + 20) = 40.
 
-There is a common macro @code[defn] that can be used for creating functions and immediately binding
-them to a name. @code[defn] works as expected at both the top level and inside another form. There is also
-the corresponding macro @code`defmacro` that does the same kind of wrapping for macros.
+There is a common macro @code[defn] that can be used for creating functions and
+immediately binding them to a name. @code[defn] works as expected at both the
+top level and inside another form. There is also the corresponding macro
+@code`defmacro` that does the same kind of wrapping for macros.
 
 @codeblock[janet]```
 (defn myfun [x y]
@@ -77,18 +80,17 @@ the corresponding macro @code`defmacro` that does the same kind of wrapping for 
 (myfun 3 4) # -> 10
 ```
 
-Janet has many macros provided for you (and you can write your own).
-Macros are just functions that take your source code
-and transform it into some other source code, usually automating some repetitive pattern for you.
+Janet has many macros provided for you (and you can write your own).  Macros are
+just functions that take your source code and transform it into some other
+source code, usually automating some repetitive pattern for you.
 
 ## Optional arguments
 
-Most Janet functions will raise an error at runtime
-if not passed exactly the right number of arguments.
-Sometimes, you want to define a function with optional arguments, where the arguments
-take a default value if not supplied by the caller. Janet has support for this via
-the @code`&opt` symbol in parameter lists, where all parameters after @code`&opt` are
-@code`nil` if not supplied.
+Most Janet functions will raise an error at runtime if not passed exactly the
+right number of arguments.  Sometimes, you want to define a function with
+optional arguments, where the arguments take a default value if not supplied by
+the caller. Janet has support for this via the @code`&opt` symbol in parameter
+lists, where all parameters after @code`&opt` are @code`nil` if not supplied.
 
 @codeblock[janet]```
 (defn my-opt-function
@@ -100,15 +102,17 @@ the @code`&opt` symbol in parameter lists, where all parameters after @code`&opt
  (+ a b c d e f))
 ```
 
-The @code`(default)` macro is a useful macro for setting default values for parameters. If a parameter
-is @code`nil`, @code`(default)` will redefine it to a default value.
+The @code`(default)` macro is a useful macro for setting default values for
+parameters. If a parameter is @code`nil`, @code`(default)` will redefine it to a
+default value.
 
 ## Variadic functions
 
-Janet also provides first-class support for variadic functions. Variadic functions can take any number
-of parameters, and gather them up into a tuple. To define a variadic function, use the @code`&` symbol
-as the second to last item of the parameter list. Parameters defined before the last variadic argument
-are not optional, unless specified as so with the @code`&opt` symbol.
+Janet also provides first-class support for variadic functions. Variadic
+functions can take any number of parameters, and gather them up into a tuple. To
+define a variadic function, use the @code`&` symbol as the second to last item
+of the parameter list. Parameters defined before the last variadic argument are
+not optional, unless specified as so with the @code`&opt` symbol.
 
 @codeblock[janet]```
 (defn my-adder
@@ -124,10 +128,11 @@ are not optional, unless specified as so with the @code`&opt` symbol.
 
 ## Ignoring extra arguments
 
-Sometimes you may want to have a function that can take a number of extra arguments but not
-use them. This happens because a function may be part of an interface, but the function itself
-doesn't need those arguments. You can write a function that will simply drop extra parameters
-by adding @code`&` as the last parameter in the function.
+Sometimes you may want to have a function that can take a number of extra
+arguments but not use them. This happens because a function may be part of an
+interface, but the function itself doesn't need those arguments. You can write a
+function that will simply drop extra parameters by adding @code`&` as the last
+parameter in the function.
 
 @codeblock[janet]```
 (defn ignore-extra
@@ -139,11 +144,11 @@ by adding @code`&` as the last parameter in the function.
 
 ## Keyword-style arguments
 
-Sometimes, you want a function to have many arguments, and calling
-such a function can get confusing without naming the arguments in the call.
-One solution to this problem is passing a table or struct with all of the
-arguments you want to use. This is in general a good approach, as now your
-original arguments can be identified by the keys in the struct.
+Sometimes, you want a function to have many arguments, and calling such a
+function can get confusing without naming the arguments in the call.  One
+solution to this problem is passing a table or struct with all of the arguments
+you want to use. This is in general a good approach, as now your original
+arguments can be identified by the keys in the struct.
 
 @codeblock[janet]```
 (defn make-recipe
@@ -195,9 +200,10 @@ We can solve this first problem by using destructuring in the argument.
   :vanilla-extract 0.5})
 ```
 
-The docstring of the improved function will contain a list of arguments that our function takes.
-To fix the second issue, we can use the &keys symbol in a function parameter list to automatically
-create our big argument struct for use on invocation.
+The docstring of the improved function will contain a list of arguments that our
+function takes.  To fix the second issue, we can use the &keys symbol in a
+function parameter list to automatically create our big argument struct for use
+on invocation.
 
 @codeblock[janet]```
 (defn make-recipe-3
@@ -222,16 +228,19 @@ create our big argument struct for use on invocation.
   :vanilla-extract 0.5)
 ```
 
-Usage of this last variant looks cleaner than the previous two recipe-making functions, but
-there is a caveat. Having all of the arguments packaged as a struct is often useful, as the
-struct can be passed around and threaded through an application efficiently. Functions that
-require many arguments often pass those arguments to subroutines, so in practice this issue is quite
-common. The @code`&keys` syntax
-is therefore most useful where terseness and visual clarity is more important.
+Usage of this last variant looks cleaner than the previous two recipe-making
+functions, but there is a caveat. Having all of the arguments packaged as a
+struct is often useful, as the struct can be passed around and threaded through
+an application efficiently. Functions that require many arguments often pass
+those arguments to subroutines, so in practice this issue is quite common. The
+@code`&keys` syntax is therefore most useful where terseness and visual clarity
+is more important.
 
-It is not difficult to convert between the two calling styles, if need be. To pass a struct to a function that expects @code`&keys`-style arguments, the @code`kvs` function works well. To convert
-arguments in the other direction, from @code`&keys`-style to a single struct argument, is trivial -
-just wrap your arguments in curly brackets!
+It is not difficult to convert between the two calling styles, if need be. To
+pass a struct to a function that expects @code`&keys`-style arguments, the
+@code`kvs` function works well. To convert arguments in the other direction,
+from @code`&keys`-style to a single struct argument, is trivial - just wrap your
+arguments in curly brackets!
 
 @codeblock[janet]```
 (def args

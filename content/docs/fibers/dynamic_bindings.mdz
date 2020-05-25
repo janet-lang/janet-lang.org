@@ -2,17 +2,17 @@
  :template "docpage.html"}
 ---
 
-There are situations where the programmer would like to thread a parameter through
-multiple function calls, without passing that argument to every function explicitly.
-This can make code more concise, easier to read, and easier to extend. Dynamic bindings
-are a mechanism that provide this in a safe and easy to use way.
-This is in contrast to lexically-scoped bindings, which are usually superior to
-dynamically-scoped bindings in terms of clarity, composability, and
+There are situations where the programmer would like to thread a parameter
+through multiple function calls, without passing that argument to every function
+explicitly.  This can make code more concise, easier to read, and easier to
+extend. Dynamic bindings are a mechanism that provide this in a safe and easy to
+use way.  This is in contrast to lexically-scoped bindings, which are usually
+superior to dynamically-scoped bindings in terms of clarity, composability, and
 performance. However, dynamic scoping can be used to great effect for implicit
 contexts, configuration, and testing. Janet supports dynamic scoping as of
 version 0.5.0 on a per-fiber basis @html[&mdash;] each fiber contains an
-environment table that can be queried for values. Using table prototypes, we
-can easily emulate dynamic scoping.
+environment table that can be queried for values. Using table prototypes, we can
+easily emulate dynamic scoping.
 
 ## Setting a value
 
@@ -133,10 +133,10 @@ program-global configuration.
 ## Advanced use cases
 
 Dynamic bindings work by a table associated with each fiber, called the fiber
-environment (often "env" for short). This table can be accessed by all functions
-in the fiber, so it serves as a place to store implicit context. During compilation, this
-table also contains top level bindings available for use, and is what is returned
-from a @code`(require ...)` expression.
+environment (often "env" for short). This table can be accessed by all
+functions in the fiber, so it serves as place to store implicit context. During
+compilation, this table also contains top-level bindings available for use, and
+is what is returned from a @code`(require ...)` expression.
 
 With this in mind, there is no requirement that the first argument to
 @code`(setdyn name value)` and @code`(dyn name)` be keywords. These functions
@@ -151,8 +151,8 @@ environment. As such, these can be used for getting metadata for a given symbol.
 (setdyn 'a nil) # -> will remove the binding to 'a in the current environment.
 ```
 
-Macros can modify this table to do things
-that are otherwise not possible in a macro.
+Macros can modify this table to do things that are otherwise not possible in a
+macro.
 
 @codeblock[janet]```
 (defmacro make-defs

@@ -3,10 +3,10 @@
  :order 16}
 ---
 
-To support basic generic programming, Janet tables support a prototype
-table. A prototype table contains default values for a table if certain keys
-are not found in the original table. This allows many similar tables to share
-contents without duplicating memory.
+To support basic generic programming, Janet tables support a prototype table. A
+prototype table contains default values for a table if certain keys are not
+found in the original table. This allows many similar tables to share contents
+without duplicating memory.
 
 @codeblock[janet]```
 # Simple Object Oriented behavior in Janet
@@ -25,19 +25,24 @@ contents without duplicating memory.
 (:behave thing2 :b) # prints "behaving 2 :b"
 ```
 
-Looking up a value in a table with a prototype can be summed up with the following algorithm.
+Looking up a value in a table with a prototype can be summed up with the
+following algorithm.
 
 @ol{@li{@code`(get my-table my-key)` is called.}
-    @li{@code`my-table` is checked for the key @code`my-key`. If there is a value for the key, it is returned.}
-    @li{If there is a prototype table for @code`my-table`, set `my-table` = `my-table's prototype` and go to 2. Otherwise go to 4.}
+    @li{@code`my-table` is checked for the key @code`my-key`. If there is a value
+         for the key, it is returned.}
+    @li{If there is a prototype table for @code`my-table`, set @code`my-table` =
+        @code`my-table's prototype` and go to 2. Otherwise go to 4.}
     @li{Return @code`nil` as the key was not found.}}
 
-Janet will check up to about a 1000 prototypes recursively by default before giving up and returning @code`nil`. This
-is to prevent an infinite loop. This value can be changed by adjusting the @code`JANET_RECURSION_GUARD` value
-in @code`janet.h`.
+Janet will check up to about a 1000 prototypes recursively by default before
+giving up and returning @code`nil`. This is to prevent an infinite loop. This
+value can be changed by adjusting the @code`JANET_RECURSION_GUARD` value in
+@code`janet.h`.
 
-Note that Janet prototypes are not as expressive as metatables in Lua and many other languages.
-This is by design, as adding Lua- or Python-like capabilities would not be technically difficult.
-Users should prefer plain data and functions that operate on them rather than mutable objects
-with methods. However, some object-oriented capabilities are useful in Janet for
-systems that require extra flexibility.
+Note that Janet prototypes are not as expressive as metatables in Lua and many
+other languages.  This is by design, as adding Lua- or Python-like capabilities
+would not be technically difficult.  Users should prefer plain data and
+functions that operate on them rather than mutable objects with methods.
+However, some object-oriented capabilities are useful in Janet for systems that
+require extra flexibility.

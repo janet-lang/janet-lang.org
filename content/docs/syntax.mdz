@@ -3,28 +3,27 @@
  :order 1}
 ---
 
-
 A Janet program begins life as a text file, just a sequence of bytes like any
 other file on the system. Janet source files should be UTF-8 or ASCII encoded.
 Before Janet can compile or run the program, it must transform the source code
 into a data structure. Like Lisp, Janet source code is homoiconic - code is
 represented as Janet's core data structures - thus all the facilities in the
-language for the manipulation of tuples, strings and tables can easily be used for
-manipulation of the source code as well.
+language for the manipulation of tuples, strings and tables can easily be used
+for manipulation of the source code as well.
 
 However, before Janet code transforms into a data structure, it must be read, or
-parsed, by the Janet parser. The parser, often called the reader in Lisp,
-is a machine that takes in plain text and outputs data structures which can be
-used by both the compiler and macros. In Janet, it is a parser rather than a
-reader because there is no code execution at reading time. This approach is
-safer and more straightforward, and makes syntax higlighting, formatting, and other
-syntax analysis simpler. While a parser is not extensible, in Janet the
-philosophy is to extend the language via macros rather than reader macros.
+parsed, by the Janet parser. The parser, often called the reader in Lisp, is a
+machine that takes in plain text and outputs data structures which can be used
+by both the compiler and macros. In Janet, it is a parser rather than a reader
+because there is no code execution at reading time. This approach is safer and
+more straightforward, and makes syntax higlighting, formatting, and other syntax
+analysis simpler. While a parser is not extensible, in Janet the philosophy is
+to extend the language via macros rather than reader macros.
 
 ## @code`nil`, @code`true` and @code`false`
 
-The values @code`nil`, @code`true` and @code`false` are all literals that can be entered as such
-in the parser.
+The values @code`nil`, @code`true` and @code`false` are all literals that can be
+entered as such in the parser.
 
 @codeblock[janet]```
 nil
@@ -41,11 +40,11 @@ starting with a digit or a colon. They can also contain the characters @code`!`,
 @code`?`, @code`\`, @code`,` as well as any Unicode codepoint not in the ASCII
 range.
 
-By convention, most symbols should be all lower case and use dashes to connect words
-(sometimes called kebab case).
+By convention, most symbols should be all lower case and use dashes to connect
+words (sometimes called kebab case).
 
-Symbols that come from another module will typically contain a slash that separates
-the name of the module from the name of the definition in the module.
+Symbols that come from another module will typically contain a slash that
+separates the name of the module from the name of the definition in the module.
 
 @codeblock[janet]```
 symbol
@@ -60,10 +59,10 @@ my-module/my-fuction
 
 ## Keywords
 
-Janet keywords are like symbols that begin with the character @code`:`. However, they
-are used differently and treated by the compiler as a constant rather than a name for
-something. Keywords are used mostly for keys in tables and structs, or pieces of syntax
-in macros.
+Janet keywords are like symbols that begin with the character @code`:`. However,
+they are used differently and treated by the compiler as a constant rather than
+a name for something. Keywords are used mostly for keys in tables and structs,
+or pieces of syntax in macros.
 
 @codeblock[janet]```
 :keyword
@@ -76,14 +75,15 @@ in macros.
 
 ## Numbers
 
-Janet numbers are represented by IEEE 754 floating point numbers.
-The syntax is similar to that of many other languages
-as well. Numbers can be written in base 10, with
-underscores used to separate digits into groups. A decimal point can be used for floating
-point numbers. Numbers can also be written in other bases by prefixing the number with the desired
-base and the character @code`r`. For example, 16 can be written as @code`16`, @code`1_6`, @code`16r10`, @code`4r100`, or @code`0x10`. The
-@code`0x` prefix can be used for hexadecimal as it is so common. The radix must be written in base 10, and
-can be any integer from 2 to 36. For any radix above 10, use the letters as digits (not case sensitive).
+Janet numbers are represented by IEEE 754 floating point numbers.  The syntax is
+similar to that of many other languages as well. Numbers can be written in base
+10, with underscores used to separate digits into groups. A decimal point can be
+used for floating point numbers. Numbers can also be written in other bases by
+prefixing the number with the desired base and the character @code`r`. For
+example, 16 can be written as @code`16`, @code`1_6`, @code`16r10`, @code`4r100`,
+or @code`0x10`. The @code`0x` prefix can be used for hexadecimal as it is so
+common. The radix must be written in base 10, and can be any integer from 2 to
+36. For any radix above 10, use the letters as digits (not case sensitive).
 
 @codeblock[janet]```
 0
@@ -101,11 +101,11 @@ can be any integer from 2 to 36. For any radix above 10, use the letters as digi
 ## Strings
 
 Strings in Janet are surrounded by double quotes. Strings are 8-bit clean,
-meaning they can contain any arbitrary sequence of bytes, including embedded
-0s. To insert a double quote into a string itself, escape
-the double quote with a backslash. For unprintable characters, you can either use
-one of a few common escapes, use the @code`\xHH` escape to escape a single byte in
-hexidecimal. The supported escapes are:
+meaning they can contain any arbitrary sequence of bytes, including embedded 0s.
+To insert a double quote into a string itself, escape the double quote with a
+backslash. For unprintable characters, you can either use one of a few common
+escapes, use the @code`\xHH` escape to escape a single byte in hexidecimal. The
+supported escapes are:
 
 @ul{@li{@code`\xHH` Escape a single arbitrary byte in hexidecimal.}
     @li{@code`\n` Newline (ASCII 10)}
@@ -118,18 +118,18 @@ hexidecimal. The supported escapes are:
     @li{@code`\"` Double Quote (ASCII 34)}
     @li{@code`\\` Backslash (ASCII 92)}}
 
-Strings can also contain literal newline characters that will be ignored.
-This lets one define a multiline string that does not contain newline characters.
+Strings can also contain literal newline characters that will be ignored.  This
+lets one define a multiline string that does not contain newline characters.
 
 ### Long strings
 
 An alternative way of representing strings in Janet is the long string, or the
-backquote-delimited string. A string can also be defined to start with a certain number of
-backquotes, and will end the same number of backquotes. Long strings
+backquote-delimited string. A string can also be defined to start with a certain
+number of backquotes, and will end the same number of backquotes. Long strings
 do not contain escape sequences; all bytes will be parsed literally until the
-ending delimiter is found. This is useful
-for defining multi-line strings with literal newline characters, unprintable
-characters, or strings that would otherwise require many escape sequences.
+ending delimiter is found. This is useful for defining multi-line strings with
+literal newline characters, unprintable characters, or strings that would
+otherwise require many escape sequences.
 
 @codeblock[janet]```
 "This is a string."
@@ -152,10 +152,10 @@ a string.
 
 ## Buffers
 
-Buffers are similar to strings except they are mutable data structures. Strings in Janet
-cannot be mutated after being created, whereas a buffer can be changed after creation.
-The syntax for a buffer is the same as that for a string or long string, but
-the buffer must be prefixed with the @code`@` character.
+Buffers are similar to strings except they are mutable data structures. Strings
+in Janet cannot be mutated after being created, whereas a buffer can be changed
+after creation.  The syntax for a buffer is the same as that for a string or
+long string, but the buffer must be prefixed with the @code`@` character.
 
 @codeblock[janet]```
 @""
@@ -168,24 +168,25 @@ Yet another buffer
 
 ## Tuples
 
-Tuples are a sequence of whitespace separated values surrounded by either parentheses
-or brackets. The parser considers any of the characters ASCII 32, @code`\0`,
-@code`\f`, @code`\n`, @code`\r` or @code`\t` to be whitespace.
+Tuples are a sequence of whitespace separated values surrounded by either
+parentheses or brackets. The parser considers any of the characters ASCII 32,
+@code`\0`, @code`\f`, @code`\n`, @code`\r` or @code`\t` to be whitespace.
 
 @codeblock[janet]```
 (do 1 2 3)
 [do 1 2 3]
 ```
 
-Square brackets indicate that a tuple will be used as a tuple literal rather than
-a function call, macro call, or special form. The parser will set a flag on a tuple
-if it has square brackets to let the compiler know to compile the tuple into a
-constructor. The programmer can check if a tuple has brackets via the
+Square brackets indicate that a tuple will be used as a tuple literal rather
+than a function call, macro call, or special form. The parser will set a flag on
+a tuple if it has square brackets to let the compiler know to compile the tuple
+into a constructor. The programmer can check if a tuple has brackets via the
 @code`tuple/type` function.
 
 ## Arrays
 
-Arrays are the same as tuples, but have a leading @code`@` to indicate mutability.
+Arrays are the same as tuples, but have a leading @code`@` to indicate
+mutability.
 
 @codeblock[janet]```
 @(:one :two :three)
@@ -195,10 +196,11 @@ Arrays are the same as tuples, but have a leading @code`@` to indicate mutabilit
 ## Structs
 
 Structs are represented by a sequence of whitespace-delimited key-value pairs
-surrounded by curly braces. The sequence is defined as key1, value1, key2, value2, etc.
-There must be an even number of items between curly braces or the parser will
-signal a parse error. Any value can be a key or value. Using @code`nil` or @code`NaN` as a key, however,
-will drop that pair from the parsed struct.
+surrounded by curly braces. The sequence is defined as key1, value1, key2,
+value2, etc.  There must be an even number of items between curly braces or the
+parser will signal a parse error. Any value can be a key or value. Using
+@code`nil` or @code`NaN` as a key, however, will drop that pair from the parsed
+struct.
 
 @codeblock[janet]```
 {}
@@ -210,8 +212,8 @@ will drop that pair from the parsed struct.
 
 ## Tables
 
-Tables have the same syntax as structs, except they have the @code`@` prefix to indicate
-that they are mutable.
+Tables have the same syntax as structs, except they have the @code`@` prefix to
+indicate that they are mutable.
 
 @codeblock[janet]```
 @{}
@@ -228,9 +230,9 @@ There are no multiline comments.
 
 ## Shorthand
 
-Often called reader macros in other programming languages, Janet provides several shorthand
-notations for some forms. In Janet, this syntax is referred to as prefix forms and they are not
-extensible.
+Often called reader macros in other programming languages, Janet provides
+several shorthand notations for some forms. In Janet, this syntax is referred to
+as prefix forms and they are not extensible.
 
 ### @code`'x`
 
@@ -252,20 +254,23 @@ Shorthand for @code`(unquote x)`
 
 Shorthand for @code`(short-fn (body $))`
 
-These shorthand notations can be combined in any order, allowing
-forms like @code`''x` \ (@code`(quote (quote x))`), or @code`,;x` \ (@code`(unquote (splice x))`).
+These shorthand notations can be combined in any order, allowing forms like
+@code`''x` \ (@code`(quote (quote x))`), or @code`,;x` \ 
+(@code`(unquote (splice x))`).
 
 ## Syntax Highlighting
 
-For syntax highlighting, there is some preliminary Vim syntax highlighting in @link[https://github.com/janet-lang/janet.vim][janet.vim].
-Generic lisp syntax highlighting should, however, provide good results. One can also generate a @code`janet.tmLanguage`
-file for other programs with @code`make grammar` from the Janet source code.
+For syntax highlighting, there is some preliminary Vim syntax highlighting in
+@link[https://github.com/janet-lang/janet.vim][janet.vim].  Generic lisp syntax
+highlighting should, however, provide good results. One can also generate a
+@code`janet.tmLanguage` file for other programs with @code`make grammar` from
+the Janet source code.
 
 ## Grammar
 
 For anyone looking for a more succinct description of the grammar, a PEG grammar
-for recognizing Janet source code is below. The PEG syntax is itself similar to EBNF.
-More info on the PEG syntax can be found in the @link[/docs/peg.html][PEG section].
+for recognizing Janet source code is below. The PEG syntax is itself similar to
+EBNF.  More info on the PEG syntax can be found in the @link[/docs/peg.html][PEG section].
 
 @codeblock[janet]```
 (def grammar

@@ -4,21 +4,20 @@
  :template "docpage.html"
  :order 17}
 ---
-The Janet language is implemented on top of an abstract machine (AM). The compiler
-converts Janet data structures to this bytecode, which can then be efficiently executed
-from inside a C program. To understand Janet bytecode, it is useful to understand
-the abstractions used inside the Janet AM, as well as the C types used to implement these
-features.
+The Janet language is implemented on top of an abstract machine (AM). The
+compiler converts Janet data structures to this bytecode, which can then be
+efficiently executed from inside a C program. To understand Janet bytecode, it
+is useful to understand the abstractions used inside the Janet AM, as well as
+the C types used to implement these features.
 
 ## The stack = the fiber
 
-A Janet fiber is the type used to represent multiple concurrent processes
-in Janet. It is basically a wrapper around the idea of a stack. The stack is
-divided into a number of stack frames (@code[JanetStackFrame *] in C), each of which
-contains information such as the function that created the stack frame,
-the program counter for the stack frame, a pointer to the previous frame,
-and the size of the frame. Each stack frame also is paired with a number of
-registers.
+A Janet fiber is the type used to represent multiple concurrent processes in
+Janet. It is basically a wrapper around the idea of a stack. The stack is
+divided into a number of stack frames (@code[JanetStackFrame *] in C), each of
+which contains information such as the function that created the stack frame,
+the program counter for the stack frame, a pointer to the previous frame, and
+the size of the frame. Each stack frame also is paired with a number registers.
 
 @codeblock(```
 X: Slot
@@ -59,14 +58,14 @@ Frame -2
 Bottom of stack
 ```)
 
-Fibers also have an incomplete stack frame for the next function call on top
-of their stacks. Making a function call involves pushing arguments to this
-temporary stack, and then invoking either the @code`CALL` or @code`TCALL` instructions.
-Arguments for the next function call are pushed via the @code`PUSH`,
-@code`PUSH2`, @code`PUSH3`, and
-@code`PUSHA` instructions. The stack of a fiber will grow as large as needed, although by
-default Janet will limit the maximum size of a fiber's stack.
-The maximum stack size can be modified on a per-fiber basis.
+Fibers also have an incomplete stack frame for the next function call on top of
+their stacks. Making a function call involves pushing arguments to this
+temporary stack, and then invoking either the @code`CALL` or @code`TCALL`
+instructions.  Arguments for the next function call are pushed via the
+@code`PUSH`, @code`PUSH2`, @code`PUSH3`, and @code`PUSHA` instructions. The
+stack of a fiber will grow as large as needed, although by default Janet will
+limit the maximum size of a fiber's stack.  The maximum stack size can be
+modified on a per-fiber basis.
 
 The slots in the stack are exposed as virtual registers to instructions. They
 can hold any Janet value.
@@ -74,35 +73,38 @@ can hold any Janet value.
 ## Closures
 
 All functions in Janet are closures; they combine some bytecode instructions
-with 0 or more environments. In the C source, a closure (hereby the same as
-a function) is represented by the type @code[JanetFunction *]. The bytecode instruction
-part of the function is represented by @code[JanetFuncDef *], and a function environment
-is represented with @code[JanetFuncEnv *].
+with 0 or more environments. In the C source, a closure (hereby the same as a
+function) is represented by the type @code[JanetFunction *]. The bytecode
+instruction part of the function is represented by @code[JanetFuncDef *], and a
+function environment is represented with @code[JanetFuncEnv *].
 
-The function definition part of a function (the 'bytecode' part, @code[JanetFuncDef *]),
-also stores various metadata about the function which is useful for debugging,
-as well as constants referenced by the function.
+The function definition part of a function (the 'bytecode' part,
+@code[JanetFuncDef *]), also stores various metadata about the function which is
+useful for debugging, as well as constants referenced by the function.
 
 ## C functions
 
 Janet uses C functions to bridge to native code. A C function
-(@code[JanetCFunction *] in C) is a C function pointer that can be called like
-a normal Janet closure. From the perspective of the bytecode instruction set, there is no difference
-in invoking a C function and invoking a normal Janet function.
+(@code[JanetCFunction *] in C) is a C function pointer that can be called like a
+normal Janet closure. From the perspective of the bytecode instruction set,
+there is no difference in invoking a C function and invoking a normal Janet
+function.
 
 ## Bytecode format
 
-Janet bytecode operates on an array of identical registers that can hold any Janet value (@code[Janet *] in C). Most instructions
-have a destination register, and 1 or 2 source registers. Registers are simply indices
-into the stack frame, which can be thought of as a constant sized array.
+Janet bytecode operates on an array of identical registers that can hold any
+Janet value (@code[Janet *] in C). Most instructions have a destination
+register, and 1 or 2 source registers. Registers are simply indices into the
+stack frame, which can be thought of as a constant sized array.
 
-Each instruction is a 32-bit integer, meaning that the instruction set is a constant
-width RISC instruction set like MIPS. The opcode of each instruction is the least significant
-byte of the instruction. The highest bit of
-this leading byte is reserved for debugging purpose, so there are 128 possible opcodes encodable
-with this scheme. Not all of these possible opcodes are defined, and undefined
-opcodes will trap the interpreter and emit a debug signal. Note that this means an unknown opcode is still valid bytecode, it will
-just put the interpreter into a debug state when executed.
+Each instruction is a 32-bit integer, meaning that the instruction set is a
+constant width RISC instruction set like MIPS. The opcode of each instruction is
+the least significant byte of the instruction. The highest bit of this leading
+byte is reserved for debugging purpose, so there are 128 possible opcodes
+encodable with this scheme. Not all of these possible opcodes are defined, and
+undefined opcodes will trap the interpreter and emit a debug signal. Note that
+this means an unknown opcode is still valid bytecode, it will just put the
+interpreter into a debug state when executed.
 
 @codeblock(```
 X - Payload bits
@@ -114,46 +116,57 @@ O - Opcode bits
 +----+----+----+----+
 ```)
 
-Eight bits for the opcode leaves 24 bits for the payload, which may or may not be utilized.
-There are a few instruction variants that divide these payload bits.
+Eight bits for the opcode leaves 24 bits for the payload, which may or may not
+be utilized.  There are a few instruction variants that divide these payload
+bits.
 
-@ul{@li{0 arg - Used for noops, returning @code`nil`, or other instructions that take no
-        arguments. The payload is essentially ignored.}
-    @li{1 arg - All payload bits correspond to a single value, usually a signed or unsigned integer.
-        Used for instructions of 1 argument, like returning a value, yielding a
-        value to the parent fiber, or doing a (relative) jump.}
-    @li{2 arg - Payload is split into byte 2 and bytes 3 and 4. The first argument is the 8-bit value from
-        byte 2, and the second argument is the 16-bit value from bytes 3 and 4 (@code[instruction >> 16]). Used for instructions of
-        two arguments, like move, normal function calls, conditionals, etc.}
+@ul{@li{0 arg - Used for noops, returning @code`nil`, or other instructions that
+        take no arguments. The payload is essentially ignored.}
+    @li{1 arg - All payload bits correspond to a single value, usually a signed
+        or unsigned integer.  Used for instructions of 1 argument, like
+        returning a value, yielding a value to the parent fiber, or doing a
+        (relative) jump.}
+    @li{2 arg - Payload is split into byte 2 and bytes 3 and 4. The first
+        argument is the 8-bit value from byte 2, and the second argument is the
+        16-bit value from bytes 3 and 4 (@code[instruction >> 16]). Used for
+        instructions of two arguments, like move, normal function calls,
+        conditionals, etc.}
     @li{3 arg - Bytes 2, 3, and 4 each correspond to an 8-bit argument.
         Used for arithmetic operations, emitting a signal, etc.}}
 
-These instruction variants can be further refined based on the semantics of the arguments.
-Some instructions may treat an argument as a slot index, while other instructions
-will treat the argument as a signed integer literal, an index for a constant, an index
-for an environment, or an unsigned integer. Keeping the bytecode fairly uniform makes
-verification, compilation, and debugging simpler.
+These instruction variants can be further refined based on the semantics of the
+arguments.  Some instructions may treat an argument as a slot index, while other
+instructions will treat the argument as a signed integer literal, an index for a
+constant, an index for an environment, or an unsigned integer. Keeping the
+bytecode fairly uniform makes verification, compilation, and debugging simpler.
 
 ## Instruction reference
 
-A listing of all opcode values can be found in @code`janet.h`. The Janet assembly
-short names can be found in @code`src/core/asm.c`. In this document, we will refer to the instructions
-by their short names as presented to the assembler rather than their numerical values.
+A listing of all opcode values can be found in @code`janet.h`. The Janet
+assembly short names can be found in @code`src/core/asm.c`. In this document,
+we will refer to the instructions by their short names as presented to the
+assembler rather than their numerical values.
 
-Each instruction is also listed with a signature, which are the arguments the instruction
-expects. There are a handful of instruction signatures, which combine the arity and type
-of the instruction. The assembler does not
-do any type-checking per closure, but does prevent jumping to invalid instructions and
+Each instruction is also listed with a signature, which are the arguments the
+instruction expects. There are a handful of instruction signatures, which
+combine the arity and type of the instruction. The assembler does not do any
+type-checking per closure, but does prevent jumping to invalid instructions and
 failure to return or error.
 
 ### Notation
 
-@ul{@li{The '$' prefix indicates that a instruction parameter is acting as a virtual register (slot). If a parameter
-        does not have the '$' suffix in the description, it is acting as some kind
-        of literal (usually an unsigned integer for indexes, and a signed integer for literal integers).}
-    @li{Some operators in the description have the suffix 'i' or 'r'. These indicate that these operators
-        correspond to integers or real numbers only, respectively. All bit-wise operators and bit shifts only work with integers.}
-    @li{The @code[>>>] indicates unsigned right shift, as in Java. Because all integers in Janet are signed, we differentiate the two kinds of right bit shift.}
+@ul{@li{The '$' prefix indicates that a instruction parameter is acting as a
+        virtual register (slot). If a parameter does not have the '$' suffix in
+        the description, it is acting as some kind of literal (usually an
+        unsigned integer for indexes, and a signed integer for literal
+        integers).}
+    @li{Some operators in the description have the suffix 'i' or 'r'. These
+        indicate that these operators correspond to integers or real numbers
+        only, respectively. All bit-wise operators and bit shifts only work with
+        integers.}
+    @li{The @code[>>>] indicates unsigned right shift, as in Java. Because all
+        integers in Janet are signed, we differentiate the two kinds of right
+        bit shift.}
     @li{The 'im' suffix in the instruction name is short for immediate.}}
 
 ### Reference table
