@@ -12,17 +12,18 @@ be very complex to maintain and may not exist for many languages. String functio
 powerful enough for a large class of languages, and regular expressions can be hard to read
 (which characters are escaped?) and under-powered (don't parse HTML with regex!).
 
-PEGs, or Parsing Expression Grammars, are another formalism for recognizing languages that
+PEGs, or Parsing Expression Grammars, are another formalism for recognizing languages. PEGs
 are easier to write than a custom parser and more powerful than regular expressions. They also
 can produce grammars that are easily understandable and fast. PEGs can also be compiled
 to a bytecode format that can be reused. Janet offers the @code`peg` module for writing and
 evaluating PEGs.
 
 Janet's @code`peg` module borrows syntax and ideas from both LPeg and REBOL/Red parse module. Janet has
-no built in regex module because PEGs offer a superset of regex's functionality.
+no built-in regex module because PEGs offer a superset of the functionality of
+regular expressions.
 
 Below is a simple example for checking if a string is a valid IP address. Notice how
-the grammar is descriptive enough that you can read it even if you don't know the peg
+the grammar is descriptive enough that you can read it even if you don't know the PEG
 syntax (example is translated from a @link[https://www.red-lang.org/2013/11/041-introducing-parse.html][RED language blog post]).
 
 @codeblock[janet]```
@@ -53,25 +54,25 @@ many times.
 
 ### @code`(peg/match peg text [,start=0] & arguments)`
 
-Match a peg against some text. Returns an array of captured data if the text
-matches, or nil if there is no match. The caller can provide an optional start
-index to begin matching the text at, otherwise the PEG starts on the first character
-of text. A peg can either a compile PEG object or peg source.
+Match a PEG against some text. Returns an array of captured data if the text
+matches, or @code`nil` if there is no match. The caller can provide an optional @code`start`
+index to begin matching, otherwise the PEG starts on the first character
+of text. A PEG can either bea compiled PEG object or PEG source.
 
 ### @code`(peg/compile peg)`
 
-Compiles a peg source data structure into a new PEG. Throws an error if there are problems
-with the peg code.
+Compiles a PEG source data structure into a new PEG. Throws an error if there are problems
+with the PEG code.
 
-## Primitive Patterns
+## Primitive patterns
 
 Larger patterns are built up with primitive patterns, which recognize individual
 characters, string literals, or a given number of characters. A character in Janet
 is considered a byte, so PEGs will work on any string of bytes. No special meaning is
-given to the 0 byte, or the string terminator in many languages.
+given to the @code`0` byte, or the string terminator as in many languages.
 
 @tag[table]{
-    @tr{@th{Pattern Signature} @th{What it Matches}}
+    @tr{@th{Pattern Signature} @th{What it matches}}
     @tr{@td{string ("cat")   } @td{ The literal string. }}
     @tr{@td{integer (3)      } @td{ Matches a number of characters, and advances that many characters. If negative, matches if not that many characters and does not advance. For example, -1 will match the end of a string }}
     @tr{@td{@code`(range "az" "AZ")` } @td{ Matches characters in a range and advances 1 character. Multiple ranges can be combined together. }}
@@ -91,7 +92,7 @@ Primitive patterns are not that useful by themselves, but can be passed to @code
 (peg/match '(set "ABCDEFGHIJKLMNOPQRSTUVWXYZ") "F") # -> @[]
 ```
 
-## Combining Patterns
+## Combining patterns
 
 These primitive patterns can be combined with several combinators to match a wide number of
 languages. These combinators
@@ -120,21 +121,21 @@ can be thought of as the looping and branching forms in a traditional language
 
 PEGs try to match an input text with a pattern in a greedy manner.
 This means that if a rule fails to match, that rule will fail and not try again. The only
-backtracking provided in a peg is provided by the @code`(choice x y z ...)` special, which will
-try rules in order until one succeeds, and the whole pattern succeeds. If no sub pattern
+backtracking provided in a PEG is provided by the @code`(choice x y z ...)` special, which will
+try rules in order until one succeeds, and the whole pattern succeeds. If no sub-pattern
 succeeds, then the whole pattern fails. Note that this means that the order of @code`x y z` in choice
-DOES matter. If y matches everything that z matches, z will never succeed.
+@strong{does} matter. If @code`y` matches everything that @code`z` matches, @code`z` will never succeed.
 
 ## Captures
 
 So far we have only been concerned with "does this text match this language?". This is useful, but
-it is often more useful to extract data from text if it does match a peg. The @code`peg` module
+it is often more useful to extract data from text if it does match a PEG. The @code`peg` module
 uses that concept of a capture stack to extract data from text. As the PEG is trying to match
 a piece of text, some forms may push Janet values onto the capture stack as a side effect. If the
-text matches the main peg language, @code`(peg/match)` will return the final capture stack as an array.
+text matches the main PEG language, @code`(peg/match)` will return the final capture stack as an array.
 
 Capture specials will only push captures to the capture stack if their child pattern matches the text.
-Most captures specials will match the same text as their first argument pattern. Also most specials
+Most captures specials will match the same text as their first argument pattern. In addition, most specials
 that produce captures can take an optional argument @code`tag` that applies a keyword tag to the capture.
 These tagged captures can then be recaptured via the @code`(backref tag)` special in subsequent matches.
 Tagged captures, when combined with the @code`(cmt)` special, provide a powerful form of look-behind
@@ -161,13 +162,13 @@ that can make many grammars simpler.
     @tr{@td{@code`(drop patt)` } @td{ Ignores (drops) all captures from patt. }}
     @tr{@td{@code`(lenprefix n patt)` } @td{ Matches n repetitions of a pattern, where n is supplied from other parsed input and is not a constant. }}}
 
-## Grammars and Recursion
+## Grammars and recursion
 
 The feature that makes PEGs so much more powerful than pattern matching solutions like (vanilla) regex is mutual recursion.
-To do recursion in a peg, you can wrap multiple patterns in a grammar, which is a Janet struct. The patterns must be named by
+To do recursion in a PEG, you can wrap multiple patterns in a grammar, which is a Janet struct. The patterns must be named by
 keywords, which can then be used in all sub-patterns in the grammar.
 
-Each grammar, defined by a struct, must also have a main rule, called :main, that is the pattern that the entire grammar
+Each grammar, defined by a struct, must also have a main rule, called @code`:main`, that is the pattern that the entire grammar
 is defined by.
 
 An example grammar that uses mutual recursion:
@@ -185,16 +186,17 @@ An example grammar that uses mutual recursion:
 ```
 
 Keep in mind that recursion is implemented with a stack, meaning that very recursive grammars
-can overflow the stack. The compiler is able to turn some recursion into iteration via tail call optimization, but some patterns
+can overflow the stack. The compiler is able to turn some recursion into iteration via tail-call optimization, but some patterns
 may fail on large inputs. It is also possible to construct (very poorly written) patterns that will result in long loops and be very
 slow in general.
 
-## Built-in Patterns
+## Built-in patterns
 
 Besides the primitive patterns and pattern combinators given above, the @code`peg` module also
 provides a default grammar with a handful of commonly used patterns. All of these shorthands
-can be defined with the combinators above and primitive patterns, but these aliases may come up
-a lot when writing grammars.
+can be defined with the combinators above and primitive patterns, but you may
+see these aliases in other grammars and they can make grammar simpler and easier
+to read.
 
 @tag[table]{
     @tr{@th{Name} @th{Expanded} @th{Description}}
@@ -221,12 +223,13 @@ a lot when writing grammars.
 
 All of these aliases are defined in @code`default-peg-grammar`, which is a table that maps
 from the alias name to the expanded form. You can even add your own aliases here which are then
-available for all pegs in the program. Modifiying this table will not affect already compiled pegs.
+available for all PEGs in the program. Modifiying this table will not affect
+already compiled PEGs.
 
-## String Searching and other Idioms
+## String searching and other idioms
 
 Although all pattern matching is done in anchored mode, operations like global substitution
-and searching can be implemented with the peg module. A simple Janet function that produces PEGs
+and searching can be implemented with the PEG module. A simple Janet function that produces PEGs
 that search for strings shows how captures and looping specials can composed, and how quasiquoting
 can be used to embed values in patterns.
 
@@ -247,7 +250,7 @@ can be used to embed values in patterns.
 (peg/match find-cats "cat ct caat caaaaat cat") # -> @[0 7 12 20]
 ```
 
-We can also wrap a peg to turn it into a global substitution grammar with
+We can also wrap a PEG to turn it into a global substitution grammar with
 the accumulate special @code`(%)`.
 
 @codeblock[janet]```
