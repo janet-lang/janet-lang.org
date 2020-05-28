@@ -17,7 +17,7 @@ in janet. It is basically a wrapper around the idea of a stack. The stack is
 divided into a number of stack frames (@code[JanetStackFrame *] in C), each of which
 contains information such as the function that created the stack frame,
 the program counter for the stack frame, a pointer to the previous frame,
-and the size of the frame. Each stack frame also is paired with a number
+and the size of the frame. Each stack frame also is paired with a number of
 registers.
 
 @codeblock(```
@@ -93,7 +93,7 @@ in invoking a C function and invoking a normal janet function.
 
 Janet bytecode operates on an array of identical registers that can hold any Janet value (@code[Janet *] in C). Most instructions
 have a destination register, and 1 or 2 source registers. Registers are simply indexes
-into the stack frame, which can be thought of a constant sized array.
+into the stack frame, which can be thought of as a constant sized array.
 
 Each instruction is a 32 bit integer, meaning that the instruction set is a constant
 width RISC instruction set like MIPS. The opcode of each instruction is the least significant
@@ -136,7 +136,7 @@ verification, compilation, and debugging simpler.
 ## Instruction Reference
 
 A listing of all opcode values can be found in janet.h. The janet assembly
-short names can be found src/core/asm.c. In this document, we will refer to the instructions
+short names can be found in src/core/asm.c. In this document, we will refer to the instructions
 by their short names as presented to the assembler rather than their numerical values.
 
 Each instruction is also listed with a signature, which are the arguments the instruction

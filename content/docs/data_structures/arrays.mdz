@@ -75,7 +75,7 @@ Note that a non-integer key will throw an error when using `in`.
 
 To set values in an array, use either the `put` function or the `set` special.
 The put function is a function that allows putting values in any associative
-data structure. This means that can associate keys with values for
+data structure. This means that it can associate keys with values for
 arrays, tables, and buffers. If an index is given that is past the
 end of the array, the array is first padded with nils so that it is large
 enough to accommodate the new element.
