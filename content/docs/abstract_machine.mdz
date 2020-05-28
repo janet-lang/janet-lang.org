@@ -116,9 +116,9 @@ O - Opcode bits
 +----+----+----+----+
 ```)
 
-Eight bits for the opcode leaves 24 bits for the payload, which may or may not
-be utilized.  There are a few instruction variants that divide these payload
-bits.
+Using 8 bits for the opcode leaves 24 bits for the payload, which may or may
+not be utilized.  There are a few instruction variants that divide these
+payload bits.
 
 @ul{@li{0 arg - Used for noops, returning @code`nil`, or other instructions that
         take no arguments. The payload is essentially ignored.}
