@@ -74,11 +74,18 @@ gmake test CC=gcc
 
 @ol{@li{Install @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#][Visual Studio] or
     @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15#][Visual Studio Build Tools]}
-    @li{Run a Visual Studio Command Prompt (cl.exe and link.exe need to be on the PATH) and cd to the directory with janet.}
+    @li{Run a Visual Studio Command Prompt (cl.exe and link.exe need to be on the PATH)}
+    @li{@code[cd] to the directory with janet}
     @li{Run @code[build_win] to compile janet.}
     @li{Run @code[build_win test] to make sure everything is working.}}
 
-To install from source, the best way to is use @link[https://sourceforge.net/projects/nsis/]{NSIS} to generate an installer and run that. You will need NSVC (or the Microsoft Build Tools) to build everything, and NSIS to build the installer. From a Developer Command Prompt, run @code`build_win all` to build, test, and install Janet on your local machine.
+To install from source, first follow the steps above, then you will need to
+
+@ol{@li{Install, or otherwise add to your PATH, the @link[https://github.com/wixtoolset/wix3/releases]{WiX 3.11 Toolset}}
+    @li{Run a Visual Studio Command Prompt (cl.exe and link.exe need to be on the PATH)}
+    @li{@code[cd] to the directory with janet}
+    @li{Run @code[build_win dist]}
+    @li{Then, lastly, execute the resulting @code[.msi] executable}}
 
 ### Emscripten
 
