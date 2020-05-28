@@ -20,21 +20,20 @@ use the @code[(length x)] function.
 There are many ways to create arrays in Janet, but the easiest is the array
 literal.
 
-@codeblock[janet](```
+@codeblock[janet]```
 (def my-array @[1 2 3 "four"])
 (def my-array2 @(1 2 3 "four"))
-```)
+```
 
-An array literal begins with an at symbol, @code[@], followed by square
+An array literal begins with an at symbol, @code`@`, followed by square
 brackets or parentheses with 0 or more values inside.
 
-To create an empty array that you will fill later, use the @code`(array/new
-capacity)` function. This creates an array with a reserved capacity for a
-number of elements. This means that appending elements to the array will not
+To create an empty array that you will fill later, use the @code`(array/new capacity)` function. This creates an array with a reserved capacity for
+a number of elements. This means that appending elements to the array will not
 re-allocate the memory in the array. Using an empty array literal would not
 pre-allocate any space, so the resulting operation would be less efficient.
 
-@codeblock[janet](```
+@codeblock[janet]```
 (def arr (array/new 4))
 arr # -> @[]
 (put arr 0 :one)
@@ -42,7 +41,7 @@ arr # -> @[]
 (put arr 2 :three)
 (put arr 3 :four)
 arr # -> @[:one :two :three :four]
-```)
+```
 
 ## Getting values
 
@@ -91,7 +90,7 @@ arr # -> @[:hi nil :hello]
 
 The syntax for the @code`set` special is slightly different, as it is meant to
 mirror the syntax for getting an element out of a data structure.  Another
-difference is that while `put` returns the data structure, `set` evaluates to
+difference is that while @code`put` returns the data structure, @code`set` evaluates to
 the new value.
 
 ## Using an array as a stack
@@ -110,7 +109,7 @@ Appends a value to the end of the array and returns the array.
 ### @code[(array/pop stack)]
 
 Removes the last value from stack and returns it. If the array is empty,
-returns @code'nil`.
+returns @code`nil`.
 
 ### @code[(array/peek stack)]
 
