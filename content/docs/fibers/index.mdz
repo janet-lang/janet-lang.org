@@ -4,28 +4,32 @@
  :order 13}
 ---
 
-Janet has support for single-core asynchronous programming via coroutines, or fibers.
-Fibers allow a process to stop and resume execution later, essentially enabling
-multiple returns from a function. This allows many patterns such a schedules, generators,
-iterators, live debugging, and robust error handling. Janet's error handling is actually built on
-top of fibers (when an error is thrown, the parent fiber will handle the error).
+Janet has support for single-core asynchronous programming via coroutines or
+fibers.  Fibers allow a process to stop and resume execution later, essentially
+enabling multiple returns from a function. This allows many patterns such as
+schedules, generators, iterators, live debugging, and robust error handling.
+Janet's error handling is actually built on top of fibers (when an error is
+thrown, control is returned to the parent fiber).
 
-A temporary return from a fiber is called a yield, and can be invoked with the @code[yield] function.
-To resume a fiber that has been yielded, use the @code[resume] function. When resume is called on a fiber,
-it will only return when that fiber either returns, yields, throws an error, or otherwise emits
-a signal.
+A temporary return from a fiber is called a yield, and can be invoked with the
+@code[yield] function.  To resume a fiber that has been yielded, use the
+@code[resume] function. When @code`resume` is called on a fiber, it will only
+return when that fiber either returns, yields, throws an error, or otherwise
+emits a signal.
 
-Different from traditional coroutines, Janet's fibers implement a signaling mechanism, which
-is used to differentiate different kinds of returns. When a fiber yields or throws an error,
-control is returned to the calling fiber. The parent fiber must then check what kind of state the
-fiber is in to differentiate errors from return values from user defined signals.
+Different from traditional coroutines, Janet's fibers implement a signaling
+mechanism, which is used to differentiate different kinds of returns. When a
+fiber yields or throws an error, control is returned to the calling fiber. The
+parent fiber must then check what kind of state the fiber is in to differentiate
+errors from return values from user-defined signals.
 
-To create a fiber, user the @code[fiber/new] function. The fiber constructor take one or two arguments.
-The first, necessary argument is the function that the fiber will execute. This function must accept
-an arity of zero. The next optional argument is a collection of flags checking what kinds of
-signals to trap and return via @code[resume]. This is useful so
-the programmer does not need to handle all different kinds of signals from a fiber. Any un-trapped signals
-are simply propagated to the next fiber.
+To create a fiber, user the @code[fiber/new] function. The fiber constructor
+take one or two arguments.  The first, necessary argument is the function that
+the fiber will execute. This function must accept an arity of zero. The next
+optional argument is a collection of flags checking what kinds of signals to
+trap and return via @code[resume]. This is useful so the programmer does not
+need to handle all different kinds of signals from a fiber. Any un-trapped
+signals are simply propagated to the previous calling fiber.
 
 @codeblock[janet](```
 (def f (fiber/new (fn []
@@ -48,9 +52,10 @@ are simply propagated to the next fiber.
 (print (resume f)) # -> throws an error because the fiber is dead
 ```)
 
-## Using Fibers to Capture Errors
+## Using fibers to capture errors
 
-Besides being used as coroutines, fibers can be used to implement error handling (exceptions).
+Besides being used as coroutines, fibers can be used to implement error handling
+(ie: exceptions).
 
 @codeblock[janet](```
 (defn my-function-that-errors []
@@ -66,11 +71,10 @@ Besides being used as coroutines, fibers can be used to implement error handling
  (print "result contains the good result"))
 ```)
 
-Since the above code is rather verbose, Janet provides a
-@code[try] macro which is similar to try/catch in other languages.
-It wraps a body of code in a new fiber, @code[resume]s the fiber, and
-then checks the result. If the fiber has errored, an error clause
-is evaluated.
+Since the above code is rather verbose, Janet provides a @code[try] macro which
+is similar to try/catch in other languages.  It wraps the body in a new fiber,
+@code[resume]s the fiber, and then checks the result. If the fiber has errored,
+an error clause is evaluated.
 
 @codeblock[janet](```
 (try

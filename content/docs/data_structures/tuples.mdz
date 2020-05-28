@@ -3,13 +3,13 @@
 ---
 
 Tuples are immutable, sequential types that are similar to arrays. They are
-represented in the source code with either parenthesis or brackets surrounding
-their items. Note that Janet differs from traditional Lisps here, which commonly
-use the term "lists" to describe forms wrapped in parenthesis. Like all data
-structures, tuple contents can be retrieved with the @code`get` function and
-their length retrieved with the @code`length` function.
+represented in source code with either parenthesis or brackets surrounding
+their items. Note that Janet differs from traditional Lisps here, which
+commonly use the term "lists" to describe forms wrapped in parenthesis. Like
+all data structures, tuple contents can be retrieved with the @code`get`
+function and their length retrieved with the @code`length` function.
 
-The two most common ways to create a tuple is using the literal form with
+The two most common ways to create a tuple are using the literal form with
 bracket characters @code`[]` or calling the @code`tuple` function directly.
 
 @codeblock[janet]```
@@ -29,10 +29,10 @@ bracket characters @code`[]` or calling the @code`tuple` function directly.
 (assert (= mytup1 mytup2 mytup3 mytup4)) # true
 ```
 
-## As Table Keys
+## As table keys
 
-Tuples can be used as table keys because two tuples with the same
-contents are considered equal:
+Tuples can be used as table keys because two tuples with the same contents are
+considered equal:
 
 @codeblock[janet]```
 (def points @{[0 0] "A"
@@ -45,12 +45,13 @@ contents are considered equal:
 (get points [8 5])       # nil (ie: not found)
 ```
 
-## Sorting Tuples
+## Sorting tuples
 
-Tuples can also be used to sort items. When sorting tuples via the @code`order<` or
-@code`<` comparators, the first elements are compared first. If those elements are equal, we
-move on to the second element, then the third, and so on. We could use this property of tuples
-to sort all sorts of data, or sort one array by the contents of another array.
+Tuples can also be used to sort items. When sorting tuples via the @code`<` or
+@code`>` comparators, the first elements are compared first. If those elements
+are equal, we move on to the second element, then the third, and so on. We
+could use this property of tuples to sort all kind of data, or sort one array
+by the contents of another array.
 
 @codeblock[janet]```
 (def inventory [
@@ -72,23 +73,27 @@ to sort all sorts of data, or sort one array by the contents of another array.
 # flamingo: 23
 ```
 
-## Bracketed Tuples
+## Bracketed tuples
 
-Under the hood there are two kinds of tuples: bracketed and non-bracketed. We have seen above
-that bracket tuples are used to create a tuple constructor with @code`[]` characters (ie: a tuple literal).
-The way a tuple literal is interpreted by the compiler is one of the few ways in which bracket tuples
-and non-bracketed tuples differ:
+Under the hood, there are two kinds of tuples: bracketed and non-bracketed. We
+have seen above that bracket tuples are used to create a tuple with @code`[]`
+characters (ie: a tuple literal).  The way a tuple literal is interpreted by
+the compiler is one of the few ways in which bracketed tuples and non-bracketed
+tuples differ:
 
-@ul{@li{Bracket tuples are interpreted as a tuple constructor rather than a function call by the compiler.}
-    @li{When printed via @code`pp`, bracket tuples are printed with square brackets instead of parentheses.}
-    @li{When passed as an argument to @code`tuple/type`, bracket tuples will returns @code`:brackets` instead of @code`:parens`.}}
+@ul{@li{Bracket tuples are interpreted as a tuple constructor rather than a
+        function call by the compiler.}
+    @li{When printed via @code`pp`, bracket tuples are printed with square
+        brackets instead of parentheses.}
+    @li{When passed as an argument to @code`tuple/type`, bracket tuples will
+        returns @code`:brackets` instead of @code`:parens`.}}
 
-In all other ways, bracket tuples behave identically to normal tuples. It is not
-recommended to use bracket tuples for anything outside of macros and tuple
-constructors (ie: tuple literals).
+In all other ways, bracketed tuples behave identically to normal tuples. It is
+not recommended to use bracketed tuples for anything outside of macros and
+tuple constructors (ie: tuple literals).
 
-## More Functions
+## More functions
 
-Most functions in the core library that work on arrays also work on tuples, or have
-an analogous function for tuples. See the @link[/doc.html#tuple][tuple section] in
-the Core Library API for a comprehensive list of functions that operate on tuples.
+Most functions in the core library that work on arrays also work on tuples, or
+have an analogous function for tuples. See the @link[/api/tuple.html][Tuple API]
+for a list of functions that operate on tuples.

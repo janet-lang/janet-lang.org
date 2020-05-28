@@ -8,7 +8,7 @@
 
 Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
 Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}.
-For help, you can also checkout @link[https://janetdocs.com]{Janet Docs} for the Janet documentation with user provided examples.
+For help, you can also checkout @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples.
 
 ## Use Cases
 
@@ -29,7 +29,7 @@ are fairly straightforward. Janet can be easily ported to new platforms.
     @li{Mutable and immutable strings (buffer/string)}
     @li{Macros}
     @li{Byte code interpreter with an assembly interface, as well as bytecode verification}
-    @li{Tailcall Optimization}
+    @li{Tail call optimization}
     @li{Direct interop with C via abstract types and C functions}
     @li{Dynamically load C libraries}
     @li{Functional and imperative standard library}
@@ -56,7 +56,7 @@ are fairly straightforward. Janet can be easily ported to new platforms.
 
 ## Usage
 
-A REPL is launched when the binary is invoked with no arguments. Pass the -h flag
+A REPL is launched when the @code`janet` binary is invoked with no arguments. Pass the @code`-h` flag
 to display the usage information. Individual scripts can be run with @code`janet myscript.janet`
 
 If you are looking to explore, you can print a list of all available macros, functions, and constants

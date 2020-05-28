@@ -3,19 +3,24 @@
  :order 18}
 ---
 
-Starting in version 1.6.0, Janet has the ability to do true, non-cooperative multithreading with the @code`thread/`
-functions. Janet threads correspond to native threads on the host operating system, which may be either pthreads on
-posix systems or Windows threads. Each thread has its own Janet heap, which means threads behave more like processes
-that communicate by message passing. However, this does not prevent native code from sharing memory across these threads.
-Without native extensions, however, the only way for two Janet threads to communicate directly is through message passing.
+Starting in version 1.6.0, Janet has the ability to do true, non-cooperative
+multithreading with the @code`thread/` functions. Janet threads correspond to
+native threads on the host operating system, which may be either pthreads on
+POSIX systems or Windows threads. Each thread has its own Janet heap, which
+means threads behave more like processes that communicate by message passing.
+However, this does not prevent native code from sharing memory across these
+threads.  Without native extensions, however, the only way for two Janet threads
+to communicate directly is through message passing.
 
-## Creating Threads
+## Creating threads
 
-Use @code`(thread/new func &opt capacity)` to create a new thread. This thread will start and wait for a message containing a function
-that it will run as the main body. This function must also be able to take 1 parameter, the parent thread.
-Each thread has its own mailbox, which can asynchronously receive messages. These messages are added to a queue, which has
-a configurable maximum capacity according to the second optional argument passed to @code`thread/new`. If unspecified, the mailbox
-will have an initial capacity of 10.
+Use @code`(thread/new func &opt capacity)` to create a new thread. This thread
+will start and wait for a message containing a function that it will run as the
+main body. This function must also be able to take 1 parameter, the parent
+thread.  Each thread has its own mailbox, which can asynchronously receive
+messages. These messages are added to a queue, which has a configurable maximum
+capacity according to the second optional argument passed to @code`thread/new`.
+If unspecified, the mailbox will have an initial capacity of 10.
 
 @codeblock[janet]```
 (defn worker
@@ -26,10 +31,11 @@ will have an initial capacity of 10.
 (def thread (thread/new worker 32))
 ```
 
-## Sending and Receiving Messages
+## Sending and receiving messages
 
-Threads in Janet do not share a memory heap and must communicate via message passing. Use @code`thread/send`
-to send a message to a thread, and @code`thread/receive` to get messages sent to the current thread.
+Threads in Janet do not share a memory heap and must communicate via message
+passing. Use @code`thread/send` to send a message to a thread, and
+@code`thread/receive` to get messages sent to the current thread.
 
 @codeblock[janet]```
 (defn worker
@@ -43,18 +49,22 @@ to send a message to a thread, and @code`thread/receive` to get messages sent to
 (:send thread "Hello!")
 ```
 
-## Limitations of Messages
+## Limitations of messages
 
-Since threads do not share Janet heaps, all values sent as messages are first marshalled to a byte sequence by the sending thread, and then
-unmarshalled by the receiving thread. For marshalling and unmarshalling, threads use the two tables @code`make-image-dict` and
-@code`load-image-dict`. This means you can send over core bindings, even if the underlying value cannot be marshalled.
-Semantically, messages sent with @code`(thread/send to msg)` are first converted to a buffer
-via @code`(marshal msg make-image-dict mailbox-buf)`,
-and then unmarshalled by the receiving thread via @code`(unmarshal mailbox-buf load-image-dict)`.
+Since threads do not share Janet heaps, all values sent as messages are first
+marshalled to a byte sequence by the sending thread, and then unmarshalled by
+the receiving thread. For marshalling and unmarshalling, threads use the two
+tables @code`make-image-dict` and @code`load-image-dict`. This means you can
+send over core bindings, even if the underlying value cannot be marshalled.
+Semantically, messages sent with @code`(thread/send to msg)` are first converted
+to a buffer via @code`(marshal msg make-image-dict mailbox-buf)`, and then
+unmarshalled by the receiving thread via @code`(unmarshal mailbox-buf
+load-image-dict)`.
 
-Values that cannot be marshalled, including thread values, cannot be sent as messages to other threads, or even
-as part of a message to another thread. For example, the following will not work because open file handles
-cannot be marshalled.
+Values that cannot be marshalled, including thread values, cannot be sent as
+messages to other threads, or even as part of a message to another thread. For
+example, the following will not work because open file handles cannot be
+marshalled.
 
 @codeblock[janet]```
 (def file (file/open "myfile.txt" :w))
@@ -67,8 +77,8 @@ cannot be marshalled.
 (thread/new worker)
 ```
 
-The fix here is to move the file creation inside the worker function, since every worker thread is going to have
-its own copy of the file handle.
+The fix here is to move the file creation inside the worker function, since
+every worker thread is going to have its own copy of the file handle.
 
 @codeblock[janet]```
 (defn worker
@@ -81,16 +91,21 @@ its own copy of the file handle.
 (thread/new worker)
 ```
 
-This limitation has been removed for some values (C Functions and raw pointers) in
-version 1.9.0, to make use of threads with native modules more seamless, although certain abstract
-types like open files can still not be sent to threads via @code`thread/send` or @code`thread/new`.
+This limitation has been removed for some values (C functions and raw pointers)
+in version 1.9.0, to make use of threads with native modules more seamless,
+although certain abstract types like open files can still not be sent to threads
+via @code`thread/send` or @code`thread/new`.
 
-## Blocking and Non-blocking Sends and Receives
+## Blocking and non-blocking sends and receives
 
-All sends and receives can be blocking or non-blocking by providing an optional timeout value. A timeout
-of 0 makes @code`(thread/send to msg &opt timeout)` and @code`(thread/receive &opt timeout)` non-blocking, while a positive timeout value
-indicates a blocking send or receive that will resume the current thread by throwing an error after
-timeout seconds. Timeouts are limited to 30 days, with the exception that using @code`math/inf` for a timeout means that a timeout will never occur.
+All sends and receives can be blocking or non-blocking by providing an optional
+timeout value. A timeout of @code`0` makes
+@code`(thread/send to msg &opt timeout)` and
+@code`(thread/receive &opt timeout)` non-blocking, while a positive timeout
+value indicates a blocking send or receive that will resume the current thread
+by throwing an error after timeout seconds. Timeouts are limited to 30 days,
+with exception the using @code`math/inf` for a timeout means that a timeout
+will never occur.
 
 @codeblock[janet]```
 (defn worker

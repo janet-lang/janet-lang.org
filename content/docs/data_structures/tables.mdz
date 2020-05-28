@@ -3,17 +3,16 @@
  :order 3}
 ---
 
-The table is one of the most flexible data structures in Janet and
-is modeled after the associative array, or dictionary. Values are
-put into a table with a key, and can be looked up later with the
-same key. Tables are implemented with an underlying open hash table, so
-they are quite fast and cache friendly.
+The table is one of the most flexible data structures in Janet and is modeled
+after the associative array or dictionary. Values are put into a table with a
+key, and can be looked up later with the same key. Tables are implemented with
+an underlying open hash table, so they are quite fast and cache friendly.
 
-Any Janet value except nil and NaN can either a key or a value in a Janet
-table, and a single Janet table can have any mixture of
-types as keys and values.
+Any Janet value except @code`nil` and @code`NaN` can be a key or a value in a
+Janet table, and a single Janet table can have any mixture of types as keys and
+values.
 
-## Creating Tables
+## Creating tables
 
 The easiest way to create a table is via a table literal.
 
@@ -25,9 +24,9 @@ The easiest way to create a table is via a table literal.
  '(1 0) @{:another :table}})
 ```)
 
-Another way to create a table is via the @code[table] function. This has the advantage
-that @code[table] is an ordinary function that can be passed around like any other. For
-most cases, a table literal should be preferred.
+Another way to create a table is via the @code[table] function. This has the
+advantage that @code[table] is an ordinary function that can be passed around
+like any other. For most cases, a table literal should be preferred.
 
 @codeblock[janet](```
 (def my-tab (table
@@ -37,12 +36,13 @@ most cases, a table literal should be preferred.
              '(1 0) @{:another :table}))
 ```)
 
-## Getting and Setting values
+## Getting and setting values
 
-Like other data structures in Janet, values in a table can be retrieved
-with the @code[get] function, and new values in a table can be added via the
-@code[put] function or the @code[set] special. Inserting a value of nil into a table
-removes the key from the table. This means table's cannot contain nil values.
+Like other data structures in Janet, values in a table can be retrieved with
+the @code[get] function, and new values in a table can be added via the
+@code[put] function or the @code[set] special. Inserting a value of @code`nil`
+into a table removes the key from the table. This means tables cannot contain
+@code`nil` values.
 
 @codeblock[janet](```
 (def t @{})
@@ -62,10 +62,11 @@ removes the key from the table. This means table's cannot contain nil values.
 
 ## Prototypes
 
-All tables can have a prototype, a parent table that is checked when a
-key is not found in the first table. By default, tables have no prototype.
-Prototypes are a flexible mechanism that, among other uses, can be used to
-implement inheritance in Janet. Read more in the @link[/docs/prototypes.html][documentation for prototypes]
+All tables can have a prototype, a parent table that is checked when a key is
+not found in the first table. By default, tables have no prototype.  Prototypes
+are a flexible mechanism that, among other things, can be used to implement
+inheritance in Janet. Read more in the
+@link[/docs/prototypes.html][documentation for prototypes]
 
 ## Useful functions for tables
 
@@ -88,4 +89,4 @@ is a non-exhaustive list.
     @li{@code[walk]}
     @li{@code[zipcoll]}}
 
-See the @link[/doc.html][Core Api Documentation] for more information on individual functions.
+See the @link[/api/table.html][Table API] documentation for table-specific functions.
