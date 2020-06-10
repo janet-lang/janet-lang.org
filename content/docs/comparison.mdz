@@ -88,30 +88,31 @@ will "do the right thing".
 ## Implementing Polymorphic Comparison
 
 If you just want to use the polymorphic comparison for the built in types,
-you can skip this section.  It contains advanced information to allow a
+you can skip this section, which contains advanced information to allow a
 developer to implement polymorphic comparison for their own types.
 
-The polymorphic comparison operators will simply defer comparison to the
-primitive comparison operators unless one or more of the objects being compared
-support a "compare" method.
+The polymorphic comparison operators all use a function called @code`compare`
+to establish an ordering for all objects.  The @code`compare` function always
+compares just two values (here @code`a` and @code`b`, and returns -1, 0, or 1
+for @code[a < b], @code[a = b], @code[a > b] respectively.  This result is used
+by the comparison operator, like @code[compare<], to decide to return false or
+true.  (The comparison operators are extended to work for multiple arguments
+using multiple calls to @code`compare`.
 
-In general, for any pairwise comparison between @code`a` and @code`b`, the
-comparison operator will first check if @code`a` implements a compare method,
-and if so call it with @code`a` and @code`b` as arguments.  The compare method
-can only return -1, 0, 1, or nil, corresponding to @code[a < b], @code[a = b],
+The function @code`compare` checks if @code`a` implements a compare method,
+and if so calls it with @code`a` and @code`b` as arguments.  The compare method
+will only return -1, 0, 1, or nil, corresponding to @code[a < b], @code[a = b],
 @code[a > b], or "I don't know how to compare these two types".  If the return
-value is not nil, the operator can use the result to translate into true/false
-results for any comparison operation in the obvious way.  For example, if the
-compare method returns -1, and the called function was compare<, then the
-result is true.
+value is not nil, compare returns that result to the calling comparator.
 
 If the compare method returns nil when called with @code`a` and @code`b` as
-arguments, then the comparison operator checks if @code`b` implements a
-comparison method.  If so, it called with @code`a` and @code`b` as arguments,
-with the same possible outcomes (-1, 0, 1 or nil).  If this call returns nil,
-the comparison operator will defer to the primitive comparison operator, which
-never returns nil, so the polymorphic operators always produce a total ordering
-over all types, just as do the primitive operators.
+arguments, then the @code`compare` function checks if @code`b` implements a
+comparison method.  If so, it is called with @code`a` and @code`b` as
+arguments, with the same possible outcomes (-1, 0, 1 or nil).  If this method
+call returns nil, the @code`compare` function will defer to the primitive
+comparison operators, which never return nil, so the polymorphic operators
+always produce a total ordering over all types, just as do the primitive
+operators.
 
 The compare method, which allows a type to participate in polymorpic comparison
 in a semantically meaningful way, can be implemented in C, or as a
