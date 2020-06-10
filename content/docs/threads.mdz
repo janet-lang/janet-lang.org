@@ -1,6 +1,6 @@
 {:title "Multithreading"
  :template "docpage.html"
- :order 18}
+ :order 19}
 ---
 
 Starting in version 1.6.0, Janet has the ability to do true, non-cooperative

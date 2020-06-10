@@ -1,6 +1,6 @@
 {:title "Functions"
  :template "docpage.html"
- :order 6}
+ :order 7}
 ---
 
 Janet is a functional language - that means that one of the basic building

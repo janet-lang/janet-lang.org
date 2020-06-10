@@ -1,6 +1,6 @@
 {:title "Macros"
  :template "docpage.html"
- :order 9}
+ :order 10}
 ---
 
 Janet supports macros: routines that take code as input and return transformed

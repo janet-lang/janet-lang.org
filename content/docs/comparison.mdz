@@ -1,0 +1,121 @@
+{:title "Comparison Operators"
+ :template "docpage.html"
+ :order 4}
+---
+
+Comparison operators are used for comparing values in Janet, in order to
+establish equality or ordering.  Janet has two types of comparison operators,
+which we refer to as "primitive" comparison operators, and "polymorphic"
+comparison operators, respectively.
+
+## Primitive Comparison Operators
+
+The primitive comparison operators are @code[=], @code[<], @code[<=], @code[>],
+@code[>=].  In the simple case, each operator can be used to compare two values
+as follows: @code[(< a b)] will return true if a < b, and false otherwise.
+Similarly @code[(= a b)] will be true only if a == b.
+
+@codeblock[janet](```
+(= 3 3)          # true
+(< 1 3)          # true
+(>= :a :a)       # true
+(> "bar" "foo")  # false -- strings compare lexicographically
+(<= :bar :foo)   # true -- symbols compare lexicographically by symbol name
+(= nil nil)      # true -- nil always equal to itself and only itself
+```)
+
+More generally, each of these operators can take any number of arguments
+(from 0) and will return true if the arguments do not violate the ordering
+implied by the operator.  So @code[(< 1 2 3)] returns true but
+@code[(> 3 2 4)] returns false.  As an extreme, @code[(<)] returns true
+since its (nonexistent) arguments do not violate the ordering.
+
+@codeblock[janet](```
+(= 1 1 1)  # true
+(< 1 3 5)  # true
+(>= 3 1 7) # false
+(> 1)      # true
+```)
+
+The primitive comparison operators provide a total ordering for all Janet
+types, but importantly, these operators do not actually compare values of
+different types in a semantic way.  If two arguments of a primitive comparison
+are of different types, they will be ordered by Janet's internal type number.
+This is not necessarily what the user needs, for example, when comparing
+Janet int/s64 types to Janet numbers.
+
+@codeblock[janet](```
+# surprisingly evaluates to false:
+(= (int/s64 1) (int/u64 1))
+# surprisingly evaluates to true but this due to Janet internal type number
+# for int/u64 types being greater than the internal type number for numbers!
+(< 3 (int/u64 2))
+```)
+
+If you require comparison between types, use the polymorphic comparison
+operators, described below.
+
+## Polymorphic Comparison Operators
+
+The polymorphic comparison operators are used for comparing different types in
+some manner rather than just by internal Janet type number.  The semantics are
+determined by the types involved.  The purpose of these operators is to allow
+comparison to work in some "less surprising" way (relative to the primitive
+comparison operators) when two types have a natural ordering between them.
+
+The polymorphic comparison operators are called @code[compare=],
+@code[compare<], @code[compare<=], @code[compare>], @code[compare>=].  In
+general, they work like the primitive operators (and in fact, they defer to the
+primitive operators if no "special polymorphicness" is available for the types
+involved -- see below).  So similar to the above examples:
+
+@codeblock[janet](```
+(compare< 1 3)          # true
+(compare> "bar" "foo")  # false -- strings compare lexicographically
+(compare<= :bar :foo)   # true -- symbols compare lexicographically by symbol name
+(compare= nil nil)      # true -- nil always equal to itself and only itself
+(compare< 1 2 3)        # true -- just like <
+```)
+
+However, when comparing between int/s64, int/u64, and number types, these operators
+will "do the right thing".
+
+@codeblock[janet](```
+(compare= (int/s64 1) (int/u64 1))  # true -- they are "semantically" equal
+(compare< 3 (int/u64 2))            # false -- semantically 3 is not < 2
+```)
+
+## Implementing Polymorphic Comparison
+
+If you just want to use the polymorphic comparison for the built in types,
+you can skip this section.  It contains advanced information to allow a
+developer to implement polymorphic comparison for their own types.
+
+The polymorphic comparison operators will simply defer comparison to the
+primitive comparison operators unless one or more of the objects being compared
+support a "compare" method.
+
+In general, for any pairwise comparison between @code`a` and @code`b`, the
+comparison operator will first check if @code`a` implements a compare method,
+and if so call it with @code`a` and @code`b` as arguments.  The compare method
+can only return -1, 0, 1, or nil, corresponding to @code[a < b], @code[a = b],
+@code[a > b], or "I don't know how to compare these two types".  If the return
+value is not nil, the operator can use the result to translate into true/false
+results for any comparison operation in the obvious way.  For example, if the
+compare method returns -1, and the called function was compare<, then the
+result is true.
+
+If the compare method returns nil when called with @code`a` and @code`b` as
+arguments, then the comparison operator checks if @code`b` implements a
+comparison method.  If so, it called with @code`a` and @code`b` as arguments,
+with the same possible outcomes (-1, 0, 1 or nil).  If this call returns nil,
+the comparison operator will defer to the primitive comparison operator, which
+never returns nil, so the polymorphic operators always produce a total ordering
+over all types, just as do the primitive operators.
+
+The compare method, which allows a type to participate in polymorpic comparison
+in a semantically meaningful way, can be implemented in C, or as a
+Janet-language method on a table-based "object".  See the
+@link[/docs/object_oriented.html][object oriented programming section] and the
+@link[/docs/prototypes.html][prototypes section] for more information on
+developing object methods.

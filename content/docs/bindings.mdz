@@ -1,6 +1,6 @@
 {:title "Bindings (def and var)"
  :template "docpage.html"
- :order 4}
+ :order 5}
 ---
 
 Values can be bound to symbols for later use using the keyword @code[def]. Using
