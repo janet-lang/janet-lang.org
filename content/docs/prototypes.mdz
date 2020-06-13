@@ -1,6 +1,6 @@
 {:title "Prototypes"
  :template "docpage.html"
- :order 16}
+ :order 17}
 ---
 
 To support basic generic programming, Janet tables support a prototype table. A

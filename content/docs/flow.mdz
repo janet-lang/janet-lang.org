@@ -1,6 +1,6 @@
 {:title "Flow"
  :template "docpage.html"
- :order 5}
+ :order 6}
 ---
 
 Janet has only two built in primitives to change flow while inside a function.

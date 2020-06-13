@@ -1,6 +1,6 @@
 {:title "Destructuring"
  :template "docpage.html"
- :order 10}
+ :order 11}
 ---
 
 Janet uses the @code[get] function to retrieve values from inside data

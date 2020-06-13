@@ -1,6 +1,6 @@
 {:title "Object-Oriented Programming"
  :template "docpage.html"
- :order 14}
+ :order 15}
 ---
 
 Although Janet is primarily a functional language, it has support for
