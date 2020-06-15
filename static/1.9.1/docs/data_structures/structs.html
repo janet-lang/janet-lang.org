@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Structs</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Structs" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../index.html">Documentation</a></span><ul><li><span><a href="../syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../specials.html">Special Forms</a></span></li><li><span><a href="../numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../comparison.html">Comparison Operators</a></span></li><li><span><a href="../bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../flow.html">Flow</a></span></li><li><span><a href="../functions.html">Functions</a></span></li><li><span><a href="../strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../loop.html">Looping</a></span></li><li><span><a href="../macros.html">Macros</a></span></li><li class="caret"><span><a href="index.html">Data Structures</a></span><ul><li><span><a href="arrays.html">Arrays</a></span></li><li><span><a href="buffers.html">Buffers</a></span></li><li><span><a href="tables.html">Tables</a></span></li><li><span class="selected"><a href="structs.html">Structs</a></span></li><li><span><a href="tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../fibers/index.html">Fibers</a></span><ul><li><span><a href="../fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../modules.html">Modules</a></span></li><li><span><a href="../object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../prototypes.html">Prototypes</a></span></li><li><span><a href="../abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../threads.html">Multithreading</a></span></li><li><span><a href="../jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/thread.html">thread</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li><li><span><a href="../../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.9.1-4ae3722 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.8.1/docs/data_structures/structs.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/docs/data_structures/structs.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/docs/data_structures/structs.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/docs/data_structures/structs.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/docs/data_structures/structs.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/docs/data_structures/structs.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/docs/data_structures/structs.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Structs</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="tables.html"><span class="prevnext-text">Tables</span></a></span>
+
+          <span class="next"><a href="tuples.html"><span class="prevnext-text">Tuples</span></a></span>
+        </div>
+        
+
+<p>Structs are immutable data structures that map keys to values. They are
+semantically similar to <a href="/docs/data_structures/tables.html">tables</a>, but
+are immutable. They also can be used as keys in tables and other structs, and
+follow expected equality semantics. Like tables, they are backed by an
+efficient, native hash table.
+</p>
+<p>To create a struct, you may use a struct literal or the <code class="mendoza-code">struct</code> function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-struct</span> {<span class="mdzsyn-keyword">:key1</span> <span class="mdzsyn-number">2</span>
+                <span class="mdzsyn-keyword">:key2</span> <span class="mdzsyn-number">4</span>})
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-struct2</span> (<span class="mdzsyn-coresym">struct</span>
+                 <span class="mdzsyn-keyword">:key1</span> <span class="mdzsyn-number">2</span>
+                 <span class="mdzsyn-keyword">:key2</span> <span class="mdzsyn-number">4</span>))
+
+<span class="mdzsyn-comment"># Structs with identical contents are equal</span>
+(<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-symbol">my-struct</span> <span class="mdzsyn-symbol">my-struct2</span>) <span class="mdzsyn-comment">#-&gt; true</span></code></pre><p>As with other data structures, you may retrieve values in a struct via the
+<code class="mendoza-code">get</code> function, or call the struct as a function. Since structs are
+immutable, you cannot add key-value pairs
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">st</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-number">2</span>})
+
+(<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">st</span> <span class="mdzsyn-keyword">:a</span>) <span class="mdzsyn-comment">#-&gt; 1</span>
+(<span class="mdzsyn-symbol">st</span> <span class="mdzsyn-keyword">:b</span>) <span class="mdzsyn-comment">#-&gt; 2</span></code></pre><h2>Converting a table to a struct
+</h2>
+<p>A table can be converted to a struct via the <code class="mendoza-code">table/to-struct</code> function.
+This is useful for efficiently creating a struct by first incrementally putting
+key-value pairs in a table.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">accum</span> @{})
+(<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">100</span>
+ (<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-symbol">accum</span> (<span class="mdzsyn-coresym">string</span> <span class="mdzsyn-symbol">i</span>) <span class="mdzsyn-symbol">i</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-struct</span> (<span class="mdzsyn-coresym">table/to-struct</span> <span class="mdzsyn-symbol">accum</span>))</code></pre><h2>Using structs as keys
+</h2>
+<p>Because a struct is equal to any struct with the same contents, structs make
+useful keys for tables or other structs. For example, we can use structs to
+represent Cartesian points and keep a mapping from points to other values.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">points</span> @{
+ {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-number">12</span>} <span class="mdzsyn-string">"A"</span>
+ {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-number">12</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-number">10</span>} <span class="mdzsyn-string">"B"</span>
+ {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-number">0</span>}   <span class="mdzsyn-string">"C"</span>})
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">get-item</span>
+  <span class="mdzsyn-string">"Get item at a specific point"</span>
+  [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>]
+  (<span class="mdzsyn-symbol">points</span> {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-symbol">y</span>}))
+
+(<span class="mdzsyn-symbol">get-item</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">12</span>) <span class="mdzsyn-comment"># -&gt; "A"</span>
+(<span class="mdzsyn-symbol">get-item</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">0</span>) <span class="mdzsyn-comment"># -&gt; "C"</span>
+(<span class="mdzsyn-symbol">get-item</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">5</span>) <span class="mdzsyn-comment"># -&gt; nil</span></code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="tables.html"><span class="prevnext-text">Tables</span></a></span>
+          <span class="next"><a href="tuples.html"><span class="prevnext-text">Tuples</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2020
+  <div class="gentag">Generated on June 13, 2020 at 19:13:00 (UTC) with Janet 1.9.1-4ae3722</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

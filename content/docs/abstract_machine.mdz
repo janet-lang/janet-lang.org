@@ -2,7 +2,7 @@
 
 {:title "The Janet Abstract Machine"
  :template "docpage.html"
- :order 17}
+ :order 18}
 ---
 The Janet language is implemented on top of an abstract machine (AM). The
 compiler converts Janet data structures to this bytecode, which can then be

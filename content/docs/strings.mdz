@@ -1,6 +1,6 @@
 {:title "Strings, Keywords, and Symbols"
  :template "docpage.html"
- :order 7}
+ :order 8}
 ---
 
 Janet supports several varieties of types that can be used as labels for things
