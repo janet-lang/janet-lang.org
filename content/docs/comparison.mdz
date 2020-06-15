@@ -20,7 +20,7 @@ Similarly @code[(= a b)] will be true only if a == b.
 (< 1 3)          # true
 (>= :a :a)       # true
 (> "bar" "foo")  # false -- strings compare lexicographically
-(<= :bar :foo)   # true -- symbols compare lexicographically by symbol name
+(<= :bar :foo)   # true -- keywords compare lexicographically by keyword name
 (= nil nil)      # true -- nil always equal to itself and only itself
 ```)
 
@@ -71,7 +71,7 @@ similarly to the primitive operators:
 @codeblock[janet](```
 (compare< 1 3)          # true
 (compare> "bar" "foo")  # false -- strings compare lexicographically
-(compare<= :bar :foo)   # true -- symbols compare lexicographically by symbol name
+(compare<= :bar :foo)   # true -- keywords compare lexicographically by keyword name
 (compare= nil nil)      # true -- nil always equal to itself and only itself
 (compare< 1 2 3)        # true -- just like <
 ```)
