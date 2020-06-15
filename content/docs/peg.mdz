@@ -59,7 +59,7 @@ implemented inside patterns.  PEGs can also be compiled ahead of time with
 Match a PEG against some text. Returns an array of captured data if the text
 matches, or @code`nil` if there is no match. The caller can provide an optional
 @code`start` index to begin matching, otherwise the PEG starts on the first
-character of text. A PEG can either bea compiled PEG object or PEG source.
+character of text. A PEG can either be a compiled PEG object or PEG source.
 
 ### @code`(peg/compile peg)`
 
@@ -84,7 +84,7 @@ languages.
     @tr{@td{integer (3)}
         @td{ Matches a number of characters, and advances that many characters.
         If negative, matches if not that many characters and does not advance.
-        For example, -1 will match the end of a string }}
+        For example, -1 will match the end of a string. }}
 
     @tr{@td{@code`(range "az" "AZ")` }
         @td{ Matches characters in a range and advances 1 character. Multiple
@@ -149,6 +149,9 @@ compiled to bytecode).
     @tr{@td{@code`(at-most n x)` }
         @td{  Matches at most n repetitions of x. }}
 
+    @tr{@td{@code`(repeat n x)` }
+        @td{ Matches exactly n repetitions of x. }}
+
     @tr{@td{@code`(if cond patt)` }
         @td{ Tries to match patt only if cond matches as well. cond will not
         produce any captures. }}
@@ -172,11 +175,20 @@ compiled to bytecode).
     @tr{@td{@code`(> offset patt)` }
         @td{ Alias for @code`(look offset patt)` }}
 
+    @tr{@td{@code`(backmatch ?tag)` }
+        @td{ If tag is provided, matches against the tagged capture.  If no
+             tag is provided, matches against the last capture, but only if
+             that capture is untagged.  The peg advances if there was a
+             match.}}
+
     @tr{@td{@code`(opt patt)` }
         @td{ Alias for @code`(between 0 1 patt)` }}
 
     @tr{@td{@code`(? patt)` }
-        @td{ Alias for @code`(between 0 1 patt)` }}}
+        @td{ Alias for @code`(between 0 1 patt)` }}
+
+    @tr{@td{@code`(n patt)` }
+        @td{ Alias for @code`(repeat n patt)` }}}
 
 PEGs try to match an input text with a pattern in a greedy manner.  This means
 that if a rule fails to match, that rule will fail and not try again. The only
@@ -190,7 +202,7 @@ this means that the order of @code`x y z` in choice @strong{does} matter. If
 
 So far we have only been concerned with "does this text match this language?".
 This is useful, but it is often more useful to extract data from text if it does
-match a PEG. The @code`peg` module uses that concept of a capture stack to
+match a PEG. The @code`peg` module uses the concept of a capture stack to
 extract data from text. As the PEG is trying to match a piece of text, some
 forms may push Janet values onto the capture stack as a side effect. If the text
 matches the main PEG language, @code`(peg/match)` will return the final capture
@@ -210,9 +222,9 @@ grammars simpler.
         @th{What it matches}}
 
     @tr{@td{@code`(capture patt ?tag)` }
-        @td{ Captures all of the text in patt if patt matches, If patt contains
-        any captures, then those captures will be pushed to the capture stack
-        before the total text. }}
+        @td{ Captures all of the text in patt if patt matches. If patt contains
+        any captures, then those captures will be pushed on to the capture
+        stack before the total text. }}
 
     @tr{@td{@code`(<- patt ?tag)` }
         @td{ Alias for @code`(capture patt ?tag)` }}
@@ -227,7 +239,7 @@ grammars simpler.
     @tr{@td{@code`(replace patt subst ?tag)` }
         @td{ Replaces the captures produced by patt by applying subst to them.
         If subst is a table or struct, will push @code`(get subst last-capture)`
-        to the capture stack after removing the old captures. If a subst is a
+        to the capture stack after removing the old captures. If subst is a
         function, will call subst with the captures of patt as arguments and
         push the result to the capture stack. Otherwise, will push subst
         literally to the capture stack. }}
@@ -317,7 +329,7 @@ Besides the primitive patterns and pattern combinators given above, the
 @code`peg` module also provides a default grammar with a handful of commonly
 used patterns. All of these shorthands can be defined with the combinators above
 and primitive patterns, but you may see these aliases in other grammars and they
-can make grammar simpler and easier to read.
+can make grammars simpler and easier to read.
 
 @tag[table]{
     @tr{@th{Name} @th{Expanded} @th{Description}}
@@ -352,7 +364,7 @@ this table will not affect already compiled PEGs.
 Although all pattern matching is done in anchored mode, operations like global
 substitution and searching can be implemented with the PEG module. A simple
 Janet function that produces PEGs that search for strings shows how captures and
-looping specials can composed, and how quasiquoting can be used to embed values
+looping specials can be composed, and how quasiquoting can be used to embed values
 in patterns.
 
 @codeblock[janet]```
