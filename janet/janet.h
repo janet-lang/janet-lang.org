@@ -138,11 +138,6 @@ extern "C" {
 #define JANET_NO_UTC_MKTIME
 #endif
 
-/* Add some windows flags */
-#ifdef JANET_WINDOWS
-#define JANET_NO_REALPATH
-#endif
-
 /* Define how global janet state is declared */
 #ifdef JANET_SINGLE_THREADED
 #define JANET_THREAD_LOCAL
@@ -1307,6 +1302,7 @@ JANET_API void janet_table_merge_table(JanetTable *table, JanetTable *other);
 JANET_API void janet_table_merge_struct(JanetTable *table, JanetStruct other);
 JANET_API JanetKV *janet_table_find(JanetTable *t, Janet key);
 JANET_API JanetTable *janet_table_clone(JanetTable *table);
+JANET_API void janet_table_clear(JanetTable *table);
 
 /* Fiber */
 JANET_API JanetFiber *janet_fiber(JanetFunction *callee, int32_t capacity, int32_t argc, const Janet *argv);
@@ -1587,6 +1583,8 @@ typedef enum {
     RULE_ERROR,        /* [rule] */
     RULE_DROP,         /* [rule] */
     RULE_BACKMATCH,    /* [tag] */
+    RULE_TO,           /* [rule] */
+    RULE_THRU,         /* [rule] */
     RULE_LENPREFIX,    /* [rule_a, rule_b (repeat rule_b rule_a times)] */
 } JanetPegOpcode;
 
