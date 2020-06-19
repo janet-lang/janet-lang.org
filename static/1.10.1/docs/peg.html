@@ -129,7 +129,7 @@ implemented inside patterns.  PEGs can also be compiled ahead of time with
 <p>Match a PEG against some text. Returns an array of captured data if the text
 matches, or <code class="mendoza-code">nil</code> if there is no match. The caller can provide an optional
 <code class="mendoza-code">start</code> index to begin matching, otherwise the PEG starts on the first
-character of text. A PEG can either bea compiled PEG object or PEG source.
+character of text. A PEG can either be a compiled PEG object or PEG source.
 </p>
 <h3><code class="mendoza-code">(peg/compile peg)</code>
 </h3>
@@ -154,7 +154,7 @@ languages.
     <tr><td>integer (3)</td>
         <td> Matches a number of characters, and advances that many characters.
         If negative, matches if not that many characters and does not advance.
-        For example, -1 will match the end of a string </td></tr>
+        For example, -1 will match the end of a string. </td></tr>
 
     <tr><td><code class="mendoza-code">(range "az" "AZ")</code> </td>
         <td> Matches characters in a range and advances 1 character. Multiple
@@ -213,6 +213,9 @@ compiled to bytecode).
     <tr><td><code class="mendoza-code">(at-most n x)</code> </td>
         <td>  Matches at most n repetitions of x. </td></tr>
 
+    <tr><td><code class="mendoza-code">(repeat n x)</code> </td>
+        <td> Matches exactly n repetitions of x. </td></tr>
+
     <tr><td><code class="mendoza-code">(if cond patt)</code> </td>
         <td> Tries to match patt only if cond matches as well. cond will not
         produce any captures. </td></tr>
@@ -225,7 +228,7 @@ compiled to bytecode).
         <td> Matches only if patt does not match. Will not produce captures or
         advance any characters. </td></tr>
 
-    <tr><td><code class="mendoza-code">(! patt)</code>   </td>
+    <tr><td><code class="mendoza-code">(! patt)</code> </td>
     <td> Alias for <code class="mendoza-code">(not patt)</code> </td></tr>
 
     <tr><td><code class="mendoza-code">(look offset patt)</code> </td>
@@ -236,11 +239,30 @@ compiled to bytecode).
     <tr><td><code class="mendoza-code">(&gt; offset patt)</code> </td>
         <td> Alias for <code class="mendoza-code">(look offset patt)</code> </td></tr>
 
+    <tr><td><code class="mendoza-code">(to patt)</code> </td>
+        <td> Match up to patt (but not including it). If the end of the input
+             is reached and patt is not matched, the entire pattern does not
+             match. </td></tr>
+
+    <tr><td><code class="mendoza-code">(thru patt)</code> </td>
+        <td> Match up through patt (thus including it). If the end of the
+             input is reached and patt is not matched, the entire pattern
+             does not match. </td></tr>
+
+    <tr><td><code class="mendoza-code">(backmatch ?tag)</code> </td>
+        <td> If tag is provided, matches against the tagged capture.  If no
+             tag is provided, matches against the last capture, but only if
+             that capture is untagged.  The peg advances if there was a
+             match.</td></tr>
+
     <tr><td><code class="mendoza-code">(opt patt)</code> </td>
         <td> Alias for <code class="mendoza-code">(between 0 1 patt)</code> </td></tr>
 
     <tr><td><code class="mendoza-code">(? patt)</code> </td>
-        <td> Alias for <code class="mendoza-code">(between 0 1 patt)</code> </td></tr></table><p>PEGs try to match an input text with a pattern in a greedy manner.  This means
+        <td> Alias for <code class="mendoza-code">(between 0 1 patt)</code> </td></tr>
+
+    <tr><td><code class="mendoza-code">(n patt)</code> </td>
+        <td> Alias for <code class="mendoza-code">(repeat n patt)</code> </td></tr></table><p>PEGs try to match an input text with a pattern in a greedy manner.  This means
 that if a rule fails to match, that rule will fail and not try again. The only
 backtracking provided in a PEG is provided by the <code class="mendoza-code">(choice x y z ...)</code>
 special, which will try rules in order until one succeeds, and the whole pattern
@@ -252,7 +274,7 @@ this means that the order of <code class="mendoza-code">x y z</code> in choice <
 </h2>
 <p>So far we have only been concerned with "does this text match this language?".
 This is useful, but it is often more useful to extract data from text if it does
-match a PEG. The <code class="mendoza-code">peg</code> module uses that concept of a capture stack to
+match a PEG. The <code class="mendoza-code">peg</code> module uses the concept of a capture stack to
 extract data from text. As the PEG is trying to match a piece of text, some
 forms may push Janet values onto the capture stack as a side effect. If the text
 matches the main PEG language, <code class="mendoza-code">(peg/match)</code> will return the final capture
@@ -272,9 +294,9 @@ grammars simpler.
         <th>What it matches</th></tr>
 
     <tr><td><code class="mendoza-code">(capture patt ?tag)</code> </td>
-        <td> Captures all of the text in patt if patt matches, If patt contains
-        any captures, then those captures will be pushed to the capture stack
-        before the total text. </td></tr>
+        <td> Captures all of the text in patt if patt matches. If patt contains
+        any captures, then those captures will be pushed on to the capture
+        stack before the total text. </td></tr>
 
     <tr><td><code class="mendoza-code">(&lt;- patt ?tag)</code> </td>
         <td> Alias for <code class="mendoza-code">(capture patt ?tag)</code> </td></tr>
@@ -289,7 +311,7 @@ grammars simpler.
     <tr><td><code class="mendoza-code">(replace patt subst ?tag)</code> </td>
         <td> Replaces the captures produced by patt by applying subst to them.
         If subst is a table or struct, will push <code class="mendoza-code">(get subst last-capture)</code>
-        to the capture stack after removing the old captures. If a subst is a
+        to the capture stack after removing the old captures. If subst is a
         function, will call subst with the captures of patt as arguments and
         push the result to the capture stack. Otherwise, will push subst
         literally to the capture stack. </td></tr>
@@ -373,7 +395,7 @@ that will result in long loops and be very slow in general.
 <code class="mendoza-code">peg</code> module also provides a default grammar with a handful of commonly
 used patterns. All of these shorthands can be defined with the combinators above
 and primitive patterns, but you may see these aliases in other grammars and they
-can make grammar simpler and easier to read.
+can make grammars simpler and easier to read.
 </p>
 <table>
     <tr><th>Name</th> <th>Expanded</th> <th>Description</th></tr>
@@ -406,7 +428,7 @@ this table will not affect already compiled PEGs.
 <p>Although all pattern matching is done in anchored mode, operations like global
 substitution and searching can be implemented with the PEG module. A simple
 Janet function that produces PEGs that search for strings shows how captures and
-looping specials can composed, and how quasiquoting can be used to embed values
+looping specials can be composed, and how quasiquoting can be used to embed values
 in patterns.
 </p>
 <pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">finder</span>
@@ -439,7 +461,7 @@ accumulate special <code class="mendoza-code">(%)</code>.
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2020
-  <div class="gentag">Generated on June 19, 2020 at 01:55:25 (UTC) with Janet 1.10.1-9cfc3d9</div>
+  <div class="gentag">Generated on June 19, 2020 at 02:15:38 (UTC) with Janet 1.10.1-9cfc3d9</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>
