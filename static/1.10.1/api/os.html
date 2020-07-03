@@ -95,17 +95,17 @@ Check the ISA that janet was compiled for. Returns one of:
 	:sparc
 	:wasm
 	:unknown
-</pre></div><hr><div class="binding"><span class="binding-sym" id="os/cd">os/cd</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cd path)
+</pre><a href="https://janetdocs.com/os/arch">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/cd">os/cd</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cd path)
 
-Change current directory to path. Returns nil on success, errors on failure.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/chmod">os/chmod</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/chmod path mode)
+Change current directory to path. Returns nil on success, errors on failure.</pre><a href="https://janetdocs.com/os/cd">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/chmod">os/chmod</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/chmod path mode)
 
-Change file permissions, where mode is a permission string as returned by os/perm-string, or an integer as returned by os/perm-int. When mode is an integer, it is interpreted as a Unix permission value, best specified in octal, like 8r666 or 8r400. Windows will not differentiate between user, group, and other permissions, and thus will combine all of these permissions. Returns nil.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/clock">os/clock</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/clock)
+Change file permissions, where mode is a permission string as returned by os/perm-string, or an integer as returned by os/perm-int. When mode is an integer, it is interpreted as a Unix permission value, best specified in octal, like 8r666 or 8r400. Windows will not differentiate between user, group, and other permissions, and thus will combine all of these permissions. Returns nil.</pre><a href="https://janetdocs.com/os/chmod">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/clock">os/clock</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/clock)
 
-Return the number of seconds since some fixed point in time. The clock is guaranteed to be non decreasing in real time.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/cryptorand">os/cryptorand</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cryptorand n &amp;opt buf)
+Return the number of seconds since some fixed point in time. The clock is guaranteed to be non decreasing in real time.</pre><a href="https://janetdocs.com/os/clock">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/cryptorand">os/cryptorand</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cryptorand n &amp;opt buf)
 
-Get or append n bytes of good quality random data provided by the OS. Returns a new buffer or buf.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/cwd">os/cwd</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cwd)
+Get or append n bytes of good quality random data provided by the OS. Returns a new buffer or buf.</pre><a href="https://janetdocs.com/os/cryptorand">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/cwd">os/cwd</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cwd)
 
-Returns the current working directory.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/date">os/date</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/date &amp;opt time local)
+Returns the current working directory.</pre><a href="https://janetdocs.com/os/cwd">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/date">os/date</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/date &amp;opt time local)
 
 Returns the given time as a date struct, or the current time if no time is given. Returns a struct with following key values. Note that all numbers are 0-indexed. Date is given in UTC unless local is truthy, in which case the date is formatted for the local timezone.
 
@@ -117,54 +117,54 @@ Returns the given time as a date struct, or the current time if no time is given
 	:year - years since year 0 (e.g. 2019)
 	:week-day - day of the week [0-6]
 	:year-day - day of the year [0-365]
-	:dst - If Day Light Savings is in effect</pre></div><hr><div class="binding"><span class="binding-sym" id="os/dir">os/dir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/dir dir &amp;opt array)
+	:dst - If Day Light Savings is in effect</pre><a href="https://janetdocs.com/os/date">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/dir">os/dir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/dir dir &amp;opt array)
 
-Iterate over files and subdirectories in a directory. Returns an array of paths parts, with only the file name or directory name and no prefix.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/environ">os/environ</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/environ)
+Iterate over files and subdirectories in a directory. Returns an array of paths parts, with only the file name or directory name and no prefix.</pre><a href="https://janetdocs.com/os/dir">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/environ">os/environ</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/environ)
 
-Get a copy of the os environment table.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/execute">os/execute</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/execute args &amp;opts flags env)
+Get a copy of the os environment table.</pre><a href="https://janetdocs.com/os/environ">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/execute">os/execute</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/execute args &amp;opts flags env)
 
 Execute a program on the system and pass it string arguments. Flags is a keyword that modifies how the program will execute.
 
 	:e - enables passing an environment to the program. Without :e, the current environment is inherited.
 	:p - allows searching the current PATH for the binary to execute. Without this flag, binaries must use absolute paths.
 
-env is a table or struct mapping environment variables to values. Returns the exit status of the program.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/exit">os/exit</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/exit &amp;opt x)
+env is a table or struct mapping environment variables to values. Returns the exit status of the program.</pre><a href="https://janetdocs.com/os/execute">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/exit">os/exit</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/exit &amp;opt x)
 
-Exit from janet with an exit code equal to x. If x is not an integer, the exit with status equal the hash of x.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/getenv">os/getenv</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/getenv variable &amp;opt dflt)
+Exit from janet with an exit code equal to x. If x is not an integer, the exit with status equal the hash of x.</pre><a href="https://janetdocs.com/os/exit">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/getenv">os/getenv</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/getenv variable &amp;opt dflt)
 
-Get the string value of an environment variable.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/link">os/link</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/link oldpath newpath &amp;opt symlink)
+Get the string value of an environment variable.</pre><a href="https://janetdocs.com/os/getenv">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/link">os/link</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/link oldpath newpath &amp;opt symlink)
 
-Create a link at newpath that points to oldpath and returns nil. Iff symlink is truthy, creates a symlink. Iff symlink is falsey or not provided, creates a hard link. Does not work on Windows.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/lstat">os/lstat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/lstat path &amp;opt tab|key)
+Create a link at newpath that points to oldpath and returns nil. Iff symlink is truthy, creates a symlink. Iff symlink is falsey or not provided, creates a hard link. Does not work on Windows.</pre><a href="https://janetdocs.com/os/link">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/lstat">os/lstat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/lstat path &amp;opt tab|key)
 
 Like os/stat, but don't follow symlinks.
-</pre></div><hr><div class="binding"><span class="binding-sym" id="os/mkdir">os/mkdir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/mkdir path)
+</pre><a href="https://janetdocs.com/os/lstat">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/mkdir">os/mkdir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/mkdir path)
 
-Create a new directory. The path will be relative to the current directory if relative, otherwise it will be an absolute path. Returns true if the directory was created, false if the directory already exists, and errors otherwise.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/mktime">os/mktime</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/mktime date-struct &amp;opt local)
+Create a new directory. The path will be relative to the current directory if relative, otherwise it will be an absolute path. Returns true if the directory was created, false if the directory already exists, and errors otherwise.</pre><a href="https://janetdocs.com/os/mkdir">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/mktime">os/mktime</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/mktime date-struct &amp;opt local)
 
 Get the broken down date-struct time expressed as the number of seconds since January 1, 1970, the Unix epoch. Returns a real number. Date is given in UTC unless local is truthy, in which case the date is computed for the local timezone.
 
-Inverse function to os/date.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/perm-int">os/perm-int</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/perm-int bytes)
+Inverse function to os/date.</pre><a href="https://janetdocs.com/os/mktime">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/perm-int">os/perm-int</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/perm-int bytes)
 
-Parse a 9 character permission string and return an integer that can be used by chmod.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/perm-string">os/perm-string</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/perm-string int)
+Parse a 9 character permission string and return an integer that can be used by chmod.</pre><a href="https://janetdocs.com/os/perm-int">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/perm-string">os/perm-string</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/perm-string int)
 
-Convert a Unix octal permission value from a permission integer as returned by os/stat to a human readable string, that follows the formatting of unix tools like ls. Returns the string as a 9 character string of r, w, x and - characters. Does not include the file/directory/symlink character as rendered by `ls`.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/readlink">os/readlink</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/readlink path)
+Convert a Unix octal permission value from a permission integer as returned by os/stat to a human readable string, that follows the formatting of unix tools like ls. Returns the string as a 9 character string of r, w, x and - characters. Does not include the file/directory/symlink character as rendered by `ls`.</pre><a href="https://janetdocs.com/os/perm-string">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/readlink">os/readlink</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/readlink path)
 
 Read the contents of a symbolic link. Does not work on Windows.
-</pre></div><hr><div class="binding"><span class="binding-sym" id="os/realpath">os/realpath</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/realpath path)
+</pre><a href="https://janetdocs.com/os/readlink">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/realpath">os/realpath</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/realpath path)
 
-Get the absolute path for a given path, following ../, ./, and symlinks. Returns an absolute path as a string. Will raise an error on Windows.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/rename">os/rename</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rename oldname newname)
+Get the absolute path for a given path, following ../, ./, and symlinks. Returns an absolute path as a string. Will raise an error on Windows.</pre><a href="https://janetdocs.com/os/realpath">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/rename">os/rename</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rename oldname newname)
 
-Rename a file on disk to a new path. Returns nil.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/rm">os/rm</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rm path)
+Rename a file on disk to a new path. Returns nil.</pre><a href="https://janetdocs.com/os/rename">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/rm">os/rm</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rm path)
 
-Delete a file. Returns nil.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/rmdir">os/rmdir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rmdir path)
+Delete a file. Returns nil.</pre><a href="https://janetdocs.com/os/rm">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/rmdir">os/rmdir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rmdir path)
 
-Delete a directory. The directory must be empty to succeed.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/setenv">os/setenv</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/setenv variable value)
+Delete a directory. The directory must be empty to succeed.</pre><a href="https://janetdocs.com/os/rmdir">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/setenv">os/setenv</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/setenv variable value)
 
-Set an environment variable.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/shell">os/shell</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/shell str)
+Set an environment variable.</pre><a href="https://janetdocs.com/os/setenv">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/shell">os/shell</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/shell str)
 
-Pass a command string str directly to the system shell.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/sleep">os/sleep</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/sleep nsec)
+Pass a command string str directly to the system shell.</pre><a href="https://janetdocs.com/os/shell">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/sleep">os/sleep</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/sleep nsec)
 
-Suspend the program for nsec seconds. 'nsec' can be a real number. Returns nil.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/stat">os/stat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/stat path &amp;opt tab|key)
+Suspend the program for nsec seconds. 'nsec' can be a real number. Returns nil.</pre><a href="https://janetdocs.com/os/sleep">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/stat">os/stat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/stat path &amp;opt tab|key)
 
 Gets information about a file or directory. Returns a table If the third argument is a keyword, returns only that information from stat. If the file or directory does not exist, returns nil. The keys are
 
@@ -182,15 +182,15 @@ Gets information about a file or directory. Returns a table If the third argumen
 	:accessed - timestamp when file last accessed
 	:changed - timestamp when file last changed (permissions changed)
 	:modified - timestamp when file last modified (content changed)
-</pre></div><hr><div class="binding"><span class="binding-sym" id="os/symlink">os/symlink</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/symlink oldpath newpath)
+</pre><a href="https://janetdocs.com/os/stat">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/symlink">os/symlink</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/symlink oldpath newpath)
 
-Create a symlink from oldpath to newpath, returning nil. Same as (os/link oldpath newpath true).</pre></div><hr><div class="binding"><span class="binding-sym" id="os/time">os/time</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/time)
+Create a symlink from oldpath to newpath, returning nil. Same as (os/link oldpath newpath true).</pre><a href="https://janetdocs.com/os/symlink">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/time">os/time</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/time)
 
-Get the current time expressed as the number of seconds since January 1, 1970, the Unix epoch. Returns a real number.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/touch">os/touch</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/touch path &amp;opt actime modtime)
+Get the current time expressed as the number of seconds since January 1, 1970, the Unix epoch. Returns a real number.</pre><a href="https://janetdocs.com/os/time">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/touch">os/touch</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/touch path &amp;opt actime modtime)
 
-Update the access time and modification times for a file. By default, sets times to the current time.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/umask">os/umask</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/umask mask)
+Update the access time and modification times for a file. By default, sets times to the current time.</pre><a href="https://janetdocs.com/os/touch">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/umask">os/umask</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/umask mask)
 
-Set a new umask, returns the old umask.</pre></div><hr><div class="binding"><span class="binding-sym" id="os/which">os/which</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/which)
+Set a new umask, returns the old umask.</pre><a href="https://janetdocs.com/os/umask">Community Examples</a></div><hr><div class="binding"><span class="binding-sym" id="os/which">os/which</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/which)
 
 Check the current operating system. Returns one of:
 
@@ -203,7 +203,7 @@ Check the current operating system. Returns one of:
 	:netbsd
 	:posix - A POSIX compatible system (default)
 
-May also return a custom keyword specified at build time.</pre></div>
+May also return a custom keyword specified at build time.</pre><a href="https://janetdocs.com/os/which">Community Examples</a></div>
         <div class="prevnext-bar">
           <span class="prev"><a href="net.html"><span class="prevnext-text">Net Module</span></a></span>
           <span class="next"><a href="peg.html"><span class="prevnext-text">PEG Module</span></a></span>
@@ -214,7 +214,7 @@ May also return a custom keyword specified at build time.</pre></div>
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2020
-  <div class="gentag">Generated on June 19, 2020 at 02:15:38 (UTC) with Janet 1.10.1-9cfc3d9</div>
+  <div class="gentag">Generated on July 3, 2020 at 15:37:47 (UTC) with Janet 1.10.1-9cfc3d9</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>
