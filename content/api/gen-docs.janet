@@ -48,7 +48,9 @@
                {:tag "pre" "class" "binding-text" :content (or docstring "")}
                ;(if example [{:tag "div" "class" "example-title" :content "EXAMPLES"}
                              {:tag "pre" "class" "mendoza-codeblock"
-                              :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])]}))
+                              :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])
+
+               {:tag "a" "href" (string "https://janetdocs.com/" key) :content "Community Examples"}]}))
 
 (def- all-entries 
   (sort (pairs (table/getproto (fiber/getenv (fiber/current))))))
