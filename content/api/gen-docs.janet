@@ -21,6 +21,20 @@
     (print src)
     src))
 
+(def- url-repl-chars
+  {(chr "%") "%25"
+   (chr "?") "_q"
+   (chr "=") "%3d"})
+
+(defn jdoc-escape
+  [str]
+  (def ret @"")
+  (each b str
+    (if-let [repl (in url-repl-chars b)]
+      (buffer/push-string ret repl)
+      (buffer/push-byte ret b)))
+  ret)
+
 (def- ver janet/build)
 
 (defn- emit-item
@@ -50,7 +64,7 @@
                              {:tag "pre" "class" "mendoza-codeblock"
                               :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])
 
-               {:tag "a" "href" (string "https://janetdocs.com/" key) :content "Community Examples"}]}))
+               {:tag "a" "href" (string "https://janetdocs.com/" (jdoc-escape key)) :content "Community Examples"}]}))
 
 (def- all-entries 
   (sort (pairs (table/getproto (fiber/getenv (fiber/current))))))
