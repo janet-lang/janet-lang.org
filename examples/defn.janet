@@ -22,10 +22,10 @@
   [x y z & more]
   [x y z more])
 
-(with-metadata 1 2) # raises arity error
-(with-metadata 1 2 3) # -> (1 2 3 ())
-(with-metadata 1 2 3 4) # -> (1 2 3 (4))
-(with-metadata 1 2 3 4 5) # -> (1 2 3 (4 5))
+(with-tags 1 2) # raises arity error
+(with-tags 1 2 3) # -> (1 2 3 ())
+(with-tags 1 2 3 4) # -> (1 2 3 (4))
+(with-tags 1 2 3 4 5) # -> (1 2 3 (4 5))
 
 # Tags (and other metadata) are (usually) visible in the environment.
 (dyn 'with-tags) # -> @{:tag2 true :value <function with-tags> :doc "(with-tags x y z & more)\n\nAlso has a docstring..." :source-map ("repl" 4 1) :tag1 true :private true}

@@ -52,7 +52,6 @@ run: build/bin/janet
 .PHONY: deploy
 deploy: build
 	@echo "Deploying..."
-	aws s3 rm s3://janet-lang.org --recursive
-	aws s3 cp site s3://janet-lang.org --recursive
+	aws s3 sync site s3://janet-lang.org --delete
 	aws cloudfront create-invalidation --distribution-id E36S10WSIVPLGB --paths "/*"
 	@echo "Done!"
