@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Strings, Keywords, and Symbols</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Strings, Keywords, and Symbols" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc toc-hidden">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span class="selected"><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/thread.html">thread</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.10.1-9cfc3d9 Documentation<br>(Other Versions:
+          
+          <a href="../../1.9.1/docs/strings.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/strings.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/strings.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/strings.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/strings.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/strings.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/strings.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/strings.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Strings, Keywords, and Symbols</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="functions.html"><span class="prevnext-text">Functions</span></a></span>
+
+          <span class="next"><a href="loop.html"><span class="prevnext-text">Looping</span></a></span>
+        </div>
+        
+
+<p>Janet supports several varieties of types that can be used as labels for things
+in your program. The most useful type for this purpose is the keyword type. A
+keyword begins with a colon, and then contains 0 or more alphanumeric or a few
+other common characters. For example, <code class="mendoza-code">:hello</code>, <code class="mendoza-code">:my-name</code>, <code class="mendoza-code">::</code>,
+and <code class="mendoza-code">:ABC123_-*&amp;^%$</code> are all keywords.
+</p>
+<p>Keywords, symbols, and strings all behave similarly and can be used as keys for
+tables and structs.  Symbols and keywords are optimized for fast equality
+checks, so are preferred for table keys.  Keywords, symbols, and strings are all
+immutable.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Evaluates to :monday</span>
+<span class="mdzsyn-keyword">:monday</span>
+
+<span class="mdzsyn-comment"># Will throw a compile error as monday is not defined</span>
+<span class="mdzsyn-symbol">monday</span>
+
+<span class="mdzsyn-comment"># Quote it - evaluates to the symbol monday</span>
+'<span class="mdzsyn-symbol">monday</span>
+
+<span class="mdzsyn-comment"># Our first define, 'monday'</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">monday</span> <span class="mdzsyn-string">"It is monday"</span>)
+
+<span class="mdzsyn-comment"># Now the evaluation should work - monday evaluates to "It is monday"</span>
+<span class="mdzsyn-symbol">monday</span></code></pre><h2>Keywords
+</h2>
+<p>The most common thing to do with a keyword is to check it for equality or use it
+as a key into a table or struct.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Evaluates to true</span>
+(<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-keyword">:hello</span> <span class="mdzsyn-keyword">:hello</span>)
+
+<span class="mdzsyn-comment"># Evaluates to false, everything in janet is case sensitive</span>
+(<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-keyword">:hello</span> <span class="mdzsyn-keyword">:HeLlO</span>)
+
+<span class="mdzsyn-comment"># Look up into a table - evaluates to 25</span>
+(<span class="mdzsyn-coresym">get</span> {
+    <span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"John"</span>
+    <span class="mdzsyn-keyword">:age</span> <span class="mdzsyn-number">25</span>
+    <span class="mdzsyn-keyword">:occupation</span> <span class="mdzsyn-string">"plumber"</span>
+} <span class="mdzsyn-keyword">:age</span>)</code></pre><h2>Symbols
+</h2>
+<p>The difference between symbols and keywords is that keywords evaluate to
+themselves, while symbols evaluate to whatever they are bound to. To have a
+symbol evaluate to itself, it must be quoted.
+</p>
+<h2>Strings
+</h2>
+<p>Strings can be used similarly to keywords, but their primary usage is for
+defining either text or arbitrary sequences of bytes. Strings (and symbols) in
+Janet are what is sometimes known as ˝8-bit clean˝; they can hold any number of
+bytes, and are completely unaware of things like character encodings. This is
+completely compatible with ASCII and UTF-8, two of the most common character
+encodings. By being encoding agnostic, Janet strings can be simple, fast, and
+useful for other uses besides holding text.
+</p>
+<p>Literal text can be entered inside quotes, as we have seen above.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-string">"Hello, this is a string."</span>
+
+<span class="mdzsyn-comment"># We can also add escape characters for newlines, double quotes, backslash, tabs, etc.</span>
+<span class="mdzsyn-string">"Hello\nThis is on line two\n\tThis is indented\n"</span>
+
+<span class="mdzsyn-comment"># For long strings where you don't want to type a lot of escape characters,</span>
+<span class="mdzsyn-comment"># you can use 1 or more backticks (`) to delimit a string.</span>
+<span class="mdzsyn-comment"># To close this string, simply repeat the opening sequence of backticks</span>
+<span class="mdzsyn-string">``
+This is a string.
+Line 2
+    Indented
+"We can just type quotes here", and backslashes \ no problem.
+``</span></code></pre><p>Strings, symbols, and keywords can all contain embedded UTF-8. It is recomended
+that you embed UTF-8 literally in strings rather than escaping it if it is
+printable.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-string">"Hello, 👍"</span></code></pre><h3>Substrings
+</h3>
+<p>The <code class="mendoza-code">string/slice</code> function is used to get substrings from a string.
+Negative integers can be used to index from the end of the string.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span>) <span class="mdzsyn-comment"># -&gt; "abcdefg"</span>
+(<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; "bcdefg"</span>
+(<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">-2</span>) <span class="mdzsyn-comment"># -&gt; "cdef"</span>
+(<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">-4</span> <span class="mdzsyn-number">-2</span>) <span class="mdzsyn-comment"># -&gt; "ef"</span></code></pre><h3>Finding substrings
+</h3>
+<p>Janet has multiple functions for finding and replacing strings. The Janet string
+finding functions do not work on patterns or regular expressions; they only work
+on string literals. For more flexible searching and replacing, see the
+<a href="/docs/peg.html">PEG section</a>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">string/find</span> <span class="mdzsyn-string">"h"</span> <span class="mdzsyn-string">"h h h h"</span>) <span class="mdzsyn-comment">#-&gt; 0</span>
+(<span class="mdzsyn-coresym">string/find-all</span> <span class="mdzsyn-string">"h"</span> <span class="mdzsyn-string">"h h h h"</span>) <span class="mdzsyn-comment">#-&gt; @[0 2 4 6]</span>
+(<span class="mdzsyn-coresym">string/replace</span> <span class="mdzsyn-string">"a"</span> <span class="mdzsyn-string">"b"</span> <span class="mdzsyn-string">"a a a a"</span>) <span class="mdzsyn-comment">#-&gt; "b a a a"</span>
+(<span class="mdzsyn-coresym">string/replace-all</span> <span class="mdzsyn-string">"a"</span> <span class="mdzsyn-string">"b"</span> <span class="mdzsyn-string">"a a a a"</span>) <span class="mdzsyn-comment">#-&gt; "b b b b"</span></code></pre><h3>Splitting strings
+</h3>
+<p>The <code class="mendoza-code">string/split</code> function can be used to split strings or buffers on a
+delimiting character. This can be used as a quick and dirty function for getting
+fields from a CSV line or words from a sentence.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">string/split</span> <span class="mdzsyn-string">","</span> <span class="mdzsyn-string">"abc,def,ghi"</span>) <span class="mdzsyn-comment">#-&gt; @["abc" "def" "ghi"]</span>
+(<span class="mdzsyn-coresym">string/split</span> <span class="mdzsyn-string">" "</span> <span class="mdzsyn-string">"abc def ghi"</span>) <span class="mdzsyn-comment">#-&gt; @["abc" "def" "ghi"]</span></code></pre><h3>Concatenating strings
+</h3>
+<p>There are many ways to concatenate strings. The first, most common way is the
+<code class="mendoza-code">string</code> function, which takes any number of arguments and creates a string
+that is the concatenation of all of the arguments.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">string</span> <span class="mdzsyn-string">"abc"</span> <span class="mdzsyn-number">123</span> <span class="mdzsyn-string">"def"</span>) <span class="mdzsyn-comment"># -&gt; "abc123def"</span></code></pre><p>The second way is the <code class="mendoza-code">string/join</code> function, which takes an array or tuple
+of strings and joins them together. <code class="mendoza-code">string/join</code> can also take an optional
+separator string which is inserted between items in the array. All items in the
+array or tuple must be byte sequences.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">string/join</span> @[<span class="mdzsyn-string">"abc"</span> <span class="mdzsyn-string">"123"</span> <span class="mdzsyn-string">"def"</span>]) <span class="mdzsyn-comment">#-&gt; "abc123def"</span>
+(<span class="mdzsyn-coresym">string/join</span> @[<span class="mdzsyn-string">"abc"</span> <span class="mdzsyn-string">"123"</span> <span class="mdzsyn-string">"def"</span>] <span class="mdzsyn-string">","</span>) <span class="mdzsyn-comment"># -&gt; "abc,123,def"</span></code></pre><p>This has the advantage over the <code class="mendoza-code">string</code> function that one can specify a
+separator. Otherwise, the behavior can be easily emulated using the
+<code class="mendoza-code">splice</code> special form.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">=</span> (<span class="mdzsyn-coresym">string</span> ;@[<span class="mdzsyn-string">"a"</span> <span class="mdzsyn-string">"b"</span> <span class="mdzsyn-string">"c"</span>])
+   (<span class="mdzsyn-coresym">string/join</span> @[<span class="mdzsyn-string">"a"</span> <span class="mdzsyn-string">"b"</span> <span class="mdzsyn-string">"c"</span>])) <span class="mdzsyn-comment"># -&gt; true</span></code></pre><h3>Upper and lower case
+</h3>
+<p>The string library also provides facilities for converting strings to upper case
+and lower case. However, only ASCII characters will be transformed.  The
+functions <code class="mendoza-code">string/ascii-upper</code> and <code class="mendoza-code">string/ascii-lower</code> return a new
+string that has all character in the appropriate case.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">string/ascii-upper</span> <span class="mdzsyn-string">"aBcdef--*"</span>) <span class="mdzsyn-comment">#-&gt; "ABCDEF--*"</span>
+(<span class="mdzsyn-coresym">string/ascii-lower</span> <span class="mdzsyn-string">"aBc676A--*"</span>) <span class="mdzsyn-comment">#-&gt; "abc676a--*"</span></code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="functions.html"><span class="prevnext-text">Functions</span></a></span>
+          <span class="next"><a href="loop.html"><span class="prevnext-text">Looping</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2020
+  <div class="gentag">Generated on July 3, 2020 at 15:37:47 (UTC) with Janet 1.10.1-9cfc3d9</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

@@ -44,6 +44,10 @@
 (defn find-old-versions
   "Get old versions of this documentation for link purposes."
   []
-  (sort (seq [d :in (os/dir "static") :when (peg/match '(* :d+ "." :d+ "." :d+) d) :when (not= d janet/version)] d) >))
+  (sort (seq [d :in (os/dir "static")
+              :let [m (peg/match ~'(* (/ ':d+ ,scan-number) "." (/ ':d+ ,scan-number) "." (/ ':d+ ,scan-number)) d)]
+              :when m
+              :when (not= d janet/version)]
+          (tuple ;m)) >))
 
-(def other-versions (find-old-versions))
+(def other-versions (map last (find-old-versions)))
