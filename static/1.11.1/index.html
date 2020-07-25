@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Janet Programming Language</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, and should run on other systems with some porting. The entire language (core library, interpreter, compiler, assembler) is about 200-300 kB and should run on many constrained systems.">
+    <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="css/landing.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis|Inconsolata|Open+Sans">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+    <link rel="canonical" href="https://janet-lang.org">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="The Janet Programming Language" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://janet-lang.org/" />
+    <meta property="og:image" content="https://janet-lang.org/assets/janet-no-bg.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+
+  </head>
+  <body>
+
+    <!-- Github corner ribbon -->
+<a href="https://github.com/janet-lang/janet" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#09a5b8; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+
+    <div class="top">
+      <div class="content-wrapper">
+        <h1 class="title">Janet Language</h1>
+
+        <div class="block">
+          <img id="logo" src="assets/janet-big.png" alt="janet-logo">
+          <p>
+            Janet is a functional and imperative programming language. It runs on Windows, Linux,
+            macOS, BSDs, and should run on other systems with some porting. The entire language (core library,
+            interpreter, compiler, assembler, PEG) is less than 1MB. You can also add Janet scripting
+            to an application by embedding a single C file and two headers.
+          </p>
+        </div>
+      </div>
+      <div class="carousel">
+        <a href="https://github.com/janet-lang/janet/releases">Download</a>
+        <a href="https://github.com/janet-lang/janet">Source</a>
+        <a href="docs/index.html">Documentation</a>
+        <a href="api/index.html">Core API</a>
+      </div>
+    </div>
+    <div class="top-under"></div>
+    <div class="content-wrapper">
+
+      
+
+<h2>Community
+</h2>
+<p>Feel free to ask questions and join discussion on the <a href="https://gitter.im/janet-language/community">Janet Gitter Channel</a>.
+Alternatively, check out <a href="https://webchat.freenode.net/">the #janet channel on Freenode</a>.
+For help, you can also checkout <a href="https://janetdocs.com">Janet Docs</a> for Janet documentation with user-provided examples.
+</p>
+<h2>Use Cases
+</h2>
+<p>Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototyping, dynamic systems, and other domains
+where dynamic languages shine. Implemented mostly in standard C99, Janet runs on Windows, Linux and macOS.
+The few features that are not standard C (dynamic library loading, compiler specific optimizations),
+are fairly straightforward. Janet can be easily ported to new platforms.
+</p>
+<h2>Features
+</h2>
+<ul><li>Minimal setup - one binary and you are good to go!</li>
+    <li>First class closures</li>
+    <li>Garbage collection</li>
+    <li>First class green threads (continuations)</li>
+    <li>Python style generators (implemented as a plain macro)</li>
+    <li>Mutable and immutable arrays (array/tuple)</li>
+    <li>Mutable and immutable hashtables (table/struct)</li>
+    <li>Mutable and immutable strings (buffer/string)</li>
+    <li>Macros</li>
+    <li>Byte code interpreter with an assembly interface, as well as bytecode verification</li>
+    <li>Tail call optimization</li>
+    <li>Direct interop with C via abstract types and C functions</li>
+    <li>Dynamically load C libraries</li>
+    <li>Functional and imperative standard library</li>
+    <li>Lexical scoping</li>
+    <li>Imperative and functional programming</li>
+    <li>REPL</li>
+    <li>Parsing Expression Grammars built in to the core library</li>
+    <li>300+ functions and macros in the core library</li>
+    <li>Interactive environment with detailed stack traces</li>
+    <li>Export your projects to standalone executables with a companion build tool, jpm</li></ul><h2>Try It
+</h2>
+
+<div id="replblock">
+<div id="replterm">
+
+</div>
+<div id="replinbar">
+  <span id="replprompt">&gt;</span><div contenteditable="true" id="replin">(print "hello, world!")</div>
+</div>
+</div>
+<h2>Usage
+</h2>
+<p>A REPL is launched when the <code class="mendoza-code">janet</code> binary is invoked with no arguments. Pass the <code class="mendoza-code">-h</code> flag
+to display the usage information. Individual scripts can be run with <code class="mendoza-code">janet myscript.janet</code>
+</p>
+<p>If you are looking to explore, you can print a list of all available macros, functions, and constants
+by entering the command <code class="mendoza-code">all-bindings</code> into the REPL.
+</p>
+<pre class="mendoza-codeblock"><code>$ janet
+Janet 1.0.0-dev-cc1ff91  Copyright (C) 2017-2019 Calvin Rose
+janet:0:&gt; (+ 1 2 3)
+6
+janet:10:&gt; (print "Hello, world!")
+Hello, world!
+nil
+janet:34:&gt; (os/exit)
+$ janet -h
+usage: janet [options] script args...
+Options are:
+  -h : Show this help
+  -v : Print the version string
+  -s : Use raw stdin instead of getline like functionality
+  -e code : Execute a string of janet
+  -r : Enter the repl after running all scripts
+  -p : Keep on executing if there is a top level error (persistent)
+  -q : Hide prompt, logo, and repl output (quiet)
+  -k : Compile scripts but do not execute
+  -m syspath : Set system path for loading global modules
+  -c source output : Compile janet source code into an image
+  -n : Disable ANSI color output in the repl
+  -l path : Execute code in a file before running the main script
+  -- : Stop handling options</code></pre><h2>Modules and Libraries
+</h2>
+<p>See some auxiliary projects on <a href="https://github.com/janet-lang">GitHub</a>. Here is a short list of libraries
+for Janet to help you get started with some interesting stuff. See <a href="https://github.com/janet-lang/pkgs">the Janet Package Listing</a>
+for a more complete list. Packages in the listing can be installed via <code class="mendoza-code">jpm install pkg-name</code>.
+</p>
+<ul><li><a href="https://github.com/janet-lang/circlet">Circlet</a> - An HTTP server for Janet</li>
+    <li><a href="https://joyframework.com/">Joy Web Framework</a> - Framework for web development in Janet</li>
+    <li><a href="https://github.com/janet-lang/json">JSON</a> - A JSON parser and encoder</li>
+    <li><a href="https://github.com/janet-lang/sqlite3">SQLite3</a> - Bindings to SQLite</li>
+    <li><a href="https://github.com/janet-lang/webview">WebView</a> - Spawn a browser window for creating HTML+CSS UIs on any platform</li>
+    <li><a href="https://github.com/janet-lang/jaylib">Jaylib</a> - Bindings to Raylib for 2d and 3d game development</li>
+    <li><a href="https://github.com/janet-lang/jhydro">JHydro</a> - Cryptography for Janet</li>
+    <li><a href="https://github.com/janet-lang/janetui">JanetUI</a> - Bindings to <a href="https://github.com/andlabs/libui">libui</a></li></ul><p>For editor support:
+</p>
+<ul><li><a href="https://github.com/Olical/conjure">Conjure</a> - Interactive evaluation for Neovim (Clojure, Fennel, Janet)</li>
+    <li><a href="https://github.com/janet-lang/janet.vim">janet.vim</a> - Support for Janet syntax in Vim</li>
+    <li><a href="https://github.com/janet-lang/vscode-janet">vscode-janet</a> - VSCode plugin for Janet</li>
+    <li><a href="https://github.com/SerialDev/ijanet-mode">ijanet-mode</a> - Emacs interactive Janet mode</li>
+    <li><a href="https://github.com/ALSchwalm/janet-mode">janet-mode</a> - Janet major mode for Emacs</li>
+    <li><a href="https://github.com/velkyel/inf-janet">inf-janet</a> - Inferior lisp Janet mode for Emacs</li>
+    <li><a href="https://atom.io/packages/language-janet">language-janet</a> - Atom Editor support for Janet.</li></ul>
+
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2020
+  <div class="gentag">Generated on July 25, 2020 at 19:25:16 (UTC) with Janet 1.11.1-4cc6809</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+    <!-- Set up emscripten runtime -->
+    <script type="text/javascript" src="js/ansi_up.js"></script>
+    <script type='text/javascript' src="js/repl.js"></script>
+
+    <!-- Load and start running janet -->
+    <script async type="text/javascript" src="js/janet.js"></script>
+
+  </body>
+</html>
