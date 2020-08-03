@@ -1,6 +1,6 @@
 # janet-lang.org
 
-This is the source code for the website for the [Janet](https://janet-lang.org) programming
+This is the source code for the website of the [Janet](https://janet-lang.org) programming
 language. It is a static website built with [mendoza](https://github.com/bakpakin/mendoza), a
 static site generator.
 
@@ -42,7 +42,7 @@ documentation tool, but of course is written in and is a dialect of Janet. See
 
 Simply add a file with the name of the binding you are giving examples for to the examples
 directory, with the `.janet` suffix. If the binding includes the `/` character, replace it with
-and underscore - this works because no bindings in the core use an underscore. For example, the
+an underscore - this works because no bindings in the core use an underscore. For example, the
 binding `array/new` has examples in the `examples/array_new.janet` file.
 
 If such a file already exists, you can simply append your example code the existing file.
