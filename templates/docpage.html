@@ -48,7 +48,7 @@
        (def next-url (relative-url (page-next :url))) %}
 
     <div class="twocol">
-      <div class="toc toc-hidden">
+      <div class="toc show-toc">
         <ul>
           {{ (seq [sm :in (sitemap :pages)] (render-toc sm)) }}
         </ul>

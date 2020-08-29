@@ -80,10 +80,21 @@
         :when (string/has-prefix? prefix k)]
        x))
 
-(defn gen-prefix
-  "Generate the document for all of the core api."
-  [prefix]
-  (def entries (get-from-prefix prefix))
+(defn- get-from-peg
+  "Get all bindings that start with a prefix."
+  [peg]
+  (seq [x :in all-entries
+        :let [[k entry] x]
+        :when (symbol? k)
+        :when (get entry :doc)
+        :when (not (get entry :private))
+        :when (peg/match peg (string k))]
+       x))
+
+(defn gen-peg
+  "Generate the document for all of the core api whose name matches the peg."
+  [peg]
+  (def entries (get-from-peg peg))
   (def index
     (seq [[k entry] :in entries]
          [{:tag "a" "href" (string "#" k) :content k} " "]))
@@ -91,6 +102,11 @@
     (seq [[k entry] :in entries]
          [{:tag "hr" :no-close true} (emit-item k entry)]))
   [{:tag "p" :content index} bindings])
+
+(defn gen-prefix
+  "Generate the documentation for some subset of the core api."
+  [prefix]
+  (gen-peg (peg/compile prefix)))
 
 (defn gen
   "Generate all bindings."

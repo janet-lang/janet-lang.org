@@ -1,0 +1,13 @@
+(import ./gen-docs :as gen-docs)
+
+{:title "Top Level Bindings"
+ :nav-title "misc"
+ :template "docpage.html"}
+---
+
+All of the core functions, macros, and bindings that are not part of any module.
+
+## Index
+
+@gen-docs/gen-peg('(not (* (some (if-not "/" 1)) "/")))
+
