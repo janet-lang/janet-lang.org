@@ -106,7 +106,7 @@ syspath. You can optionally install into any directory if you don't want to
 pollute your system or you don't have permission to write to the directory where
 @code`janet` itself was installed.  You can specify the path to install modules
 to via the @code`--modpath` option, and the path to install binaries to with the
-@code`--binpath` option. These need to given before the subcommand
+@code`--binpath` option. These need to be given before the subcommand
 @code`install`.
 
 ## The @code`project.janet` file
