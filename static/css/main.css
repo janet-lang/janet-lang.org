@@ -260,7 +260,7 @@ code {
 .mendoza-codeblock {
     color: white;
     padding: 14px;
-    background: #111;
+    background: #333;
     border-radius: 5px;
     margin: 15px;
     line-height: 1.2;
@@ -271,11 +271,11 @@ code {
 .mdzsyn-comment {color: #B5B19e;}
 .mdzsyn-operator {color: #ae81ff;}
 .mdzsyn-number {color: #ae81ff;}
-.mdzsyn-keyword {color: #f92672;}
+.mdzsyn-keyword {color: #ff97bc;}
 .mdzsyn-string {color: #e6db74;}
 .mdzsyn-identifier {color: #a6e22e;}
-.mdzsyn-symbol {color: #9effff;}
-.mdzsyn-coresym {color: #fd971f;}
+.mdzsyn-symbol {color: #afffff;}
+.mdzsyn-coresym {color: #ffbc6d;}
 
 .cm-s-monokai span.cm-bracket {color: #f8f8f2;}
 .cm-s-monokai span.cm-tag {color: #f92672;}
