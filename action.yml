@@ -1,0 +1,25 @@
+name: 'Deploy to S3'
+description: 'Build website, deploy, and push to S3 bucket.'
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  steps:
+  - uses: actions/checkout@v2
+  - env:
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_DEFAULT_OUTPUT: json
+  - run: |
+    make
+    make deploy
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+  post: 'dist/cleanup/index.js'
+
