@@ -1,5 +1,4 @@
 name: 'Deploy to S3'
-description: 'Runs "make deploy" to deploy website to AWS.'
 on:
   pull_request:
   push:
