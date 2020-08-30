@@ -1,5 +1,7 @@
 # janet-lang.org
 
+[![Gitter](https://badges.gitter.im/janet-language/website.svg)](https://gitter.im/janet-language/website?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 This is the source code for the website of the [Janet](https://janet-lang.org) programming
 language. It is a static website built with [mendoza](https://github.com/bakpakin/mendoza), a
 static site generator.
