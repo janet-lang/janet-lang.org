@@ -18,7 +18,6 @@
   (def path (string "examples/" (string/replace "/" "_" sym) ".janet"))
   (when (= :file (os/stat path :mode))
     (def src (slurp path))
-    (print src)
     src))
 
 (def- url-repl-chars

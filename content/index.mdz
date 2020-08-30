@@ -10,6 +10,15 @@ Feel free to ask questions and join discussion on the @link[https://gitter.im/ja
 Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}.
 For help, you can also checkout @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples.
 
+### Other Gitter Rooms
+
+@ul{
+    @li{@link[https://gitter.im/janet-language/help][help]:
+        For getting help withi specific problems in the Janet language.}
+    @li{@link[https://gitter.im/janet-language/website][website]:
+        For discussion and help realted to this website and documentation.}
+}
+
 ## Use Cases
 
 Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototyping, dynamic systems, and other domains
