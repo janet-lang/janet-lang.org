@@ -11,11 +11,17 @@
     (set ret (string/replace "  " " " ret)))
   ret)
 
+(def- replacer (peg/compile ~(% (any (+ (/ '(set "/*%") ,|(string "_" (0 $))) '1)))))
+(defn- sym-to-filename
+  "Convert a symbol to a filename. Certain filenames are not allowed on various operating systems."
+  [fname]
+  (string "examples/" ((peg/match replacer fname) 0) ".janet"))
+
 (defn- check-example
   "Check if a binding has related examples. If so, load them
   and get their content."
   [sym]
-  (def path (string "examples/" (string/replace "/" "_" sym) ".janet"))
+  (def path (sym-to-filename sym))
   (when (= :file (os/stat path :mode))
     (def src (slurp path))
     src))
