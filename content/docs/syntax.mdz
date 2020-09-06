@@ -116,6 +116,8 @@ supported escapes are:
     @li{@code`\f` Form Feed (ASCII 12)}
     @li{@code`\e` Escape (ASCII 27)}
     @li{@code`\"` Double Quote (ASCII 34)}
+    @li{@code`\uxxxx` Escape UTF-8 codepoint with 4 hex digits.}
+    @li{@code`\Uxxxxxx` Escape UTF-8 codepoint with 6 hex digits.}
     @li{@code`\\` Backslash (ASCII 92)}}
 
 Strings can also contain literal newline characters that will be ignored.  This
