@@ -27,10 +27,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 11
+#define JANET_VERSION_MINOR 12
 #define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.11.1"
+#define JANET_VERSION "1.12.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -57,6 +57,7 @@
 /* #define JANET_NO_UMASK */
 
 /* Other settings */
+/* #define JANET_DEBUG */
 /* #define JANET_PRF */
 /* #define JANET_NO_UTC_MKTIME */
 /* #define JANET_OUT_OF_MEMORY do { printf("janet out of memory\n"); exit(1); } while (0) */

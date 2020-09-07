@@ -180,7 +180,7 @@ static int rawmode(void) {
     t.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
     t.c_cc[VMIN] = 1;
     t.c_cc[VTIME] = 0;
-    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &t) < 0) goto fatal;
+    if (tcsetattr(STDIN_FILENO, TCSADRAIN, &t) < 0) goto fatal;
     gbl_israwmode = 1;
     return 0;
 fatal:
@@ -193,7 +193,7 @@ fatal:
 
 /* Disable raw mode */
 static void norawmode(void) {
-    if (gbl_israwmode && tcsetattr(STDIN_FILENO, TCSAFLUSH, &gbl_termios_start) != -1)
+    if (gbl_israwmode && tcsetattr(STDIN_FILENO, TCSADRAIN, &gbl_termios_start) != -1)
         gbl_israwmode = 0;
 #ifndef JANET_SINGLE_THREADED
     pthread_mutex_unlock(&gbl_lock);
@@ -763,7 +763,7 @@ static int line() {
 
         switch (c) {
             default:
-                if (c < 0x20) break;
+                if ((unsigned char) c < 0x20) break;
                 if (insert(c, 1)) return -1;
                 break;
             case 1:     /* ctrl-a */
@@ -1016,6 +1016,23 @@ int main(int argc, char **argv) {
     /* Try and not leave the terminal in a bad state */
     atexit(norawmode);
 #endif
+
+#if defined(JANET_PRF)
+    uint8_t hash_key[JANET_HASH_KEY_SIZE + 1];
+#ifdef JANET_REDUCED_OS
+    char *envvar = NULL;
+#else
+    char *envvar = getenv("JANET_HASHSEED");
+#endif
+    if (NULL != envvar) {
+        strncpy((char *) hash_key, envvar, sizeof(hash_key) - 1);
+    } else if (janet_cryptorand(hash_key, JANET_HASH_KEY_SIZE) != 0) {
+        fputs("unable to initialize janet PRF hash function.\n", stderr);
+        return 1;
+    }
+    janet_init_hash_key(hash_key);
+#endif
+
 
     /* Set up VM */
     janet_init();
