@@ -1,0 +1,1051 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Top Level Bindings</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Top Level Bindings" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="thread.html">thread</a></span></li><li><span class="selected"><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li><li><span><a href="tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.12.2-b91fe8b Documentation<br>(Other Versions:
+          
+          <a href="../../1.11.1/api/misc.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/misc.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/misc.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/misc.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/misc.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/misc.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/misc.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/misc.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/misc.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/misc.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Top Level Bindings</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="thread.html"><span class="prevnext-text">Threads</span></a></span>
+
+          <span class="next"><a href="tuple.html"><span class="prevnext-text">Tuple Module</span></a></span>
+        </div>
+        
+
+<p>All of the core functions, macros, and bindings that are not part of any module.
+</p>
+<h2>Index
+</h2>
+<p><a href="#%">%</a> <a href="#%=">%=</a> <a href="#*">*</a> <a href="#*=">*=</a> <a href="#+">+</a> <a href="#++">++</a> <a href="#+=">+=</a> <a href="#-">-</a> <a href="#--">--</a> <a href="#-=">-=</a> <a href="#->">-&gt;</a> <a href="#->>">-&gt;&gt;</a> <a href="#-?>">-?&gt;</a> <a href="#-?>>">-?&gt;&gt;</a> <a href="#/">/</a> <a href="#/=">/=</a> <a href="#<">&lt;</a> <a href="#<=">&lt;=</a> <a href="#=">=</a> <a href="#>">&gt;</a> <a href="#>=">&gt;=</a> <a href="#abstract?">abstract?</a> <a href="#accumulate">accumulate</a> <a href="#accumulate2">accumulate2</a> <a href="#all">all</a> <a href="#all-bindings">all-bindings</a> <a href="#all-dynamics">all-dynamics</a> <a href="#and">and</a> <a href="#any?">any?</a> <a href="#apply">apply</a> <a href="#array">array</a> <a href="#array?">array?</a> <a href="#as->">as-&gt;</a> <a href="#as?->">as?-&gt;</a> <a href="#asm">asm</a> <a href="#assert">assert</a> <a href="#bad-compile">bad-compile</a> <a href="#bad-parse">bad-parse</a> <a href="#band">band</a> <a href="#blshift">blshift</a> <a href="#bnot">bnot</a> <a href="#boolean?">boolean?</a> <a href="#bor">bor</a> <a href="#brshift">brshift</a> <a href="#brushift">brushift</a> <a href="#buffer">buffer</a> <a href="#buffer?">buffer?</a> <a href="#bxor">bxor</a> <a href="#bytes?">bytes?</a> <a href="#cancel">cancel</a> <a href="#case">case</a> <a href="#cfunction?">cfunction?</a> <a href="#chr">chr</a> <a href="#cli-main">cli-main</a> <a href="#cmp">cmp</a> <a href="#comment">comment</a> <a href="#comp">comp</a> <a href="#compare">compare</a> <a href="#compare<">compare&lt;</a> <a href="#compare<=">compare&lt;=</a> <a href="#compare=">compare=</a> <a href="#compare>">compare&gt;</a> <a href="#compare>=">compare&gt;=</a> <a href="#compile">compile</a> <a href="#complement">complement</a> <a href="#comptime">comptime</a> <a href="#cond">cond</a> <a href="#coro">coro</a> <a href="#count">count</a> <a href="#curenv">curenv</a> <a href="#debug">debug</a> <a href="#debugger-env">debugger-env</a> <a href="#dec">dec</a> <a href="#deep-not=">deep-not=</a> <a href="#deep=">deep=</a> <a href="#def-">def-</a> <a href="#default">default</a> <a href="#default-peg-grammar">default-peg-grammar</a> <a href="#defer">defer</a> <a href="#defglobal">defglobal</a> <a href="#defmacro">defmacro</a> <a href="#defmacro-">defmacro-</a> <a href="#defn">defn</a> <a href="#defn-">defn-</a> <a href="#describe">describe</a> <a href="#dictionary?">dictionary?</a> <a href="#disasm">disasm</a> <a href="#distinct">distinct</a> <a href="#doc">doc</a> <a href="#doc*">doc*</a> <a href="#doc-format">doc-format</a> <a href="#dofile">dofile</a> <a href="#drop">drop</a> <a href="#drop-until">drop-until</a> <a href="#drop-while">drop-while</a> <a href="#dyn">dyn</a> <a href="#each">each</a> <a href="#eachk">eachk</a> <a href="#eachp">eachp</a> <a href="#eachy">eachy</a> <a href="#edefer">edefer</a> <a href="#eflush">eflush</a> <a href="#empty?">empty?</a> <a href="#env-lookup">env-lookup</a> <a href="#eprin">eprin</a> <a href="#eprinf">eprinf</a> <a href="#eprint">eprint</a> <a href="#eprintf">eprintf</a> <a href="#error">error</a> <a href="#errorf">errorf</a> <a href="#eval">eval</a> <a href="#eval-string">eval-string</a> <a href="#even?">even?</a> <a href="#every?">every?</a> <a href="#extreme">extreme</a> <a href="#false?">false?</a> <a href="#fiber?">fiber?</a> <a href="#filter">filter</a> <a href="#find">find</a> <a href="#find-index">find-index</a> <a href="#first">first</a> <a href="#flatten">flatten</a> <a href="#flatten-into">flatten-into</a> <a href="#flush">flush</a> <a href="#for">for</a> <a href="#forever">forever</a> <a href="#forv">forv</a> <a href="#freeze">freeze</a> <a href="#frequencies">frequencies</a> <a href="#function?">function?</a> <a href="#gccollect">gccollect</a> <a href="#gcinterval">gcinterval</a> <a href="#gcsetinterval">gcsetinterval</a> <a href="#generate">generate</a> <a href="#gensym">gensym</a> <a href="#get">get</a> <a href="#get-in">get-in</a> <a href="#getline">getline</a> <a href="#hash">hash</a> <a href="#idempotent?">idempotent?</a> <a href="#identity">identity</a> <a href="#if-let">if-let</a> <a href="#if-not">if-not</a> <a href="#if-with">if-with</a> <a href="#import">import</a> <a href="#import*">import*</a> <a href="#in">in</a> <a href="#inc">inc</a> <a href="#index-of">index-of</a> <a href="#indexed?">indexed?</a> <a href="#int?">int?</a> <a href="#interleave">interleave</a> <a href="#interpose">interpose</a> <a href="#invert">invert</a> <a href="#juxt">juxt</a> <a href="#juxt*">juxt*</a> <a href="#keep">keep</a> <a href="#keys">keys</a> <a href="#keyword">keyword</a> <a href="#keyword?">keyword?</a> <a href="#kvs">kvs</a> <a href="#label">label</a> <a href="#last">last</a> <a href="#length">length</a> <a href="#let">let</a> <a href="#load-image">load-image</a> <a href="#load-image-dict">load-image-dict</a> <a href="#loop">loop</a> <a href="#macex">macex</a> <a href="#macex1">macex1</a> <a href="#make-env">make-env</a> <a href="#make-image">make-image</a> <a href="#make-image-dict">make-image-dict</a> <a href="#map">map</a> <a href="#mapcat">mapcat</a> <a href="#marshal">marshal</a> <a href="#match">match</a> <a href="#max">max</a> <a href="#mean">mean</a> <a href="#merge">merge</a> <a href="#merge-into">merge-into</a> <a href="#min">min</a> <a href="#mod">mod</a> <a href="#nan?">nan?</a> <a href="#nat?">nat?</a> <a href="#native">native</a> <a href="#neg?">neg?</a> <a href="#next">next</a> <a href="#nil?">nil?</a> <a href="#not">not</a> <a href="#not=">not=</a> <a href="#number?">number?</a> <a href="#odd?">odd?</a> <a href="#one?">one?</a> <a href="#or">or</a> <a href="#pairs">pairs</a> <a href="#parse">parse</a> <a href="#partial">partial</a> <a href="#partition">partition</a> <a href="#pos?">pos?</a> <a href="#postwalk">postwalk</a> <a href="#pp">pp</a> <a href="#prewalk">prewalk</a> <a href="#prin">prin</a> <a href="#prinf">prinf</a> <a href="#print">print</a> <a href="#printf">printf</a> <a href="#product">product</a> <a href="#prompt">prompt</a> <a href="#propagate">propagate</a> <a href="#protect">protect</a> <a href="#put">put</a> <a href="#put-in">put-in</a> <a href="#quit">quit</a> <a href="#range">range</a> <a href="#reduce">reduce</a> <a href="#reduce2">reduce2</a> <a href="#repeat">repeat</a> <a href="#repl">repl</a> <a href="#require">require</a> <a href="#resume">resume</a> <a href="#return">return</a> <a href="#reverse">reverse</a> <a href="#reverse!">reverse!</a> <a href="#root-env">root-env</a> <a href="#run-context">run-context</a> <a href="#scan-number">scan-number</a> <a href="#seq">seq</a> <a href="#setdyn">setdyn</a> <a href="#short-fn">short-fn</a> <a href="#signal">signal</a> <a href="#slice">slice</a> <a href="#slurp">slurp</a> <a href="#some">some</a> <a href="#sort">sort</a> <a href="#sort-by">sort-by</a> <a href="#sorted">sorted</a> <a href="#sorted-by">sorted-by</a> <a href="#spit">spit</a> <a href="#stderr">stderr</a> <a href="#stdin">stdin</a> <a href="#stdout">stdout</a> <a href="#string">string</a> <a href="#string?">string?</a> <a href="#struct">struct</a> <a href="#struct?">struct?</a> <a href="#sum">sum</a> <a href="#symbol">symbol</a> <a href="#symbol?">symbol?</a> <a href="#table">table</a> <a href="#table?">table?</a> <a href="#take">take</a> <a href="#take-until">take-until</a> <a href="#take-while">take-while</a> <a href="#trace">trace</a> <a href="#tracev">tracev</a> <a href="#true?">true?</a> <a href="#truthy?">truthy?</a> <a href="#try">try</a> <a href="#tuple">tuple</a> <a href="#tuple?">tuple?</a> <a href="#type">type</a> <a href="#unless">unless</a> <a href="#unmarshal">unmarshal</a> <a href="#untrace">untrace</a> <a href="#update">update</a> <a href="#update-in">update-in</a> <a href="#use">use</a> <a href="#values">values</a> <a href="#var-">var-</a> <a href="#varfn">varfn</a> <a href="#varglobal">varglobal</a> <a href="#walk">walk</a> <a href="#when">when</a> <a href="#when-let">when-let</a> <a href="#when-with">when-with</a> <a href="#with">with</a> <a href="#with-dyns">with-dyns</a> <a href="#with-syms">with-syms</a> <a href="#with-vars">with-vars</a> <a href="#xprin">xprin</a> <a href="#xprinf">xprinf</a> <a href="#xprint">xprint</a> <a href="#xprintf">xprintf</a> <a href="#yield">yield</a> <a href="#zero?">zero?</a> <a href="#zipcoll">zipcoll</a> </p><hr><div class="binding"><span id="%" class="binding-sym">%</span> <span class="binding-type">function</span>  <pre class="binding-text">(% dividend divisor)
+
+Returns the remainder of dividend / divisor.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># -&gt; 1</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">-10</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># -&gt; -1</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">-3</span>) <span class="mdzsyn-comment"># -&gt; 1</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">-10</span> <span class="mdzsyn-number">-3</span>) <span class="mdzsyn-comment"># -&gt; -1</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">1.4</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; 0.4</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">-1.4</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; -0.4</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">1.4</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; 0.4</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">-1.4</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; -0.4</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">-1.4</span> <span class="mdzsyn-number">0</span>) <span class="mdzsyn-comment"># -&gt; -nan</span>
+(<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-number">-1.4</span> <span class="mdzsyn-number">0</span>) <span class="mdzsyn-comment"># -&gt; -nan</span>
+</code></pre><a href="https://janetdocs.com/%25">Community Examples</a></div><hr><div class="binding"><span id="%=" class="binding-sym">%=</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L135">source</a></span> <pre class="binding-text">(%= x n)
+
+Shorthand for (set x (% x n)).</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 10</span>
+(<span class="mdzsyn-coresym">%=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># -&gt; 1</span>
+<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-comment"># -&gt; 1</span>
+</code></pre><a href="https://janetdocs.com/%25%3d">Community Examples</a></div><hr><div class="binding"><span id="*" class="binding-sym">*</span> <span class="binding-type">function</span>  <pre class="binding-text">(* &amp; xs)
+
+Returns the product of all elements in xs. If xs is empty, returns 1.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">*</span>) <span class="mdzsyn-comment"># -&gt; 1</span>
+(<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 10</span>
+(<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">20</span>) <span class="mdzsyn-comment"># -&gt; 200</span>
+(<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span> <span class="mdzsyn-number">7</span>) <span class="mdzsyn-comment">#-&gt; 5040</span>
+
+<span class="mdzsyn-comment"># Can take product of array with splice, but 'product' is better</span>
+(<span class="mdzsyn-coresym">*</span> ;(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">20</span>)) <span class="mdzsyn-comment">#-&gt; 1.21645e+17</span>
+(<span class="mdzsyn-coresym">product</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">20</span>)) <span class="mdzsyn-comment">#-&gt; 1.21645e+17</span>
+</code></pre><a href="https://janetdocs.com/*">Community Examples</a></div><hr><div class="binding"><span id="*=" class="binding-sym">*=</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L133">source</a></span> <pre class="binding-text">(*= x n)
+
+Shorthand for (set x (* x n)).</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">100</span>) <span class="mdzsyn-comment"># -&gt; 100</span>
+<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-comment"># -&gt; 100</span>
+(<span class="mdzsyn-coresym">*=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 1000</span>
+<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-comment"># -&gt; 1000</span>
+</code></pre><a href="https://janetdocs.com/*%3d">Community Examples</a></div><hr><div class="binding"><span id="+" class="binding-sym">+</span> <span class="binding-type">function</span>  <pre class="binding-text">(+ &amp; xs)
+
+Returns the sum of all xs. xs must be integers or real numbers only. If xs is empty, return 0.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">+</span>) <span class="mdzsyn-comment"># -&gt; 0</span>
+(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 10</span>
+(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>) <span class="mdzsyn-comment"># -&gt; 3</span>
+(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1.4</span> <span class="mdzsyn-number">-4.5</span>) <span class="mdzsyn-comment"># -&gt; -3.1</span>
+(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span> <span class="mdzsyn-number">7</span> <span class="mdzsyn-number">8</span> <span class="mdzsyn-number">9</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 55</span>
+
+<span class="mdzsyn-comment"># Splice can be used to sum arrays, but 'sum' is better</span>
+(<span class="mdzsyn-coresym">+</span> ;(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">101</span>)) <span class="mdzsyn-comment"># -&gt; 5050</span>
+(<span class="mdzsyn-coresym">sum</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">101</span>)) <span class="mdzsyn-comment"># -&gt; 5050</span>
+
+<span class="mdzsyn-comment"># Janet can add types that support the :+ or :r+ method</span>
+(<span class="mdzsyn-coresym">+</span> (<span class="mdzsyn-coresym">int/s64</span> <span class="mdzsyn-string">"10"</span>) <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; &lt;core/s64 20&gt;</span>
+
+<span class="mdzsyn-comment"># Bad types give errors</span>
+(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; error: could not find method :+ for nil, or :r+ for 10</span>
+</code></pre><a href="https://janetdocs.com/+">Community Examples</a></div><hr><div class="binding"><span id="++" class="binding-sym">++</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L129">source</a></span> <pre class="binding-text">(++ x)
+
+Increments the var x by 1.</pre><a href="https://janetdocs.com/++">Community Examples</a></div><hr><div class="binding"><span id="+=" class="binding-sym">+=</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L131">source</a></span> <pre class="binding-text">(+= x n)
+
+Increments the var x by n.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">100</span>) <span class="mdzsyn-comment"># -&gt; 100</span>
+<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-comment"># -&gt; 100</span>
+(<span class="mdzsyn-coresym">+=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 110</span>
+<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-comment"># -&gt; 110</span>
+</code></pre><a href="https://janetdocs.com/+%3d">Community Examples</a></div><hr><div class="binding"><span id="-" class="binding-sym">-</span> <span class="binding-type">function</span>  <pre class="binding-text">(- &amp; xs)
+
+Returns the difference of xs. If xs is empty, returns 0. If xs has one element, returns the negative value of that element. Otherwise, returns the first element in xs minus the sum of the rest of the elements.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">-</span>) <span class="mdzsyn-comment"># -&gt; 0</span>
+(<span class="mdzsyn-coresym">-</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; -10</span>
+(<span class="mdzsyn-coresym">-</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>) <span class="mdzsyn-comment"># -&gt; -1</span>
+(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1.4</span> <span class="mdzsyn-number">-4.5</span>) <span class="mdzsyn-comment"># -&gt; 5.9</span>
+
+<span class="mdzsyn-comment"># Equivalent to (- first (+ ;rest))</span>
+(<span class="mdzsyn-coresym">-</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span> <span class="mdzsyn-number">7</span> <span class="mdzsyn-number">8</span> <span class="mdzsyn-number">9</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; -53</span>
+
+<span class="mdzsyn-comment"># Janet can subtract types that support the :- or :r- method</span>
+(<span class="mdzsyn-coresym">-</span> (<span class="mdzsyn-coresym">int/s64</span> <span class="mdzsyn-string">"10"</span>) <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; &lt;core/s64 0&gt;</span>
+</code></pre><a href="https://janetdocs.com/-">Community Examples</a></div><hr><div class="binding"><span id="--" class="binding-sym">--</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L130">source</a></span> <pre class="binding-text">(-- x)
+
+Decrements the var x by 1.</pre><a href="https://janetdocs.com/--">Community Examples</a></div><hr><div class="binding"><span id="-=" class="binding-sym">-=</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L132">source</a></span> <pre class="binding-text">(-= x n)
+
+Decrements the var x by n.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 10</span>
+(<span class="mdzsyn-coresym">-=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">20</span>) <span class="mdzsyn-comment"># -&gt; -10</span>
+<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-comment"># -&gt; -10</span>
+</code></pre><a href="https://janetdocs.com/-%3d">Community Examples</a></div><hr><div class="binding"><span id="->" class="binding-sym">-&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1064">source</a></span> <pre class="binding-text">(-&gt; x &amp; forms)
+
+Threading macro. Inserts x as the second value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. Useful for expressing pipelines of data.</pre><a href="https://janetdocs.com/->">Community Examples</a></div><hr><div class="binding"><span id="->>" class="binding-sym">-&gt;&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1077">source</a></span> <pre class="binding-text">(-&gt;&gt; x &amp; forms)
+
+Threading macro. Inserts x as the last value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. Useful for expressing pipelines of data.</pre><a href="https://janetdocs.com/->>">Community Examples</a></div><hr><div class="binding"><span id="-?>" class="binding-sym">-?&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1090">source</a></span> <pre class="binding-text">(-?&gt; x &amp; forms)
+
+Short circuit threading macro. Inserts x as the second value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. The pipeline will return nil if an intermediate value is nil. Useful for expressing pipelines of data.</pre><a href="https://janetdocs.com/-_q>">Community Examples</a></div><hr><div class="binding"><span id="-?>>" class="binding-sym">-?&gt;&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1106">source</a></span> <pre class="binding-text">(-?&gt;&gt; x &amp; forms)
+
+Short circuit threading macro. Inserts x as the last value in the first form in forms, and inserts the modified first form into the second form in the same manner, and so on. The pipeline will return nil if an intermediate value is nil. Useful for expressing pipelines of data.</pre><a href="https://janetdocs.com/-_q>>">Community Examples</a></div><hr><div class="binding"><span id="/" class="binding-sym">/</span> <span class="binding-type">function</span>  <pre class="binding-text">(/ &amp; xs)
+
+Returns the quotient of xs. If xs is empty, returns 1. If xs has one value x, returns the reciprocal of x. Otherwise return the first value of xs repeatedly divided by the remaining values.</pre><a href="https://janetdocs.com//">Community Examples</a></div><hr><div class="binding"><span id="/=" class="binding-sym">/=</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L134">source</a></span> <pre class="binding-text">(/= x n)
+
+Shorthand for (set x (/ x n)).</pre><a href="https://janetdocs.com//%3d">Community Examples</a></div><hr><div class="binding"><span id="<" class="binding-sym">&lt;</span> <span class="binding-type">function</span>  <pre class="binding-text">(&lt; &amp; xs)
+
+Check if xs is in ascending order. Returns a boolean.</pre><a href="https://janetdocs.com/<">Community Examples</a></div><hr><div class="binding"><span id="<=" class="binding-sym">&lt;=</span> <span class="binding-type">function</span>  <pre class="binding-text">(&lt;= &amp; xs)
+
+Check if xs is in non-descending order. Returns a boolean.</pre><a href="https://janetdocs.com/<%3d">Community Examples</a></div><hr><div class="binding"><span id="=" class="binding-sym">=</span> <span class="binding-type">function</span>  <pre class="binding-text">(= &amp; xs)
+
+Check if all values in xs are equal. Returns a boolean.</pre><a href="https://janetdocs.com/%3d">Community Examples</a></div><hr><div class="binding"><span id=">" class="binding-sym">&gt;</span> <span class="binding-type">function</span>  <pre class="binding-text">(&gt; &amp; xs)
+
+Check if xs is in descending order. Returns a boolean.</pre><a href="https://janetdocs.com/>">Community Examples</a></div><hr><div class="binding"><span id=">=" class="binding-sym">&gt;=</span> <span class="binding-type">function</span>  <pre class="binding-text">(&gt;= &amp; xs)
+
+Check if xs is in non-ascending order. Returns a boolean.</pre><a href="https://janetdocs.com/>%3d">Community Examples</a></div><hr><div class="binding"><span id="abstract?" class="binding-sym">abstract?</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(abstract? x)
+
+Check if x is an abstract type.</pre><a href="https://janetdocs.com/abstract_q">Community Examples</a></div><hr><div class="binding"><span id="accumulate" class="binding-sym">accumulate</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L833">source</a></span> <pre class="binding-text">(accumulate f init ind)
+
+Similar to reduce, but accumulates intermediate values into an array. The last element in the array is what would be the return value from reduce. The init value is not added to the array. Returns a new array.</pre><a href="https://janetdocs.com/accumulate">Community Examples</a></div><hr><div class="binding"><span id="accumulate2" class="binding-sym">accumulate2</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L844">source</a></span> <pre class="binding-text">(accumulate2 f ind)
+
+The 2 argument version of accumulate that does not take an initialization value.</pre><a href="https://janetdocs.com/accumulate2">Community Examples</a></div><hr><div class="binding"><span id="all" class="binding-sym">all</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1858">source</a></span> <pre class="binding-text">(all pred xs)
+
+Returns true if all xs are truthy, otherwise the result of first falsey predicate value, (pred x).</pre><a href="https://janetdocs.com/all">Community Examples</a></div><hr><div class="binding"><span id="all-bindings" class="binding-sym">all-bindings</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1644">source</a></span> <pre class="binding-text">(all-bindings &amp;opt env local)
+
+Get all symbols available in an environment. Defaults to the current fiber's environment. If local is truthy, will not show inherited bindings (from prototype tables).</pre><a href="https://janetdocs.com/all-bindings">Community Examples</a></div><hr><div class="binding"><span id="all-dynamics" class="binding-sym">all-dynamics</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1651">source</a></span> <pre class="binding-text">(all-dynamics &amp;opt env local)
+
+Get all dynamic bindings in an environment. Defaults to the current fiber's environment. If local is truthy, will not show inherited bindings (from prototype tables).</pre><a href="https://janetdocs.com/all-dynamics">Community Examples</a></div><hr><div class="binding"><span id="and" class="binding-sym">and</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L249">source</a></span> <pre class="binding-text">(and &amp; forms)
+
+Evaluates to the last argument if all preceding elements are truthy, otherwise evaluates to the first falsey argument.</pre><a href="https://janetdocs.com/and">Community Examples</a></div><hr><div class="binding"><span id="any?" class="binding-sym">any?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1230">source</a></span> <pre class="binding-text">(any? ind)
+
+Returns the first truthy value in ind, otherwise nil. falsey value.</pre><a href="https://janetdocs.com/any_q">Community Examples</a></div><hr><div class="binding"><span id="apply" class="binding-sym">apply</span> <span class="binding-type">function</span>  <pre class="binding-text">(apply f &amp; args)
+
+Applies a function to a variable number of arguments. Each element in args is used as an argument to f, except the last element in args, which is expected to be an array-like. Each element in this last argument is then also pushed as an argument to f. For example:
+
+	(apply + 1000 (range 10))
+
+sums the first 10 integers and 1000.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">apply</span> <span class="mdzsyn-coresym">+</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">10</span>)) <span class="mdzsyn-comment"># -&gt; 45</span>
+(<span class="mdzsyn-coresym">apply</span> <span class="mdzsyn-coresym">+</span> []) <span class="mdzsyn-comment"># -&gt; 0</span>
+(<span class="mdzsyn-coresym">apply</span> <span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span> <span class="mdzsyn-number">7</span> [<span class="mdzsyn-number">8</span> <span class="mdzsyn-number">9</span> <span class="mdzsyn-number">10</span>]) <span class="mdzsyn-comment"># -&gt; 55</span>
+(<span class="mdzsyn-coresym">apply</span> <span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span> <span class="mdzsyn-number">7</span> <span class="mdzsyn-number">8</span> <span class="mdzsyn-number">9</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; error: expected array|tuple, got number </span>
+
+<span class="mdzsyn-comment"># Can also be used to call macros like functions.</span>
+<span class="mdzsyn-comment"># Will return the macro expanded code of the original macro.</span>
+(<span class="mdzsyn-coresym">apply</span> <span class="mdzsyn-coresym">for</span> '<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">10</span> ['(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>)])
+<span class="mdzsyn-comment"># -&gt; (do (var _000000 0) (def _000001 10) (while ...</span>
+</code></pre><a href="https://janetdocs.com/apply">Community Examples</a></div><hr><div class="binding"><span id="array" class="binding-sym">array</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array &amp; items)
+
+Create a new array that contains items. Returns the new array.</pre><a href="https://janetdocs.com/array">Community Examples</a></div><hr><div class="binding"><span id="array?" class="binding-sym">array?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L97">source</a></span> <pre class="binding-text">(array? x)
+
+Check if x is an array.</pre><a href="https://janetdocs.com/array_q">Community Examples</a></div><hr><div class="binding"><span id="as->" class="binding-sym">as-&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1161">source</a></span> <pre class="binding-text">(as-&gt; x as &amp; forms)
+
+Thread forms together, replacing as in forms with the value of the previous form. The first for is the value x. Returns the last value.</pre><a href="https://janetdocs.com/as->">Community Examples</a></div><hr><div class="binding"><span id="as?->" class="binding-sym">as?-&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1173">source</a></span> <pre class="binding-text">(as?-&gt; x as &amp; forms)
+
+Thread forms together, replacing as in forms with the value of the previous form. The first for is the value x. If any intermediate values are falsey, return nil; otherwise, returns the last value.</pre><a href="https://janetdocs.com/as_q->">Community Examples</a></div><hr><div class="binding"><span id="asm" class="binding-sym">asm</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(asm assembly)
+
+Returns a new function that is the compiled result of the assembly.
+The syntax for the assembly can be found on the Janet website, and should correspond
+to the return value of disasm. Will throw an
+error on invalid assembly.</pre><a href="https://janetdocs.com/asm">Community Examples</a></div><hr><div class="binding"><span id="assert" class="binding-sym">assert</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L137">source</a></span> <pre class="binding-text">(assert x &amp;opt err)
+
+Throw an error if x is not truthy.</pre><a href="https://janetdocs.com/assert">Community Examples</a></div><hr><div class="binding"><span id="bad-compile" class="binding-sym">bad-compile</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2061">source</a></span> <pre class="binding-text">(bad-compile msg macrof where)
+
+Default handler for a compile error.</pre><a href="https://janetdocs.com/bad-compile">Community Examples</a></div><hr><div class="binding"><span id="bad-parse" class="binding-sym">bad-parse</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2043">source</a></span> <pre class="binding-text">(bad-parse p where)
+
+Default handler for a parse error.</pre><a href="https://janetdocs.com/bad-parse">Community Examples</a></div><hr><div class="binding"><span id="band" class="binding-sym">band</span> <span class="binding-type">function</span>  <pre class="binding-text">(band &amp; xs)
+
+Returns the bit-wise and of all values in xs. Each x in xs must be an integer.</pre><a href="https://janetdocs.com/band">Community Examples</a></div><hr><div class="binding"><span id="blshift" class="binding-sym">blshift</span> <span class="binding-type">function</span>  <pre class="binding-text">(blshift x &amp; shifts)
+
+Returns the value of x bit shifted left by the sum of all values in shifts. x and each element in shift must be an integer.</pre><a href="https://janetdocs.com/blshift">Community Examples</a></div><hr><div class="binding"><span id="bnot" class="binding-sym">bnot</span> <span class="binding-type">function</span>  <pre class="binding-text">(bnot x)
+
+Returns the bit-wise inverse of integer x.</pre><a href="https://janetdocs.com/bnot">Community Examples</a></div><hr><div class="binding"><span id="boolean?" class="binding-sym">boolean?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L99">source</a></span> <pre class="binding-text">(boolean? x)
+
+Check if x is a boolean.</pre><a href="https://janetdocs.com/boolean_q">Community Examples</a></div><hr><div class="binding"><span id="bor" class="binding-sym">bor</span> <span class="binding-type">function</span>  <pre class="binding-text">(bor &amp; xs)
+
+Returns the bit-wise or of all values in xs. Each x in xs must be an integer.</pre><a href="https://janetdocs.com/bor">Community Examples</a></div><hr><div class="binding"><span id="brshift" class="binding-sym">brshift</span> <span class="binding-type">function</span>  <pre class="binding-text">(brshift x &amp; shifts)
+
+Returns the value of x bit shifted right by the sum of all values in shifts. x and each element in shift must be an integer.</pre><a href="https://janetdocs.com/brshift">Community Examples</a></div><hr><div class="binding"><span id="brushift" class="binding-sym">brushift</span> <span class="binding-type">function</span>  <pre class="binding-text">(brushift x &amp; shifts)
+
+Returns the value of x bit shifted right by the sum of all values in shifts. x and each element in shift must be an integer. The sign of x is not preserved, so for positive shifts the return value will always be positive.</pre><a href="https://janetdocs.com/brushift">Community Examples</a></div><hr><div class="binding"><span id="buffer" class="binding-sym">buffer</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(buffer &amp; xs)
+
+Creates a new buffer by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new buffer.</pre><a href="https://janetdocs.com/buffer">Community Examples</a></div><hr><div class="binding"><span id="buffer?" class="binding-sym">buffer?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L91">source</a></span> <pre class="binding-text">(buffer? x)
+
+Check if x is a buffer.</pre><a href="https://janetdocs.com/buffer_q">Community Examples</a></div><hr><div class="binding"><span id="bxor" class="binding-sym">bxor</span> <span class="binding-type">function</span>  <pre class="binding-text">(bxor &amp; xs)
+
+Returns the bit-wise xor of all values in xs. Each in xs must be an integer.</pre><a href="https://janetdocs.com/bxor">Community Examples</a></div><hr><div class="binding"><span id="bytes?" class="binding-sym">bytes?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L100">source</a></span> <pre class="binding-text">(bytes? x)
+
+Check if x is a string, symbol, keyword, or buffer.</pre><a href="https://janetdocs.com/bytes_q">Community Examples</a></div><hr><div class="binding"><span id="cancel" class="binding-sym">cancel</span> <span class="binding-type">function</span>  <pre class="binding-text">(cancel fiber err)
+
+Resume a fiber but have it immediately raise an error. This lets a programmer unwind a pending fiber. Returns the same result as resume.</pre><a href="https://janetdocs.com/cancel">Community Examples</a></div><hr><div class="binding"><span id="case" class="binding-sym">case</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L187">source</a></span> <pre class="binding-text">(case dispatch &amp; pairs)
+
+Select the body that equals the dispatch value. When pairs has an odd number of arguments, the last is the default expression. If no match is found, returns nil.</pre><a href="https://janetdocs.com/case">Community Examples</a></div><hr><div class="binding"><span id="cfunction?" class="binding-sym">cfunction?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L94">source</a></span> <pre class="binding-text">(cfunction? x)
+
+Check if x a cfunction.</pre><a href="https://janetdocs.com/cfunction_q">Community Examples</a></div><hr><div class="binding"><span id="chr" class="binding-sym">chr</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L334">source</a></span> <pre class="binding-text">(chr c)
+
+Convert a string of length 1 to its byte (ascii) value at compile time.</pre><a href="https://janetdocs.com/chr">Community Examples</a></div><hr><div class="binding"><span id="cli-main" class="binding-sym">cli-main</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2756">source</a></span> <pre class="binding-text">(cli-main args)
+
+Entrance for the Janet CLI tool. Call this functions with the command line arguments as an array or tuple of strings to invoke the CLI interface.</pre><a href="https://janetdocs.com/cli-main">Community Examples</a></div><hr><div class="binding"><span id="cmp" class="binding-sym">cmp</span> <span class="binding-type">function</span>  <pre class="binding-text">(cmp x y)
+
+Returns -1 if x is strictly less than y, 1 if y is strictly greater than x, and 0 otherwise. To return 0, x and y must be the exact same type.</pre><a href="https://janetdocs.com/cmp">Community Examples</a></div><hr><div class="binding"><span id="comment" class="binding-sym">comment</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L153">source</a></span> <pre class="binding-text">(comment &amp;)
+
+Ignores the body of the comment.</pre><a href="https://janetdocs.com/comment">Community Examples</a></div><hr><div class="binding"><span id="comp" class="binding-sym">comp</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L651">source</a></span> <pre class="binding-text">(comp &amp; functions)
+
+Takes multiple functions and returns a function that is the composition of those functions.</pre><a href="https://janetdocs.com/comp">Community Examples</a></div><hr><div class="binding"><span id="compare" class="binding-sym">compare</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L704">source</a></span> <pre class="binding-text">(compare x y)
+
+Polymorphic compare. Returns -1, 0, 1 for x &lt; y, x = y, x &gt; y respectively. Differs from the primitive comparators in that it first checks to see whether either x or y implement a 'compare' method which can compare x and y. If so it uses that compare method. If not, it delegates to the primitive comparators.</pre><a href="https://janetdocs.com/compare">Community Examples</a></div><hr><div class="binding"><span id="compare<" class="binding-sym">compare&lt;</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L731">source</a></span> <pre class="binding-text">(compare&lt; &amp; xs)
+
+Equivalent of '&lt;' but using compare function instead of primitive comparator</pre><a href="https://janetdocs.com/compare<">Community Examples</a></div><hr><div class="binding"><span id="compare<=" class="binding-sym">compare&lt;=</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L736">source</a></span> <pre class="binding-text">(compare&lt;= &amp; xs)
+
+Equivalent of '&lt;=' but using compare function instead of primitive comparator</pre><a href="https://janetdocs.com/compare<%3d">Community Examples</a></div><hr><div class="binding"><span id="compare=" class="binding-sym">compare=</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L726">source</a></span> <pre class="binding-text">(compare= &amp; xs)
+
+Equivalent of '=' but using compare function instead of primitive comparator</pre><a href="https://janetdocs.com/compare%3d">Community Examples</a></div><hr><div class="binding"><span id="compare>" class="binding-sym">compare&gt;</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L741">source</a></span> <pre class="binding-text">(compare&gt; &amp; xs)
+
+Equivalent of '&gt;' but using compare function instead of primitive comparator</pre><a href="https://janetdocs.com/compare>">Community Examples</a></div><hr><div class="binding"><span id="compare>=" class="binding-sym">compare&gt;=</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L746">source</a></span> <pre class="binding-text">(compare&gt;= &amp; xs)
+
+Equivalent of '&gt;=' but using compare function instead of primitive comparator</pre><a href="https://janetdocs.com/compare>%3d">Community Examples</a></div><hr><div class="binding"><span id="compile" class="binding-sym">compile</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(compile ast &amp;opt env source)
+
+Compiles an Abstract Syntax Tree (ast) into a function. Pair the compile function with parsing functionality to implement eval. Returns a new function and does not modify ast. Returns an error struct with keys :line, :column, and :error if compilation fails.</pre><a href="https://janetdocs.com/compile">Community Examples</a></div><hr><div class="binding"><span id="complement" class="binding-sym">complement</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L670">source</a></span> <pre class="binding-text">(complement f)
+
+Returns a function that is the complement to the argument.</pre><a href="https://janetdocs.com/complement">Community Examples</a></div><hr><div class="binding"><span id="comptime" class="binding-sym">comptime</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2255">source</a></span> <pre class="binding-text">(comptime x)
+
+(comptime x)
+
+ Evals x at compile time and returns the result. Similar to a top level unquote.</pre><a href="https://janetdocs.com/comptime">Community Examples</a></div><hr><div class="binding"><span id="cond" class="binding-sym">cond</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L172">source</a></span> <pre class="binding-text">(cond &amp; pairs)
+
+Evaluates conditions sequentially until the first true condition is found, and then executes the corresponding body. If there are an odd number of forms, the last expression is executed if no forms are matched. If there are no matches, return nil.</pre><a href="https://janetdocs.com/cond">Community Examples</a></div><hr><div class="binding"><span id="coro" class="binding-sym">coro</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L581">source</a></span> <pre class="binding-text">(coro &amp; body)
+
+A wrapper for making fibers. Same as (fiber/new (fn [] ;body) :yi).</pre><a href="https://janetdocs.com/coro">Community Examples</a></div><hr><div class="binding"><span id="count" class="binding-sym">count</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L901">source</a></span> <pre class="binding-text">(count pred ind)
+
+Count the number of items in ind for which (pred item) is true.</pre><a href="https://janetdocs.com/count">Community Examples</a></div><hr><div class="binding"><span id="curenv" class="binding-sym">curenv</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2076">source</a></span> <pre class="binding-text">(curenv &amp;opt n)
+
+Get the current environment table. Same as (fiber/getenv (fiber/current)). If n is provided, gets the nth prototype of the environment table.</pre><a href="https://janetdocs.com/curenv">Community Examples</a></div><hr><div class="binding"><span id="debug" class="binding-sym">debug</span> <span class="binding-type">function</span>  <pre class="binding-text">(debug &amp;opt x)
+
+Throws a debug signal that can be caught by a parent fiber and used to inspect the running state of the current fiber. Returns the value passed in by resume.</pre><a href="https://janetdocs.com/debug">Community Examples</a></div><hr><div class="binding"><span id="debugger-env" class="binding-sym">debugger-env</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2652">source</a></span> <pre class="binding-text">An environment that contains dot prefixed functions for debugging.</pre><a href="https://janetdocs.com/debugger-env">Community Examples</a></div><hr><div class="binding"><span id="dec" class="binding-sym">dec</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L128">source</a></span> <pre class="binding-text">(dec x)
+
+Returns x - 1.</pre><a href="https://janetdocs.com/dec">Community Examples</a></div><hr><div class="binding"><span id="deep-not=" class="binding-sym">deep-not=</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1874">source</a></span> <pre class="binding-text">(deep-not= x y)
+
+Like not=, but mutable types (arrays, tables, buffers) are considered equal if they have identical structure. Much slower than not=.</pre><a href="https://janetdocs.com/deep-not%3d">Community Examples</a></div><hr><div class="binding"><span id="deep=" class="binding-sym">deep=</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1889">source</a></span> <pre class="binding-text">(deep= x y)
+
+Like =, but mutable types (arrays, tables, buffers) are considered equal if they have identical structure. Much slower than =.</pre><a href="https://janetdocs.com/deep%3d">Community Examples</a></div><hr><div class="binding"><span id="def-" class="binding-sym">def-</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L58">source</a></span> <pre class="binding-text">(def- name &amp; more)
+
+Define a private value that will not be exported.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code><span class="mdzsyn-comment"># In a file module.janet</span>
+(<span class="mdzsyn-coresym">def-</span> <span class="mdzsyn-symbol">private-thing</span> <span class="mdzsyn-keyword">:encapsulated</span>)
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">public-thing</span> <span class="mdzsyn-keyword">:exposed</span>)
+
+<span class="mdzsyn-comment"># In a file main.janet</span>
+(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">module</span>)
+
+<span class="mdzsyn-symbol">module/private-thing</span> <span class="mdzsyn-comment"># -&gt; Unknown symbol</span>
+<span class="mdzsyn-symbol">module/public-thing</span> <span class="mdzsyn-comment"># -&gt; :exposed</span>
+
+<span class="mdzsyn-comment"># Same as normal def with :private metadata</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-keyword">:private</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">private-thing</span> <span class="mdzsyn-keyword">:encapsulated</span>)
+</code></pre><a href="https://janetdocs.com/def-">Community Examples</a></div><hr><div class="binding"><span id="default" class="binding-sym">default</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L147">source</a></span> <pre class="binding-text">(default sym val)
+
+Define a default value for an optional argument. Expands to (def sym (if (= nil sym) val sym))</pre><a href="https://janetdocs.com/default">Community Examples</a></div><hr><div class="binding"><span id="default-peg-grammar" class="binding-sym">default-peg-grammar</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1999">source</a></span> <pre class="binding-text">The default grammar used for pegs. This grammar defines several common patterns that should make it easier to write more complex patterns.</pre><a href="https://janetdocs.com/default-peg-grammar">Community Examples</a></div><hr><div class="binding"><span id="defer" class="binding-sym">defer</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L296">source</a></span> <pre class="binding-text">(defer form &amp; body)
+
+Run form unconditionally after body, even if the body throws an error. Will also run form if a user signal 0-4 is received.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code><span class="mdzsyn-comment"># Evaluates to 6 after printing "scope left!"</span>
+(<span class="mdzsyn-coresym">defer</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"scope left!"</span>)
+  (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>))
+
+<span class="mdzsyn-comment"># cleanup will always be called, even if there is a failure</span>
+(<span class="mdzsyn-coresym">defer</span> (<span class="mdzsyn-symbol">cleanup</span>)
+  (<span class="mdzsyn-symbol">step-1</span>)
+  (<span class="mdzsyn-symbol">step-2</span>)
+  (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-number">0.1</span> (<span class="mdzsyn-coresym">math/random</span>)) (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"failure"</span>))
+  (<span class="mdzsyn-symbol">step-3</span>))
+</code></pre><a href="https://janetdocs.com/defer">Community Examples</a></div><hr><div class="binding"><span id="defglobal" class="binding-sym">defglobal</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L68">source</a></span> <pre class="binding-text">(defglobal name value)
+
+Dynamically create a global def.</pre><a href="https://janetdocs.com/defglobal">Community Examples</a></div><hr><div class="binding"><span id="defmacro" class="binding-sym">defmacro</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L43">source</a></span> <pre class="binding-text">(defmacro name &amp; more)
+
+Define a macro.</pre><a href="https://janetdocs.com/defmacro">Community Examples</a></div><hr><div class="binding"><span id="defmacro-" class="binding-sym">defmacro-</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L48">source</a></span> <pre class="binding-text">(defmacro- name &amp; more)
+
+Define a private macro that will not be exported.</pre><a href="https://janetdocs.com/defmacro-">Community Examples</a></div><hr><div class="binding"><span id="defn" class="binding-sym">defn</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L12">source</a></span> <pre class="binding-text">(defn name &amp; more)
+
+Define a function. Equivalent to (def name (fn name [args] ...)).</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">simple</span>
+  [<span class="mdzsyn-symbol">x</span>]
+  (<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">1</span>)))
+
+(<span class="mdzsyn-symbol">simple</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 11</span>
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">long-body</span>
+  [<span class="mdzsyn-symbol">y</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">y</span>)
+  (<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-number">1</span>))
+  (<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-number">2</span>))
+  (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-number">3</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">with-docstring</span>
+  <span class="mdzsyn-string">"This function has a docstring"</span>
+  []
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"hello!"</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">with-tags</span>
+  <span class="mdzsyn-keyword">:tag1</span> <span class="mdzsyn-keyword">:tag2</span> <span class="mdzsyn-keyword">:private</span>
+  <span class="mdzsyn-string">"Also has a docstring and a variadic argument 'more'!"</span>
+  [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">z</span> <span class="mdzsyn-symbol">&amp;</span> <span class="mdzsyn-symbol">more</span>]
+  [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">z</span> <span class="mdzsyn-symbol">more</span>])
+
+(<span class="mdzsyn-symbol">with-tags</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>) <span class="mdzsyn-comment"># raises arity error</span>
+(<span class="mdzsyn-symbol">with-tags</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># -&gt; (1 2 3 ())</span>
+(<span class="mdzsyn-symbol">with-tags</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>) <span class="mdzsyn-comment"># -&gt; (1 2 3 (4))</span>
+(<span class="mdzsyn-symbol">with-tags</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span>) <span class="mdzsyn-comment"># -&gt; (1 2 3 (4 5))</span>
+
+<span class="mdzsyn-comment"># Tags (and other metadata) are (usually) visible in the environment.</span>
+(<span class="mdzsyn-coresym">dyn</span> '<span class="mdzsyn-symbol">with-tags</span>) <span class="mdzsyn-comment"># -&gt; @{:tag2 true :value &lt;function with-tags&gt; :doc "(with-tags x y z &amp; more)\n\nAlso has a docstring..." :source-map ("repl" 4 1) :tag1 true :private true}</span>
+
+</code></pre><a href="https://janetdocs.com/defn">Community Examples</a></div><hr><div class="binding"><span id="defn-" class="binding-sym">defn-</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L53">source</a></span> <pre class="binding-text">(defn- name &amp; more)
+
+Define a private function that will not be exported.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code><span class="mdzsyn-comment"># In a file module.janet</span>
+(<span class="mdzsyn-coresym">defn-</span> <span class="mdzsyn-symbol">not-exposed-fn</span>
+  [<span class="mdzsyn-symbol">x</span>]
+  (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span>))
+(<span class="mdzsyn-symbol">not-exposed-fn</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; 20</span>
+
+<span class="mdzsyn-comment"># In a file main.janet</span>
+(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">module</span>)
+
+(<span class="mdzsyn-symbol">module/not-exposed-fn</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; Unknown symbol error</span>
+
+<span class="mdzsyn-comment"># Same as</span>
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">not-exposed-fn</span>
+  <span class="mdzsyn-keyword">:private</span>
+  [<span class="mdzsyn-symbol">x</span>]
+  (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span>))
+</code></pre><a href="https://janetdocs.com/defn-">Community Examples</a></div><hr><div class="binding"><span id="describe" class="binding-sym">describe</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(describe x)
+
+Returns a string that is a human readable description of a value x.</pre><a href="https://janetdocs.com/describe">Community Examples</a></div><hr><div class="binding"><span id="dictionary?" class="binding-sym">dictionary?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L103">source</a></span> <pre class="binding-text">(dictionary? x)
+
+Check if x a table or struct.</pre><a href="https://janetdocs.com/dictionary_q">Community Examples</a></div><hr><div class="binding"><span id="disasm" class="binding-sym">disasm</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(disasm func &amp;opt field)
+
+Returns assembly that could be used be compile the given function.
+func must be a function, not a c function. Will throw on error on a badly
+typed argument. If given a field name, will only return that part of the function assembly.
+Possible fields are:
+
+	:arity - number of required and optional arguments.
+	:min-arity - minimum number of arguments function can be called with.
+	:max-arity - maximum number of arguments function can be called with.
+	:vararg - true if function can take a variable number of arguments.
+	:bytecode - array of parsed bytecode instructions. Each instruction is a tuple.
+	:source - name of source file that this function was compiled from.
+	:name - name of function.
+	:slotcount - how many virtual registers, or slots, this function uses. Corresponds to stack space used by function.
+	:constants - an array of constants referenced by this function.
+	:sourcemap - a mapping of each bytecode instruction to a line and column in the source file.
+	:environments - an internal mapping of which enclosing functions are referenced for bindings.
+	:defs - other function definitions that this function may instantiate.
+</pre><a href="https://janetdocs.com/disasm">Community Examples</a></div><hr><div class="binding"><span id="distinct" class="binding-sym">distinct</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1423">source</a></span> <pre class="binding-text">(distinct xs)
+
+Returns an array of the deduplicated values in xs.</pre><a href="https://janetdocs.com/distinct">Community Examples</a></div><hr><div class="binding"><span id="doc" class="binding-sym">doc</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1741">source</a></span> <pre class="binding-text">(doc &amp;opt sym)
+
+Shows documentation for the given symbol, or can show a list of available bindings. If sym is a symbol, will look for documentation for that symbol. If sym is a string or is not provided, will show all lexical and dynamic bindings in the current environment with that prefix (all bindings will be shown if no prefix is given).</pre><a href="https://janetdocs.com/doc">Community Examples</a></div><hr><div class="binding"><span id="doc*" class="binding-sym">doc*</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1707">source</a></span> <pre class="binding-text">(doc* &amp;opt sym)
+
+Get the documentation for a symbol in a given environment. Function form of doc.</pre><a href="https://janetdocs.com/doc*">Community Examples</a></div><hr><div class="binding"><span id="doc-format" class="binding-sym">doc-format</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1658">source</a></span> <pre class="binding-text">(doc-format text &amp;opt width)
+
+Reformat text to wrap at a given line.</pre><a href="https://janetdocs.com/doc-format">Community Examples</a></div><hr><div class="binding"><span id="dofile" class="binding-sym">dofile</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2374">source</a></span> <pre class="binding-text">(dofile path &amp;keys {:source src :evaluator evaluator :expander expander :env env :exit exit})
+
+Evaluate a file and return the resulting environment. :env, :expander, and :evaluator are passed through to the underlying run-context call. If exit is true, any top level errors will trigger a call to (os/exit 1) after printing the error.</pre><a href="https://janetdocs.com/dofile">Community Examples</a></div><hr><div class="binding"><span id="drop" class="binding-sym">drop</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1003">source</a></span> <pre class="binding-text">(drop n ind)
+
+Drop first n elements in an indexed type. Returns new indexed instance.</pre><a href="https://janetdocs.com/drop">Community Examples</a></div><hr><div class="binding"><span id="drop-until" class="binding-sym">drop-until</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1014">source</a></span> <pre class="binding-text">(drop-until pred ind)
+
+Same as (drop-while (complement pred) ind).</pre><a href="https://janetdocs.com/drop-until">Community Examples</a></div><hr><div class="binding"><span id="drop-while" class="binding-sym">drop-while</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1024">source</a></span> <pre class="binding-text">(drop-while pred ind)
+
+Given a predicate, remove elements from an indexed type that satisfy the predicate, and abort on first failure. Returns a new array.</pre><a href="https://janetdocs.com/drop-while">Community Examples</a></div><hr><div class="binding"><span id="dyn" class="binding-sym">dyn</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(dyn key &amp;opt default)
+
+Get a dynamic binding. Returns the default value (or nil) if no binding found.</pre><a href="https://janetdocs.com/dyn">Community Examples</a></div><hr><div class="binding"><span id="each" class="binding-sym">each</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L526">source</a></span> <pre class="binding-text">(each x ds &amp; body)
+
+Loop over each value in ds. Returns nil.</pre><a href="https://janetdocs.com/each">Community Examples</a></div><hr><div class="binding"><span id="eachk" class="binding-sym">eachk</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L499">source</a></span> <pre class="binding-text">(eachk x ds &amp; body)
+
+Loop over each key in ds. Returns nil.</pre><a href="https://janetdocs.com/eachk">Community Examples</a></div><hr><div class="binding"><span id="eachp" class="binding-sym">eachp</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L504">source</a></span> <pre class="binding-text">(eachp x ds &amp; body)
+
+Loop over each (key, value) pair in ds. Returns nil.</pre><a href="https://janetdocs.com/eachp">Community Examples</a></div><hr><div class="binding"><span id="eachy" class="binding-sym">eachy</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L509">source</a></span> <pre class="binding-text">(eachy x fiber &amp; body)
+
+Resume a fiber in a loop until it has errored or died. Evaluate the body of the loop with binding set to the yielded value.</pre><a href="https://janetdocs.com/eachy">Community Examples</a></div><hr><div class="binding"><span id="edefer" class="binding-sym">edefer</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L309">source</a></span> <pre class="binding-text">(edefer form &amp; body)
+
+Run form after body in the case that body terminates abnormally (an error or user signal 0-4). Otherwise, return last form in body.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code><span class="mdzsyn-comment"># Half of the time, return "ok", the other</span>
+<span class="mdzsyn-comment"># half of the time, print there was an error and throw "oops".</span>
+(<span class="mdzsyn-coresym">edefer</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"there was an error"</span>)
+  (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">&lt;</span> (<span class="mdzsyn-coresym">math/random</span>) <span class="mdzsyn-number">0.5</span>)
+    (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"oops"</span>)
+    <span class="mdzsyn-string">"ok"</span>))
+</code></pre><a href="https://janetdocs.com/edefer">Community Examples</a></div><hr><div class="binding"><span id="eflush" class="binding-sym">eflush</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(eflush)
+
+Flush (dyn :err stderr) if it is a file, otherwise do nothing.</pre><a href="https://janetdocs.com/eflush">Community Examples</a></div><hr><div class="binding"><span id="empty?" class="binding-sym">empty?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L113">source</a></span> <pre class="binding-text">(empty? xs)
+
+Check if xs is empty.</pre><a href="https://janetdocs.com/empty_q">Community Examples</a></div><hr><div class="binding"><span id="env-lookup" class="binding-sym">env-lookup</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(env-lookup env)
+
+Creates a forward lookup table for unmarshalling from an environment. To create a reverse lookup table, use the invert function to swap keys and values in the returned table.</pre><a href="https://janetdocs.com/env-lookup">Community Examples</a></div><hr><div class="binding"><span id="eprin" class="binding-sym">eprin</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(eprin &amp; xs)
+
+Same as prin, but uses (dyn :err stderr) instead of (dyn :out stdout).</pre><a href="https://janetdocs.com/eprin">Community Examples</a></div><hr><div class="binding"><span id="eprinf" class="binding-sym">eprinf</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(eprinf fmt &amp; xs)
+
+Like eprintf but with no trailing newline.</pre><a href="https://janetdocs.com/eprinf">Community Examples</a></div><hr><div class="binding"><span id="eprint" class="binding-sym">eprint</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(eprint &amp; xs)
+
+Same as print, but uses (dyn :err stderr) instead of (dyn :out stdout).</pre><a href="https://janetdocs.com/eprint">Community Examples</a></div><hr><div class="binding"><span id="eprintf" class="binding-sym">eprintf</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(eprintf fmt &amp; xs)
+
+Prints output formatted as if with (string/format fmt ;xs) to (dyn :err stderr) with a trailing newline.</pre><a href="https://janetdocs.com/eprintf">Community Examples</a></div><hr><div class="binding"><span id="error" class="binding-sym">error</span> <span class="binding-type">function</span>  <pre class="binding-text">(error e)
+
+Throws an error e that can be caught and handled by a parent fiber.</pre><a href="https://janetdocs.com/error">Community Examples</a></div><hr><div class="binding"><span id="errorf" class="binding-sym">errorf</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L142">source</a></span> <pre class="binding-text">(errorf fmt &amp; args)
+
+A combination of error and string/format. Equivalent to (error (string/format fmt ;args))</pre><a href="https://janetdocs.com/errorf">Community Examples</a></div><hr><div class="binding"><span id="eval" class="binding-sym">eval</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2223">source</a></span> <pre class="binding-text">(eval form)
+
+Evaluates a form in the current environment. If more control over the environment is needed, use run-context.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">eval</span> '(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>)) <span class="mdzsyn-comment"># -&gt; 6</span>
+(<span class="mdzsyn-coresym">eval</span> '(<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-keyword">:oops</span>)) <span class="mdzsyn-comment"># -&gt; raises error :oops</span>
+(<span class="mdzsyn-coresym">eval</span> '(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-constant">nil</span>)) <span class="mdzsyn-comment"># -&gt; raises error</span>
+</code></pre><a href="https://janetdocs.com/eval">Community Examples</a></div><hr><div class="binding"><span id="eval-string" class="binding-sym">eval-string</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2198">source</a></span> <pre class="binding-text">(eval-string str)
+
+Evaluates a string in the current environment. If more control over the environment is needed, use run-context.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">eval-string</span> <span class="mdzsyn-string">"(+ 1 2 3 4)"</span>) <span class="mdzsyn-comment"># -&gt; 10</span>
+(<span class="mdzsyn-coresym">eval-string</span> <span class="mdzsyn-string">")"</span>) <span class="mdzsyn-comment"># -&gt; parse error</span>
+(<span class="mdzsyn-coresym">eval-string</span> <span class="mdzsyn-string">"(bloop)"</span>) <span class="mdzsyn-comment"># -&gt; compile error</span>
+(<span class="mdzsyn-coresym">eval-string</span> <span class="mdzsyn-string">"(+ nil nil)"</span>) <span class="mdzsyn-comment"># -&gt; runtime error</span>
+</code></pre><a href="https://janetdocs.com/eval-string">Community Examples</a></div><hr><div class="binding"><span id="even?" class="binding-sym">even?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L84">source</a></span> <pre class="binding-text">(even? x)
+
+Check if x is even.</pre><a href="https://janetdocs.com/even_q">Community Examples</a></div><hr><div class="binding"><span id="every?" class="binding-sym">every?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1221">source</a></span> <pre class="binding-text">(every? ind)
+
+Returns true if each value in is truthy, otherwise the first falsey value.</pre><a href="https://janetdocs.com/every_q">Community Examples</a></div><hr><div class="binding"><span id="extreme" class="binding-sym">extreme</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L675">source</a></span> <pre class="binding-text">(extreme order args)
+
+Returns the most extreme value in args based on the function order. order should take two values and return true or false (a comparison). Returns nil if args is empty.</pre><a href="https://janetdocs.com/extreme">Community Examples</a></div><hr><div class="binding"><span id="false?" class="binding-sym">false?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L111">source</a></span> <pre class="binding-text">(false? x)
+
+Check if x is false.</pre><a href="https://janetdocs.com/false_q">Community Examples</a></div><hr><div class="binding"><span id="fiber?" class="binding-sym">fiber?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L87">source</a></span> <pre class="binding-text">(fiber? x)
+
+Check if x is a fiber.</pre><a href="https://janetdocs.com/fiber_q">Community Examples</a></div><hr><div class="binding"><span id="filter" class="binding-sym">filter</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L891">source</a></span> <pre class="binding-text">(filter pred ind)
+
+Given a predicate, take only elements from an array or tuple for which (pred element) is truthy. Returns a new array.</pre><a href="https://janetdocs.com/filter">Community Examples</a></div><hr><div class="binding"><span id="find" class="binding-sym">find</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L956">source</a></span> <pre class="binding-text">(find pred ind)
+
+Find the first value in an indexed collection that satisfies a predicate. Returns nil if not found. Note there is no way to differentiate a nil from the indexed collection and a not found. Consider find-index if this is an issue.</pre><a href="https://janetdocs.com/find">Community Examples</a></div><hr><div class="binding"><span id="find-index" class="binding-sym">find-index</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L945">source</a></span> <pre class="binding-text">(find-index pred ind)
+
+Find the index of indexed type for which pred is true. Returns nil if not found.</pre><a href="https://janetdocs.com/find-index">Community Examples</a></div><hr><div class="binding"><span id="first" class="binding-sym">first</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L692">source</a></span> <pre class="binding-text">(first xs)
+
+Get the first element from an indexed data structure.</pre><a href="https://janetdocs.com/first">Community Examples</a></div><hr><div class="binding"><span id="flatten" class="binding-sym">flatten</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1441">source</a></span> <pre class="binding-text">(flatten xs)
+
+Takes a nested array (tree), and returns the depth first traversal of that array. Returns a new array.</pre><a href="https://janetdocs.com/flatten">Community Examples</a></div><hr><div class="binding"><span id="flatten-into" class="binding-sym">flatten-into</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1431">source</a></span> <pre class="binding-text">(flatten-into into xs)
+
+Takes a nested array (tree), and appends the depth first traversal of that array to an array 'into'. Returns array into.</pre><a href="https://janetdocs.com/flatten-into">Community Examples</a></div><hr><div class="binding"><span id="flush" class="binding-sym">flush</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(flush)
+
+Flush (dyn :out stdout) if it is a file, otherwise do nothing.</pre><a href="https://janetdocs.com/flush">Community Examples</a></div><hr><div class="binding"><span id="for" class="binding-sym">for</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L494">source</a></span> <pre class="binding-text">(for i start stop &amp; body)
+
+Do a c style for loop for side effects. Returns nil.</pre><a href="https://janetdocs.com/for">Community Examples</a></div><hr><div class="binding"><span id="forever" class="binding-sym">forever</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L521">source</a></span> <pre class="binding-text">(forever &amp; body)
+
+Evaluate body forever in a loop, or until a break statement.</pre><a href="https://janetdocs.com/forever">Community Examples</a></div><hr><div class="binding"><span id="forv" class="binding-sym">forv</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L488">source</a></span> <pre class="binding-text">(forv i start stop &amp; body)
+
+Do a c style for loop for side effects. The iteration variable i can be mutated in the loop, unlike normal for. Returns nil.</pre><a href="https://janetdocs.com/forv">Community Examples</a></div><hr><div class="binding"><span id="freeze" class="binding-sym">freeze</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1895">source</a></span> <pre class="binding-text">(freeze x)
+
+Freeze an object (make it immutable) and do a deep copy, making child values also immutable. Closures, fibers, and abstract types will not be recursively frozen, but all other types will.</pre><a href="https://janetdocs.com/freeze">Community Examples</a></div><hr><div class="binding"><span id="frequencies" class="binding-sym">frequencies</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1401">source</a></span> <pre class="binding-text">(frequencies ind)
+
+Get the number of occurrences of each value in a indexed structure.</pre><a href="https://janetdocs.com/frequencies">Community Examples</a></div><hr><div class="binding"><span id="function?" class="binding-sym">function?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L92">source</a></span> <pre class="binding-text">(function? x)
+
+Check if x is a function (not a cfunction).</pre><a href="https://janetdocs.com/function_q">Community Examples</a></div><hr><div class="binding"><span id="gccollect" class="binding-sym">gccollect</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(gccollect)
+
+Run garbage collection. You should probably not call this manually.</pre><a href="https://janetdocs.com/gccollect">Community Examples</a></div><hr><div class="binding"><span id="gcinterval" class="binding-sym">gcinterval</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(gcinterval)
+
+Returns the integer number of bytes to allocate before running an iteration of garbage collection.</pre><a href="https://janetdocs.com/gcinterval">Community Examples</a></div><hr><div class="binding"><span id="gcsetinterval" class="binding-sym">gcsetinterval</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(gcsetinterval interval)
+
+Set an integer number of bytes to allocate before running garbage collection. Low values for interval will be slower but use less memory. High values will be faster but use more memory.</pre><a href="https://janetdocs.com/gcsetinterval">Community Examples</a></div><hr><div class="binding"><span id="generate" class="binding-sym">generate</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L575">source</a></span> <pre class="binding-text">(generate head &amp; body)
+
+Create a generator expression using the loop syntax. Returns a fiber that yields all values inside the loop in order. See loop for details.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code><span class="mdzsyn-comment"># An infinite stream of random numbers, but doubled.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">g</span> (<span class="mdzsyn-coresym">generate</span> [<span class="mdzsyn-symbol">_</span> <span class="mdzsyn-keyword">:iterate</span> <span class="mdzsyn-constant">true</span> <span class="mdzsyn-keyword">:repeat</span> <span class="mdzsyn-number">2</span>] (<span class="mdzsyn-coresym">math/random</span>)))
+<span class="mdzsyn-comment"># -&gt; &lt;fiber 0x5562863141E0&gt;</span>
+
+(<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">g</span>) <span class="mdzsyn-comment"># -&gt; 0.487181</span>
+(<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">g</span>) <span class="mdzsyn-comment"># -&gt; 0.487181</span>
+(<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">g</span>) <span class="mdzsyn-comment"># -&gt; 0.507917</span>
+(<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">g</span>) <span class="mdzsyn-comment"># -&gt; 0.507917</span>
+<span class="mdzsyn-comment"># ...</span>
+</code></pre><a href="https://janetdocs.com/generate">Community Examples</a></div><hr><div class="binding"><span id="gensym" class="binding-sym">gensym</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(gensym)
+
+Returns a new symbol that is unique across the runtime. This means it will not collide with any already created symbols during compilation, so it can be used in macros to generate automatic bindings.</pre><a href="https://janetdocs.com/gensym">Community Examples</a></div><hr><div class="binding"><span id="get" class="binding-sym">get</span> <span class="binding-type">function</span>  <pre class="binding-text">(get ds key &amp;opt dflt)
+
+Get the value mapped to key in data structure ds, and return dflt or nil if not found. Similar to in, but will not throw an error if the key is invalid for the data structure unless the data structure is an abstract type. In that case, the abstract type getter may throw an error.</pre><a href="https://janetdocs.com/get">Community Examples</a></div><hr><div class="binding"><span id="get-in" class="binding-sym">get-in</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1290">source</a></span> <pre class="binding-text">(get-in ds ks &amp;opt dflt)
+
+Access a value in a nested data structure. Looks into the data structure via a sequence of keys.</pre><a href="https://janetdocs.com/get-in">Community Examples</a></div><hr><div class="binding"><span id="getline" class="binding-sym">getline</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(getline &amp;opt prompt buf env)
+
+Reads a line of input into a buffer, including the newline character, using a prompt. An optional environment table can be provided for auto-complete. Returns the modified buffer. Use this function to implement a simple interface for a terminal program.</pre><a href="https://janetdocs.com/getline">Community Examples</a></div><hr><div class="binding"><span id="hash" class="binding-sym">hash</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(hash value)
+
+Gets a hash for any value. The hash is an integer can be used as a cheap hash function for all values. If two values are strictly equal, then they will have the same hash value.</pre><a href="https://janetdocs.com/hash">Community Examples</a></div><hr><div class="binding"><span id="idempotent?" class="binding-sym">idempotent?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L115">source</a></span> <pre class="binding-text">(idempotent? x)
+
+Check if x is a value that evaluates to itself when compiled.</pre><a href="https://janetdocs.com/idempotent_q">Community Examples</a></div><hr><div class="binding"><span id="identity" class="binding-sym">identity</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L665">source</a></span> <pre class="binding-text">(identity x)
+
+A function that returns its first argument.</pre><a href="https://janetdocs.com/identity">Community Examples</a></div><hr><div class="binding"><span id="if-let" class="binding-sym">if-let</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L615">source</a></span> <pre class="binding-text">(if-let bindings tru &amp;opt fal)
+
+Make multiple bindings, and if all are truthy, evaluate the tru form. If any are false or nil, evaluate the fal form. Bindings have the same syntax as the let macro.</pre><a href="https://janetdocs.com/if-let">Community Examples</a></div><hr><div class="binding"><span id="if-not" class="binding-sym">if-not</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L157">source</a></span> <pre class="binding-text">(if-not condition then &amp;opt else)
+
+Shorthand for (if (not condition) else then).</pre><a href="https://janetdocs.com/if-not">Community Examples</a></div><hr><div class="binding"><span id="if-with" class="binding-sym">if-with</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L371">source</a></span> <pre class="binding-text">(if-with [binding ctor dtor] truthy &amp;opt falsey)
+
+Similar to with, but if binding is false or nil, evaluates the falsey path. Otherwise, evaluates the truthy path. In both cases, ctor is bound to binding.</pre><a href="https://janetdocs.com/if-with">Community Examples</a></div><hr><div class="binding"><span id="import" class="binding-sym">import</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2473">source</a></span> <pre class="binding-text">(import path &amp; args)
+
+Import a module. First requires the module, and then merges its symbols into the current environment, prepending a given prefix as needed. (use the :as or :prefix option to set a prefix). If no prefix is provided, use the name of the module as a prefix. One can also use :export true to re-export the imported symbols. If :exit true is given as an argument, any errors encountered at the top level in the module will cause (os/exit 1) to be called. Dynamic bindings will NOT be imported. Use :fresh to bypass the module cache.</pre><a href="https://janetdocs.com/import">Community Examples</a></div><hr><div class="binding"><span id="import*" class="binding-sym">import*</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2453">source</a></span> <pre class="binding-text">(import* path &amp; args)
+
+Function form of import. Same parameters, but the path and other symbol parameters should be strings instead.</pre><a href="https://janetdocs.com/import*">Community Examples</a></div><hr><div class="binding"><span id="in" class="binding-sym">in</span> <span class="binding-type">function</span>  <pre class="binding-text">(in ds key &amp;opt dflt)
+
+Get value in ds at key, works on associative data structures. Arrays, tuples, tables, structs, strings, symbols, and buffers are all associative and can be used. Arrays, tuples, strings, buffers, and symbols must use integer keys that are in bounds or an error is raised. Structs and tables can take any value as a key except nil and will return nil or dflt if not found.</pre><a href="https://janetdocs.com/in">Community Examples</a></div><hr><div class="binding"><span id="inc" class="binding-sym">inc</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L127">source</a></span> <pre class="binding-text">(inc x)
+
+Returns x + 1.</pre><a href="https://janetdocs.com/inc">Community Examples</a></div><hr><div class="binding"><span id="index-of" class="binding-sym">index-of</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L964">source</a></span> <pre class="binding-text">(index-of x ind &amp;opt dflt)
+
+Find the first key associated with a value x in a data structure, acting like a reverse lookup. Will not look at table prototypes. Returns dflt if not found.</pre><a href="https://janetdocs.com/index-of">Community Examples</a></div><hr><div class="binding"><span id="indexed?" class="binding-sym">indexed?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L106">source</a></span> <pre class="binding-text">(indexed? x)
+
+Check if x is an array or tuple.</pre><a href="https://janetdocs.com/indexed_q">Community Examples</a></div><hr><div class="binding"><span id="int?" class="binding-sym">int?</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(int? x)
+
+Check if x can be exactly represented as a 32 bit signed two's complement integer.</pre><a href="https://janetdocs.com/int_q">Community Examples</a></div><hr><div class="binding"><span id="interleave" class="binding-sym">interleave</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1410">source</a></span> <pre class="binding-text">(interleave &amp; cols)
+
+Returns an array of the first elements of each col, then the second, etc.</pre><a href="https://janetdocs.com/interleave">Community Examples</a></div><hr><div class="binding"><span id="interpose" class="binding-sym">interpose</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1455">source</a></span> <pre class="binding-text">(interpose sep ind)
+
+Returns a sequence of the elements of ind separated by sep. Returns a new array.</pre><a href="https://janetdocs.com/interpose">Community Examples</a></div><hr><div class="binding"><span id="invert" class="binding-sym">invert</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1265">source</a></span> <pre class="binding-text">(invert ds)
+
+Returns a table where the keys of an associative data structure are the values, and the values of the keys. If multiple keys have the same value, one key will be ignored.</pre><a href="https://janetdocs.com/invert">Community Examples</a></div><hr><div class="binding"><span id="juxt" class="binding-sym">juxt</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1040">source</a></span> <pre class="binding-text">(juxt &amp; funs)
+
+Macro form of juxt*. Same behavior but more efficient.</pre><a href="https://janetdocs.com/juxt">Community Examples</a></div><hr><div class="binding"><span id="juxt*" class="binding-sym">juxt*</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1030">source</a></span> <pre class="binding-text">(juxt* &amp; funs)
+
+Returns the juxtaposition of functions. In other words, ((juxt* a b c) x) evaluates to [(a x) (b x) (c x)].</pre><a href="https://janetdocs.com/juxt*">Community Examples</a></div><hr><div class="binding"><span id="keep" class="binding-sym">keep</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L911">source</a></span> <pre class="binding-text">(keep pred ind)
+
+Given a predicate, take only elements from an array or tuple for which (pred element) is truthy. Returns a new array of truthy predicate results.</pre><a href="https://janetdocs.com/keep">Community Examples</a></div><hr><div class="binding"><span id="keys" class="binding-sym">keys</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1371">source</a></span> <pre class="binding-text">(keys x)
+
+Get the keys of an associative data structure.</pre><a href="https://janetdocs.com/keys">Community Examples</a></div><hr><div class="binding"><span id="keyword" class="binding-sym">keyword</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(keyword &amp; xs)
+
+Creates a keyword by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new keyword.</pre><a href="https://janetdocs.com/keyword">Community Examples</a></div><hr><div class="binding"><span id="keyword?" class="binding-sym">keyword?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L90">source</a></span> <pre class="binding-text">(keyword? x)
+
+Check if x is a keyword.</pre><a href="https://janetdocs.com/keyword_q">Community Examples</a></div><hr><div class="binding"><span id="kvs" class="binding-sym">kvs</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1447">source</a></span> <pre class="binding-text">(kvs dict)
+
+Takes a table or struct and returns and array of key value pairs like @[k v k v ...]. Returns a new array.</pre><a href="https://janetdocs.com/kvs">Community Examples</a></div><hr><div class="binding"><span id="label" class="binding-sym">label</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L341">source</a></span> <pre class="binding-text">(label name &amp; body)
+
+Set a label point that is lexically scoped. Name should be a symbol that will be bound to the label.</pre><a href="https://janetdocs.com/label">Community Examples</a></div><hr><div class="binding"><span id="last" class="binding-sym">last</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L697">source</a></span> <pre class="binding-text">(last xs)
+
+Get the last element from an indexed data structure.</pre><a href="https://janetdocs.com/last">Community Examples</a></div><hr><div class="binding"><span id="length" class="binding-sym">length</span> <span class="binding-type">function</span>  <pre class="binding-text">(length ds)
+
+Returns the length or count of a data structure in constant time as an integer. For structs and tables, returns the number of key-value pairs in the data structure.</pre><a href="https://janetdocs.com/length">Community Examples</a></div><hr><div class="binding"><span id="let" class="binding-sym">let</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L207">source</a></span> <pre class="binding-text">(let bindings &amp; body)
+
+Create a scope and bind values to symbols. Each pair in bindings is assigned as if with def, and the body of the let form returns the last value.</pre><a href="https://janetdocs.com/let">Community Examples</a></div><hr><div class="binding"><span id="load-image" class="binding-sym">load-image</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2267">source</a></span> <pre class="binding-text">(load-image image)
+
+The inverse operation to make-image. Returns an environment.</pre><a href="https://janetdocs.com/load-image">Community Examples</a></div><hr><div class="binding"><span id="load-image-dict" class="binding-sym">load-image-dict</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2250">source</a></span> <pre class="binding-text">A table used in combination with unmarshal to unmarshal byte sequences created by make-image, such that (load-image bytes) is the same as (unmarshal bytes load-image-dict).</pre><a href="https://janetdocs.com/load-image-dict">Community Examples</a></div><hr><div class="binding"><span id="loop" class="binding-sym">loop</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L531">source</a></span> <pre class="binding-text">(loop head &amp; body)
+
+A general purpose loop macro. This macro is similar to the Common Lisp loop macro, although intentionally much smaller in scope. The head of the loop should be a tuple that contains a sequence of either bindings or conditionals. A binding is a sequence of three values that define something to loop over. They are formatted like:
+
+ 	binding :verb object/expression
+
+ Where binding is a binding as passed to def, :verb is one of a set of keywords, and object is any expression. The available verbs are:
+
+ 	:iterate - repeatedly evaluate and bind to the expression while it is truthy.
+ 	:range - loop over a range. The object should be two element tuple with a start and end value, and an optional positive step. The range is half open, [start, end).
+  	:range-to - same as :range, but the range is inclusive [start, end].
+  	:down - loop over a range, stepping downwards. The object should be two element tuple  with a start and (exclusive) end value, and an optional (positive!) step size.
+  	:down-to - same :as down, but the range is inclusive [start, end].
+  	:keys - iterate over the keys in a data structure.
+  	:pairs - iterate over the keys value pairs as tuples in a data structure.
+  	:in - iterate over the values in a data structure.
+  	:generate - iterate over values yielded from a fiber. Can be paired with the generator  function for the producer/consumer pattern.
+
+  loop also accepts conditionals to refine the looping further. Conditionals are of  the form:
+
+  	:modifier argument
+
+  where :modifier is one of a set of keywords, and argument is keyword dependent.  :modifier can be one of:
+
+  	:while expression - breaks from the loop if expression is falsey.
+  	:until expression - breaks from the loop if expression is truthy.
+  	:let bindings - defines bindings inside the loop as passed to the let macro.
+  	:before form - evaluates a form for a side effect before of the next inner loop.
+  	:after form - same as :before, but the side effect happens after the next inner loop.
+  	:repeat n - repeats the next inner loop n times.
+  	:when condition - only evaluates the loop body when condition is true.
+
+  The loop macro always evaluates to nil.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code><span class="mdzsyn-comment"># -&gt; prints 0123456789 (not followed by newline)</span>
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">10</span>]]
+  (<span class="mdzsyn-coresym">prin</span> <span class="mdzsyn-symbol">x</span>))
+
+<span class="mdzsyn-comment"># Cartesian product (nested loops)</span>
+
+<span class="mdzsyn-comment"># -&gt; prints 00010203101112132021222330313233</span>
+<span class="mdzsyn-comment"># Same as (for x 0 4 (for y 0 4 (prin x y)))</span>
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">4</span>]
+       <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">4</span>]]
+  (<span class="mdzsyn-coresym">prin</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>))
+
+<span class="mdzsyn-comment"># -&gt; prints bytes of "hello, world" as numbers</span>
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">character</span> <span class="mdzsyn-keyword">:in</span> <span class="mdzsyn-string">"hello, world"</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">character</span>))
+
+<span class="mdzsyn-comment"># -&gt; prints 1, 2, and 3, in an unspecified order</span>
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">value</span> <span class="mdzsyn-keyword">:in</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-number">3</span>}]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">value</span>))
+
+<span class="mdzsyn-comment"># -&gt; prints 0 to 99 inclusive</span>
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:in</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">100</span>)]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>))
+
+<span class="mdzsyn-comment"># Complex body</span>
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:in</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">10</span>)]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>)
+  (<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">inc</span> <span class="mdzsyn-symbol">c</span>))
+  (<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">2</span>)))
+
+<span class="mdzsyn-comment"># Iterate over keys</span>
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">k</span> <span class="mdzsyn-keyword">:keys</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-number">3</span>}]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">k</span>))
+<span class="mdzsyn-comment"># print a, b, and c in an unspecified order</span>
+
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">index</span> <span class="mdzsyn-keyword">:keys</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-keyword">:d</span>]]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">index</span>))
+<span class="mdzsyn-comment">#  print 0, 1, 2, and 3 in order.</span>
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">print-pairs</span>
+  [<span class="mdzsyn-symbol">x</span>]
+  (<span class="mdzsyn-coresym">loop</span> [[<span class="mdzsyn-symbol">k</span> <span class="mdzsyn-symbol">v</span>] <span class="mdzsyn-keyword">:pairs</span> <span class="mdzsyn-symbol">x</span>]
+    (<span class="mdzsyn-coresym">printf</span> <span class="mdzsyn-string">"[%v]=%v"</span> <span class="mdzsyn-symbol">k</span> <span class="mdzsyn-symbol">v</span>)))
+
+(<span class="mdzsyn-symbol">print-pairs</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:c</span>])
+<span class="mdzsyn-comment"># [0]=:a</span>
+<span class="mdzsyn-comment"># [1]=:b</span>
+<span class="mdzsyn-comment"># [2]=:c</span>
+
+(<span class="mdzsyn-symbol">print-pairs</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-number">3</span>})
+<span class="mdzsyn-comment"># [:a]=1</span>
+<span class="mdzsyn-comment"># [:b]=2</span>
+<span class="mdzsyn-comment"># [:c]=3</span>
+
+<span class="mdzsyn-comment"># Some modifiers - allow early termination and conditional execution</span>
+<span class="mdzsyn-comment"># of the loop</span>
+
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">100</span>] <span class="mdzsyn-keyword">:when</span> (<span class="mdzsyn-coresym">even?</span> <span class="mdzsyn-symbol">x</span>)]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>))
+<span class="mdzsyn-comment"># prints even numbers 0, 2, 4, ..., 98</span>
+
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">100</span>] <span class="mdzsyn-keyword">:while</span> (<span class="mdzsyn-coresym">pos?</span> (<span class="mdzsyn-coresym">%</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">7</span>))]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>))
+<span class="mdzsyn-comment"># prints 1, 2, 3, 4, 5, 6</span>
+
+<span class="mdzsyn-comment"># Consume fibers as generators</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">f</span>
+  (<span class="mdzsyn-coresym">fiber/new</span>
+    (<span class="mdzsyn-coresym">fn</span> []
+      (<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">100</span>
+        (<span class="mdzsyn-coresym">yield</span> <span class="mdzsyn-symbol">i</span>)))))
+
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:generate</span> <span class="mdzsyn-symbol">f</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>))
+<span class="mdzsyn-comment"># print 0, 1, 2, ... 99</span>
+
+<span class="mdzsyn-comment"># Modifiers in nested loops</span>
+
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">10</span>]
+      <span class="mdzsyn-keyword">:after</span> (<span class="mdzsyn-coresym">print</span>)
+       <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-symbol">x</span>]]
+  (<span class="mdzsyn-coresym">prin</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-string">" "</span>))
+<span class="mdzsyn-comment"># 0</span>
+<span class="mdzsyn-comment"># 0 1</span>
+<span class="mdzsyn-comment"># 0 1 2</span>
+<span class="mdzsyn-comment"># 0 1 2 3</span>
+<span class="mdzsyn-comment"># 0 1 2 3 4</span>
+<span class="mdzsyn-comment"># 0 1 2 3 4 5</span>
+<span class="mdzsyn-comment"># 0 1 2 3 4 5 6</span>
+<span class="mdzsyn-comment"># 0 1 2 3 4 5 6 7</span>
+<span class="mdzsyn-comment"># 0 1 2 3 4 5 6 7 8</span>
+</code></pre><a href="https://janetdocs.com/loop">Community Examples</a></div><hr><div class="binding"><span id="macex" class="binding-sym">macex</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1910">source</a></span> <pre class="binding-text">(macex x &amp;opt on-binding)
+
+Expand macros completely. on-binding is an optional callback whenever a normal symbolic binding is encounter. This allows macros to easily see all bindings use by their arguments by calling macex on their contents. The binding itself is also replaced by the value returned by on-binding within the expand macro.</pre><a href="https://janetdocs.com/macex">Community Examples</a></div><hr><div class="binding"><span id="macex1" class="binding-sym">macex1</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1758">source</a></span> <pre class="binding-text">(macex1 x &amp;opt on-binding)
+
+Expand macros in a form, but do not recursively expand macros. See macex docs for info on on-binding.</pre><a href="https://janetdocs.com/macex1">Community Examples</a></div><hr><div class="binding"><span id="make-env" class="binding-sym">make-env</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2034">source</a></span> <pre class="binding-text">(make-env &amp;opt parent)
+
+Create a new environment table. The new environment will inherit bindings from the parent environment, but new bindings will not pollute the parent environment.</pre><a href="https://janetdocs.com/make-env">Community Examples</a></div><hr><div class="binding"><span id="make-image" class="binding-sym">make-image</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2261">source</a></span> <pre class="binding-text">(make-image env)
+
+Create an image from an environment returned by require. Returns the image source as a string.</pre><a href="https://janetdocs.com/make-image">Community Examples</a></div><hr><div class="binding"><span id="make-image-dict" class="binding-sym">make-image-dict</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2245">source</a></span> <pre class="binding-text">A table used in combination with marshal to marshal code (images), such that (make-image x) is the same as (marshal x make-image-dict).</pre><a href="https://janetdocs.com/make-image-dict">Community Examples</a></div><hr><div class="binding"><span id="map" class="binding-sym">map</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L859">source</a></span> <pre class="binding-text">(map f &amp; inds)
+
+Map a function over every element in an indexed data structure and return an array of the results.</pre><a href="https://janetdocs.com/map">Community Examples</a></div><hr><div class="binding"><span id="mapcat" class="binding-sym">mapcat</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L882">source</a></span> <pre class="binding-text">(mapcat f ind)
+
+Map a function over every element in an array or tuple and use array to concatenate the results.</pre><a href="https://janetdocs.com/mapcat">Community Examples</a></div><hr><div class="binding"><span id="marshal" class="binding-sym">marshal</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(marshal x &amp;opt reverse-lookup buffer)
+
+Marshal a value into a buffer and return the buffer. The buffer can the later be unmarshalled to reconstruct the initial value. Optionally, one can pass in a reverse lookup table to not marshal aliased values that are found in the table. Then a forwardlookup table can be used to recover the original value when unmarshalling.</pre><a href="https://janetdocs.com/marshal">Community Examples</a></div><hr><div class="binding"><span id="match" class="binding-sym">match</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1599">source</a></span> <pre class="binding-text">(match x &amp; cases)
+
+Pattern matching. Match an expression x against any number of cases. Each case is a pattern to match against, followed by an expression to evaluate to if that case is matched. A pattern that is a symbol will match anything, binding x's value to that symbol. An array will match only if all of it's elements match the corresponding elements in x. A table or struct will match if all values match with the corresponding values in x. A tuple pattern will match if it's first element matches, and the following elements are treated as predicates and are true. The last special case is the '_ symbol, which is a wildcard that will match any value without creating a binding. Any other value pattern will only match if it is equal to x.</pre><a href="https://janetdocs.com/match">Community Examples</a></div><hr><div class="binding"><span id="max" class="binding-sym">max</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L684">source</a></span> <pre class="binding-text">(max &amp; args)
+
+Returns the numeric maximum of the arguments.</pre><a href="https://janetdocs.com/max">Community Examples</a></div><hr><div class="binding"><span id="mean" class="binding-sym">mean</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L603">source</a></span> <pre class="binding-text">(mean xs)
+
+Returns the mean of xs. If empty, returns NaN.</pre><a href="https://janetdocs.com/mean">Community Examples</a></div><hr><div class="binding"><span id="merge" class="binding-sym">merge</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1360">source</a></span> <pre class="binding-text">(merge &amp; colls)
+
+Merges multiple tables/structs to one. If a key appears in more than one collection, then later values replace any previous ones. Returns a new table.</pre><a href="https://janetdocs.com/merge">Community Examples</a></div><hr><div class="binding"><span id="merge-into" class="binding-sym">merge-into</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1350">source</a></span> <pre class="binding-text">(merge-into tab &amp; colls)
+
+Merges multiple tables/structs into a table. If a key appears in more than one collection, then later values replace any previous ones. Returns the original table.</pre><a href="https://janetdocs.com/merge-into">Community Examples</a></div><hr><div class="binding"><span id="min" class="binding-sym">min</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L688">source</a></span> <pre class="binding-text">(min &amp; args)
+
+Returns the numeric minimum of the arguments.</pre><a href="https://janetdocs.com/min">Community Examples</a></div><hr><div class="binding"><span id="mod" class="binding-sym">mod</span> <span class="binding-type">function</span>  <pre class="binding-text">(mod dividend divisor)
+
+Returns the modulo of dividend / divisor.</pre><a href="https://janetdocs.com/mod">Community Examples</a></div><hr><div class="binding"><span id="nan?" class="binding-sym">nan?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L83">source</a></span> <pre class="binding-text">(nan? x)
+
+Check if x is NaN</pre><a href="https://janetdocs.com/nan_q">Community Examples</a></div><hr><div class="binding"><span id="nat?" class="binding-sym">nat?</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(nat? x)
+
+Check if x can be exactly represented as a non-negative 32 bit signed two's complement integer.</pre><a href="https://janetdocs.com/nat_q">Community Examples</a></div><hr><div class="binding"><span id="native" class="binding-sym">native</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(native path &amp;opt env)
+
+Load a native module from the given path. The path must be an absolute or relative path on the file system, and is usually a .so file on Unix systems, and a .dll file on Windows. Returns an environment table that contains functions and other values from the native module.</pre><a href="https://janetdocs.com/native">Community Examples</a></div><hr><div class="binding"><span id="neg?" class="binding-sym">neg?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L753">source</a></span> <pre class="binding-text">(neg? x)
+
+Check if x is less than 0.</pre><a href="https://janetdocs.com/neg_q">Community Examples</a></div><hr><div class="binding"><span id="next" class="binding-sym">next</span> <span class="binding-type">function</span>  <pre class="binding-text">(next ds &amp;opt key)
+
+Gets the next key in a data structure. Can be used to iterate through the keys of a data structure in an unspecified order. Keys are guaranteed to be seen only once per iteration if they data structure is not mutated during iteration. If key is nil, next returns the first key. If next returns nil, there are no more keys to iterate through.</pre><a href="https://janetdocs.com/next">Community Examples</a></div><hr><div class="binding"><span id="nil?" class="binding-sym">nil?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L112">source</a></span> <pre class="binding-text">(nil? x)
+
+Check if x is nil.</pre><a href="https://janetdocs.com/nil_q">Community Examples</a></div><hr><div class="binding"><span id="not" class="binding-sym">not</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(not x)
+
+Returns the boolean inverse of x.</pre><a href="https://janetdocs.com/not">Community Examples</a></div><hr><div class="binding"><span id="not=" class="binding-sym">not=</span> <span class="binding-type">function</span>  <pre class="binding-text">(not= &amp; xs)
+
+Check if any values in xs are not equal. Returns a boolean.</pre><a href="https://janetdocs.com/not%3d">Community Examples</a></div><hr><div class="binding"><span id="number?" class="binding-sym">number?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L86">source</a></span> <pre class="binding-text">(number? x)
+
+Check if x is a number.</pre><a href="https://janetdocs.com/number_q">Community Examples</a></div><hr><div class="binding"><span id="odd?" class="binding-sym">odd?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L85">source</a></span> <pre class="binding-text">(odd? x)
+
+Check if x is odd.</pre><a href="https://janetdocs.com/odd_q">Community Examples</a></div><hr><div class="binding"><span id="one?" class="binding-sym">one?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L754">source</a></span> <pre class="binding-text">(one? x)
+
+Check if x is equal to 1.</pre><a href="https://janetdocs.com/one_q">Community Examples</a></div><hr><div class="binding"><span id="or" class="binding-sym">or</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L267">source</a></span> <pre class="binding-text">(or &amp; forms)
+
+Evaluates to the last argument if all preceding elements are falsey, otherwise evaluates to the first truthy element.</pre><a href="https://janetdocs.com/or">Community Examples</a></div><hr><div class="binding"><span id="pairs" class="binding-sym">pairs</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1391">source</a></span> <pre class="binding-text">(pairs x)
+
+Get the values of an associative data structure.</pre><a href="https://janetdocs.com/pairs">Community Examples</a></div><hr><div class="binding"><span id="parse" class="binding-sym">parse</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2232">source</a></span> <pre class="binding-text">(parse str)
+
+Parse a string and return the first value. For complex parsing, such as for a repl with error handling, use the parser api.</pre><a href="https://janetdocs.com/parse">Community Examples</a></div><hr><div class="binding"><span id="partial" class="binding-sym">partial</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1215">source</a></span> <pre class="binding-text">(partial f &amp; more)
+
+Partial function application.</pre><a href="https://janetdocs.com/partial">Community Examples</a></div><hr><div class="binding"><span id="partition" class="binding-sym">partition</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1468">source</a></span> <pre class="binding-text">(partition n ind)
+
+Partition an indexed data structure into tuples of size n. Returns a new array.</pre><a href="https://janetdocs.com/partition">Community Examples</a></div><hr><div class="binding"><span id="pos?" class="binding-sym">pos?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L752">source</a></span> <pre class="binding-text">(pos? x)
+
+Check if x is greater than 0.</pre><a href="https://janetdocs.com/pos_q">Community Examples</a></div><hr><div class="binding"><span id="postwalk" class="binding-sym">postwalk</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1150">source</a></span> <pre class="binding-text">(postwalk f form)
+
+Do a post-order traversal of a data structure and call (f x) on every visitation.</pre><a href="https://janetdocs.com/postwalk">Community Examples</a></div><hr><div class="binding"><span id="pp" class="binding-sym">pp</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1510">source</a></span> <pre class="binding-text">(pp x)
+
+Pretty print to stdout or (dyn :out). The format string used is (dyn :pretty-format "%q").</pre><a href="https://janetdocs.com/pp">Community Examples</a></div><hr><div class="binding"><span id="prewalk" class="binding-sym">prewalk</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1156">source</a></span> <pre class="binding-text">(prewalk f form)
+
+Similar to postwalk, but do pre-order traversal.</pre><a href="https://janetdocs.com/prewalk">Community Examples</a></div><hr><div class="binding"><span id="prin" class="binding-sym">prin</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(prin &amp; xs)
+
+Same as print, but does not add trailing newline.</pre><a href="https://janetdocs.com/prin">Community Examples</a></div><hr><div class="binding"><span id="prinf" class="binding-sym">prinf</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(prinf fmt &amp; xs)
+
+Like printf but with no trailing newline.</pre><a href="https://janetdocs.com/prinf">Community Examples</a></div><hr><div class="binding"><span id="print" class="binding-sym">print</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(print &amp; xs)
+
+Print values to the console (standard out). Value are converted to strings if they are not already. After printing all values, a newline character is printed. Use the value of (dyn :out stdout) to determine what to push characters to. Expects (dyn :out stdout) to be either a core/file or a buffer. Returns nil.</pre><a href="https://janetdocs.com/print">Community Examples</a></div><hr><div class="binding"><span id="printf" class="binding-sym">printf</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(printf fmt &amp; xs)
+
+Prints output formatted as if with (string/format fmt ;xs) to (dyn :out stdout) with a trailing newline.</pre><a href="https://janetdocs.com/printf">Community Examples</a></div><hr><div class="binding"><span id="product" class="binding-sym">product</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L608">source</a></span> <pre class="binding-text">(product xs)
+
+Returns the product of xs. If xs is empty, returns 1.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">product</span> []) <span class="mdzsyn-comment"># -&gt; 1</span>
+(<span class="mdzsyn-coresym">product</span> @[<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># -&gt; 6</span>
+(<span class="mdzsyn-coresym">product</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># -&gt; 0</span>
+(<span class="mdzsyn-coresym">product</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">10</span>)) <span class="mdzsyn-comment"># -&gt; 362880</span>
+
+<span class="mdzsyn-comment"># Product over byte values [0-255] in a string</span>
+(<span class="mdzsyn-coresym">product</span> <span class="mdzsyn-string">"hello"</span>) <span class="mdzsyn-comment"># -&gt; 1.35996e+10</span>
+
+<span class="mdzsyn-comment"># Product over values in a table or struct</span>
+(<span class="mdzsyn-coresym">sum</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-number">4</span>}) <span class="mdzsyn-comment"># -&gt; 8</span>
+</code></pre><a href="https://janetdocs.com/product">Community Examples</a></div><hr><div class="binding"><span id="prompt" class="binding-sym">prompt</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L321">source</a></span> <pre class="binding-text">(prompt tag &amp; body)
+
+Set up a checkpoint that can be returned to. Tag should be a value that is used in a return statement, like a keyword.</pre><a href="https://janetdocs.com/prompt">Community Examples</a></div><hr><div class="binding"><span id="propagate" class="binding-sym">propagate</span> <span class="binding-type">function</span>  <pre class="binding-text">(propagate x fiber)
+
+Propagate a signal from a fiber to the current fiber. The resulting stack trace from the current fiber will include frames from fiber. If fiber is in a state that can be resumed, resuming the current fiber will first resume fiber. This function can be used to re-raise an error without losing the original stack trace.</pre><a href="https://janetdocs.com/propagate">Community Examples</a></div><hr><div class="binding"><span id="protect" class="binding-sym">protect</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L239">source</a></span> <pre class="binding-text">(protect &amp; body)
+
+Evaluate expressions, while capturing any errors. Evaluates to a tuple of two elements. The first element is true if successful, false if an error, and the second is the return value or error.</pre><a href="https://janetdocs.com/protect">Community Examples</a></div><hr><div class="binding"><span id="put" class="binding-sym">put</span> <span class="binding-type">function</span>  <pre class="binding-text">(put ds key value)
+
+Associate a key with a value in any mutable associative data structure. Indexed data structures (arrays and buffers) only accept non-negative integer keys, and will expand if an out of bounds value is provided. In an array, extra space will be filled with nils, and in a buffer, extra space will be filled with 0 bytes. In a table, putting a key that is contained in the table prototype will hide the association defined by the prototype, but will not mutate the prototype table. Putting a value nil into a table will remove the key from the table. Returns the data structure ds.</pre><a href="https://janetdocs.com/put">Community Examples</a></div><hr><div class="binding"><span id="put-in" class="binding-sym">put-in</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1320">source</a></span> <pre class="binding-text">(put-in ds ks v)
+
+Put a value into a nested data structure. Looks into the data structure via a sequence of keys. Missing data structures will be replaced with tables. Returns the modified, original data structure.</pre><a href="https://janetdocs.com/put-in">Community Examples</a></div><hr><div class="binding"><span id="quit" class="binding-sym">quit</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2189">source</a></span> <pre class="binding-text">(quit &amp;opt value)
+
+Tries to exit from the current repl or context. Does not always exit the application. Works by setting the :exit dynamic binding to true. Passing a non-nil value here will cause the outer run-context to return that value.</pre><a href="https://janetdocs.com/quit">Community Examples</a></div><hr><div class="binding"><span id="range" class="binding-sym">range</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L921">source</a></span> <pre class="binding-text">(range &amp; args)
+
+Create an array of values [start, end) with a given step. With one argument returns a range [0, end). With two arguments, returns a range [start, end). With three, returns a range with optional step size.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; @[0 1 2 3 4  6 7 8 9]</span>
+(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># -&gt; @[5 6 7 8 9]</span>
+(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">2</span>) <span class="mdzsyn-comment"># -&gt; @[5 7 9]</span>
+(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">11</span> <span class="mdzsyn-number">2</span>) <span class="mdzsyn-comment"># -&gt; @[5 7 9]</span>
+(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">-1</span>) <span class="mdzsyn-comment"># -&gt; @[10 9 8 7 6 5 4 3 2 1]</span>
+</code></pre><a href="https://janetdocs.com/range">Community Examples</a></div><hr><div class="binding"><span id="reduce" class="binding-sym">reduce</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L812">source</a></span> <pre class="binding-text">(reduce f init ind)
+
+Reduce, also know as fold-left in many languages, transforms an indexed type (array, tuple) with a function to produce a value.</pre><a href="https://janetdocs.com/reduce">Community Examples</a></div><hr><div class="binding"><span id="reduce2" class="binding-sym">reduce2</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L820">source</a></span> <pre class="binding-text">(reduce2 f ind)
+
+The 2 argument version of reduce that does not take an initialization value. Instead the first element of the array is used for initialization.</pre><a href="https://janetdocs.com/reduce2">Community Examples</a></div><hr><div class="binding"><span id="repeat" class="binding-sym">repeat</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L515">source</a></span> <pre class="binding-text">(repeat n &amp; body)
+
+Evaluate body n times. If n is negative, body will be evaluated 0 times. Evaluates to nil.</pre><a href="https://janetdocs.com/repeat">Community Examples</a></div><hr><div class="binding"><span id="repl" class="binding-sym">repl</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2666">source</a></span> <pre class="binding-text">(repl &amp;opt chunks onsignal env)
+
+Run a repl. The first parameter is an optional function to call to get a chunk of source code that should return nil for end of file. The second parameter is a function that is called when a signal is caught. One can provide an optional environment table to run the repl in.</pre><a href="https://janetdocs.com/repl">Community Examples</a></div><hr><div class="binding"><span id="require" class="binding-sym">require</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2446">source</a></span> <pre class="binding-text">(require path &amp; args)
+
+Require a module with the given name. Will search all of the paths in module/paths. Returns the new environment returned from compiling and running the file.</pre><a href="https://janetdocs.com/require">Community Examples</a></div><hr><div class="binding"><span id="resume" class="binding-sym">resume</span> <span class="binding-type">function</span>  <pre class="binding-text">(resume fiber &amp;opt x)
+
+Resume a new or suspended fiber and optionally pass in a value to the fiber that will be returned to the last yield in the case of a pending fiber, or the argument to the dispatch function in the case of a new fiber. Returns either the return result of the fiber's dispatch function, or the value from the next yield call in fiber.</pre><a href="https://janetdocs.com/resume">Community Examples</a></div><hr><div class="binding"><span id="return" class="binding-sym">return</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L349">source</a></span> <pre class="binding-text">(return to &amp;opt value)
+
+Return to a prompt point.</pre><a href="https://janetdocs.com/return">Community Examples</a></div><hr><div class="binding"><span id="reverse" class="binding-sym">reverse</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1253">source</a></span> <pre class="binding-text">(reverse t)
+
+Reverses the order of the elements in a given array or tuple and returns a new array. If string or buffer is provided function returns array of chars reversed.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">reverse</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># -&gt; @[3 2 1]</span>
+(<span class="mdzsyn-coresym">reverse</span> <span class="mdzsyn-string">"abcdef"</span>) <span class="mdzsyn-comment"># -&gt; @[102 101 100 99 98 97]</span>
+(<span class="mdzsyn-coresym">reverse</span> <span class="mdzsyn-keyword">:abc</span>) <span class="mdzsyn-comment"># -&gt; @[99 98 97]</span>
+
+</code></pre><a href="https://janetdocs.com/reverse">Community Examples</a></div><hr><div class="binding"><span id="reverse!" class="binding-sym">reverse!</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1239">source</a></span> <pre class="binding-text">(reverse! t)
+
+Reverses the order of the elements in a given array or buffer and returns it mutated.</pre><a href="https://janetdocs.com/reverse!">Community Examples</a></div><hr><div class="binding"><span id="root-env" class="binding-sym">root-env</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L10">source</a></span> <pre class="binding-text">The root environment used to create environments with (make-env)</pre><a href="https://janetdocs.com/root-env">Community Examples</a></div><hr><div class="binding"><span id="run-context" class="binding-sym">run-context</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2084">source</a></span> <pre class="binding-text">(run-context opts)
+
+Run a context. This evaluates expressions in an environment, and is encapsulates the parsing, compilation, and evaluation. Returns (in environment :exit-value environment) when complete. opts is a table or struct of options. The options are as follows:
+
+	 :chunks - callback to read into a buffer - default is getline
+	 :on-parse-error - callback when parsing fails - default is bad-parse
+	 :env - the environment to compile against - default is the current env
+	 :source - string path of source for better errors - default is "&lt;anonymous&gt;"
+	 :on-compile-error - callback when compilation fails - default is bad-compile
+	 :evaluator - callback that executes thunks. Signature is (evaluator thunk source env where)
+	 :on-status - callback when a value is evaluated - default is debug/stacktrace
+	  :fiber-flags - what flags to wrap the compilation fiber with. Default is :ia.
+	  :expander - an optional function that is called on each top level form before being compiled.</pre><a href="https://janetdocs.com/run-context">Community Examples</a></div><hr><div class="binding"><span id="scan-number" class="binding-sym">scan-number</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(scan-number str)
+
+Parse a number from a byte sequence an return that number, either and integer or a real. The number must be in the same format as numbers in janet source code. Will return nil on an invalid number.</pre><a href="https://janetdocs.com/scan-number">Community Examples</a></div><hr><div class="binding"><span id="seq" class="binding-sym">seq</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L568">source</a></span> <pre class="binding-text">(seq head &amp; body)
+
+Similar to loop, but accumulates the loop body into an array and returns that. See loop for details.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">seq</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">5</span>]] (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-symbol">x</span>)) <span class="mdzsyn-comment"># -&gt; @[0 2 4 6 8]</span>
+</code></pre><a href="https://janetdocs.com/seq">Community Examples</a></div><hr><div class="binding"><span id="setdyn" class="binding-sym">setdyn</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(setdyn key value)
+
+Set a dynamic binding. Returns value.</pre><a href="https://janetdocs.com/setdyn">Community Examples</a></div><hr><div class="binding"><span id="short-fn" class="binding-sym">short-fn</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1957">source</a></span> <pre class="binding-text">(short-fn arg)
+
+fn shorthand.
+
+ usage:
+
+ 	(short-fn (+ $ $)) - A function that double's its arguments.
+ 	(short-fn (string $0 $1)) - accepting multiple args
+ 	|(+ $ $) - use pipe reader macro for terse function literals
+ 	|(+ $&amp;) - variadic functions</pre><a href="https://janetdocs.com/short-fn">Community Examples</a></div><hr><div class="binding"><span id="signal" class="binding-sym">signal</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(signal what x)
+
+Raise a signal with payload x. </pre><a href="https://janetdocs.com/signal">Community Examples</a></div><hr><div class="binding"><span id="slice" class="binding-sym">slice</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(slice x &amp;opt start end)
+
+Extract a sub-range of an indexed data structure or byte sequence.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">slice</span> @[<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># -&gt; (1 2 3) (a new array!)</span>
+(<span class="mdzsyn-coresym">slice</span> @[<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:c</span>] <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; (:b :c)</span>
+(<span class="mdzsyn-coresym">slice</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:e</span>] <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">4</span>) <span class="mdzsyn-comment"># -&gt; (:c :d)</span>
+(<span class="mdzsyn-coresym">slice</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:e</span>] <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">-1</span>) <span class="mdzsyn-comment"># -&gt; (:c :d :e)</span>
+(<span class="mdzsyn-coresym">slice</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:e</span>] <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">-2</span>) <span class="mdzsyn-comment"># -&gt; (:c :d)</span>
+(<span class="mdzsyn-coresym">slice</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:e</span>] <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">-4</span>) <span class="mdzsyn-comment"># -&gt; ()</span>
+(<span class="mdzsyn-coresym">slice</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:e</span>] <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">-10</span>) <span class="mdzsyn-comment"># -&gt; error: range error</span>
+(<span class="mdzsyn-coresym">slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">2</span>) <span class="mdzsyn-comment"># -&gt; "ab"</span>
+(<span class="mdzsyn-coresym">slice</span> <span class="mdzsyn-string">@"abcdefg"</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">2</span>) <span class="mdzsyn-comment"># -&gt; "ab"</span>
+
+</code></pre><a href="https://janetdocs.com/slice">Community Examples</a></div><hr><div class="binding"><span id="slurp" class="binding-sym">slurp</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1489">source</a></span> <pre class="binding-text">(slurp path)
+
+Read all data from a file with name path and then close the file.</pre><a href="https://janetdocs.com/slurp">Community Examples</a></div><hr><div class="binding"><span id="some" class="binding-sym">some</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1866">source</a></span> <pre class="binding-text">(some pred xs)
+
+Returns nil if all xs are false or nil, otherwise returns the result of the first truthy predicate, (pred x).</pre><a href="https://janetdocs.com/some">Community Examples</a></div><hr><div class="binding"><span id="sort" class="binding-sym">sort</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L787">source</a></span> <pre class="binding-text">(sort a &amp;opt by)
+
+Sort an array in-place. Uses quick-sort and is not a stable sort.</pre><a href="https://janetdocs.com/sort">Community Examples</a></div><hr><div class="binding"><span id="sort-by" class="binding-sym">sort-by</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L795">source</a></span> <pre class="binding-text">(sort-by f ind)
+
+Returns a new sorted array that compares elements by invoking a function on each element and comparing the result with &lt;.</pre><a href="https://janetdocs.com/sort-by">Community Examples</a></div><hr><div class="binding"><span id="sorted" class="binding-sym">sorted</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L801">source</a></span> <pre class="binding-text">(sorted ind &amp;opt by)
+
+Returns a new sorted array without modifying the old one.</pre><a href="https://janetdocs.com/sorted">Community Examples</a></div><hr><div class="binding"><span id="sorted-by" class="binding-sym">sorted-by</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L806">source</a></span> <pre class="binding-text">(sorted-by f ind)
+
+Returns a new sorted array that compares elements by invoking a function on each element and comparing the result with &lt;.</pre><a href="https://janetdocs.com/sorted-by">Community Examples</a></div><hr><div class="binding"><span id="spit" class="binding-sym">spit</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1499">source</a></span> <pre class="binding-text">(spit path contents &amp;opt mode)
+
+Write contents to a file at path. Can optionally append to the file.</pre><a href="https://janetdocs.com/spit">Community Examples</a></div><hr><div class="binding"><span id="stderr" class="binding-sym">stderr</span> <span class="binding-type">core/file</span>  <pre class="binding-text">The standard error file.</pre><a href="https://janetdocs.com/stderr">Community Examples</a></div><hr><div class="binding"><span id="stdin" class="binding-sym">stdin</span> <span class="binding-type">core/file</span>  <pre class="binding-text">The standard input file.</pre><a href="https://janetdocs.com/stdin">Community Examples</a></div><hr><div class="binding"><span id="stdout" class="binding-sym">stdout</span> <span class="binding-type">core/file</span>  <pre class="binding-text">The standard output file.</pre><a href="https://janetdocs.com/stdout">Community Examples</a></div><hr><div class="binding"><span id="string" class="binding-sym">string</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string &amp; parts)
+
+Creates a string by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new string.</pre><a href="https://janetdocs.com/string">Community Examples</a></div><hr><div class="binding"><span id="string?" class="binding-sym">string?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L88">source</a></span> <pre class="binding-text">(string? x)
+
+Check if x is a string.</pre><a href="https://janetdocs.com/string_q">Community Examples</a></div><hr><div class="binding"><span id="struct" class="binding-sym">struct</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(struct &amp; kvs)
+
+Create a new struct from a sequence of key value pairs. kvs is a sequence k1, v1, k2, v2, k3, v3, ... If kvs has an odd number of elements, an error will be thrown. Returns the new struct.</pre><a href="https://janetdocs.com/struct">Community Examples</a></div><hr><div class="binding"><span id="struct?" class="binding-sym">struct?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L96">source</a></span> <pre class="binding-text">(struct? x)
+
+Check if x a struct.</pre><a href="https://janetdocs.com/struct_q">Community Examples</a></div><hr><div class="binding"><span id="sum" class="binding-sym">sum</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L596">source</a></span> <pre class="binding-text">(sum xs)
+
+Returns the sum of xs. If xs is empty, returns 0.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">sum</span> []) <span class="mdzsyn-comment"># -&gt; 0</span>
+(<span class="mdzsyn-coresym">sum</span> @[<span class="mdzsyn-number">1</span>]) <span class="mdzsyn-comment"># -&gt; 1</span>
+(<span class="mdzsyn-coresym">sum</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">100</span>)) <span class="mdzsyn-comment"># -&gt; 4950</span>
+
+<span class="mdzsyn-comment"># Sum over bytes values [0-255] in a string</span>
+(<span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-string">"hello"</span>) <span class="mdzsyn-comment"># -&gt; 532</span>
+
+<span class="mdzsyn-comment"># Sum over values in a table or struct</span>
+(<span class="mdzsyn-coresym">sum</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-number">4</span>}) <span class="mdzsyn-comment"># -&gt; 7</span>
+</code></pre><a href="https://janetdocs.com/sum">Community Examples</a></div><hr><div class="binding"><span id="symbol" class="binding-sym">symbol</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(symbol &amp; xs)
+
+Creates a symbol by concatenating values together. Values are converted to bytes via describe if they are not byte sequences. Returns the new symbol.</pre><a href="https://janetdocs.com/symbol">Community Examples</a></div><hr><div class="binding"><span id="symbol?" class="binding-sym">symbol?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L89">source</a></span> <pre class="binding-text">(symbol? x)
+
+Check if x is a symbol.</pre><a href="https://janetdocs.com/symbol_q">Community Examples</a></div><hr><div class="binding"><span id="table" class="binding-sym">table</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(table &amp; kvs)
+
+Creates a new table from a variadic number of keys and values. kvs is a sequence k1, v1, k2, v2, k3, v3, ... If kvs has an odd number of elements, an error will be thrown. Returns the new table.</pre><a href="https://janetdocs.com/table">Community Examples</a></div><hr><div class="binding"><span id="table?" class="binding-sym">table?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L95">source</a></span> <pre class="binding-text">(table? x)
+
+Check if x a table.</pre><a href="https://janetdocs.com/table_q">Community Examples</a></div><hr><div class="binding"><span id="take" class="binding-sym">take</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L976">source</a></span> <pre class="binding-text">(take n ind)
+
+Take first n elements in an indexed type. Returns new indexed instance.</pre><a href="https://janetdocs.com/take">Community Examples</a></div><hr><div class="binding"><span id="take-until" class="binding-sym">take-until</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L987">source</a></span> <pre class="binding-text">(take-until pred ind)
+
+Same as (take-while (complement pred) ind).</pre><a href="https://janetdocs.com/take-until">Community Examples</a></div><hr><div class="binding"><span id="take-while" class="binding-sym">take-while</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L997">source</a></span> <pre class="binding-text">(take-while pred ind)
+
+Given a predicate, take only elements from an indexed type that satisfy the predicate, and abort on first failure. Returns a new array.</pre><a href="https://janetdocs.com/take-while">Community Examples</a></div><hr><div class="binding"><span id="trace" class="binding-sym">trace</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(trace func)
+
+Enable tracing on a function. Returns the function.</pre><a href="https://janetdocs.com/trace">Community Examples</a></div><hr><div class="binding"><span id="tracev" class="binding-sym">tracev</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1049">source</a></span> <pre class="binding-text">(tracev x)
+
+Print a value and a description of the form that produced that value to stderr. Evaluates to x.</pre><a href="https://janetdocs.com/tracev">Community Examples</a></div><hr><div class="binding"><span id="true?" class="binding-sym">true?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L110">source</a></span> <pre class="binding-text">(true? x)
+
+Check if x is true.</pre><a href="https://janetdocs.com/true_q">Community Examples</a></div><hr><div class="binding"><span id="truthy?" class="binding-sym">truthy?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L109">source</a></span> <pre class="binding-text">(truthy? x)
+
+Check if x is truthy.</pre><a href="https://janetdocs.com/truthy_q">Community Examples</a></div><hr><div class="binding"><span id="try" class="binding-sym">try</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L223">source</a></span> <pre class="binding-text">(try body catch)
+
+Try something and catch errors. Body is any expression, and catch should be a form with the first element a tuple. This tuple should contain a binding for errors and an optional binding for the fiber wrapping the body. Returns the result of body if no error, or the result of catch if an error.</pre><a href="https://janetdocs.com/try">Community Examples</a></div><hr><div class="binding"><span id="tuple" class="binding-sym">tuple</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(tuple &amp; items)
+
+Creates a new tuple that contains items. Returns the new tuple.</pre><a href="https://janetdocs.com/tuple">Community Examples</a></div><hr><div class="binding"><span id="tuple?" class="binding-sym">tuple?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L98">source</a></span> <pre class="binding-text">(tuple? x)
+
+Check if x is a tuple.</pre><a href="https://janetdocs.com/tuple_q">Community Examples</a></div><hr><div class="binding"><span id="type" class="binding-sym">type</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(type x)
+
+Returns the type of x as a keyword. x is one of
+	:nil
+	:boolean
+	:number
+	:array
+	:tuple
+	:table
+	:struct
+	:string
+	:buffer
+	:symbol
+	:keyword
+	:function
+	:cfunction
+
+or another keyword for an abstract type.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">type</span> <span class="mdzsyn-constant">nil</span>) <span class="mdzsyn-comment"># -&gt; :nil</span>
+(<span class="mdzsyn-coresym">type</span> <span class="mdzsyn-constant">true</span>) <span class="mdzsyn-comment"># -&gt; :boolean</span>
+(<span class="mdzsyn-coresym">type</span> <span class="mdzsyn-constant">false</span>) <span class="mdzsyn-comment"># -&gt; :boolean</span>
+(<span class="mdzsyn-coresym">type</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; :number</span>
+(<span class="mdzsyn-coresym">type</span> <span class="mdzsyn-keyword">:key</span>) <span class="mdzsyn-comment"># -&gt; :keyword</span>
+(<span class="mdzsyn-coresym">type</span> (<span class="mdzsyn-coresym">int/s64</span> <span class="mdzsyn-string">"100"</span>)) <span class="mdzsyn-comment"># -&gt; :core/s64</span>
+</code></pre><a href="https://janetdocs.com/type">Community Examples</a></div><hr><div class="binding"><span id="unless" class="binding-sym">unless</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L167">source</a></span> <pre class="binding-text">(unless condition &amp; body)
+
+Shorthand for (when (not condition) ;body). </pre><a href="https://janetdocs.com/unless">Community Examples</a></div><hr><div class="binding"><span id="unmarshal" class="binding-sym">unmarshal</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(unmarshal buffer &amp;opt lookup)
+
+Unmarshal a value from a buffer. An optional lookup table can be provided to allow for aliases to be resolved. Returns the value unmarshalled from the buffer.</pre><a href="https://janetdocs.com/unmarshal">Community Examples</a></div><hr><div class="binding"><span id="untrace" class="binding-sym">untrace</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(untrace func)
+
+Disables tracing on a function. Returns the function.</pre><a href="https://janetdocs.com/untrace">Community Examples</a></div><hr><div class="binding"><span id="update" class="binding-sym">update</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1342">source</a></span> <pre class="binding-text">(update ds key func &amp; args)
+
+Accepts a key argument and passes its associated value to a function. The key is the re-associated to the function's return value. Returns the updated data structure ds.</pre><a href="https://janetdocs.com/update">Community Examples</a></div><hr><div class="binding"><span id="update-in" class="binding-sym">update-in</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1298">source</a></span> <pre class="binding-text">(update-in ds ks f &amp; args)
+
+Update a value in a nested data structure by applying f to the current value. Looks into the data structure via a sequence of keys. Missing data structures will be replaced with tables. Returns the modified, original data structure.</pre><a href="https://janetdocs.com/update-in">Community Examples</a></div><hr><div class="binding"><span id="use" class="binding-sym">use</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L2487">source</a></span> <pre class="binding-text">(use &amp; modules)
+
+Similar to import, but imported bindings are not prefixed with a namespace identifier. Can also import multiple modules in one shot.</pre><a href="https://janetdocs.com/use">Community Examples</a></div><hr><div class="binding"><span id="values" class="binding-sym">values</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1381">source</a></span> <pre class="binding-text">(values x)
+
+Get the values of an associative data structure.</pre><a href="https://janetdocs.com/values">Community Examples</a></div><hr><div class="binding"><span id="var-" class="binding-sym">var-</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L63">source</a></span> <pre class="binding-text">(var- name &amp; more)
+
+Define a private var that will not be exported.</pre><a href="https://janetdocs.com/var-">Community Examples</a></div><hr><div class="binding"><span id="varfn" class="binding-sym">varfn</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1927">source</a></span> <pre class="binding-text">(varfn name &amp; body)
+
+Create a function that can be rebound. varfn has the same signature as defn, but defines functions in the environment as vars. If a var 'name' already exists in the environment, it is rebound to the new function. Returns a function.</pre><a href="https://janetdocs.com/varfn">Community Examples</a></div><hr><div class="binding"><span id="varglobal" class="binding-sym">varglobal</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L75">source</a></span> <pre class="binding-text">(varglobal name init)
+
+Dynamically create a global var.</pre><a href="https://janetdocs.com/varglobal">Community Examples</a></div><hr><div class="binding"><span id="walk" class="binding-sym">walk</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1134">source</a></span> <pre class="binding-text">(walk f form)
+
+Iterate over the values in ast and apply f to them. Collect the results in a data structure. If ast is not a table, struct, array, or tuple, returns form.</pre><a href="https://janetdocs.com/walk">Community Examples</a></div><hr><div class="binding"><span id="when" class="binding-sym">when</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L162">source</a></span> <pre class="binding-text">(when condition &amp; body)
+
+Evaluates the body when the condition is true. Otherwise returns nil.</pre><a href="https://janetdocs.com/when">Community Examples</a></div><hr><div class="binding"><span id="when-let" class="binding-sym">when-let</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L646">source</a></span> <pre class="binding-text">(when-let bindings &amp; body)
+
+Same as (if-let bindings (do ;body)).</pre><a href="https://janetdocs.com/when-let">Community Examples</a></div><hr><div class="binding"><span id="when-with" class="binding-sym">when-with</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L364">source</a></span> <pre class="binding-text">(when-with [binding ctor dtor] &amp; body)
+
+Similar to with, but if binding is false or nil, returns nil without evaluating the body. Otherwise, the same as with.</pre><a href="https://janetdocs.com/when-with">Community Examples</a></div><hr><div class="binding"><span id="with" class="binding-sym">with</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L354">source</a></span> <pre class="binding-text">(with [binding ctor dtor] &amp; body)
+
+Evaluate body with some resource, which will be automatically cleaned up if there is an error in body. binding is bound to the expression ctor, and dtor is a function or callable that is passed the binding. If no destructor (dtor) is given, will call :close on the resource.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code><span class="mdzsyn-comment"># Print all of poetry.txt, and close the file when done,</span>
+<span class="mdzsyn-comment"># even when there is an error.</span>
+(<span class="mdzsyn-coresym">with</span> [<span class="mdzsyn-symbol">f</span> (<span class="mdzsyn-coresym">file/open</span> <span class="mdzsyn-string">"poetry.txt"</span>)]
+  (<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-keyword">:read</span> <span class="mdzsyn-symbol">f</span> <span class="mdzsyn-keyword">:all</span>)))
+</code></pre><a href="https://janetdocs.com/with">Community Examples</a></div><hr><div class="binding"><span id="with-dyns" class="binding-sym">with-dyns</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1186">source</a></span> <pre class="binding-text">(with-dyns bindings &amp; body)
+
+Run a block of code in a new fiber that has some dynamic bindings set. The fiber will not mask errors or signals, but the dynamic bindings will be properly unset, as dynamic bindings are fiber local.</pre><a href="https://janetdocs.com/with-dyns">Community Examples</a></div><hr><div class="binding"><span id="with-syms" class="binding-sym">with-syms</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L285">source</a></span> <pre class="binding-text">(with-syms syms &amp; body)
+
+Evaluates body with each symbol in syms bound to a generated, unique symbol.</pre><a href="https://janetdocs.com/with-syms">Community Examples</a></div><hr><div class="binding"><span id="with-vars" class="binding-sym">with-vars</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1197">source</a></span> <pre class="binding-text">(with-vars vars &amp; body)
+
+Evaluates body with each var in vars temporarily bound. Similar signature to let, but each binding must be a var.</pre><a href="https://janetdocs.com/with-vars">Community Examples</a></div><hr><div class="binding"><span id="xprin" class="binding-sym">xprin</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(xprin to &amp; xs)
+
+Print to a file or other value explicitly (no dynamic bindings). The value to print to is the first argument, and is otherwise the same as prin. Returns nil.</pre><a href="https://janetdocs.com/xprin">Community Examples</a></div><hr><div class="binding"><span id="xprinf" class="binding-sym">xprinf</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(xprin to fmt &amp; xs)
+
+Like prinf but prints to an explicit file or value to. Returns nil.</pre><a href="https://janetdocs.com/xprinf">Community Examples</a></div><hr><div class="binding"><span id="xprint" class="binding-sym">xprint</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(xprint to &amp; xs)
+
+Print to a file or other value explicitly (no dynamic bindings) with a trailing newline character. The value to print to is the first argument, and is otherwise the same as print. Returns nil.</pre><a href="https://janetdocs.com/xprint">Community Examples</a></div><hr><div class="binding"><span id="xprintf" class="binding-sym">xprintf</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(xprint to fmt &amp; xs)
+
+Like printf but prints to an explicit file or value to. Returns nil.</pre><a href="https://janetdocs.com/xprintf">Community Examples</a></div><hr><div class="binding"><span id="yield" class="binding-sym">yield</span> <span class="binding-type">function</span>  <pre class="binding-text">(yield &amp;opt x)
+
+Yield a value to a parent fiber. When a fiber yields, its execution is paused until another thread resumes it. The fiber will then resume, and the last yield call will return the value that was passed to resume.</pre><a href="https://janetdocs.com/yield">Community Examples</a></div><hr><div class="binding"><span id="zero?" class="binding-sym">zero?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L751">source</a></span> <pre class="binding-text">(zero? x)
+
+Check if x is zero.</pre><a href="https://janetdocs.com/zero_q">Community Examples</a></div><hr><div class="binding"><span id="zipcoll" class="binding-sym">zipcoll</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b91fe8b/src/boot/boot.janet#L1275">source</a></span> <pre class="binding-text">(zipcoll ks vs)
+
+Creates a table from two arrays/tuples. Returns a new table.</pre><a href="https://janetdocs.com/zipcoll">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="thread.html"><span class="prevnext-text">Threads</span></a></span>
+          <span class="next"><a href="tuple.html"><span class="prevnext-text">Tuple Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2020
+  <div class="gentag">Generated on September 22, 2020 at 00:29:19 (UTC) with Janet 1.12.2-b91fe8b</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

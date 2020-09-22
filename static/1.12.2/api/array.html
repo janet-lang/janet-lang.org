@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Array Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Array Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span class="selected"><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="thread.html">thread</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li><li><span><a href="tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.12.2-b91fe8b Documentation<br>(Other Versions:
+          
+          <a href="../../1.11.1/api/array.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/array.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/array.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/array.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/array.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/array.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/array.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/array.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/array.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/array.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Array Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Core API</span></a></span>
+
+          <span class="next"><a href="buffer.html"><span class="prevnext-text">Buffer Module</span></a></span>
+        </div>
+        
+
+<p>Arrays are the mutable indexed type in Janet. They contain a sequence of values
+that are keyed with an index. They can also be used to implement stacks and queues.
+See the <a href="/docs/data_structures/arrays.html">Arrays</a> documentation for more info.
+</p>
+<h2>Index
+</h2>
+<p><a href="#array/concat">array/concat</a> <a href="#array/ensure">array/ensure</a> <a href="#array/fill">array/fill</a> <a href="#array/insert">array/insert</a> <a href="#array/new">array/new</a> <a href="#array/new-filled">array/new-filled</a> <a href="#array/peek">array/peek</a> <a href="#array/pop">array/pop</a> <a href="#array/push">array/push</a> <a href="#array/remove">array/remove</a> <a href="#array/slice">array/slice</a> <a href="#array/trim">array/trim</a> </p><hr><div class="binding"><span id="array/concat" class="binding-sym">array/concat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/concat arr &amp; parts)
+
+Concatenates a variable number of arrays (and tuples) into the first argument which must be an array. If any of the parts are arrays or tuples, their elements will be inserted into the array. Otherwise, each part in parts will be appended to arr in order. Return the modified array arr.</pre><a href="https://janetdocs.com/array/concat">Community Examples</a></div><hr><div class="binding"><span id="array/ensure" class="binding-sym">array/ensure</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/ensure arr capacity growth)
+
+Ensures that the memory backing the array is large enough for capacity items at the given rate of growth. Capacity and growth must be integers. If the backing capacity is already enough, then this function does nothing. Otherwise, the backing memory will be reallocated so that there is enough space.</pre><a href="https://janetdocs.com/array/ensure">Community Examples</a></div><hr><div class="binding"><span id="array/fill" class="binding-sym">array/fill</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/fill arr &amp;opt value)
+
+Replace all elements of an array with value (defaulting to nil) without changing the length of the array. Returns the modified array.</pre><a href="https://janetdocs.com/array/fill">Community Examples</a></div><hr><div class="binding"><span id="array/insert" class="binding-sym">array/insert</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/insert arr at &amp; xs)
+
+Insert all xs into array arr at index at. at should be an integer between 0 and the length of the array. A negative value for at will index backwards from the end of the array, such that inserting at -1 appends to the array. Returns the array.</pre><a href="https://janetdocs.com/array/insert">Community Examples</a></div><hr><div class="binding"><span id="array/new" class="binding-sym">array/new</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/new capacity)
+
+Creates a new empty array with a pre-allocated capacity. The same as (array) but can be more efficient if the maximum size of an array is known.</pre><div class="example-title">EXAMPLES</div><pre class="mendoza-codeblock"><code>(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">arr</span> (<span class="mdzsyn-coresym">array/new</span> <span class="mdzsyn-number">100</span>)) <span class="mdzsyn-comment"># -&gt; @[]</span>
+
+<span class="mdzsyn-comment"># Now we can fill up the array without triggering a resize</span>
+(<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">100</span>
+  (<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-symbol">arr</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-symbol">i</span>))
+</code></pre><a href="https://janetdocs.com/array/new">Community Examples</a></div><hr><div class="binding"><span id="array/new-filled" class="binding-sym">array/new-filled</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/new-filled count &amp;opt value)
+
+Creates a new array of count elements, all set to value, which defaults to nil. Returns the new array.</pre><a href="https://janetdocs.com/array/new-filled">Community Examples</a></div><hr><div class="binding"><span id="array/peek" class="binding-sym">array/peek</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/peek arr)
+
+Returns the last element of the array. Does not modify the array.</pre><a href="https://janetdocs.com/array/peek">Community Examples</a></div><hr><div class="binding"><span id="array/pop" class="binding-sym">array/pop</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/pop arr)
+
+Remove the last element of the array and return it. If the array is empty, will return nil. Modifies the input array.</pre><a href="https://janetdocs.com/array/pop">Community Examples</a></div><hr><div class="binding"><span id="array/push" class="binding-sym">array/push</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/push arr x)
+
+Insert an element in the end of an array. Modifies the input array and returns it.</pre><a href="https://janetdocs.com/array/push">Community Examples</a></div><hr><div class="binding"><span id="array/remove" class="binding-sym">array/remove</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/remove arr at &amp;opt n)
+
+Remove up to n elements starting at index at in array arr. at can index from the end of the array with a negative index, and n must be a non-negative integer. By default, n is 1. Returns the array.</pre><a href="https://janetdocs.com/array/remove">Community Examples</a></div><hr><div class="binding"><span id="array/slice" class="binding-sym">array/slice</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/slice arrtup &amp;opt start end)
+
+Takes a slice of array or tuple from start to end. The range is half open, [start, end). Indexes can also be negative, indicating indexing from the end of the end of the array. By default, start is 0 and end is the length of the array. Note that index -1 is synonymous with index (length arrtup) to allow a full negative slice range. Returns a new array.</pre><a href="https://janetdocs.com/array/slice">Community Examples</a></div><hr><div class="binding"><span id="array/trim" class="binding-sym">array/trim</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(array/trim arr)
+
+Set the backing capacity of an array to its current length. Returns the modified array.</pre><a href="https://janetdocs.com/array/trim">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Core API</span></a></span>
+          <span class="next"><a href="buffer.html"><span class="prevnext-text">Buffer Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2020
+  <div class="gentag">Generated on September 22, 2020 at 00:29:19 (UTC) with Janet 1.12.2-b91fe8b</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

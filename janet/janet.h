@@ -310,6 +310,15 @@ JANET_API extern const char *const janet_type_names[16];
 JANET_API extern const char *const janet_signal_names[14];
 JANET_API extern const char *const janet_status_names[16];
 
+/* For various IO routines, we want to use an int on posix and HANDLE on windows */
+#ifdef JANET_WINDOWS
+typedef void *JanetHandle;
+#define JANET_HANDLE_NONE NULL
+#else
+typedef int JanetHandle;
+#define JANET_HANDLE_NONE (-1)
+#endif
+
 /* Fiber signals */
 typedef enum {
     JANET_SIGNAL_OK,
@@ -1021,6 +1030,19 @@ struct JanetFile {
     int32_t flags;
 };
 
+/* For janet_try and janet_restore */
+typedef struct {
+    /* old state */
+    int32_t stackn;
+    int gc_handle;
+    JanetFiber *vm_fiber;
+    jmp_buf *vm_jmp_buf;
+    Janet *vm_return_reg;
+    /* new state */
+    jmp_buf buf;
+    Janet payload;
+} JanetTryState;
+
 /* Thread types */
 #ifdef JANET_THREADS
 typedef struct JanetThread JanetThread;
@@ -1402,6 +1424,13 @@ JANET_API JanetBuffer *janet_pretty(JanetBuffer *buffer, int depth, int flags, J
 #define JANET_HASH_KEY_SIZE 16
 JANET_API void janet_init_hash_key(uint8_t key[JANET_HASH_KEY_SIZE]);
 #endif
+JANET_API void janet_try_init(JanetTryState *state);
+#if defined(JANET_BSD) || defined(JANET_APPLE)
+#define janet_try(state) (janet_try_init(state), (JanetSignal) _setjmp((state)->buf))
+#else
+#define janet_try(state) (janet_try_init(state), (JanetSignal) setjmp((state)->buf))
+#endif
+JANET_API void janet_restore(JanetTryState *state);
 JANET_API int janet_equals(Janet x, Janet y);
 JANET_API int32_t janet_hash(Janet x);
 JANET_API int janet_compare(Janet x, Janet y);
@@ -1560,6 +1589,7 @@ extern JANET_API const JanetAbstractType janet_file_type;
 #define JANET_FILE_NONIL 512
 
 JANET_API Janet janet_makefile(FILE *f, int32_t flags);
+JANET_API JanetFile *janet_makejfile(FILE *f, int32_t flags);
 JANET_API FILE *janet_getfile(const Janet *argv, int32_t n, int32_t *flags);
 JANET_API FILE *janet_dynfile(const char *name, FILE *def);
 JANET_API JanetFile *janet_getjfile(const Janet *argv, int32_t n);
