@@ -283,11 +283,13 @@ EBNF.  More info on the PEG syntax can be found in the @link[/docs/peg.html][PEG
     :hex (range "09" "af" "AF")
     :escape (* "\\" (+ (set "ntrzfev0\"\\")
                        (* "x" :hex :hex)
-                       (error (constant "bad hex escape"))))
+                       (* "u" [4 :hex])
+                       (* "U" [6 :hex])
+                       (error (constant "bad escape"))))
     :comment (* "#" (any (if-not (+ "\n" -1) 1)))
     :symbol :token
     :keyword (* ":" (any :symchars))
-    :constant (+ "true" "false" "nil")
+    :constant (* (+ "true" "false" "nil") (not :symchars))
     :bytes (* "\"" (any (+ :escape (if-not "\"" 1))) "\"")
     :string :bytes
     :buffer (* "@" :bytes)
