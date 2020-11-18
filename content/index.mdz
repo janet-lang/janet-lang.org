@@ -8,13 +8,13 @@
 
 Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
 Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}.
-For help, you can also checkout @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples.
+For help, you can also check out @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples.
 
 ### Other Gitter Rooms
 
 @ul{
     @li{@link[https://gitter.im/janet-language/help][help]:
-        For getting help withi specific problems in the Janet language.}
+        For getting help with specific problems in the Janet language.}
     @li{@link[https://gitter.im/janet-language/website][website]:
         For discussion and help related to this website and documentation.}
 }
