@@ -35,9 +35,9 @@ false
 
 Janet symbols are represented as a sequence of alphanumeric characters not
 starting with a digit or a colon. They can also contain the characters @code`!`,
-@code`\@`, @code`$`, @code`%`, @code`^`, @code`&`, @code`*`, @code`-`,@code` _`,
-@code`+`, @code`=`, @code`|`, @code`~`, @code`:`, @code`<`, @code`>`, @code`.`,
-@code`?`, @code`\`, @code`,` as well as any Unicode codepoint not in the ASCII
+@code`@`, @code`$`, @code`%`, @code`^`, @code`&`, @code`*`, @code`-`, @code`_`,
+@code`+`, @code`=`, @code`:`, @code`<`, @code`>`, @code`.`, @code`?`
+as well as any Unicode codepoint not in the ASCII
 range.
 
 By convention, most symbols should be all lower case and use dashes to connect
