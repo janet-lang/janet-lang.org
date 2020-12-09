@@ -46,9 +46,9 @@ signals are simply propagated to the previous calling fiber.
 (print (resume f)) # -> prints 2
 (print (resume f)) # -> prints 3
 (print (resume f)) # -> prints 4
-(print (fiber/status f)) # -> print :pending
+(print (fiber/status f)) # -> :pending
 (print (resume f)) # -> prints 5
-(print (fiber/status f)) # -> print :dead
+(print (fiber/status f)) # -> :dead
 (print (resume f)) # -> throws an error because the fiber is dead
 ```)
 
