@@ -102,8 +102,8 @@ lists, where all parameters after @code`&opt` are @code`nil` if not supplied.
  (+ a b c d e f))
 ```
 
-The @code`(default)` macro is a useful macro for setting default values for
-parameters. If a parameter is @code`nil`, @code`(default)` will redefine it to a
+The @code`default` macro is a useful macro for setting default values for
+parameters. If a parameter is @code`nil`, @code`default` will redefine it to a
 default value.
 
 ## Variadic functions
@@ -171,7 +171,7 @@ arguments can be identified by the keys in the struct.
 This is often good enough, but there are a couple downsides. The first is that
 our semantic arguments are not documented, the docstring will just have a single
 argument "args" which is not helpful. The docstring should have some indication
-of they keys that we expect in the struct.  We also need to write out an extra
+of the keys that we expect in the struct.  We also need to write out an extra
 pair of brackets for the struct - this isn't a huge deal, but it would be nice
 if we didn't need to write this explicitly.
 
@@ -251,6 +251,6 @@ arguments in curly brackets!
    :eggs 2
    :vanilla-extract 0.5})
 
-# Turn struct into an array key,value,key,value,... and splice into a call
+# Turn struct into an array key, value, key, value, ... and splice into a call
 (make-recipe-3 ;(kvs args))
 ```
