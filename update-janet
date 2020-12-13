@@ -8,5 +8,4 @@ get_one_artifact() {
 }
 get_one_artifact janet.c
 get_one_artifact janet.h
-get_one_artifact janetconf.h
 get_one_artifact shell.c

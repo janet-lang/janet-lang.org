@@ -11,7 +11,7 @@ amount through special forms. Special forms are neither functions nor macros
 @html`&mdash;` they are used by the compiler to directly express a low-level
 construct that cannot be expressed through macros or functions.  Special forms
 can be thought of as forming the real 'core' language of Janet. There are only
-12 special forms in Janet.
+13 special forms in Janet.
 
 ## @code`(def name meta... value)`
 
@@ -293,3 +293,26 @@ form. The shorthand for @code`(unquote x)` is @code`,x`.
 
 Unquote a form within a @code`quasiquote`. Outside of a @code`quasiquote`,
 @code`unquote` is invalid.
+
+## @code`(upscope & body)`
+
+Similar to `do`, `upscope` evaluates a number of forms and sequence and evaluates to the
+result of the last form. However, `upscope` does not create a new lexical scope, which means
+that bindings created inside it are visible in the scope where upscope is declared. This is
+useful for writing macros that make several def and var delcarations at once.
+
+@codeblock[janet]```
+(upscope
+ (def a 1)
+ (def b 2)
+ (def c 3)) # -> 3
+
+(+ a b c) # -> 6
+```
+
+In general, use this macro as a last resort. There are other, often betters ways to do this, including
+using destructuring.
+
+@codeblock[janet]```
+(def [a b c] [1 2 3])
+```

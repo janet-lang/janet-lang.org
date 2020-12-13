@@ -16,7 +16,7 @@ endif
 default: build
 
 # Also set things up.
-build/bin/janet: janet/janet.c janet/janet.h janet/janetconf.h janet/shell.c
+build/bin/janet: janet/janet.c janet/janet.h janet/shell.c
 	mkdir -p build/bin
 	mkdir -p build/lib
 	cp janet/jpm build/bin
@@ -25,7 +25,7 @@ build/bin/janet: janet/janet.c janet/janet.h janet/janetconf.h janet/shell.c
 
 .PHONY: wasm
 wasm: static/js/janet.js
-static/js/janet.js: janet/janet.c janet/janet.h janet/janetconf.h janet/webrepl.c build/bin/janet
+static/js/janet.js: janet/janet.c janet/janet.h janet/webrepl.c build/bin/janet
 	mkdir -p build
 	emcc $(CFLAGS) -o static/js/janet.js -Ijanet janet/janet.c janet/webrepl.c \
 		-s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]' \

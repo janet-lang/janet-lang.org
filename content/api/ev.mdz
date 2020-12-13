@@ -1,0 +1,12 @@
+(import ./gen-docs :as gen-docs)
+
+{:title "Event Module"
+ :nav-title "ev"
+ :template "docpage.html"}
+---
+
+Functions related to evented (asynchrnous) IO and a fiber based event loop.
+
+## Index
+
+@gen-docs/gen-prefix[ev/]
