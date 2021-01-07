@@ -20,7 +20,7 @@ Gitter provides matrix and IRC bridges as well for users who prefer those.
 
 ### Forum
 
-We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion that Gitter.
+We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion than Gitter.
 
 ### Janet Docs
 
