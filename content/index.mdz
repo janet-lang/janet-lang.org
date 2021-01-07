@@ -7,8 +7,7 @@
 ## Community
 
 Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
-Alternatively, check out @link[https://webchat.freenode.net/]{the #janet channel on Freenode}.
-For help, you can also check out @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples.
+Gitter provides matrix and IRC bridges as well for users who prefer those.
 
 ### Other Gitter Rooms
 
@@ -18,6 +17,14 @@ For help, you can also check out @link[https://janetdocs.com]{Janet Docs} for Ja
     @li{@link[https://gitter.im/janet-language/website][website]:
         For discussion and help related to this website and documentation.}
 }
+
+### Forum
+
+We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion that Gitter.
+
+### Janet Docs
+
+For help, you can also check out @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples. Feel free to contribute your own examples here to help fellow programmers.
 
 ## Use Cases
 
