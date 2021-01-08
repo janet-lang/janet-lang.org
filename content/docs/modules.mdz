@@ -173,6 +173,49 @@ init.janet
 ...
 ```
 
+Note that relative imports are relative to the current file, not to the working
+directory. For that behavior, see the section on working directory imports.
+
+### Pre-loaded Modules
+
+An easy way to bypass the import system and create custom modules is to manually add modules into
+@code`module/cache`.
+
+@codeblock[janet]```
+(put module/cache "mymod" (dofile "localfile.janet"))
+# The module defined by localfile.janet can now be
+# imported with (import mymod)
+```
+
+This is not recommended except in a few circumstances where a module needs to be loaded at runtime
+but doesn't exist on disk, such as if a program were compiled into a standalone executable. A
+pattern to allow this in a standalone executable built with @code`jpm` is as follows:
+
+@codeblock[janet]```
+(def mod1 (require "./localfile"))
+
+(defn main [& args]
+  (put module/cache "mod1" mod1)
+  # now calls to (import1 mod1) at runtime will succeed.
+  (import mod1))
+```
+
+### Working Directory Imports
+
+Starting in 1.14.1, Janet will allow imports relative to the current working directory.
+This is very useful in scripting circumstances where source code must be loaded at runtime.
+This can be done with the function @code`dofile`, but it can also be done with the default
+import system.
+
+To import a file relative to the working directory, prefix the import path with a forward slash "/".
+
+@codeblock[janet]```
+(import /local)
+```
+
+This will import from a file @code`./local.janet`, (or @code`./local.so`, @code`./local.jimage`, and so on), and
+prefix the imported symbols with @code`local/`.
+
 ## Writing a module
 
 Writing a module in Janet is mostly about exposing only the public functions
