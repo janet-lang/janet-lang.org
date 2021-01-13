@@ -271,11 +271,11 @@ grammars simpler.
         @td{ Alias for @code`(position ?tag)`. }}
 
     @tr{@td{@code`(column)` }
-        @td{ Captures column number of the current position in the matched
+        @td{ Captures the column number of the current position in the matched
         text. }}
 
     @tr{@td{@code`(line)` }
-        @td{ Captures line number of the current position in the matched
+        @td{ Captures the line number of the current position in the matched
         text. }}
 
     @tr{@td{@code`(accumulate patt ?tag)` }
