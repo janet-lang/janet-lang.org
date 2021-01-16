@@ -270,6 +270,14 @@ grammars simpler.
     @tr{@td{@code`($ ?tag)` }
         @td{ Alias for @code`(position ?tag)`. }}
 
+    @tr{@td{@code`(column)` }
+        @td{ Captures the column number of the current position in the matched
+        text. }}
+
+    @tr{@td{@code`(line)` }
+        @td{ Captures the line number of the current position in the matched
+        text. }}
+
     @tr{@td{@code`(accumulate patt ?tag)` }
         @td{ Capture a string that is the concatenation of all captures in patt.
         This will try to be efficient and not create intermediate strings if
