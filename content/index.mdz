@@ -20,7 +20,7 @@ Gitter provides matrix and IRC bridges as well for users who prefer those.
 
 ### Forum
 
-We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion that Gitter.
+We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion than Gitter.
 
 ### Janet Docs
 
@@ -128,4 +128,5 @@ For editor support:
     @li{@link[https://github.com/SerialDev/ijanet-mode]{ijanet-mode} - Emacs interactive Janet mode}
     @li{@link[https://github.com/ALSchwalm/janet-mode]{janet-mode} - Janet major mode for Emacs}
     @li{@link[https://github.com/velkyel/inf-janet]{inf-janet} - Inferior lisp Janet mode for Emacs}
-    @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}}
+    @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}
+    @li{@link[https://github.com/pepe/janet.kak]{janet.kak} - Kakoune Editor support for Janet.}}

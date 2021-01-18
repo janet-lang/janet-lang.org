@@ -270,6 +270,14 @@ grammars simpler.
     @tr{@td{@code`($ ?tag)` }
         @td{ Alias for @code`(position ?tag)`. }}
 
+    @tr{@td{@code`(column)` }
+        @td{ Captures the column number of the current position in the matched
+        text. }}
+
+    @tr{@td{@code`(line)` }
+        @td{ Captures the line number of the current position in the matched
+        text. }}
+
     @tr{@td{@code`(accumulate patt ?tag)` }
         @td{ Capture a string that is the concatenation of all captures in patt.
         This will try to be efficient and not create intermediate strings if
@@ -347,21 +355,25 @@ can make grammars simpler and easier to read.
     @tr{@td{@code`:a`} @td{@code`(range "az" "AZ")`} @td{Matches an ASCII letter.}}
     @tr{@td{@code`:w`} @td{@code`(range "az" "AZ" "09")`} @td{Matches an ASCII digit or letter.}}
     @tr{@td{@code`:s`} @td{@code`(set " \t\r\n\0\f")`} @td{Matches an ASCII whitespace character.}}
+    @tr{@td{@code`:h`} @td{@code`(range "09" "af")`} @td{Matches a hex character.}}
 
     @tr{@td{@code`:D`} @td{@code`(if-not :d 1)`} @td{Matches a character that is not an ASCII digit.}}
     @tr{@td{@code`:A`} @td{@code`(if-not :a 1)`} @td{Matches a character that is not an ASCII letter.}}
     @tr{@td{@code`:W`} @td{@code`(if-not :w 1)`} @td{Matches a character that is not an ASCII digit or letter.}}
     @tr{@td{@code`:S`} @td{@code`(if-not :s 1)`} @td{Matches a character that is not ASCII whitespace.}}
+    @tr{@td{@code`:H`} @td{@code`(if-not :h 1)`} @td{Matches a character that is not a hex character.}}
 
     @tr{@td{@code`:d+`} @td{@code`(some :d)`} @td{Matches 1 or more ASCII digits.}}
     @tr{@td{@code`:a+`} @td{@code`(some :a)`} @td{Matches 1 or more ASCII letters.}}
     @tr{@td{@code`:w+`} @td{@code`(some :w)`} @td{Matches 1 or more ASCII digits and lettes.}}
     @tr{@td{@code`:s+`} @td{@code`(some :s)`} @td{Matches 1 or more ASCII whitespace characters.}}
+    @tr{@td{@code`:h+`} @td{@code`(some :h)`} @td{Matches 1 or more hex characters.}}
 
     @tr{@td{@code`:d*`} @td{@code`(any :d)`} @td{Matches 0 or more ASCII digits.}}
     @tr{@td{@code`:a*`} @td{@code`(any :a)`} @td{Matches 0 or more ASCII letters.}}
     @tr{@td{@code`:w*`} @td{@code`(any :w)`} @td{Matches 0 or more ASCII digits and lettes.}}
     @tr{@td{@code`:s*`} @td{@code`(any :s)`} @td{Matches 0 or more ASCII whitespace characters.}}
+    @tr{@td{@code`:h*`} @td{@code`(any :h)`} @td{Matches 0 or more hex characters.}}
 }
 
 All of these aliases are defined in @code`default-peg-grammar`, which is a table
