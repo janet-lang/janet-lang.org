@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 13
+#define JANET_VERSION_MINOR 14
 #define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.13.1"
+#define JANET_VERSION "1.14.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -893,9 +893,15 @@ struct JanetFiber {
     JanetTable *env; /* Dynamic bindings table (usually current environment). */
     Janet *data; /* Dynamically resized stack memory */
     JanetFiber *child; /* Keep linked list of fibers for restarting pending fibers */
+    Janet last_value; /* Last returned value from a fiber */
 #ifdef JANET_EV
+    /* These fields are only relevant for fibers that are used as "root fibers" -
+     * that is, fibers that are scheduled on the event loop and behave much like threads
+     * in a multi-tasking system. It would be possible to move these fields to a new
+     * type, say "JanetTask", that as separate from fibers to save a bit of space. */
     JanetListenerState *waiting;
     uint32_t sched_id; /* Increment everytime fiber is scheduled by event loop */
+    void *supervisor_channel; /* Channel to push self to when complete */
 #endif
 };
 
@@ -1334,13 +1340,59 @@ JANET_API JanetListenerState *janet_listen(JanetStream *stream, JanetListener be
 
 /* Shorthand for yielding to event loop in C */
 JANET_NO_RETURN JANET_API void janet_await(void);
+JANET_NO_RETURN JANET_API void janet_sleep_await(double sec);
 
 /* For use inside listeners - adds a timeout to the current fiber, such that
  * it will be resumed after sec seconds if no other event schedules the current fiber. */
 JANET_API void janet_addtimeout(double sec);
+JANET_API void janet_ev_inc_refcount(void);
+JANET_API void janet_ev_dec_refcount(void);
 
 /* Get last error from a an IO operation */
 JANET_API Janet janet_ev_lasterr(void);
+
+/* Async service for calling a function or syscall in a background thread. This is not
+ * as efficient in the slightest as using Streams but can be used for arbitrary blocking
+ * functions and syscalls. */
+
+/* Used to pass data between the main thread and worker threads for simple tasks.
+ * We could just use a pointer but this prevents malloc/free in the common case
+ * of only a handful of arguments. */
+typedef struct {
+    int tag;
+    int argi;
+    void *argp;
+    JanetFiber *fiber;
+} JanetEVGenericMessage;
+
+/* How to resume or cancel after a threaded call. Not exhaustive of the possible
+ * ways one might want to resume after returning from a threaded call, but should
+ * cover most of the common cases. For something more complicated, such as resuming
+ * with an abstract type or a struct, one should use janet_ev_threaded_call instead
+ * of janet_ev_threaded_await with a custom callback. */
+
+#define JANET_EV_TCTAG_NIL 0          /* resume with nil */
+#define JANET_EV_TCTAG_INTEGER 1      /* resume with janet_wrap_integer(argi) */
+#define JANET_EV_TCTAG_STRING 2       /* resume with janet_cstringv((const char *) argp) */
+#define JANET_EV_TCTAG_STRINGF 3      /* resume with janet_cstringv((const char *) argp), then call free on argp. */
+#define JANET_EV_TCTAG_KEYWORD 4      /* resume with janet_ckeywordv((const char *) argp) */
+#define JANET_EV_TCTAG_ERR_STRING 5   /* cancel with janet_cstringv((const char *) argp) */
+#define JANET_EV_TCTAG_ERR_STRINGF 6  /* cancel with janet_cstringv((const char *) argp), then call free on argp. */
+#define JANET_EV_TCTAG_ERR_KEYWORD 7  /* cancel with janet_ckeywordv((const char *) argp) */
+#define JANET_EV_TCTAG_BOOLEAN 8      /* resume with janet_wrap_boolean(argi) */
+
+/* Function pointer that is run in the thread pool */
+typedef JanetEVGenericMessage(*JanetThreadedSubroutine)(JanetEVGenericMessage arguments);
+
+/* Handler that is run in the main thread with the result of the JanetAsyncSubroutine */
+typedef void (*JanetThreadedCallback)(JanetEVGenericMessage return_value);
+
+/* API calls for quickly offloading some work in C to a new thread or thread pool. */
+JANET_API void janet_ev_threaded_call(JanetThreadedSubroutine fp, JanetEVGenericMessage arguments, JanetThreadedCallback cb);
+JANET_NO_RETURN JANET_API void janet_ev_threaded_await(JanetThreadedSubroutine fp, int tag, int argi, void *argp);
+
+/* Callback used by janet_ev_threaded_await */
+JANET_API void janet_ev_default_threaded_callback(JanetEVGenericMessage return_value);
 
 /* Read async from a stream */
 JANET_API void janet_ev_read(JanetStream *stream, JanetBuffer *buf, int32_t nbytes);
@@ -1704,6 +1756,7 @@ JANET_API void janet_arity(int32_t arity, int32_t min, int32_t max);
 JANET_API void janet_fixarity(int32_t arity, int32_t fix);
 
 JANET_API int janet_getmethod(JanetKeyword method, const JanetMethod *methods, Janet *out);
+JANET_API Janet janet_nextmethod(const JanetMethod *methods, Janet key);
 
 JANET_API double janet_getnumber(const Janet *argv, int32_t n);
 JANET_API JanetArray *janet_getarray(const Janet *argv, int32_t n);
@@ -1781,6 +1834,7 @@ JANET_API FILE *janet_dynfile(const char *name, FILE *def);
 JANET_API JanetFile *janet_getjfile(const Janet *argv, int32_t n);
 JANET_API JanetAbstract janet_checkfile(Janet j);
 JANET_API FILE *janet_unwrapfile(Janet j, int32_t *flags);
+JANET_API int janet_file_close(JanetFile *file);
 
 JANET_API int janet_cryptorand(uint8_t *out, size_t n);
 
@@ -1848,6 +1902,7 @@ typedef struct {
     Janet *constants;
     size_t bytecode_len;
     uint32_t num_constants;
+    int has_backref;
 } JanetPeg;
 
 #endif

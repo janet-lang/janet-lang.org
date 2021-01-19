@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Syntax and the Parser</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Syntax and the Parser" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span class="selected"><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/thread.html">thread</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.13.1-392d5d5 Documentation<br>(Other Versions:
+          
+          <a href="../../1.12.2/docs/syntax.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/syntax.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/syntax.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/syntax.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/syntax.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/syntax.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/syntax.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/syntax.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/syntax.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/syntax.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/syntax.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Syntax and the Parser</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Introduction</span></a></span>
+
+          <span class="next"><a href="specials.html"><span class="prevnext-text">Special Forms</span></a></span>
+        </div>
+        
+
+<p>A Janet program begins life as a text file, just a sequence of bytes like any
+other file on the system. Janet source files should be UTF-8 or ASCII encoded.
+Before Janet can compile or run the program, it must transform the source code
+into a data structure. Like Lisp, Janet source code is homoiconic - code is
+represented as Janet's core data structures - thus all the facilities in the
+language for the manipulation of tuples, strings and tables can easily be used
+for manipulation of the source code as well.
+</p>
+<p>However, before Janet code transforms into a data structure, it must be read, or
+parsed, by the Janet parser. The parser, often called the reader in Lisp, is a
+machine that takes in plain text and outputs data structures which can be used
+by both the compiler and macros. In Janet, it is a parser rather than a reader
+because there is no code execution at reading time. This approach is safer and
+more straightforward, and makes syntax higlighting, formatting, and other syntax
+analysis simpler. While a parser is not extensible, in Janet the philosophy is
+to extend the language via macros rather than reader macros.
+</p>
+<h2><code class="mendoza-code">nil</code>, <code class="mendoza-code">true</code> and <code class="mendoza-code">false</code>
+</h2>
+<p>The values <code class="mendoza-code">nil</code>, <code class="mendoza-code">true</code> and <code class="mendoza-code">false</code> are all literals that can be
+entered as such in the parser.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-constant">nil</span>
+<span class="mdzsyn-constant">true</span>
+<span class="mdzsyn-constant">false</span></code></pre><h2 id="Symbols-0">Symbols
+</h2>
+<p>Janet symbols are represented as a sequence of alphanumeric characters not
+starting with a digit or a colon. They can also contain the characters <code class="mendoza-code">!</code>,
+<code class="mendoza-code">@</code>, <code class="mendoza-code">$</code>, <code class="mendoza-code">%</code>, <code class="mendoza-code">^</code>, <code class="mendoza-code">&amp;</code>, <code class="mendoza-code">*</code>, <code class="mendoza-code">-</code>, <code class="mendoza-code">_</code>,
+<code class="mendoza-code">+</code>, <code class="mendoza-code">=</code>, <code class="mendoza-code">:</code>, <code class="mendoza-code">&lt;</code>, <code class="mendoza-code">&gt;</code>, <code class="mendoza-code">.</code>, <code class="mendoza-code">?</code>
+as well as any Unicode codepoint not in the ASCII
+range.
+</p>
+<p>By convention, most symbols should be all lower case and use dashes to connect
+words (sometimes called kebab case).
+</p>
+<p>Symbols that come from another module will typically contain a slash that
+separates the name of the module from the name of the definition in the module.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-coresym">symbol</span>
+<span class="mdzsyn-symbol">kebab-case-symbol</span>
+<span class="mdzsyn-symbol">snake_case_symbol</span>
+<span class="mdzsyn-symbol">my-module/my-fuction</span>
+<span class="mdzsyn-symbol">*****</span>
+<span class="mdzsyn-symbol">!%$^*__--__._+++===</span>~<span class="mdzsyn-symbol">-crazy-symbol</span>
+<span class="mdzsyn-symbol">*global-var*</span>
+<span class="mdzsyn-symbol">你好</span></code></pre><h2 id="Keywords-0">Keywords
+</h2>
+<p>Janet keywords are like symbols that begin with the character <code class="mendoza-code">:</code>. However,
+they are used differently and treated by the compiler as a constant rather than
+a name for something. Keywords are used mostly for keys in tables and structs,
+or pieces of syntax in macros.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-keyword">:keyword</span>
+<span class="mdzsyn-keyword">:range</span>
+<span class="mdzsyn-keyword">:0x0x0x0</span>
+<span class="mdzsyn-keyword">:a-keyword</span>
+<span class="mdzsyn-keyword">::</span>
+<span class="mdzsyn-keyword">:</span></code></pre><h2 id="Numbers">Numbers
+</h2>
+<p>Janet numbers are represented by IEEE 754 floating point numbers.  The syntax is
+similar to that of many other languages as well. Numbers can be written in base
+10, with underscores used to separate digits into groups. A decimal point can be
+used for floating point numbers. Numbers can also be written in other bases by
+prefixing the number with the desired base and the character <code class="mendoza-code">r</code>. For
+example, 16 can be written as <code class="mendoza-code">16</code>, <code class="mendoza-code">1_6</code>, <code class="mendoza-code">16r10</code>, <code class="mendoza-code">4r100</code>,
+or <code class="mendoza-code">0x10</code>. The <code class="mendoza-code">0x</code> prefix can be used for hexadecimal as it is so
+common. The radix must be written in base 10, and can be any integer from 2 to
+36. For any radix above 10, use the letters as digits (not case sensitive).
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-number">0</span>
+<span class="mdzsyn-number">12</span>
+<span class="mdzsyn-number">-65912</span>
+<span class="mdzsyn-number">4.98</span>
+<span class="mdzsyn-number">1.3e18</span>
+<span class="mdzsyn-number">1.3E18</span>
+<span class="mdzsyn-number">18r123C</span>
+<span class="mdzsyn-number">11raaa&amp;a</span>
+<span class="mdzsyn-number">1_000_000</span>
+<span class="mdzsyn-number">0xbeef</span></code></pre><h2 id="Strings-0">Strings
+</h2>
+<p>Strings in Janet are surrounded by double quotes. Strings are 8-bit clean,
+meaning they can contain any arbitrary sequence of bytes, including embedded 0s.
+To insert a double quote into a string itself, escape the double quote with a
+backslash. For unprintable characters, you can either use one of a few common
+escapes, use the <code class="mendoza-code">\xHH</code> escape to escape a single byte in hexidecimal. The
+supported escapes are:
+</p>
+<ul><li><code class="mendoza-code">\xHH</code> Escape a single arbitrary byte in hexidecimal.</li>
+    <li><code class="mendoza-code">\n</code> Newline (ASCII 10)</li>
+    <li><code class="mendoza-code">\t</code> Tab character (ASCII 9)</li>
+    <li><code class="mendoza-code">\r</code> Carriage Return (ASCII 13)</li>
+    <li><code class="mendoza-code">\0</code> Null (ASCII 0)</li>
+    <li><code class="mendoza-code">\z</code> Null (ASCII 0)</li>
+    <li><code class="mendoza-code">\f</code> Form Feed (ASCII 12)</li>
+    <li><code class="mendoza-code">\e</code> Escape (ASCII 27)</li>
+    <li><code class="mendoza-code">\"</code> Double Quote (ASCII 34)</li>
+    <li><code class="mendoza-code">\uxxxx</code> Escape UTF-8 codepoint with 4 hex digits.</li>
+    <li><code class="mendoza-code">\Uxxxxxx</code> Escape UTF-8 codepoint with 6 hex digits.</li>
+    <li><code class="mendoza-code">\\</code> Backslash (ASCII 92)</li></ul><p>Strings can also contain literal newline characters that will be ignored.  This
+lets one define a multiline string that does not contain newline characters.
+</p>
+<h3 id="Long-strings">Long strings
+</h3>
+<p>An alternative way of representing strings in Janet is the long string, or the
+backquote-delimited string. A string can also be defined to start with a certain
+number of backquotes, and will end the same number of backquotes. Long strings
+do not contain escape sequences; all bytes will be parsed literally until the
+ending delimiter is found. This is useful for defining multi-line strings with
+literal newline characters, unprintable characters, or strings that would
+otherwise require many escape sequences.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-string">"This is a string."</span>
+<span class="mdzsyn-string">"This\nis\na\nstring."</span>
+<span class="mdzsyn-string">"This
+is
+a
+string."</span>
+<span class="mdzsyn-string">``
+This
+is
+a
+string
+``</span>
+<span class="mdzsyn-string">`
+This is
+a string.
+`</span></code></pre><h2 id="Buffers">Buffers
+</h2>
+<p>Buffers are similar to strings except they are mutable data structures. Strings
+in Janet cannot be mutated after being created, whereas a buffer can be changed
+after creation.  The syntax for a buffer is the same as that for a string or
+long string, but the buffer must be prefixed with the <code class="mendoza-code">@</code> character.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-string">@""</span>
+<span class="mdzsyn-string">@"Buffer."</span>
+<span class="mdzsyn-string">@``Another buffer``</span>
+<span class="mdzsyn-string">@`
+Yet another buffer
+`</span></code></pre><h2 id="Tuples">Tuples
+</h2>
+<p>Tuples are a sequence of whitespace separated values surrounded by either
+parentheses or brackets. The parser considers any of the characters ASCII 32,
+<code class="mendoza-code">\0</code>, <code class="mendoza-code">\f</code>, <code class="mendoza-code">\n</code>, <code class="mendoza-code">\r</code> or <code class="mendoza-code">\t</code> to be whitespace.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">do</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>)
+[<span class="mdzsyn-coresym">do</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]</code></pre><p>Square brackets indicate that a tuple will be used as a tuple literal rather
+than a function call, macro call, or special form. The parser will set a flag on
+a tuple if it has square brackets to let the compiler know to compile the tuple
+into a constructor. The programmer can check if a tuple has brackets via the
+<code class="mendoza-code">tuple/type</code> function.
+</p>
+<h2 id="Arrays">Arrays
+</h2>
+<p>Arrays are the same as tuples, but have a leading <code class="mendoza-code">@</code> to indicate
+mutability.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">@(<span class="mdzsyn-keyword">:one</span> <span class="mdzsyn-keyword">:two</span> <span class="mdzsyn-keyword">:three</span>)
+@[<span class="mdzsyn-keyword">:one</span> <span class="mdzsyn-keyword">:two</span> <span class="mdzsyn-keyword">:three</span>]</code></pre><h2 id="Structs-0">Structs
+</h2>
+<p>Structs are represented by a sequence of whitespace-delimited key-value pairs
+surrounded by curly braces. The sequence is defined as key1, value1, key2,
+value2, etc.  There must be an even number of items between curly braces or the
+parser will signal a parse error. Any value can be a key or value. Using
+<code class="mendoza-code">nil</code> or <code class="mendoza-code">NaN</code> as a key, however, will drop that pair from the parsed
+struct.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">{}
+{<span class="mdzsyn-keyword">:key1</span> <span class="mdzsyn-string">"value1"</span> <span class="mdzsyn-keyword">:key2</span> <span class="mdzsyn-keyword">:value2</span> <span class="mdzsyn-keyword">:key3</span> <span class="mdzsyn-number">3</span>}
+{(<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>) (<span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span>)}
+{@[] @[]}
+{<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span>}</code></pre><h2 id="Tables">Tables
+</h2>
+<p>Tables have the same syntax as structs, except they have the <code class="mendoza-code">@</code> prefix to
+indicate that they are mutable.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">@{}
+@{<span class="mdzsyn-keyword">:key1</span> <span class="mdzsyn-string">"value1"</span> <span class="mdzsyn-keyword">:key2</span> <span class="mdzsyn-keyword">:value2</span> <span class="mdzsyn-keyword">:key3</span> <span class="mdzsyn-number">3</span>}
+@{(<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>) (<span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span>)}
+@{@[] @[]}
+@{<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span>}</code></pre><h2 id="Comments">Comments
+</h2>
+<p>Comments begin with a <code class="mendoza-code">#</code> character and continue until the end of the line.
+There are no multiline comments.
+</p>
+<h2 id="Shorthand">Shorthand
+</h2>
+<p>Often called reader macros in other programming languages, Janet provides
+several shorthand notations for some forms. In Janet, this syntax is referred to
+as prefix forms and they are not extensible.
+</p>
+<h3><code class="mendoza-code">'x</code>
+</h3>
+<p>Shorthand for <code class="mendoza-code">(quote x)</code>
+</p>
+<h3><code class="mendoza-code">;x</code>
+</h3>
+<p>Shorthand for <code class="mendoza-code">(splice x)</code>
+</p>
+<h3><code class="mendoza-code">~x</code>
+</h3>
+<p>Shorthand for <code class="mendoza-code">(quasiquote x)</code>
+</p>
+<h3><code class="mendoza-code">,x</code>
+</h3>
+<p>Shorthand for <code class="mendoza-code">(unquote x)</code>
+</p>
+<h3><code class="mendoza-code">|(body $)</code>
+</h3>
+<p>Shorthand for <code class="mendoza-code">(short-fn (body $))</code>
+</p>
+<p>These shorthand notations can be combined in any order, allowing forms like
+<code class="mendoza-code">''x</code>  (<code class="mendoza-code">(quote (quote x))</code>), or <code class="mendoza-code">,;x</code>  
+(<code class="mendoza-code">(unquote (splice x))</code>).
+</p>
+<h2 id="Syntax-Highlighting">Syntax Highlighting
+</h2>
+<p>For syntax highlighting, there is some preliminary Vim syntax highlighting in
+<a href="https://github.com/janet-lang/janet.vim">janet.vim</a>.  Generic lisp syntax
+highlighting should, however, provide good results. One can also generate a
+<code class="mendoza-code">janet.tmLanguage</code> file for other programs with <code class="mendoza-code">make grammar</code> from
+the Janet source code.
+</p>
+<h2 id="Grammar">Grammar
+</h2>
+<p>For anyone looking for a more succinct description of the grammar, a PEG grammar
+for recognizing Janet source code is below. The PEG syntax is itself similar to
+EBNF.  More info on the PEG syntax can be found in the <a href="/docs/peg.html">PEG section</a>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">grammar</span>
+  ~{<span class="mdzsyn-keyword">:ws</span> (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-string">" \t\r\f\n\0\v"</span>)
+    <span class="mdzsyn-keyword">:readermac</span> (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-string">"';~,|"</span>)
+    <span class="mdzsyn-keyword">:symchars</span> (<span class="mdzsyn-coresym">+</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-string">"09"</span> <span class="mdzsyn-string">"AZ"</span> <span class="mdzsyn-string">"az"</span> <span class="mdzsyn-string">"\x80\xFF"</span>) (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-string">"!$%&amp;*+-./:&lt;?=&gt;@^_"</span>))
+    <span class="mdzsyn-keyword">:token</span> (<span class="mdzsyn-coresym">some</span> <span class="mdzsyn-keyword">:symchars</span>)
+    <span class="mdzsyn-keyword">:hex</span> (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-string">"09"</span> <span class="mdzsyn-string">"af"</span> <span class="mdzsyn-string">"AF"</span>)
+    <span class="mdzsyn-keyword">:escape</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"\\"</span> (<span class="mdzsyn-coresym">+</span> (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-string">"ntrzfev0\"\\"</span>)
+                       (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"x"</span> <span class="mdzsyn-keyword">:hex</span> <span class="mdzsyn-keyword">:hex</span>)
+                       (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"u"</span> [<span class="mdzsyn-number">4</span> <span class="mdzsyn-keyword">:hex</span>])
+                       (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"U"</span> [<span class="mdzsyn-number">6</span> <span class="mdzsyn-keyword">:hex</span>])
+                       (<span class="mdzsyn-coresym">error</span> (<span class="mdzsyn-symbol">constant</span> <span class="mdzsyn-string">"bad escape"</span>))))
+    <span class="mdzsyn-keyword">:comment</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"#"</span> (<span class="mdzsyn-symbol">any</span> (<span class="mdzsyn-coresym">if-not</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-string">"\n"</span> <span class="mdzsyn-number">-1</span>) <span class="mdzsyn-number">1</span>)))
+    <span class="mdzsyn-keyword">:symbol</span> <span class="mdzsyn-keyword">:token</span>
+    <span class="mdzsyn-keyword">:keyword</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">":"</span> (<span class="mdzsyn-symbol">any</span> <span class="mdzsyn-keyword">:symchars</span>))
+    <span class="mdzsyn-keyword">:constant</span> (<span class="mdzsyn-coresym">*</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-string">"true"</span> <span class="mdzsyn-string">"false"</span> <span class="mdzsyn-string">"nil"</span>) (<span class="mdzsyn-coresym">not</span> <span class="mdzsyn-keyword">:symchars</span>))
+    <span class="mdzsyn-keyword">:bytes</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"\""</span> (<span class="mdzsyn-symbol">any</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-keyword">:escape</span> (<span class="mdzsyn-coresym">if-not</span> <span class="mdzsyn-string">"\""</span> <span class="mdzsyn-number">1</span>))) <span class="mdzsyn-string">"\""</span>)
+    <span class="mdzsyn-keyword">:string</span> <span class="mdzsyn-keyword">:bytes</span>
+    <span class="mdzsyn-keyword">:buffer</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"@"</span> <span class="mdzsyn-keyword">:bytes</span>)
+    <span class="mdzsyn-keyword">:long-bytes</span> {<span class="mdzsyn-keyword">:delim</span> (<span class="mdzsyn-coresym">some</span> <span class="mdzsyn-string">"`"</span>)
+                 <span class="mdzsyn-keyword">:open</span> (<span class="mdzsyn-symbol">capture</span> <span class="mdzsyn-keyword">:delim</span> <span class="mdzsyn-keyword">:n</span>)
+                 <span class="mdzsyn-keyword">:close</span> (<span class="mdzsyn-symbol">cmt</span> (<span class="mdzsyn-coresym">*</span> (<span class="mdzsyn-coresym">not</span> (<span class="mdzsyn-coresym">&gt;</span> <span class="mdzsyn-number">-1</span> <span class="mdzsyn-string">"`"</span>)) (<span class="mdzsyn-coresym">-&gt;</span> <span class="mdzsyn-keyword">:n</span>) '<span class="mdzsyn-keyword">:delim</span>) ,<span class="mdzsyn-coresym">=</span>)
+                 <span class="mdzsyn-keyword">:main</span> (<span class="mdzsyn-coresym">drop</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-keyword">:open</span> (<span class="mdzsyn-symbol">any</span> (<span class="mdzsyn-coresym">if-not</span> <span class="mdzsyn-keyword">:close</span> <span class="mdzsyn-number">1</span>)) <span class="mdzsyn-keyword">:close</span>))}
+    <span class="mdzsyn-keyword">:long-string</span> <span class="mdzsyn-keyword">:long-bytes</span>
+    <span class="mdzsyn-keyword">:long-buffer</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"@"</span> <span class="mdzsyn-keyword">:long-bytes</span>)
+    <span class="mdzsyn-keyword">:number</span> (<span class="mdzsyn-symbol">cmt</span> (<span class="mdzsyn-symbol">&lt;-</span> <span class="mdzsyn-keyword">:token</span>) ,<span class="mdzsyn-coresym">scan-number</span>)
+    <span class="mdzsyn-keyword">:raw-value</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-keyword">:comment</span> <span class="mdzsyn-keyword">:constant</span> <span class="mdzsyn-keyword">:number</span> <span class="mdzsyn-keyword">:keyword</span>
+                  <span class="mdzsyn-keyword">:string</span> <span class="mdzsyn-keyword">:buffer</span> <span class="mdzsyn-keyword">:long-string</span> <span class="mdzsyn-keyword">:long-buffer</span>
+                  <span class="mdzsyn-keyword">:parray</span> <span class="mdzsyn-keyword">:barray</span> <span class="mdzsyn-keyword">:ptuple</span> <span class="mdzsyn-keyword">:btuple</span> <span class="mdzsyn-keyword">:struct</span> <span class="mdzsyn-keyword">:dict</span> <span class="mdzsyn-keyword">:symbol</span>)
+    <span class="mdzsyn-keyword">:value</span> (<span class="mdzsyn-coresym">*</span> (<span class="mdzsyn-symbol">any</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-keyword">:ws</span> <span class="mdzsyn-keyword">:readermac</span>)) <span class="mdzsyn-keyword">:raw-value</span> (<span class="mdzsyn-symbol">any</span> <span class="mdzsyn-keyword">:ws</span>))
+    <span class="mdzsyn-keyword">:root</span> (<span class="mdzsyn-symbol">any</span> <span class="mdzsyn-keyword">:value</span>)
+    <span class="mdzsyn-keyword">:root2</span> (<span class="mdzsyn-symbol">any</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-keyword">:value</span> <span class="mdzsyn-keyword">:value</span>))
+    <span class="mdzsyn-keyword">:ptuple</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"("</span> <span class="mdzsyn-keyword">:root</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-string">")"</span> (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">""</span>)))
+    <span class="mdzsyn-keyword">:btuple</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"["</span> <span class="mdzsyn-keyword">:root</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-string">"]"</span> (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">""</span>)))
+    <span class="mdzsyn-keyword">:struct</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"{"</span> <span class="mdzsyn-keyword">:root2</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-string">"}"</span> (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">""</span>)))
+    <span class="mdzsyn-keyword">:parray</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"@"</span> <span class="mdzsyn-keyword">:ptuple</span>)
+    <span class="mdzsyn-keyword">:barray</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"@"</span> <span class="mdzsyn-keyword">:btuple</span>)
+    <span class="mdzsyn-keyword">:dict</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-string">"@"</span> <span class="mdzsyn-keyword">:struct</span>)
+    <span class="mdzsyn-keyword">:main</span> <span class="mdzsyn-keyword">:root</span>})</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Introduction</span></a></span>
+          <span class="next"><a href="specials.html"><span class="prevnext-text">Special Forms</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on January 19, 2021 at 00:01:56 (UTC) with Janet 1.13.1-392d5d5</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

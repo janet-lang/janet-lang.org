@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>OS Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="OS Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="ev.html">ev</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span class="selected"><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="thread.html">thread</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li><li><span><a href="tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.13.1-392d5d5 Documentation<br>(Other Versions:
+          
+          <a href="../../1.12.2/api/os.html">1.12.2</a>
+          
+          <a href="../../1.11.1/api/os.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/os.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/os.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/os.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/os.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/os.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/os.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/os.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/os.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/os.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">OS Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="net.html"><span class="prevnext-text">Net Module</span></a></span>
+
+          <span class="next"><a href="peg.html"><span class="prevnext-text">PEG Module</span></a></span>
+        </div>
+        
+
+<p>The <code class="mendoza-code">os</code> module contains most Operating System specific functionality as well as routines
+for interacting with the host OS. There is also some functionality for interacting with the
+file system. The functionality in this module can be much reduced by setting the <code class="mendoza-code">JANET_REDUCED_OS</code>
+define in <code class="mendoza-code">janetconf.h</code>.
+</p>
+<h2 id="Index-11">Index
+</h2>
+<p><a href="#os/arch">os/arch</a> <a href="#os/cd">os/cd</a> <a href="#os/chmod">os/chmod</a> <a href="#os/clock">os/clock</a> <a href="#os/cryptorand">os/cryptorand</a> <a href="#os/cwd">os/cwd</a> <a href="#os/date">os/date</a> <a href="#os/dir">os/dir</a> <a href="#os/environ">os/environ</a> <a href="#os/execute">os/execute</a> <a href="#os/exit">os/exit</a> <a href="#os/getenv">os/getenv</a> <a href="#os/link">os/link</a> <a href="#os/lstat">os/lstat</a> <a href="#os/mkdir">os/mkdir</a> <a href="#os/mktime">os/mktime</a> <a href="#os/open">os/open</a> <a href="#os/perm-int">os/perm-int</a> <a href="#os/perm-string">os/perm-string</a> <a href="#os/pipe">os/pipe</a> <a href="#os/proc-kill">os/proc-kill</a> <a href="#os/proc-wait">os/proc-wait</a> <a href="#os/readlink">os/readlink</a> <a href="#os/realpath">os/realpath</a> <a href="#os/rename">os/rename</a> <a href="#os/rm">os/rm</a> <a href="#os/rmdir">os/rmdir</a> <a href="#os/setenv">os/setenv</a> <a href="#os/shell">os/shell</a> <a href="#os/sleep">os/sleep</a> <a href="#os/spawn">os/spawn</a> <a href="#os/stat">os/stat</a> <a href="#os/symlink">os/symlink</a> <a href="#os/time">os/time</a> <a href="#os/touch">os/touch</a> <a href="#os/umask">os/umask</a> <a href="#os/which">os/which</a> </p><hr><div class="binding"><span id="os/arch" class="binding-sym">os/arch</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/arch)
+
+Check the ISA that janet was compiled for. Returns one of:
+
+	:x86
+	:x86-64
+	:arm
+	:aarch64
+	:sparc
+	:wasm
+	:unknown
+</pre><a href="https://janetdocs.com/os/arch">Community Examples</a></div><hr><div class="binding"><span id="os/cd" class="binding-sym">os/cd</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cd path)
+
+Change current directory to path. Returns nil on success, errors on failure.</pre><a href="https://janetdocs.com/os/cd">Community Examples</a></div><hr><div class="binding"><span id="os/chmod" class="binding-sym">os/chmod</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/chmod path mode)
+
+Change file permissions, where mode is a permission string as returned by os/perm-string, or an integer as returned by os/perm-int. When mode is an integer, it is interpreted as a Unix permission value, best specified in octal, like 8r666 or 8r400. Windows will not differentiate between user, group, and other permissions, and thus will combine all of these permissions. Returns nil.</pre><a href="https://janetdocs.com/os/chmod">Community Examples</a></div><hr><div class="binding"><span id="os/clock" class="binding-sym">os/clock</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/clock)
+
+Return the number of seconds since some fixed point in time. The clock is guaranteed to be non decreasing in real time.</pre><a href="https://janetdocs.com/os/clock">Community Examples</a></div><hr><div class="binding"><span id="os/cryptorand" class="binding-sym">os/cryptorand</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cryptorand n &amp;opt buf)
+
+Get or append n bytes of good quality random data provided by the OS. Returns a new buffer or buf.</pre><a href="https://janetdocs.com/os/cryptorand">Community Examples</a></div><hr><div class="binding"><span id="os/cwd" class="binding-sym">os/cwd</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/cwd)
+
+Returns the current working directory.</pre><a href="https://janetdocs.com/os/cwd">Community Examples</a></div><hr><div class="binding"><span id="os/date" class="binding-sym">os/date</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/date &amp;opt time local)
+
+Returns the given time as a date struct, or the current time if no time is given. Returns a struct with following key values. Note that all numbers are 0-indexed. Date is given in UTC unless local is truthy, in which case the date is formatted for the local timezone.
+
+	:seconds - number of seconds [0-61]
+	:minutes - number of minutes [0-59]
+	:hours - number of hours [0-23]
+	:month-day - day of month [0-30]
+	:month - month of year [0, 11]
+	:year - years since year 0 (e.g. 2019)
+	:week-day - day of the week [0-6]
+	:year-day - day of the year [0-365]
+	:dst - If Day Light Savings is in effect</pre><a href="https://janetdocs.com/os/date">Community Examples</a></div><hr><div class="binding"><span id="os/dir" class="binding-sym">os/dir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/dir dir &amp;opt array)
+
+Iterate over files and subdirectories in a directory. Returns an array of paths parts, with only the file name or directory name and no prefix.</pre><a href="https://janetdocs.com/os/dir">Community Examples</a></div><hr><div class="binding"><span id="os/environ" class="binding-sym">os/environ</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/environ)
+
+Get a copy of the os environment table.</pre><a href="https://janetdocs.com/os/environ">Community Examples</a></div><hr><div class="binding"><span id="os/execute" class="binding-sym">os/execute</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/execute args &amp;opts flags env)
+
+Execute a program on the system and pass it string arguments. Flags is a keyword that modifies how the program will execute.
+
+	:e - enables passing an environment to the program. Without :e, the current environment is inherited.
+	:p - allows searching the current PATH for the binary to execute. Without this flag, binaries must use absolute paths.
+	:x - raise error if exit code is non-zero.
+env is a table or struct mapping environment variables to values. It can also contain the keys :in, :out, and :err, which allow redirecting stdio in the subprocess. These arguments should be core/file values. One can also pass in the :pipe keyword for these arguments to create files that will read (for :err and :out) or write (for :in) to the file descriptor of the subprocess. This is only useful in os/spawn, which takes the same parameters as os/execute, but will return an object that contains references to these files via (return-value :in), (return-value :out), and (return-value :err). Returns the exit status of the program.</pre><a href="https://janetdocs.com/os/execute">Community Examples</a></div><hr><div class="binding"><span id="os/exit" class="binding-sym">os/exit</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/exit &amp;opt x)
+
+Exit from janet with an exit code equal to x. If x is not an integer, the exit with status equal the hash of x.</pre><a href="https://janetdocs.com/os/exit">Community Examples</a></div><hr><div class="binding"><span id="os/getenv" class="binding-sym">os/getenv</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/getenv variable &amp;opt dflt)
+
+Get the string value of an environment variable.</pre><a href="https://janetdocs.com/os/getenv">Community Examples</a></div><hr><div class="binding"><span id="os/link" class="binding-sym">os/link</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/link oldpath newpath &amp;opt symlink)
+
+Create a link at newpath that points to oldpath and returns nil. Iff symlink is truthy, creates a symlink. Iff symlink is falsey or not provided, creates a hard link. Does not work on Windows.</pre><a href="https://janetdocs.com/os/link">Community Examples</a></div><hr><div class="binding"><span id="os/lstat" class="binding-sym">os/lstat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/lstat path &amp;opt tab|key)
+
+Like os/stat, but don't follow symlinks.
+</pre><a href="https://janetdocs.com/os/lstat">Community Examples</a></div><hr><div class="binding"><span id="os/mkdir" class="binding-sym">os/mkdir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/mkdir path)
+
+Create a new directory. The path will be relative to the current directory if relative, otherwise it will be an absolute path. Returns true if the directory was created, false if the directory already exists, and errors otherwise.</pre><a href="https://janetdocs.com/os/mkdir">Community Examples</a></div><hr><div class="binding"><span id="os/mktime" class="binding-sym">os/mktime</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/mktime date-struct &amp;opt local)
+
+Get the broken down date-struct time expressed as the number of seconds since January 1, 1970, the Unix epoch. Returns a real number. Date is given in UTC unless local is truthy, in which case the date is computed for the local timezone.
+
+Inverse function to os/date.</pre><a href="https://janetdocs.com/os/mktime">Community Examples</a></div><hr><div class="binding"><span id="os/open" class="binding-sym">os/open</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/open path &amp;opt flags mode)
+
+Create a stream from a file, like the POSIX open system call. Returns a new stream. mode should be a file mode as passed to os/chmod, but only if the create flag is given. The default mode is 8r666. Allowed flags are as follows:
+
+	:r - open this file for reading
+	:w - open this file for writing
+	:c - create a new file (O_CREATE)
+	:e - fail if the file exists (O_EXCL)
+	:t - shorten an existing file to length 0 (O_TRUNC)
+
+Posix only flags:
+	:a - append to a file (O_APPEND)
+	:x - O_SYNC
+	:C - O_NOCTTY
+
+Windows only flags:
+	:R - share reads (FILE_SHARE_READ)
+	:W - share writes (FILE_SHARE_WRITE)
+	:D - share deletes (FILE_SHARE_DELETE)
+	:H - FILE_ATTRIBUTE_HIDDEN
+	:O - FILE_ATTRIBUTE_READONLY
+	:F - FILE_ATTRIBUTE_OFFLINE
+	:T - FILE_ATTRIBUTE_TEMPORARY
+	:d - FILE_FLAG_DELETE_ON_CLOSE
+	:b - FILE_FLAG_NO_BUFFERING
+</pre><a href="https://janetdocs.com/os/open">Community Examples</a></div><hr><div class="binding"><span id="os/perm-int" class="binding-sym">os/perm-int</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/perm-int bytes)
+
+Parse a 9 character permission string and return an integer that can be used by chmod.</pre><a href="https://janetdocs.com/os/perm-int">Community Examples</a></div><hr><div class="binding"><span id="os/perm-string" class="binding-sym">os/perm-string</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/perm-string int)
+
+Convert a Unix octal permission value from a permission integer as returned by os/stat to a human readable string, that follows the formatting of unix tools like ls. Returns the string as a 9 character string of r, w, x and - characters. Does not include the file/directory/symlink character as rendered by `ls`.</pre><a href="https://janetdocs.com/os/perm-string">Community Examples</a></div><hr><div class="binding"><span id="os/pipe" class="binding-sym">os/pipe</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/pipe)
+
+Create a readable stream and a writable stream that are connected. Returns a two element tuple where the first element is a readable stream and the second element is the writable stream.</pre><a href="https://janetdocs.com/os/pipe">Community Examples</a></div><hr><div class="binding"><span id="os/proc-kill" class="binding-sym">os/proc-kill</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/proc-kill proc &amp;opt wait)
+
+Kill a subprocess by sending SIGKILL to it on posix systems, or by closing the process handle on windows. If wait is truthy, will wait for the process to finsih and returns the exit code. Otherwise, returns proc.</pre><a href="https://janetdocs.com/os/proc-kill">Community Examples</a></div><hr><div class="binding"><span id="os/proc-wait" class="binding-sym">os/proc-wait</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/proc-wait proc)
+
+Block until the subprocess completes. Returns the subprocess return code.</pre><a href="https://janetdocs.com/os/proc-wait">Community Examples</a></div><hr><div class="binding"><span id="os/readlink" class="binding-sym">os/readlink</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/readlink path)
+
+Read the contents of a symbolic link. Does not work on Windows.
+</pre><a href="https://janetdocs.com/os/readlink">Community Examples</a></div><hr><div class="binding"><span id="os/realpath" class="binding-sym">os/realpath</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/realpath path)
+
+Get the absolute path for a given path, following ../, ./, and symlinks. Returns an absolute path as a string. Will raise an error on Windows.</pre><a href="https://janetdocs.com/os/realpath">Community Examples</a></div><hr><div class="binding"><span id="os/rename" class="binding-sym">os/rename</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rename oldname newname)
+
+Rename a file on disk to a new path. Returns nil.</pre><a href="https://janetdocs.com/os/rename">Community Examples</a></div><hr><div class="binding"><span id="os/rm" class="binding-sym">os/rm</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rm path)
+
+Delete a file. Returns nil.</pre><a href="https://janetdocs.com/os/rm">Community Examples</a></div><hr><div class="binding"><span id="os/rmdir" class="binding-sym">os/rmdir</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/rmdir path)
+
+Delete a directory. The directory must be empty to succeed.</pre><a href="https://janetdocs.com/os/rmdir">Community Examples</a></div><hr><div class="binding"><span id="os/setenv" class="binding-sym">os/setenv</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/setenv variable value)
+
+Set an environment variable.</pre><a href="https://janetdocs.com/os/setenv">Community Examples</a></div><hr><div class="binding"><span id="os/shell" class="binding-sym">os/shell</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/shell str)
+
+Pass a command string str directly to the system shell.</pre><a href="https://janetdocs.com/os/shell">Community Examples</a></div><hr><div class="binding"><span id="os/sleep" class="binding-sym">os/sleep</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/sleep n)
+
+Suspend the program for n seconds. 'nsec' can be a real number. Returns nil.</pre><a href="https://janetdocs.com/os/sleep">Community Examples</a></div><hr><div class="binding"><span id="os/spawn" class="binding-sym">os/spawn</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/spawn args &amp;opts flags env)
+
+Execute a program on the system and return a handle to the process. Otherwise, the same arguments as os/execute. Does not wait for the process.</pre><a href="https://janetdocs.com/os/spawn">Community Examples</a></div><hr><div class="binding"><span id="os/stat" class="binding-sym">os/stat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/stat path &amp;opt tab|key)
+
+Gets information about a file or directory. Returns a table If the third argument is a keyword, returns only that information from stat. If the file or directory does not exist, returns nil. The keys are
+
+	:dev - the device that the file is on
+	:mode - the type of file, one of :file, :directory, :block, :character, :fifo, :socket, :link, or :other
+	:int-permissions - A Unix permission integer like 8r744
+	:permissions - A Unix permission string like "rwxr--r--"
+	:uid - File uid
+	:gid - File gid
+	:nlink - number of links to file
+	:rdev - Real device of file. 0 on windows.
+	:size - size of file in bytes
+	:blocks - number of blocks in file. 0 on windows
+	:blocksize - size of blocks in file. 0 on windows
+	:accessed - timestamp when file last accessed
+	:changed - timestamp when file last changed (permissions changed)
+	:modified - timestamp when file last modified (content changed)
+</pre><a href="https://janetdocs.com/os/stat">Community Examples</a></div><hr><div class="binding"><span id="os/symlink" class="binding-sym">os/symlink</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/symlink oldpath newpath)
+
+Create a symlink from oldpath to newpath, returning nil. Same as (os/link oldpath newpath true).</pre><a href="https://janetdocs.com/os/symlink">Community Examples</a></div><hr><div class="binding"><span id="os/time" class="binding-sym">os/time</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/time)
+
+Get the current time expressed as the number of seconds since January 1, 1970, the Unix epoch. Returns a real number.</pre><a href="https://janetdocs.com/os/time">Community Examples</a></div><hr><div class="binding"><span id="os/touch" class="binding-sym">os/touch</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/touch path &amp;opt actime modtime)
+
+Update the access time and modification times for a file. By default, sets times to the current time.</pre><a href="https://janetdocs.com/os/touch">Community Examples</a></div><hr><div class="binding"><span id="os/umask" class="binding-sym">os/umask</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/umask mask)
+
+Set a new umask, returns the old umask.</pre><a href="https://janetdocs.com/os/umask">Community Examples</a></div><hr><div class="binding"><span id="os/which" class="binding-sym">os/which</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(os/which)
+
+Check the current operating system. Returns one of:
+
+	:windows
+	:macos
+	:web - Web assembly (emscripten)
+	:linux
+	:freebsd
+	:openbsd
+	:netbsd
+	:posix - A POSIX compatible system (default)
+
+May also return a custom keyword specified at build time.</pre><a href="https://janetdocs.com/os/which">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="net.html"><span class="prevnext-text">Net Module</span></a></span>
+          <span class="next"><a href="peg.html"><span class="prevnext-text">PEG Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on January 19, 2021 at 00:01:56 (UTC) with Janet 1.13.1-392d5d5</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

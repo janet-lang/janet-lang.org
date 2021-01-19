@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Error Handling</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Error Handling" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../index.html">Documentation</a></span><ul><li><span><a href="../syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../specials.html">Special Forms</a></span></li><li><span><a href="../numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../comparison.html">Comparison Operators</a></span></li><li><span><a href="../bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../flow.html">Flow</a></span></li><li><span><a href="../functions.html">Functions</a></span></li><li><span><a href="../strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../loop.html">Looping</a></span></li><li><span><a href="../macros.html">Macros</a></span></li><li class="caret"><span><a href="../data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../data_structures/tables.html">Tables</a></span></li><li><span><a href="../data_structures/structs.html">Structs</a></span></li><li><span><a href="../data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="index.html">Fibers</a></span><ul><li><span><a href="dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span class="selected"><a href="error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../modules.html">Modules</a></span></li><li><span><a href="../object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../prototypes.html">Prototypes</a></span></li><li><span><a href="../abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../threads.html">Multithreading</a></span></li><li><span><a href="../networking.html">Networking</a></span></li><li><span><a href="../event_loop.html">The Event Loop</a></span></li><li><span><a href="../jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/thread.html">thread</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li><li><span><a href="../../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.13.1-392d5d5 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.12.2/docs/fibers/error_handling.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/docs/fibers/error_handling.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/docs/fibers/error_handling.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/docs/fibers/error_handling.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/docs/fibers/error_handling.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/docs/fibers/error_handling.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/docs/fibers/error_handling.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/docs/fibers/error_handling.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/docs/fibers/error_handling.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/docs/fibers/error_handling.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/docs/fibers/error_handling.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Error Handling</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="dynamic_bindings.html"><span class="prevnext-text">Dynamic Bindings</span></a></span>
+
+          <span class="next"><a href="../modules.html"><span class="prevnext-text">Modules</span></a></span>
+        </div>
+        
+
+<p>One of the main uses of fibers is to encapsulate and handle errors. Janet offers
+no direct try/catch mechanism like some languages, and instead builds error
+handling on top of fibers. When a function throws an error, Janet creates a
+signal and throws that signal in the current fiber. The signal will be
+propagated up the chain of active fibers until it hits a fiber that is ready to
+handle the error signal.  This fiber will trap the signal and return the error
+from the last call to <code class="mendoza-code">resume</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">block</span>
+  []
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"inside block..."</span>)
+  (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"oops"</span>))
+
+<span class="mdzsyn-comment"># Pass the :e flag to trap errors (and only errors).</span>
+<span class="mdzsyn-comment"># All other signals will be propagated up the fiber stack.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">f</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">block</span> <span class="mdzsyn-keyword">:e</span>))
+
+<span class="mdzsyn-comment"># Get result of resuming the fiber in res.</span>
+<span class="mdzsyn-comment"># Because the fiber f traps only errors, we know</span>
+<span class="mdzsyn-comment"># that after resume returns, f either exited normally</span>
+<span class="mdzsyn-comment"># (has status :dead), or threw an error (has status :error)</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">res</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>))
+
+(<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">=</span> (<span class="mdzsyn-coresym">fiber/status</span> <span class="mdzsyn-symbol">f</span>) <span class="mdzsyn-keyword">:error</span>)
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"caught error: "</span> <span class="mdzsyn-symbol">res</span>)
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"value returned: "</span> <span class="mdzsyn-symbol">res</span>))</code></pre><p>Janet also provides a simple macro <code class="mendoza-code">try</code> to make this a bit easier in the
+common case.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">try</span>
+ (<span class="mdzsyn-coresym">do</span>
+   (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"inside block..."</span>)
+   (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"oops"</span>)
+   (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"will never get here"</span>))
+ ([<span class="mdzsyn-symbol">err</span>] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"caught error: "</span> <span class="mdzsyn-symbol">err</span>)))</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="dynamic_bindings.html"><span class="prevnext-text">Dynamic Bindings</span></a></span>
+          <span class="next"><a href="../modules.html"><span class="prevnext-text">Modules</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on January 19, 2021 at 00:01:56 (UTC) with Janet 1.13.1-392d5d5</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
