@@ -82,12 +82,12 @@ and other macros and functions are wrappers around these two functions.
     (ev/sleep 0.5))
   (print name " is done!"))
 
-# Start bob working on a new task with ev/call
+# Start bob working in a new task with ev/call
 (ev/call worker "bob" 10)
 
 (ev/sleep 0.25)
 
-# Start sally working on a new task with ev/go
+# Start sally working in a new task with ev/go
 (ev/go (fiber/new |(worker "sally" 20)))
 
 (ev/sleep 11)
@@ -238,7 +238,7 @@ powerful pattern to build robust applications that gracefully handle failure.
  (print "starting new worker...")
  (ev/go (fiber/new worker :tp) nil channel))
 
-# make sure there are always two workers until the counter gets to 100
+# make sure there are always two workers until counter gets to 100
 (start-worker)
 
 (forever
