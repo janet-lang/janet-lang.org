@@ -24,14 +24,15 @@ if a string is located at a particular position, it is used as the docstring.
   (+ x 2))
 ```
 
-In the above example, Janet treats the string @code`This function adds two the
-argument` as the docstring. When creating the binding associated with the symbol
+In the above example, Janet treats the string @code`"This function adds two the
+argument."` as the docstring. When creating the binding associated with the symbol
 @code`my-function`, Janet will add a key @code`:doc` with the docstring as its
 value.
 
-In general, Janet detects the string that occurs after the binding's symbol
-as the docstring. The string should come after any tags (e.g. @code`:private`)
-that are associated with the binding.
+In the case of function and macro definitions, the string that occurs before the
+tuple of arguments is used as the docstring. In other cases, the string that
+occurs before the final value is used as the docstring. The string should come
+after any tags (e.g. @code`:private`) that are associated with the binding.
 
 @codeblock[janet]```
 (def
