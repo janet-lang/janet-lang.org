@@ -78,7 +78,7 @@ While either form can be used for docstrings, long strings have two advantages
 over ordinary strings. First, new lines are preserved. This makes it simple to
 write readable strings in code. Second, Janet will automatically removed
 indentation (so-called "dedenting") for whitespace that appears before the
-column in which the longstring began. This is best seen with an example.
+column in which the long string began. This is best seen with an example.
 
 @codeblock[janet]```
 (defn my-second-function
