@@ -1,0 +1,136 @@
+{:title "Documentation"
+ :template "docpage.html"
+ :order 22}
+ ---
+
+Documenting code is an important way to communicate to users how and when to use
+a particular piece of functionality.
+
+In many languages, documentation is associated with code through convention
+(e.g. a comment that comes immediately before a function definition describing
+the function, its parameters and the return value). In contrast, Janet includes
+first-class support for documentation through the use of docstrings.
+
+## Detecting Docstrings
+
+A docstring is a string that Janet associates with a particular binding in an
+environment. Janet detects docstrings by looking at the elements in the binding,
+if a string is located at a particular position, it is used as the docstring.
+
+@codeblock[janet]```
+(defn my-function
+  "This function adds two to the argument."
+  [x]
+  (+ x 2))
+```
+
+In the above example, Janet treats the string @code`This function adds two the
+argument` as the docstring. When creating the binding associated with the symbol
+@code`my-function`, Janet will add a key @code`:doc` with the docstring as its
+value.
+
+In general, Janet detects the string that occurs after the binding's symbol
+as the docstring. The string should come after any tags (e.g. @code`:private`)
+that are associated with the binding.
+
+@codeblock[janet]```
+(def
+  my-binding       # the symbol used to name the binding
+  :my-tag          # one or more tags that are associated with the binding
+  "The docstring"  # the docstring associated with the binding
+  42)              # the value associated with the binding
+```
+
+## Accessing Docstrings
+
+As described above, docstrings are added to a binding under the @code`:doc`
+keyword. The docstrings can be accessed from a binding using the @code`(dyn)`
+function and accessing the value associated with @code`:doc`.
+
+@codeblock[janet]```
+(defn my-function
+  "This function adds two to the argument."
+  [x]
+  (+ x 2))
+
+(get (dyn 'my-function) :doc)
+```
+
+Note that when a docstring is displayed with @code`(doc)`, Janet adds additional
+information to the docstring before displaying it. To use this modified string,
+wrap the call to @code`(doc)` in a call to @code`(with-dyns)`.
+
+@codeblock[janet]```
+(def b @"")
+(with-dyns [:out b]
+  (doc my-function))
+```
+
+## Using Long Strings
+
+Janet provides two literal forms for expressing a strings: ordinary strings
+(that is, a sequence of characters delimited by the double quote character,
+@code`"`) and long strings (that is, a sequence of characters delimited by one
+or more backquote characters, @code"`").
+
+While either form can be used for docstrings, long strings have two advantages
+over ordinary strings. First, new lines are preserved. This makes it simple to
+write readable strings in code. Second, Janet will automatically removed
+indentation (so-called "dedenting") for whitespace that appears before the
+column in which the longstring began. This is best seen with an example.
+
+@codeblock[janet]```
+(defn my-second-function
+  ``This function adds three to the argument.
+
+  Note that unlike `my-function` this function returns the value as a string.
+  ``
+  [x]
+  (string (+ 3 x)))
+```
+
+## Formatting with Markdown
+
+Docstrings are typically read in a plaintext environment. Formatting systems
+like Markdown are a natural fit for these situations.
+
+Janet's built-in documentation viewer, @code`(doc)`, understands a subset of
+Markdown and will indent docstrings that use this subset in an intelligent way.
+The subset of Markdown includes:
+
+@ul{@li{numbered and unnumbered lists}
+    @li{codeblocks}
+    @li{blockquotes}}
+
+Other Markdown-formatted text (e.g. code spans) are simply treated as ordinary
+text.
+
+## Adding Docstrings to Modules
+
+In addition to documenting bindings, documentation can be added to a file using
+@code`(setdyn)`.
+
+@codeblock[janet]```
+# my_module.janet
+
+(setdyn :doc "This is the docstring for my_module")
+
+(defn plus-two [x] (+ x 2))
+```
+
+At the REPL, this docstring can be retrieved using the path to the module:
+
+@codeblock```
+repl:1:> (import ./my_module)
+@{my_module/plus-two @{:private true} _ @{:value <cycle 0>}}
+repl:2:> (doc ./my_module)
+
+
+    module (source)
+    my_module.janet
+
+    This is the docstring for my_module.
+
+
+nil
+```
