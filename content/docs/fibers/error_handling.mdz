@@ -32,8 +32,14 @@ from the last call to @code`resume`.
  (print "value returned: " res))
 ```
 
-Janet also provides a simple macro @code`try` to make this a bit easier in the
-common case.
+## Two error-handling forms built on fibers
+
+### @code`try`
+
+Janet provides a simple macro @code`try` to make error-handling a bit
+easier in the common case. @code`try` performs the function of a
+traditional try/catch block; it will execute its body and, if any
+error is raised, pattern match against the error in its second clause.
 
 @codeblock[janet]```
 (try
@@ -42,4 +48,17 @@ common case.
    (error "oops")
    (print "will never get here"))
  ([err] (print "caught error: " err)))
+```
+
+### @code`protect`
+
+Janet also provides the @code`protect` macro for a slightly different
+flavor of error-handling, converting caught errors into further
+expressions.
+
+@codeblock[janet]```
+(protect
+  (if (> (math/random) 0.42)
+    (error "Good luck")
+    "Bad luck"))
 ```
