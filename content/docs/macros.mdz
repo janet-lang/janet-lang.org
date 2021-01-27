@@ -150,7 +150,7 @@ Janet provides a general solution to this problem in terms of the
 unique and not collide with any symbols defined previously. We can define our
 macro once more for a fully correct macro.
 
-@codeblock[janet](```janet
+@codeblock[janet](```
 (defmacro max3
  "Get the max of two values."
  [x y]
