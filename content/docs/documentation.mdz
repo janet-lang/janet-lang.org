@@ -112,9 +112,9 @@ In addition to documenting bindings, documentation can be added to a file using
 @code`(setdyn)`.
 
 @codeblock[janet]```
-# my_module.janet
+# my-module.janet
 
-(setdyn :doc "This is the docstring for my_module")
+(setdyn :doc "This is the docstring for my-module")
 
 (defn plus-two [x] (+ x 2))
 ```
@@ -122,15 +122,15 @@ In addition to documenting bindings, documentation can be added to a file using
 At the REPL, this docstring can be retrieved using the path to the module:
 
 @codeblock```
-repl:1:> (import ./my_module)
-@{my_module/plus-two @{:private true} _ @{:value <cycle 0>}}
-repl:2:> (doc ./my_module)
+repl:1:> (import ./my-module)
+@{my-module/plus-two @{:private true} _ @{:value <cycle 0>}}
+repl:2:> (doc ./my-module)
 
 
     module (source)
-    my_module.janet
+    my-module.janet
 
-    This is the docstring for my_module.
+    This is the docstring for my-module.
 
 
 nil
