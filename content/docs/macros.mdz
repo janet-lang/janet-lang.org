@@ -141,7 +141,7 @@ is bound to 8) rather than the @code`x` defined to be 10. The problem is the
 reuse of the symbol @code`x` inside the macro, which overshadowed the original
 binding. This problem is called the
 @link[https://en.wikipedia.org/wiki/Hygienic_macro#The_hygiene_problem]{hygiene
-problem} and is well known, and solved in many programming languages
+problem} and is solved in many programming languages
 (such as Scheme) by hygienic macros. Hygienic macros prevent such
 accidental captures, but usually constrain the kinds of macros that can be written. Janet's macro system does @em{not} use hygienic macros as presented in @link[ftp://jcmc.indiana.edu/pub/techreports/TR206.pdf]{Kohlbecker et al.'s 1986 paper} - instead, programmer diligence is required to avoid accidental captures.
 
