@@ -89,17 +89,17 @@ When combined with the unquote special, we get the desired output:
 # -> (def myfunction (fn myfunction (x y z) (print x) (print y) (print z)))
 ```)
 
-## Hygiene
+## Accidental Binding Capture
 
 Sometimes when we write macros, we must generate symbols for local bindings.
 Ignoring that this could be written as a function, consider the following macro:
 
-@codeblock[janet](```
+@codeblock[janet]```
 (defmacro max1
  "Get the max of two values."
  [x y]
  ~(if (> ,x ,y) ,x ,y))
-```)
+```
 
 This almost works, but will evaluate both @code`x` and @code`y` twice. This is
 because both show up in the macro twice. For example, @code[(max1 (do (print 1)
@@ -108,22 +108,22 @@ to a user of this macro.
 
 We can do better:
 
-@codeblock[janet](```
+@codeblock[janet]```
 (defmacro max2
  "Get the max of two values."
  [x y]
  ~(let [x ,x
         y ,y]
     (if (> x y) x y)))
-```)
+```
 
 Now we have no double evaluation problem! But we now have an even more subtle
 problem.  What happens in the following code?
 
-@codeblock[janet](```
+@codeblock[janet]```
 (def x 10)
 (max2 8 (+ x 4))
-```)
+```
 
 We want the maximum to be 14, but this will actually evaluate to 12! This can be
 understood if we expand the macro. You can expand a macro once in Janet using
@@ -141,9 +141,9 @@ is bound to 8) rather than the @code`x` defined to be 10. The problem is the
 reuse of the symbol @code`x` inside the macro, which overshadowed the original
 binding. This problem is called the
 @link[https://en.wikipedia.org/wiki/Hygienic_macro#The_hygiene_problem]{hygiene
-problem} and is well known in many programming languages. Some languages provide
-complicated solutions to this problem, but Janet opts for a much
-simpler&mdash;if not primitive&mdash;solution.
+problem} and is well known, and solved in many programming languages
+(such as Scheme) by hygienic macros. Hygienic macros prevent such
+accidental captures, but usually constrain the kinds of macros that can be written. Janet's macro system does @em{not} use hygienic macros as presented in @link[ftp://jcmc.indiana.edu/pub/techreports/TR206.pdf]{Kohlbecker et al.'s 1986 paper} - instead, programmer diligence is required to avoid accidental captures.
 
 Janet provides a general solution to this problem in terms of the
 @code[(gensym)] function, which returns a symbol which is guaranteed to be
@@ -177,5 +177,5 @@ Janet provides a macro @code[with-syms] to make this definition a bit terser.
 As you can see, macros are very powerful but are also prone to subtle bugs. You
 must remember that at their core, macros are just functions that output code,
 and the code that they return must work in many contexts! Many times a function
-will suffice and be more useful that a macro, as functions can be more easily
+will suffice and be more useful than a macro, as functions can be more easily
 passed around and used as first class values.
