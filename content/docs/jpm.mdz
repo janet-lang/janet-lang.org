@@ -1,6 +1,6 @@
 {:title "jpm"
  :template "docpage.html"
- :order 22}
+ :order 23}
 ---
 
 Most default installs of Janet come with a build tool, @code`jpm`, that makes
