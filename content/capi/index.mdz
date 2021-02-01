@@ -93,7 +93,7 @@ If all goes well, @code`jpm` should have built a file @code`build/mymod.so`. In 
 import your module and use it.
 
 @codeblock[janet]```
-(import build/mymod :as mymod)
+(import /build/mymod :as mymod)
 (mymod/myfun) # Prints the hello message
 ```
 
