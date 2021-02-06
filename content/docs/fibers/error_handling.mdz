@@ -39,7 +39,8 @@ from the last call to @code`resume`.
 Janet provides a simple macro @code`try` to make error-handling a bit
 easier in the common case. @code`try` performs the function of a
 traditional try/catch block; it will execute its body and, if any
-error is raised, pattern match against the error in its second clause.
+error is raised, optionally bind the error and the raising fiber in
+its second clause.
 
 @codeblock[janet]```
 (try
