@@ -270,11 +270,11 @@ grammars simpler.
     @tr{@td{@code`($ ?tag)` }
         @td{ Alias for @code`(position ?tag)`. }}
 
-    @tr{@td{@code`(column)` }
+    @tr{@td{@code`(column ?tag)` }
         @td{ Captures the column number of the current position in the matched
         text. }}
 
-    @tr{@td{@code`(line)` }
+    @tr{@td{@code`(line ?tag)` }
         @td{ Captures the line number of the current position in the matched
         text. }}
 
