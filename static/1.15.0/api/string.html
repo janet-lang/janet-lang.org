@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>String Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="String Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="ev.html">ev</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span class="selected"><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="thread.html">thread</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li><li><span><a href="tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.15.0-2795e8a Documentation<br>(Other Versions:
+          
+          <a href="../../1.13.1/api/string.html">1.13.1</a>
+          
+          <a href="../../1.12.2/api/string.html">1.12.2</a>
+          
+          <a href="../../1.11.1/api/string.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/string.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/string.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/string.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/string.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/string.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/string.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/string.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/string.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/string.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">String Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="parser.html"><span class="prevnext-text">Parser Module</span></a></span>
+
+          <span class="next"><a href="table.html"><span class="prevnext-text">Table Module</span></a></span>
+        </div>
+        
+
+<h2 id="Index-14">Index
+</h2>
+<p><a href="#string/ascii-lower">string/ascii-lower</a> <a href="#string/ascii-upper">string/ascii-upper</a> <a href="#string/bytes">string/bytes</a> <a href="#string/check-set">string/check-set</a> <a href="#string/find">string/find</a> <a href="#string/find-all">string/find-all</a> <a href="#string/format">string/format</a> <a href="#string/from-bytes">string/from-bytes</a> <a href="#string/has-prefix?">string/has-prefix?</a> <a href="#string/has-suffix?">string/has-suffix?</a> <a href="#string/join">string/join</a> <a href="#string/repeat">string/repeat</a> <a href="#string/replace">string/replace</a> <a href="#string/replace-all">string/replace-all</a> <a href="#string/reverse">string/reverse</a> <a href="#string/slice">string/slice</a> <a href="#string/split">string/split</a> <a href="#string/trim">string/trim</a> <a href="#string/triml">string/triml</a> <a href="#string/trimr">string/trimr</a> </p><hr><div class="binding"><span id="string/ascii-lower" class="binding-sym">string/ascii-lower</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/ascii-lower str)
+
+Returns a new string where all bytes are replaced with the lowercase version of themselves in ASCII. Does only a very simple case check, meaning no unicode support.</pre><a href="https://janetdocs.com/string/ascii-lower">Community Examples</a></div><hr><div class="binding"><span id="string/ascii-upper" class="binding-sym">string/ascii-upper</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/ascii-upper str)
+
+Returns a new string where all bytes are replaced with the uppercase version of themselves in ASCII. Does only a very simple case check, meaning no unicode support.</pre><a href="https://janetdocs.com/string/ascii-upper">Community Examples</a></div><hr><div class="binding"><span id="string/bytes" class="binding-sym">string/bytes</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/bytes str)
+
+Returns an array of integers that are the byte values of the string.</pre><a href="https://janetdocs.com/string/bytes">Community Examples</a></div><hr><div class="binding"><span id="string/check-set" class="binding-sym">string/check-set</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/check-set set str)
+
+Checks that the string str only contains bytes that appear in the string set. Returns true if all bytes in str appear in set, false if some bytes in str do not appear in set.</pre><a href="https://janetdocs.com/string/check-set">Community Examples</a></div><hr><div class="binding"><span id="string/find" class="binding-sym">string/find</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/find patt str)
+
+Searches for the first instance of pattern patt in string str. Returns the index of the first character in patt if found, otherwise returns nil.</pre><a href="https://janetdocs.com/string/find">Community Examples</a></div><hr><div class="binding"><span id="string/find-all" class="binding-sym">string/find-all</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/find-all patt str)
+
+Searches for all instances of pattern patt in string str. Returns an array of all indices of found patterns. Overlapping instances of the pattern are counted individually, meaning a byte in str may contribute to multiple found patterns.</pre><a href="https://janetdocs.com/string/find-all">Community Examples</a></div><hr><div class="binding"><span id="string/format" class="binding-sym">string/format</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/format format &amp; values)
+
+Similar to snprintf, but specialized for operating with Janet values. Returns a new string.</pre><a href="https://janetdocs.com/string/format">Community Examples</a></div><hr><div class="binding"><span id="string/from-bytes" class="binding-sym">string/from-bytes</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/from-bytes &amp; byte-vals)
+
+Creates a string from integer parameters with byte values. All integers will be coerced to the range of 1 byte 0-255.</pre><a href="https://janetdocs.com/string/from-bytes">Community Examples</a></div><hr><div class="binding"><span id="string/has-prefix?" class="binding-sym">string/has-prefix?</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/has-prefix? pfx str)
+
+Tests whether str starts with pfx.</pre><a href="https://janetdocs.com/string/has-prefix_q">Community Examples</a></div><hr><div class="binding"><span id="string/has-suffix?" class="binding-sym">string/has-suffix?</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/has-suffix? sfx str)
+
+Tests whether str ends with sfx.</pre><a href="https://janetdocs.com/string/has-suffix_q">Community Examples</a></div><hr><div class="binding"><span id="string/join" class="binding-sym">string/join</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/join parts &amp;opt sep)
+
+Joins an array of strings into one string, optionally separated by a separator string sep.</pre><a href="https://janetdocs.com/string/join">Community Examples</a></div><hr><div class="binding"><span id="string/repeat" class="binding-sym">string/repeat</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/repeat bytes n)
+
+Returns a string that is n copies of bytes concatenated.</pre><a href="https://janetdocs.com/string/repeat">Community Examples</a></div><hr><div class="binding"><span id="string/replace" class="binding-sym">string/replace</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/replace patt subst str)
+
+Replace the first occurrence of patt with subst in the string str. Will return the new string if patt is found, otherwise returns str.</pre><a href="https://janetdocs.com/string/replace">Community Examples</a></div><hr><div class="binding"><span id="string/replace-all" class="binding-sym">string/replace-all</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/replace-all patt subst str)
+
+Replace all instances of patt with subst in the string str. Overlapping matches will not be counted, only the first match in such a span will be replaced. Will return the new string if patt is found, otherwise returns str.</pre><a href="https://janetdocs.com/string/replace-all">Community Examples</a></div><hr><div class="binding"><span id="string/reverse" class="binding-sym">string/reverse</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/reverse str)
+
+Returns a string that is the reversed version of str.</pre><a href="https://janetdocs.com/string/reverse">Community Examples</a></div><hr><div class="binding"><span id="string/slice" class="binding-sym">string/slice</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/slice bytes &amp;opt start end)
+
+Returns a substring from a byte sequence. The substring is from index start inclusive to index end exclusive. All indexing is from 0. 'start' and 'end' can also be negative to indicate indexing from the end of the string. Note that index -1 is synonymous with index (length bytes) to allow a full negative slice range. </pre><a href="https://janetdocs.com/string/slice">Community Examples</a></div><hr><div class="binding"><span id="string/split" class="binding-sym">string/split</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/split delim str &amp;opt start limit)
+
+Splits a string str with delimiter delim and returns an array of substrings. The substrings will not contain the delimiter delim. If delim is not found, the returned array will have one element. Will start searching for delim at the index start (if provided), and return up to a maximum of limit results (if provided).</pre><a href="https://janetdocs.com/string/split">Community Examples</a></div><hr><div class="binding"><span id="string/trim" class="binding-sym">string/trim</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/trim str &amp;opt set)
+
+Trim leading and trailing whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</pre><a href="https://janetdocs.com/string/trim">Community Examples</a></div><hr><div class="binding"><span id="string/triml" class="binding-sym">string/triml</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/triml str &amp;opt set)
+
+Trim leading whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</pre><a href="https://janetdocs.com/string/triml">Community Examples</a></div><hr><div class="binding"><span id="string/trimr" class="binding-sym">string/trimr</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(string/trimr str &amp;opt set)
+
+Trim trailing whitespace from a byte sequence. If the argument set is provided, consider only characters in set to be whitespace.</pre><a href="https://janetdocs.com/string/trimr">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="parser.html"><span class="prevnext-text">Parser Module</span></a></span>
+          <span class="next"><a href="table.html"><span class="prevnext-text">Table Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on February 10, 2021 at 02:29:55 (UTC) with Janet 1.15.0-2795e8a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 14
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 15
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.14.1"
+#define JANET_VERSION "1.15.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -1422,6 +1422,7 @@ JANET_API void janet_parser_deinit(JanetParser *parser);
 JANET_API void janet_parser_consume(JanetParser *parser, uint8_t c);
 JANET_API enum JanetParserStatus janet_parser_status(JanetParser *parser);
 JANET_API Janet janet_parser_produce(JanetParser *parser);
+JANET_API Janet janet_parser_produce_wrapped(JanetParser *parser);
 JANET_API const char *janet_parser_error(JanetParser *parser);
 JANET_API void janet_parser_flush(JanetParser *parser);
 JANET_API void janet_parser_eof(JanetParser *parser);
@@ -1461,6 +1462,7 @@ JANET_API JanetCompileResult janet_compile(Janet source, JanetTable *env, JanetS
 
 /* Get the default environment for janet */
 JANET_API JanetTable *janet_core_env(JanetTable *replacements);
+JANET_API JanetTable *janet_core_lookup_table(JanetTable *replacements);
 
 JANET_API int janet_dobytes(JanetTable *env, const uint8_t *bytes, int32_t len, const char *sourcePath, Janet *out);
 JANET_API int janet_dostring(JanetTable *env, const char *str, const char *sourcePath, Janet *out);

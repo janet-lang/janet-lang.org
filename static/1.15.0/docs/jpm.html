@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>jpm</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="jpm" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span class="selected"><a href="jpm.html">jpm</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/thread.html">thread</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.15.0-2795e8a Documentation<br>(Other Versions:
+          
+          <a href="../../1.13.1/docs/jpm.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/jpm.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/jpm.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/jpm.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/jpm.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/jpm.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/jpm.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/jpm.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/jpm.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/jpm.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/jpm.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/jpm.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">jpm</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="documentation.html"><span class="prevnext-text">Documentation</span></a></span>
+
+          <span class="next"><a href="../api/index.html"><span class="prevnext-text">Core API</span></a></span>
+        </div>
+        
+
+<p>Most default installs of Janet come with a build tool, <code class="mendoza-code">jpm</code>, that makes
+managing dependencies, building Janet code, and distributing Janet applications
+easy. While <code class="mendoza-code">jpm</code> is not required by Janet, it is a very handy build tool
+that removes much of the boilerplate for creating new Janet projects, and is
+updated in step with Janet. <code class="mendoza-code">jpm</code> also works on Windows, Linux, and macOS
+so you don't need to write multiple build scripts and worry about platform
+quirks to make your scripts, binaries, and applications cross-platform.
+</p>
+<p><code class="mendoza-code">jpm</code>'s main functions are installing dependencies and building native
+    Janet modules, but it is meant to be used for much of the life-cycle for
+    Janet projects. Since Janet code doesn't usually need to be compiled, you
+    don't always need <code class="mendoza-code">jpm</code>, especially for scripts, but <code class="mendoza-code">jpm</code> comes
+    with some functionality that is difficult to duplicate, like compiling Janet
+    source code and all imported modules into a statically linked executable for
+    distribution.
+</p><h2 id="Glossary">Glossary
+</h2>
+<p>A self contained unit of Janet source code as recognized by <code class="mendoza-code">jpm</code> is called
+a project. A project is a directory containing a <code class="mendoza-code">project.janet</code> file,
+which contains build recipes. Often, a project will correspond to a single git
+repository, and contain a single library. However, a project's
+<code class="mendoza-code">project.janet</code> file can contain build recipes for as many libraries,
+native extensions, and executables as it wants. Each of these recipes builds an
+artifact. Artifacts are the output files that will either be distributed or
+installed on the end-user or developer's machine.
+</p>
+<h2 id="Building-projects-with">Building projects with <code class="mendoza-code">jpm</code>
+</h2>
+<p>Once you have the project on your machine, building the various artifacts should
+be pretty simple.
+</p>
+<h4 id="Global-install">Global install
+</h4>
+<pre class="mendoza-codeblock"><code>sudo jpm deps
+jpm build
+jpm test
+sudo jpm install</code></pre><p>(On Windows, <code class="mendoza-code">sudo</code> is not required. Use of <code class="mendoza-code">sudo</code> on POSIX systems
+depends on whether you installed <code class="mendoza-code">janet</code> to a directory owned by the root
+user.)
+</p>
+<h4 id="Local-install">Local install
+</h4>
+<pre class="mendoza-codeblock"><code>export JANET_PATH=/home/me/janet
+jpm deps
+jpm build
+jpm test
+jpm install</code></pre><h3 id="Dependencies">Dependencies
+</h3>
+<p><code class="mendoza-code">jpm deps</code> is a command that installs Janet libraries that the project
+    depends on recursively.  It will automatically fetch, build, and install all
+    required dependencies for you.  As of August 2019, this only works with git,
+    which you need to have installed on your machine to install dependencies. If
+    you don't have git you are free to manually obtain the requisite
+    dependencies and install them manually with <code class="mendoza-code">sudo jpm install</code>.
+</p><h3 id="Building">Building
+</h3>
+<p>Next, we use the <code class="mendoza-code">jpm build</code> command to build artifacts. All built
+artifacts will be created in the <code class="mendoza-code">build</code> subdirectory of the current
+project. Therefore, it is probably a good idea to exclude the <code class="mendoza-code">build</code>
+directory from source control. For building executables and native modules, you
+will need to have a C compiler on your PATH where you run <code class="mendoza-code">jpm build</code>. For
+POSIX systems, the compiler is <code class="mendoza-code">cc</code>.
+</p>
+<p>If you make changes to the source code after building once, <code class="mendoza-code">jpm</code> will try
+to only rebuild what is needed on a rebuild. If this fails for any reason, you
+can delete the entire build directory with <code class="mendoza-code">jpm clean</code> to reset things.
+</p>
+<h4 id="Windows-1">Windows
+</h4>
+<p>For Windows, the C compiler used by <code class="mendoza-code">jpm</code> is <code class="mendoza-code">cl.exe</code>, which is part
+of MSVC. You can get it with Visual Studio, or standalone with the C and C++
+Build Tools from Microsoft. You will then need to run <code class="mendoza-code">jpm build</code> in a
+Developer Command Prompt, or source <code class="mendoza-code">vcvars64.bat</code> in your shell to add
+<code class="mendoza-code">cl.exe</code> to the PATH.
+</p>
+<h3 id="Testing">Testing
+</h3>
+<p>Once we have built our software, it is a good idea to test it to verify that it
+works on the current machine. <code class="mendoza-code">jpm test</code> will run all Janet scripts in the
+<code class="mendoza-code">test</code> directory of the project and return a non-zero exit code if any
+fail.
+</p>
+<h3 id="Installing">Installing
+</h3>
+<p>Finally, once we have built our software and tested that it works, we can
+install it on our system. For an executable, this means copying it to the
+<code class="mendoza-code">bin</code> directory, and for libraries it means copying them to the global
+syspath. You can optionally install into any directory if you don't want to
+pollute your system or you don't have permission to write to the directory where
+<code class="mendoza-code">janet</code> itself was installed.  You can specify the path to install modules
+to via the <code class="mendoza-code">--modpath</code> option, and the path to install binaries to with the
+<code class="mendoza-code">--binpath</code> option. These need to be given before the subcommand
+<code class="mendoza-code">install</code>.
+</p>
+<h2 id="The-0">The <code class="mendoza-code">project.janet</code> file
+</h2>
+<p>To create your own software in Janet, it is a good idea to understand what the
+<code class="mendoza-code">project.janet</code> file is and how it defines rules for building, testing, and
+installing software. The code in <code class="mendoza-code">project.janet</code> is normal Janet source
+code that is run in a special environment.
+</p>
+<p>A <code class="mendoza-code">project.janet</code> file is loaded by <code class="mendoza-code">jpm</code> and evaluated to create
+various recipes, or rules. For example, <code class="mendoza-code">declare-project</code> creates several
+rules, including <code class="mendoza-code">"install"</code>, <code class="mendoza-code">"build"</code>, <code class="mendoza-code">"clean"</code>, and
+<code class="mendoza-code">"test"</code>. These are a few of the rules that <code class="mendoza-code">jpm</code> expects
+<code class="mendoza-code">project.janet</code> to create when executed.
+</p>
+<h3 id="Declaring-a-project">Declaring a project
+</h3>
+<p>Use the <code class="mendoza-code">declare-project</code> as the first <code class="mendoza-code">declare-</code> macro towards the
+beginning of your <code class="mendoza-code">project.janet</code> file. You can also pass in any metadata
+about your project that you want, and add dependencies on other Janet projects
+here.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">declare-project</span>
+  <span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"mylib"</span> <span class="mdzsyn-comment"># required</span>
+  <span class="mdzsyn-keyword">:description</span> <span class="mdzsyn-string">"a library that does things"</span> <span class="mdzsyn-comment"># some example metadata.</span>
+
+  <span class="mdzsyn-comment"># Optional urls to git repositories that contain required artifacts.</span>
+  <span class="mdzsyn-keyword">:dependencies</span> [<span class="mdzsyn-string">"https://github.com/janet-lang/json.git"</span>])</code></pre><h3 id="Creating-a-module">Creating a module
+</h3>
+<p>A 100% Janet library is the easiest kind of software to distribute in Janet.
+Since it does not need to be built and since installing it means simply moving
+the files to a system directory, we only need to specify the files that comprise
+the library in <code class="mendoza-code">project.janet</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">declare-source</span>
+  <span class="mdzsyn-comment"># :source is an array or tuple that can contain</span>
+  <span class="mdzsyn-comment"># source files and directories that will be installed.</span>
+  <span class="mdzsyn-comment"># Often will just be a single file or single directory.</span>
+  <span class="mdzsyn-keyword">:source</span> [<span class="mdzsyn-string">"mylib.janet"</span>])</code></pre><p>For information on writing modules, see <a href="/docs/modules.html">the modules docpage</a>.
+</p>
+<h3 id="Creating-a-native-module">Creating a native module
+</h3>
+<p>Once you have written your C code that defines your native module (see the
+<a href="/capi/embedding.html">embedding</a> page on how to do this), you must declare
+it in <code class="mendoza-code">project.janet</code> in order for <code class="mendoza-code">jpm</code> to build the native modules
+for you.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">declare-native</span>
+ <span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"mynative"</span>
+ <span class="mdzsyn-keyword">:source</span> [<span class="mdzsyn-string">"mynative.c"</span> <span class="mdzsyn-string">"mysupport.c"</span>]
+ <span class="mdzsyn-keyword">:embedded</span> [<span class="mdzsyn-string">"extra-functions.janet"</span>])</code></pre><p>This makes <code class="mendoza-code">jpm</code> create a native module called <code class="mendoza-code">mynative</code> when
+<code class="mendoza-code">jpm build</code> is run, the arguments for which should be pretty
+straightforward. The <code class="mendoza-code">:embedded</code> argument is Janet source code that will be
+embedded as an array of bytes directly into the C source code. It is not
+recommended to use the <code class="mendoza-code">:embedded</code> argument, as one can simply create
+multiple artifacts, one for a pure C native module and one for Janet source
+code.
+</p>
+<h3 id="Creating-an-executable">Creating an executable
+</h3>
+<p>The declaration for an executable file is pretty simple.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">declare-executable</span>
+ <span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"myexec"</span>
+ <span class="mdzsyn-keyword">:entry</span> <span class="mdzsyn-string">"main.janet"</span>)</code></pre><p><code class="mendoza-code">jpm</code> is smart enough to figure out from the one entry file what
+    libraries and other code your executable depends on, and bundles them into
+    the final application for you. The final executable will be located at
+    <code class="mendoza-code">build/myexec</code>, or <code class="mendoza-code">build\myexec.exe</code> on Windows.</p><p>Also note that the entry of an executable file should look different than a
+normal Janet script.  It should define a <code class="mendoza-code">main</code> function that can receive a
+variable number of parameters, the command-line arguments. It will be called as
+the entry point to your executable.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">mylib1</span>)
+(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">mylib2</span>)
+
+<span class="mdzsyn-comment"># This will be printed when you run `jpm build`</span>
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"build time!"</span>)
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">main</span> [<span class="mdzsyn-symbol">&amp;</span> <span class="mdzsyn-symbol">args</span>]
+    <span class="mdzsyn-comment"># You can also get command-line arguments through (dyn :args)</span>
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"args: "</span> ;(<span class="mdzsyn-symbol">interpolate</span> <span class="mdzsyn-string">", "</span> <span class="mdzsyn-symbol">args</span>))
+    (<span class="mdzsyn-symbol">mylib1/do-thing</span>)
+    (<span class="mdzsyn-symbol">mylib2/do-thing</span>))</code></pre><p>It's important to remember that code at the top level will run when you invoke
+<code class="mendoza-code">jpm build</code>, not at executable runtime. This is because in order to create
+the executable, we marshal the <code class="mendoza-code">main</code> function of the app and write it to
+an image. In order to create the main function, we need to actually compile and
+run everything that it references, in the above case <code class="mendoza-code">mylib1</code> and
+<code class="mendoza-code">mylib2</code>.
+</p>
+<p>This has a number of benefits, but the largest is that we only include bytecode
+for the functions that our application uses. If we only use one function from a
+library of 1000 functions, our final executable will not include the bytecode
+for the other 999 functions (unless our one function references some of those
+other functions, of course). This feature, called tree-shaking, only works
+for Janet code. Native modules will be linked to the final executable statically
+in full if they are used at all. A native module is considered "used" if is
+imported at any time during <code class="mendoza-code">jpm build</code>. This may change, but it is
+currently the most reliable way to check if a native modules needs to be linked
+into the final executable.
+</p>
+<p>There are some limitations to this approach. Any dynamically required modules
+will not always be linked into the final executable. If <code class="mendoza-code">require</code> or
+<code class="mendoza-code">import</code> is not called during <code class="mendoza-code">jpm build</code>, then the code will not be
+linked into the executable. The module can still be required if it is available
+at runtime, though.
+</p>
+<p>For an example Janet executable built with <code class="mendoza-code">jpm</code>, see
+<a href="https://github.com/bakpakin/littleserver">https://github.com/bakpakin/littleserver</a>.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="documentation.html"><span class="prevnext-text">Documentation</span></a></span>
+          <span class="next"><a href="../api/index.html"><span class="prevnext-text">Core API</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on February 10, 2021 at 02:29:55 (UTC) with Janet 1.15.0-2795e8a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
