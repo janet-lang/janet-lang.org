@@ -1,6 +1,6 @@
 /* Amalgamated build - DO NOT EDIT */
-/* Generated from janet version 1.15.0-2795e8a */
-#define JANET_BUILD "2795e8a"
+/* Generated from janet version 1.15.2-f1819c9 */
+#define JANET_BUILD "f1819c9"
 #define JANET_AMALG
 
 /* src/core/features.h */
@@ -11932,7 +11932,7 @@ static const JanetReg io_cfuns[] = {
              "* r - allow reading from the file\n\n"
              "* w - allow writing to the file\n\n"
              "* a - append to the file\n\n"
-             "Following one fo the initial flags, 0 or more of the following flags can be appended:\n\n"
+             "Following one of the initial flags, 0 or more of the following flags can be appended:\n\n"
              "* b - open the file in binary mode (rather than text mode)\n\n"
              "* + - append to the file instead of overwriting it\n\n"
              "* n - error if the file cannot be opened instead of returning nil")
@@ -14967,49 +14967,71 @@ static Janet os_exit(int32_t argc, Janet *argv) {
 #ifndef JANET_NO_PROCESSES
 
 /* Get env for os_execute */
-static char **os_execute_env(int32_t argc, const Janet *argv) {
-    char **envp = NULL;
-    if (argc > 2) {
-        JanetDictView dict = janet_getdictionary(argv, 2);
-        envp = janet_smalloc(sizeof(char *) * ((size_t)dict.len + 1));
-        int32_t j = 0;
-        for (int32_t i = 0; i < dict.cap; i++) {
-            const JanetKV *kv = dict.kvs + i;
-            if (!janet_checktype(kv->key, JANET_STRING)) continue;
-            if (!janet_checktype(kv->value, JANET_STRING)) continue;
-            const uint8_t *keys = janet_unwrap_string(kv->key);
-            const uint8_t *vals = janet_unwrap_string(kv->value);
-            int32_t klen = janet_string_length(keys);
-            int32_t vlen = janet_string_length(vals);
-            /* Check keys has no embedded 0s or =s. */
-            int skip = 0;
-            for (int32_t k = 0; k < klen; k++) {
-                if (keys[k] == '\0' || keys[k] == '=') {
-                    skip = 1;
-                    break;
-                }
-            }
-            if (skip) continue;
-            char *envitem = janet_smalloc((size_t) klen + (size_t) vlen + 2);
-            memcpy(envitem, keys, klen);
-            envitem[klen] = '=';
-            memcpy(envitem + klen + 1, vals, vlen);
-            envitem[klen + vlen + 1] = 0;
-            envp[j++] = envitem;
-        }
-        envp[j] = NULL;
+#ifdef JANET_WINDOWS
+typedef char *EnvBlock;
+#else
+typedef char **EnvBlock;
+#endif
+
+/* Get env for os_execute */
+static EnvBlock os_execute_env(int32_t argc, const Janet *argv) {
+    if (argc <= 2) return NULL;
+    JanetDictView dict = janet_getdictionary(argv, 2);
+#ifdef JANET_WINDOWS
+    JanetBuffer *temp = janet_buffer(10);
+    for (int32_t i = 0; i < dict.cap; i++) {
+        const JanetKV *kv = dict.kvs + i;
+        if (!janet_checktype(kv->key, JANET_STRING)) continue;
+        if (!janet_checktype(kv->value, JANET_STRING)) continue;
+        const uint8_t *keys = janet_unwrap_string(kv->key);
+        const uint8_t *vals = janet_unwrap_string(kv->value);
+        janet_buffer_push_bytes(temp, keys, janet_string_length(keys));
+        janet_buffer_push_u8(temp, '=');
+        janet_buffer_push_bytes(temp, vals, janet_string_length(vals));
+        janet_buffer_push_u8(temp, '\0');
     }
+    janet_buffer_push_u8(temp, '\0');
+    char *ret = janet_smalloc(temp->count);
+    memcpy(ret, temp->data, temp->count);
+    return ret;
+#else
+    char **envp = janet_smalloc(sizeof(char *) * ((size_t)dict.len + 1));
+    int32_t j = 0;
+    for (int32_t i = 0; i < dict.cap; i++) {
+        const JanetKV *kv = dict.kvs + i;
+        if (!janet_checktype(kv->key, JANET_STRING)) continue;
+        if (!janet_checktype(kv->value, JANET_STRING)) continue;
+        const uint8_t *keys = janet_unwrap_string(kv->key);
+        const uint8_t *vals = janet_unwrap_string(kv->value);
+        int32_t klen = janet_string_length(keys);
+        int32_t vlen = janet_string_length(vals);
+        /* Check keys has no embedded 0s or =s. */
+        int skip = 0;
+        for (int32_t k = 0; k < klen; k++) {
+            if (keys[k] == '\0' || keys[k] == '=') {
+                skip = 1;
+                break;
+            }
+        }
+        if (skip) continue;
+        char *envitem = janet_smalloc((size_t) klen + (size_t) vlen + 2);
+        memcpy(envitem, keys, klen);
+        envitem[klen] = '=';
+        memcpy(envitem + klen + 1, vals, vlen);
+        envitem[klen + vlen + 1] = 0;
+        envp[j++] = envitem;
+    }
+    envp[j] = NULL;
     return envp;
+#endif
 }
 
-/* Free memory from os_execute. Not actually needed, but doesn't pressure the GC
-   in the happy path. */
-static void os_execute_cleanup(char **envp, const char **child_argv) {
+static void os_execute_cleanup(EnvBlock envp, const char **child_argv) {
 #ifdef JANET_WINDOWS
     (void) child_argv;
+    if (NULL != envp) janet_sfree(envp);
 #else
     janet_sfree((void *)child_argv);
-#endif
     if (NULL != envp) {
         char **envitem = envp;
         while (*envitem != NULL) {
@@ -15018,6 +15040,7 @@ static void os_execute_cleanup(char **envp, const char **child_argv) {
         }
     }
     janet_sfree(envp);
+#endif
 }
 
 #ifdef JANET_WINDOWS
@@ -15510,12 +15533,11 @@ static Janet os_execute_impl(int32_t argc, Janet *argv, int is_spawn) {
     uint64_t flags = 0;
     if (argc > 1) {
         flags = janet_getflags(argv, 1, "epx");
-
     }
 
     /* Get environment */
     int use_environ = !janet_flag_at(flags, 0);
-    char **envp = os_execute_env(argc, argv);
+    EnvBlock envp = os_execute_env(argc, argv);
 
     /* Get arguments */
     JanetView exargs = janet_getindexed(argv, 0);
@@ -15699,7 +15721,6 @@ static Janet os_execute_impl(int32_t argc, Janet *argv, int is_spawn) {
         janet_unlock_environ();
     }
 
-    /* Wait for child */
     os_execute_cleanup(envp, child_argv);
     if (status) {
         janet_panicf("%p: %s", argv[0], strerror(errno));
@@ -19398,7 +19419,7 @@ static void spec_matchtime(Builder *b, int32_t argc, const Janet *argv) {
 static void spec_readint(Builder *b, int32_t argc, const Janet *argv, uint32_t mask) {
     peg_arity(b, argc, 1, 2);
     Reserve r = reserve(b, 3);
-    uint32_t tag = (argc == 2) ? emit_tag(b, argv[3]) : 0;
+    uint32_t tag = (argc == 2) ? emit_tag(b, argv[1]) : 0;
     int32_t width = peg_getnat(b, argv[0]);
     if ((width < 0) || (width > JANET_MAX_READINT_WIDTH)) {
         peg_panicf(b, "width must be between 0 and %d, got %d", JANET_MAX_READINT_WIDTH, width);
@@ -31946,7 +31967,7 @@ static const unsigned char janet_core_image_bytes[] = {
   0x72, 0x6F, 0x6E, 0x6D, 0x65, 0x6E, 0x74, 0x20, 0x69, 0x73, 0x20, 0x6E, 0x65, 0x65, 0x64, 0x65, 
   0x64, 0x2C, 0x20, 0x75, 0x73, 0x65, 0x20, 0x72, 0x75, 0x6E, 0x2D, 0x63, 0x6F, 0x6E, 0x74, 0x65, 
   0x78, 0x74, 0x2E, 0xCF, 0x0B, 0x6A, 0x61, 0x6E, 0x65, 0x74, 0x2F, 0x62, 0x75, 0x69, 0x6C, 0x64, 
-  0xD3, 0x02, 0xDA, 0x03, 0xCE, 0x07, 0x32, 0x37, 0x39, 0x35, 0x65, 0x38, 0x61, 0xDA, 0x05, 0xCE, 
+  0xD3, 0x02, 0xDA, 0x03, 0xCE, 0x07, 0x66, 0x31, 0x38, 0x31, 0x39, 0x63, 0x39, 0xDA, 0x05, 0xCE, 
   0x32, 0x54, 0x68, 0x65, 0x20, 0x62, 0x75, 0x69, 0x6C, 0x64, 0x20, 0x69, 0x64, 0x65, 0x6E, 0x74, 
   0x69, 0x66, 0x69, 0x65, 0x72, 0x20, 0x6F, 0x66, 0x20, 0x74, 0x68, 0x65, 0x20, 0x72, 0x75, 0x6E, 
   0x6E, 0x69, 0x6E, 0x67, 0x20, 0x6A, 0x61, 0x6E, 0x65, 0x74, 0x20, 0x70, 0x72, 0x6F, 0x67, 0x72, 
@@ -33774,7 +33795,7 @@ static const unsigned char janet_core_image_bytes[] = {
   0x73, 0x65, 0x72, 0x74, 0xD8, 0x0C, 0x61, 0x72, 0x72, 0x61, 0x79, 0x2F, 0x69, 0x6E, 0x73, 0x65, 
   0x72, 0x74, 0xCF, 0x0E, 0x64, 0x65, 0x62, 0x75, 0x67, 0x2F, 0x75, 0x6E, 0x66, 0x62, 0x72, 0x65, 
   0x61, 0x6B, 0xDA, 0x81, 0x0D, 0xCF, 0x0D, 0x6A, 0x61, 0x6E, 0x65, 0x74, 0x2F, 0x76, 0x65, 0x72, 
-  0x73, 0x69, 0x6F, 0x6E, 0xCE, 0x06, 0x31, 0x2E, 0x31, 0x35, 0x2E, 0x30, 0xCF, 0x06, 0x65, 0x6D, 
+  0x73, 0x69, 0x6F, 0x6E, 0xCE, 0x06, 0x31, 0x2E, 0x31, 0x35, 0x2E, 0x32, 0xCF, 0x06, 0x65, 0x6D, 
   0x70, 0x74, 0x79, 0x3F, 0xDA, 0x81, 0x8C, 0xCF, 0x11, 0x74, 0x61, 0x72, 0x72, 0x61, 0x79, 0x2F, 
   0x63, 0x6F, 0x70, 0x79, 0x2D, 0x62, 0x79, 0x74, 0x65, 0x73, 0xD8, 0x11, 0x74, 0x61, 0x72, 0x72, 
   0x61, 0x79, 0x2F, 0x63, 0x6F, 0x70, 0x79, 0x2D, 0x62, 0x79, 0x74, 0x65, 0x73, 0xCF, 0x08, 0x70, 
@@ -35972,7 +35993,7 @@ static const unsigned char janet_core_image_bytes[] = {
   0x72, 0x69, 0x74, 0x69, 0x6E, 0x67, 0x20, 0x74, 0x6F, 0x20, 0x74, 0x68, 0x65, 0x20, 0x66, 0x69, 
   0x6C, 0x65, 0x0A, 0x0A, 0x2A, 0x20, 0x61, 0x20, 0x2D, 0x20, 0x61, 0x70, 0x70, 0x65, 0x6E, 0x64, 
   0x20, 0x74, 0x6F, 0x20, 0x74, 0x68, 0x65, 0x20, 0x66, 0x69, 0x6C, 0x65, 0x0A, 0x0A, 0x46, 0x6F, 
-  0x6C, 0x6C, 0x6F, 0x77, 0x69, 0x6E, 0x67, 0x20, 0x6F, 0x6E, 0x65, 0x20, 0x66, 0x6F, 0x20, 0x74, 
+  0x6C, 0x6C, 0x6F, 0x77, 0x69, 0x6E, 0x67, 0x20, 0x6F, 0x6E, 0x65, 0x20, 0x6F, 0x66, 0x20, 0x74, 
   0x68, 0x65, 0x20, 0x69, 0x6E, 0x69, 0x74, 0x69, 0x61, 0x6C, 0x20, 0x66, 0x6C, 0x61, 0x67, 0x73, 
   0x2C, 0x20, 0x30, 0x20, 0x6F, 0x72, 0x20, 0x6D, 0x6F, 0x72, 0x65, 0x20, 0x6F, 0x66, 0x20, 0x74, 
   0x68, 0x65, 0x20, 0x66, 0x6F, 0x6C, 0x6C, 0x6F, 0x77, 0x69, 0x6E, 0x67, 0x20, 0x66, 0x6C, 0x61, 
