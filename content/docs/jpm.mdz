@@ -206,7 +206,7 @@ the entry point to your executable.
 
 (defn main [& args]
     # You can also get command-line arguments through (dyn :args)
-    (print "args: " ;(interpolate ", " args))
+    (print "args: " ;(interpose ", " args))
     (mylib1/do-thing)
     (mylib2/do-thing))
 ```
