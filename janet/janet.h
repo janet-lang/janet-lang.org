@@ -27,9 +27,9 @@
 
 #define JANET_VERSION_MAJOR 1
 #define JANET_VERSION_MINOR 15
-#define JANET_VERSION_PATCH 2
+#define JANET_VERSION_PATCH 3
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.15.2"
+#define JANET_VERSION "1.15.3"
 
 /* #define JANET_BUILD "local" */
 
@@ -1896,7 +1896,8 @@ typedef enum {
     RULE_LENPREFIX,    /* [rule_a, rule_b (repeat rule_b rule_a times)] */
     RULE_READINT,      /* [(signedness << 4) | (endianess << 5) | bytewidth, tag] */
     RULE_LINE,         /* [tag] */
-    RULE_COLUMN        /* [tag] */
+    RULE_COLUMN,       /* [tag] */
+    RULE_UNREF         /* [rule, tag] */
 } JanetPegOpcod;
 
 typedef struct {
