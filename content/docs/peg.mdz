@@ -298,9 +298,12 @@ grammars simpler.
     @tr{@td{@code`(-> tag ?tag)` }
         @td{ Alias for @code`(backref tag)`. }}
 
-    @tr{@td{@code`(error patt)` }
-        @td{ Throws a Janet error if patt matches. The error thrown will be the
-        last capture of patt, or a generic error if patt produces no captures.
+    @tr{@td{@code`(error ?patt)` }
+        @td{ Throws a Janet error.  If optional argument @code`patt` is
+        provided and it matches successfully, the error thrown will be the
+        last capture of @code`patt`, or a generic error if @code`patt`
+        produces no captures. If no argument is provided, a generic error is
+        thrown.
         }}
 
     @tr{@td{@code`(drop patt)` }
