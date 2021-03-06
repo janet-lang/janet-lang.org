@@ -354,8 +354,8 @@ can make grammars simpler and easier to read.
     @tr{@td{@code`:d`} @td{@code`(range "09")`} @td{Matches an ASCII digit.}}
     @tr{@td{@code`:a`} @td{@code`(range "az" "AZ")`} @td{Matches an ASCII letter.}}
     @tr{@td{@code`:w`} @td{@code`(range "az" "AZ" "09")`} @td{Matches an ASCII digit or letter.}}
-    @tr{@td{@code`:s`} @td{@code`(set " \t\r\n\0\f")`} @td{Matches an ASCII whitespace character.}}
-    @tr{@td{@code`:h`} @td{@code`(range "09" "af")`} @td{Matches a hex character.}}
+    @tr{@td{@code`:s`} @td{@code`(set " \t\r\n\0\f\v")`} @td{Matches an ASCII whitespace character.}}
+    @tr{@td{@code`:h`} @td{@code`(range "09" "af" "AF")`} @td{Matches a hex character.}}
 
     @tr{@td{@code`:D`} @td{@code`(if-not :d 1)`} @td{Matches a character that is not an ASCII digit.}}
     @tr{@td{@code`:A`} @td{@code`(if-not :a 1)`} @td{Matches a character that is not an ASCII letter.}}
