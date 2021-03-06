@@ -70,7 +70,7 @@
       (for i 0 100
         (yield i)))))
 
-(loop [x :generate f]
+(loop [x :in f]
   (print x))
 # print 0, 1, 2, ... 99
 
