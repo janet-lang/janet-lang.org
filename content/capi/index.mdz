@@ -31,7 +31,7 @@ a small wrapper around Janet), it is convenient to be able to add only a few sou
 to your project rather than a large dependency. The amalgamated source, @code`janet.c`, contains
 all of the source code for Janet concatenated into one file. This file can be added to the host project, along
 with @code`janet.h` and @code`janetconf.h`. There is also the option of including @code`shell.c`, which is
-used in the standalone interpretter, but not usually needed for host programs.
+used in the standalone interpreter, but not usually needed for host programs.
 
 On a POSIX system, building the amalgamated source is straightforward. With @code`janet.c`, @code`janet.h`, @code`janetconf.h`, and
 @code`shell.c` in the current directory, building is as follows:

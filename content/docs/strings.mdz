@@ -86,7 +86,7 @@ Line 2
 ``
 ```
 
-Strings, symbols, and keywords can all contain embedded UTF-8. It is recomended
+Strings, symbols, and keywords can all contain embedded UTF-8. It is recommended
 that you embed UTF-8 literally in strings rather than escaping it if it is
 printable.
 

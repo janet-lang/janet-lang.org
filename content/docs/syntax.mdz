@@ -16,7 +16,7 @@ parsed, by the Janet parser. The parser, often called the reader in Lisp, is a
 machine that takes in plain text and outputs data structures which can be used
 by both the compiler and macros. In Janet, it is a parser rather than a reader
 because there is no code execution at reading time. This approach is safer and
-more straightforward, and makes syntax higlighting, formatting, and other syntax
+more straightforward, and makes syntax highlighting, formatting, and other syntax
 analysis simpler. While a parser is not extensible, in Janet the philosophy is
 to extend the language via macros rather than reader macros.
 
@@ -50,7 +50,7 @@ separates the name of the module from the name of the definition in the module.
 symbol
 kebab-case-symbol
 snake_case_symbol
-my-module/my-fuction
+my-module/my-function
 *****
 !%$^*__--__._+++===~-crazy-symbol
 *global-var*
@@ -104,10 +104,10 @@ Strings in Janet are surrounded by double quotes. Strings are 8-bit clean,
 meaning they can contain any arbitrary sequence of bytes, including embedded 0s.
 To insert a double quote into a string itself, escape the double quote with a
 backslash. For unprintable characters, you can either use one of a few common
-escapes, use the @code`\xHH` escape to escape a single byte in hexidecimal. The
+escapes, use the @code`\xHH` escape to escape a single byte in hexadecimal. The
 supported escapes are:
 
-@ul{@li{@code`\xHH` Escape a single arbitrary byte in hexidecimal.}
+@ul{@li{@code`\xHH` Escape a single arbitrary byte in hexadecimal.}
     @li{@code`\n` Newline (ASCII 10)}
     @li{@code`\t` Tab character (ASCII 9)}
     @li{@code`\r` Carriage Return (ASCII 13)}

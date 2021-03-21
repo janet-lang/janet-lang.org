@@ -299,7 +299,7 @@ Unquote a form within a @code`quasiquote`. Outside of a @code`quasiquote`,
 Similar to `do`, `upscope` evaluates a number of forms and sequence and evaluates to the
 result of the last form. However, `upscope` does not create a new lexical scope, which means
 that bindings created inside it are visible in the scope where upscope is declared. This is
-useful for writing macros that make several def and var delcarations at once.
+useful for writing macros that make several def and var declarations at once.
 
 @codeblock[janet]```
 (upscope

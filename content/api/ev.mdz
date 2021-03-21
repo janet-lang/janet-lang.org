@@ -5,7 +5,7 @@
  :template "docpage.html"}
 ---
 
-Functions related to evented (asynchrnous) IO and a fiber based event loop.
+Functions related to evented (asynchronous) IO and a fiber based event loop.
 
 ## Index
 

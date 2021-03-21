@@ -29,7 +29,7 @@ work for a 64-bit build, and from the Developer Command Prompt should work for
 
 #### Arch Linux
 
-You can install either the latest git verion or the latest stable version for
+You can install either the latest git version or the latest stable version for
 Arch Linux from the Arch user repositories with
 @link[https://aur.archlinux.org/packages/janet-lang-git/][janet-lang-git] or
 @link[https://aur.archlinux.org/packages/janet-lang][janet-lang].
@@ -69,7 +69,7 @@ to customize.
 
 ### FreeBSD
 
-FreeBSD build instructions are the same as the Unix-like build instuctions, but
+FreeBSD build instructions are the same as the Unix-like build instructions, but
 you need @code[gmake] and @code[gcc] to compile.
 
 @codeblock(```
