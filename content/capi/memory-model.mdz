@@ -95,7 +95,7 @@ handily be used for this.
 Better code:
 @codeblock[c]```
 Janet my_bad_cfunc(int32_t argc, Janet *argv) {
-    const Janet *argv2 = janet_tuple_n(argv, argv);
+    const Janet *argv2 = janet_tuple_n(argv, argc);
     for (int32_t i = 0; i < argc; i++) {
         JanetFunction *func = janet_getfunction(argv2, i);
         janet_call(func, 0, NULL);
