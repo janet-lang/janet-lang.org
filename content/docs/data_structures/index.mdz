@@ -74,7 +74,7 @@ data structure.
 
 To read the values in a data structure, use the @code`get` function. The first
 parameter is the data structure itself, and the second parameter is the key. An
-optional third paramter can be used to specify a default if the value is not
+optional third parameter can be used to specify a default if the value is not
 found.
 
 @codeblock[janet]```
