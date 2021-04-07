@@ -310,7 +310,7 @@ useful for writing macros that make several def and var declarations at once.
 (+ a b c) # -> 6
 ```
 
-In general, use this macro as a last resort. There are other, often betters ways to do this, including
+In general, use this macro as a last resort. There are other, often better ways to do this, including
 using destructuring.
 
 @codeblock[janet]```
