@@ -75,7 +75,7 @@ top level and inside another form. There is also the corresponding macro
 
 # You can think of defn as a shorthand for def and fn together
 (def myfun-same (fn [x y]
-            (+ x x Y)))
+            (+ x x y)))
 
 (myfun 3 4) # -> 10
 ```
