@@ -218,7 +218,7 @@ to @code`nil`.
 
 Break from a @code`while` loop or return early from a function. The @code`break`
 special form can only break from the inner-most loop. Since a @code`while` loop
-always returns @code`nil`, the optional `value` parameter has no effect when
+always returns @code`nil`, the optional @code`value` parameter has no effect when
 used in a @code`while` loop, but when returning from a function, the
 @code`value` parameter is the function's return value.
 
@@ -296,8 +296,8 @@ Unquote a form within a @code`quasiquote`. Outside of a @code`quasiquote`,
 
 ## @code`(upscope & body)`
 
-Similar to `do`, `upscope` evaluates a number of forms and sequence and evaluates to the
-result of the last form. However, `upscope` does not create a new lexical scope, which means
+Similar to @code`do`, @code`upscope` evaluates a number of forms and sequence and evaluates to the
+result of the last form. However, @code`upscope` does not create a new lexical scope, which means
 that bindings created inside it are visible in the scope where upscope is declared. This is
 useful for writing macros that make several def and var declarations at once.
 
