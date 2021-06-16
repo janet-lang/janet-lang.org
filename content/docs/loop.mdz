@@ -76,7 +76,7 @@ We can do this easily with the @code`loop` macro.
 
 The @code`loop` macro has several verbs (@code`:range`) and modifiers
 (@code`:when`) that let the programmer more easily generate common looping
-idioms. The @code`loop` macro is similar to the Common Lips @code`loop` macro,
+idioms. The @code`loop` macro is similar to the Common Lisp @code`loop` macro,
 but smaller in scope and with a much simpler syntax. As with the @code`for`
 macro, the @code`loop` macro expands to similar code as our original
 @code`while` expression.
