@@ -1,0 +1,78 @@
+{:title "Linting"
+ :template "docpage.html"
+ :order 24}
+---
+
+The @code`janet` binary comes with a built in linter as of version 1.16.1. This
+allows the compiler to emit warnings that don't always need to stop compilation.
+Linting is enabled by default at the command line and can be adjusted with the
+@code`-x` and @code`-w` flags.
+
+Linting messages from the compiler contain a linting level, a message, and source
+code location. There are 3 default levels of linting messages:
+
+@ul{@li{@code`:relaxed` - Reserved for serious messages (priority 1)}
+    @li{@code`:normal` - The normal default level for linting messages (priority 2)}
+    @li{@code`:strict` - The linting level reserved for unimportant or nit-picky warnings (priority 3)}}
+
+Note that the levels of lints may seem backwards, as the levels of the lint are from the perspective
+of the programmer. For example, a "picky" lint message that was warning the user about a matter of style
+would only show up if the programmer had `:strict` mode enabled for linting. You can also use the priority
+integers directly for lint levels.
+
+## Deprecation
+
+There is also support for deprecation messages in the compiler to trigger lint warnings if a user attempts
+to use a deprecated binding. Deprecation here is the process of signaling to users that a function or
+other binding should not longer be used for new code. Deprecation levels are the same as the linting
+levels.
+
+@codeblock[janet]```
+(defn old-fn 
+ :deprecated
+ "This function is deprecated"
+ [x]
+ (* 2 x))
+
+(defn older-fn
+ {:deprecated :relaxed}
+ "This function is deprecated, and we really don't want you to use it."
+ [x]
+ (* 2 x))
+```
+
+## Lint Warnings and Errors
+
+Whenever Janet code is being executed by the @code`run-context` function, there are lint thresholds for both
+errors and warnings. If a lint message has a level equal to or below the error threshold, it will be converted
+into a compiler error. Otherwise, if the lint message has a level equal to or below the warning threshold, a
+warning will be printed to @code`stderr`. Finally, lints above both the error and warning threshold will be
+ignored.
+
+The error threshold can be set with @code`(setdyn :lint-error error-threshold)`, and the warning threshold can
+similarly be set with @code`(setdyn :lint-warn warn-threshold)`, where threshold values are any of the lint
+levels (keywords) or an integer. By default, the error threshold is 0 (no lints will cause an error), and the warn
+threshold is 2 (relaxed and normal lints will cause a warning to print, but strict lints will be ignored).
+These threshold can also be set at the command line with the @code`-w` and @code`-x` flags for the warn and
+error thresholds respectively.
+
+## Macro Linting
+
+Inside macros, Janet exposes an array used to collect lint messages. A function @code`maclintf` is provided
+to help construct error messages if some issue occurs inside a macro. @code`maclintf` can be used to check
+arguments and assert that certain invariants are held when invoking a macro.
+
+@codeblock[janet]```
+(defmacro my-plus
+ "Do addition and hint that the first argument should be a constant number."
+ [x y]
+ (unless (number? x)
+  (maclintf :normal "my-plus should be invoked with a numeric constant as x, got %v" x))
+ ~(,+ ,x ,y))
+```
+
+Use of @code`maclintf` over other methods of reporting warnings is preferred as the programmer has the
+ability to customize how the handle different levels of lint messages.
+For fatal errors inside the macro, use
+the @code`error` function as usual.
+
