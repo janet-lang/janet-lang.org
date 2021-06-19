@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 Calvin Rose
+* Copyright (c) 2021 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -27,9 +27,9 @@
 
 #define JANET_VERSION_MAJOR 1
 #define JANET_VERSION_MINOR 16
-#define JANET_VERSION_PATCH 0
+#define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.16.0"
+#define JANET_VERSION "1.16.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -231,11 +231,6 @@ extern "C" {
 /* Enable or disable the peg module */
 #ifndef JANET_NO_PEG
 #define JANET_PEG
-#endif
-
-/* Enable or disable the typedarray module */
-#ifndef JANET_NO_TYPED_ARRAY
-#define JANET_TYPED_ARRAY
 #endif
 
 /* Enable or disable event loop */

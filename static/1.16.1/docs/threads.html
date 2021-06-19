@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Multithreading</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Multithreading" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span class="selected"><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/thread.html">thread</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/tarray.html">tarray</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.16.1-87f8fe1 Documentation<br>(Other Versions:
+          
+          <a href="../../1.15.0/docs/threads.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/threads.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/threads.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/threads.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/threads.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/threads.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/threads.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/threads.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/threads.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/threads.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/threads.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/threads.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/threads.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Multithreading</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="abstract_machine.html"><span class="prevnext-text">The Janet Abstract Machine</span></a></span>
+
+          <span class="next"><a href="networking.html"><span class="prevnext-text">Networking</span></a></span>
+        </div>
+        
+
+<p>Starting in version 1.6.0, Janet has the ability to do true, non-cooperative
+multithreading with the <code class="mendoza-code">thread/</code> functions. Janet threads correspond to
+native threads on the host operating system, which may be either pthreads on
+POSIX systems or Windows threads. Each thread has its own Janet heap, which
+means threads behave more like processes that communicate by message passing.
+However, this does not prevent native code from sharing memory across these
+threads.  Without native extensions, however, the only way for two Janet threads
+to communicate directly is through message passing.
+</p>
+<h2 id="Creating-threads">Creating threads
+</h2>
+<p>Use <code class="mendoza-code">(thread/new func &amp;opt capacity)</code> to create a new thread. This thread
+will start and wait for a message containing a function that it will run as the
+main body. This function must also be able to take 1 parameter, the parent
+thread.  Each thread has its own mailbox, which can asynchronously receive
+messages. These messages are added to a queue, which has a configurable maximum
+capacity according to the second optional argument passed to <code class="mendoza-code">thread/new</code>.
+If unspecified, the mailbox will have an initial capacity of 10.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  [<span class="mdzsyn-symbol">parent</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"New thread started!"</span>))
+
+<span class="mdzsyn-comment"># New thread's mailbox has capacity for 32 messages.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">thread</span> (<span class="mdzsyn-coresym">thread/new</span> <span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-number">32</span>))</code></pre><h2 id="Sending-and-receiving-messages">Sending and receiving messages
+</h2>
+<p>Threads in Janet do not share a memory heap and must communicate via message
+passing. Use <code class="mendoza-code">thread/send</code> to send a message to a thread, and
+<code class="mendoza-code">thread/receive</code> to get messages sent to the current thread.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  [<span class="mdzsyn-symbol">parent</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"waiting for message..."</span>)
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">msg</span> (<span class="mdzsyn-coresym">thread/receive</span>))
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"got message: "</span> <span class="mdzsyn-symbol">msg</span>))
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">thread</span> (<span class="mdzsyn-coresym">thread/new</span> <span class="mdzsyn-symbol">worker</span>))
+<span class="mdzsyn-comment"># Thread objects support the :send method as an alias for thread/send.</span>
+(<span class="mdzsyn-keyword">:send</span> <span class="mdzsyn-symbol">thread</span> <span class="mdzsyn-string">"Hello!"</span>)</code></pre><h2 id="Limitations-of-messages">Limitations of messages
+</h2>
+<p>Since threads do not share Janet heaps, all values sent as messages are first
+marshalled to a byte sequence by the sending thread, and then unmarshalled by
+the receiving thread. For marshalling and unmarshalling, threads use the two
+tables <code class="mendoza-code">make-image-dict</code> and <code class="mendoza-code">load-image-dict</code>. This means you can
+send over core bindings, even if the underlying value cannot be marshalled.
+Semantically, messages sent with <code class="mendoza-code">(thread/send to msg)</code> are first converted
+to a buffer via <code class="mendoza-code">(marshal msg make-image-dict mailbox-buf)</code>, and then
+unmarshalled by the receiving thread via <code class="mendoza-code">(unmarshal mailbox-buf
+load-image-dict)</code>.
+</p>
+<p>Values that cannot be marshalled, including thread values, cannot be sent as
+messages to other threads, or even as part of a message to another thread. For
+example, the following will not work because open file handles cannot be
+marshalled.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">file</span> (<span class="mdzsyn-coresym">file/open</span> <span class="mdzsyn-string">"myfile.txt"</span> <span class="mdzsyn-keyword">:w</span>))
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  [<span class="mdzsyn-symbol">parent</span>]
+  (<span class="mdzsyn-coresym">with-dyns</span> [<span class="mdzsyn-keyword">:out</span> <span class="mdzsyn-symbol">file</span>]
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"Writing to file."</span>)))
+
+<span class="mdzsyn-comment"># Will throw an error, as worker contains a reference to file, which cannot be marshalled.</span>
+(<span class="mdzsyn-coresym">thread/new</span> <span class="mdzsyn-symbol">worker</span>)</code></pre><p>The fix here is to move the file creation inside the worker function, since
+every worker thread is going to have its own copy of the file handle.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  [<span class="mdzsyn-symbol">parent</span>]
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">file</span> (<span class="mdzsyn-coresym">file/open</span> <span class="mdzsyn-string">"myfile.txt"</span> <span class="mdzsyn-keyword">:w</span>))
+  (<span class="mdzsyn-coresym">with-dyns</span> [<span class="mdzsyn-keyword">:out</span> <span class="mdzsyn-symbol">file</span>]
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"Writing to file."</span>)))
+
+<span class="mdzsyn-comment"># No error</span>
+(<span class="mdzsyn-coresym">thread/new</span> <span class="mdzsyn-symbol">worker</span>)</code></pre><p>This limitation has been removed for some values (C functions and raw pointers)
+in version 1.9.0, to make use of threads with native modules more seamless,
+although certain abstract types like open files can still not be sent to threads
+via <code class="mendoza-code">thread/send</code> or <code class="mendoza-code">thread/new</code>.
+</p>
+<h2 id="Blocking-and-non-blocking-sends-and-receives">Blocking and non-blocking sends and receives
+</h2>
+<p>All sends and receives can be blocking or non-blocking by providing an optional
+timeout value. A timeout of <code class="mendoza-code">0</code> makes
+<code class="mendoza-code">(thread/send to msg &amp;opt timeout)</code> and
+<code class="mendoza-code">(thread/receive &amp;opt timeout)</code> non-blocking, while a positive timeout
+value indicates a blocking send or receive that will resume the current thread
+by throwing an error after timeout seconds. Timeouts are limited to 30 days,
+with exception the using <code class="mendoza-code">math/inf</code> for a timeout means that a timeout
+will never occur.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  [<span class="mdzsyn-symbol">parent</span>]
+  (<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">10</span>
+    (<span class="mdzsyn-coresym">os/sleep</span> <span class="mdzsyn-number">0.5</span>)
+    (<span class="mdzsyn-keyword">:send</span> <span class="mdzsyn-symbol">parent</span> <span class="mdzsyn-keyword">:ping</span>))
+  <span class="mdzsyn-comment"># sleep a long while to make the parent timeout</span>
+  (<span class="mdzsyn-coresym">os/sleep</span> <span class="mdzsyn-number">2</span>)
+  (<span class="mdzsyn-keyword">:send</span> <span class="mdzsyn-symbol">parent</span> <span class="mdzsyn-keyword">:done</span>))
+
+<span class="mdzsyn-comment"># Will print the first 10 pings, but timeout and throw an error before :done</span>
+(<span class="mdzsyn-coresym">try</span>
+  (<span class="mdzsyn-coresym">let</span> [<span class="mdzsyn-symbol">t</span> (<span class="mdzsyn-coresym">thread/new</span> <span class="mdzsyn-symbol">worker</span>)]
+    (<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">11</span>
+      (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"got message: "</span> (<span class="mdzsyn-coresym">thread/receive</span> <span class="mdzsyn-number">1</span>))))
+  ([<span class="mdzsyn-symbol">err</span>] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"error: "</span> <span class="mdzsyn-symbol">err</span>)))
+
+<span class="mdzsyn-comment"># Flush :done message</span>
+(<span class="mdzsyn-coresym">thread/receive</span> <span class="mdzsyn-coresym">math/inf</span>)
+
+<span class="mdzsyn-comment"># Will not error and work successfully</span>
+(<span class="mdzsyn-coresym">let</span> [<span class="mdzsyn-symbol">t</span> (<span class="mdzsyn-coresym">thread/new</span> <span class="mdzsyn-symbol">worker</span>)]
+  (<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">11</span>
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"got message: "</span> (<span class="mdzsyn-coresym">thread/receive</span> <span class="mdzsyn-coresym">math/inf</span>))))</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="abstract_machine.html"><span class="prevnext-text">The Janet Abstract Machine</span></a></span>
+          <span class="next"><a href="networking.html"><span class="prevnext-text">Networking</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on June 19, 2021 at 00:34:00 (UTC) with Janet 1.16.1-87f8fe1</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
