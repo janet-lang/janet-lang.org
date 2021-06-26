@@ -58,12 +58,6 @@ Define this to disable the @code`peg` module. The core Janet library should work
 be slightly smaller, but this flag is not recommended as the peg module itself is actually quite
 small. This disables the functions @code`peg/match` and @code`peg/compile`.
 
-### @code`#define JANET_NO_TYPED_ARRAY`
-
-Define this to disable the @code`tarray` module. Typed arrays are an interface besides buffers
-for interacting with binary data in a structured manner. The core Janet library does not use them, but
-they could be used by native modules, especially bindings to scientific or numerical libraries.
-
 ### @code`#define JANET_NO_INT_TYPES`
 
 Define this to disable the `int` module. The `int` module contains abstract types and methods
