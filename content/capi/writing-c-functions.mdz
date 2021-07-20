@@ -175,7 +175,7 @@ to specify the maximum nesting depth to print.
 
 ## Scratch Memory
 
-Panicking is implement with C's @code`setjmp` and @code`longjmp`, which means that resources are not
+Panicking is implemented with C's @code`setjmp` and @code`longjmp`, which means that resources are not
 cleaned up when a panic happens. To avoid leaking memory, stick to using Janet's data structures, which
 are garbage collected, or
 use Janet's scratch memory API to allocate memory. The scratch memory API exposes functions similar to @code`malloc` and

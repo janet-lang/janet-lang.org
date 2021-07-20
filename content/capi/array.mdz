@@ -4,8 +4,8 @@
 ---
 
 As with most data structures, arrays are exposed directly to the programmer in the C API.
-Users are free to set and get elements in the array, event change the count value of the array
-to change it's size. It is recommended to use the provided API functions to mutate the array
+Users are free to set and get elements in the array, and even change the count value of the array
+to change its size. It is recommended to use the provided API functions to mutate the array
 aside from setting a single element, though. For getting and setting values in the
 array, use @code`array->data[index]` directly.
 
