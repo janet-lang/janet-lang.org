@@ -78,8 +78,8 @@ The @code[set] special form also works for setting bytes in a buffer.
 
 @codeblock[janet](```
 (def b @"")
-(set (b 0) 97) #-> @"a"
-(set (b 10) 97) #-> @"a\0\0\0\0\0\0\0\0\0a"
+(set (b 0) 97) #-> 97
+(set (b 10) 97) #-> 97
 ```)
 
 The main difference between @code[set] and @code[put] is that @code[set] will
