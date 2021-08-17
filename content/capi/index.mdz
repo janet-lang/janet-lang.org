@@ -6,7 +6,7 @@
 
 One of the fundamental design goals of Janet is to extend it via the C programming
 language, as well as embed the interpreter in a larger program. To this end, Janet
-exposes most of it's low level functionality in well defined C API. Unlike Janet, the
+exposes most of its low level functionality in well defined C API. Unlike Janet, the
 Janet C API is not safe @html[&mdash;] it's possible to write programs in C that will
 crash, use memory after freeing it, or simply cause undefined behavior. However, using the
 C API will let you use high performance libraries on almost any system and access native
