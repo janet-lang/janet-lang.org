@@ -19,9 +19,7 @@ default: build
 build/bin/janet: janet/janet.c janet/janet.h janet/shell.c
 	mkdir -p build/bin
 	mkdir -p build/lib
-	cp janet/jpm build/bin
 	cc $(CFLAGS) -fPIC -o build/bin/janet -Ijanet janet/janet.c janet/shell.c $(LDFLAGS) $(CLIBS)
-	$(JSETTINGS) build/bin/janet build/bin/jpm install mendoza
 
 .PHONY: wasm
 wasm: static/js/janet.js

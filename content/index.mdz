@@ -4,58 +4,36 @@
  :order 1}
  ---
 
-## Community
-
-Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
-Gitter provides matrix and IRC bridges as well for users who prefer those.
-
-### Other Gitter Rooms
-
-@ul{
-    @li{@link[https://gitter.im/janet-language/help][help]:
-        For getting help with specific problems in the Janet language.}
-    @li{@link[https://gitter.im/janet-language/website][website]:
-        For discussion and help related to this website and documentation.}
-}
-
-### Forum
-
-We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion than Gitter.
-
-### Janet Docs
-
-For help, you can also check out @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples. Feel free to contribute your own examples here to help fellow programmers.
-
 ## Use Cases
 
-Janet makes a good system scripting language, or a language to embed in other programs. Think Lua or Guile. Janet also can be used for rapid prototyping, dynamic systems, and other domains
+Janet makes a good system scripting language, or a language to embed in other programs.  Janet also can be used for rapid prototyping, dynamic systems, and other domains
 where dynamic languages shine. Implemented mostly in standard C99, Janet runs on Windows, Linux and macOS.
 The few features that are not standard C (dynamic library loading, compiler specific optimizations),
-are fairly straightforward. Janet can be easily ported to new platforms.
+are fairly straightforward. Janet can be easily ported to new platforms. While Janet is embeddable, it comes with a bit more out of the box than many other such easily embeddable languages
+such as threading, networking, an event loop, subprocess handling, regex-like library called PEG, and more.
+
+
 
 ## Features
 
 @ul{@li{Minimal setup - one binary and you are good to go!}
+    @li{Builtin support for threads, networking, and an event loop}
     @li{First class closures}
     @li{Garbage collection}
     @li{First class green threads (continuations)}
-    @li{Python style generators (implemented as a plain macro)}
     @li{Mutable and immutable arrays (array/tuple)}
     @li{Mutable and immutable hashtables (table/struct)}
     @li{Mutable and immutable strings (buffer/string)}
     @li{Macros}
-    @li{Byte code interpreter with an assembly interface, as well as bytecode verification}
     @li{Tail call optimization}
     @li{Direct interop with C via abstract types and C functions}
     @li{Dynamically load C libraries}
-    @li{Functional and imperative standard library}
     @li{Lexical scoping}
-    @li{Imperative and functional programming}
-    @li{REPL}
+    @li{REPL and interactive debugger}
     @li{Parsing Expression Grammars built in to the core library}
-    @li{300+ functions and macros in the core library}
-    @li{Interactive environment with detailed stack traces}
-    @li{Export your projects to standalone executables with a companion build tool, jpm}}
+    @li{500+ functions and macros in the core library}
+    @li{Export your projects to standalone executables with a companion build tool, jpm}
+    @li{Add to a project with just @code`janet.c` and `janet.h`}}
 
 ## Code Example
 
@@ -153,3 +131,25 @@ For editor support:
     @li{@link[https://github.com/velkyel/inf-janet]{inf-janet} - Inferior lisp Janet mode for Emacs}
     @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}
     @li{@link[https://github.com/pepe/janet.kak]{janet.kak} - Kakoune Editor support for Janet.}}
+
+## Community
+
+Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
+Gitter provides matrix and IRC bridges as well for users who prefer those.
+
+### Other Gitter Rooms
+
+@ul{
+    @li{@link[https://gitter.im/janet-language/help][help]:
+        For getting help with specific problems in the Janet language.}
+    @li{@link[https://gitter.im/janet-language/website][website]:
+        For discussion and help related to this website and documentation.}
+}
+
+### Forum
+
+We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion than Gitter.
+
+### Janet Docs
+
+For help, you can also check out @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples. Feel free to contribute your own examples here to help fellow programmers.

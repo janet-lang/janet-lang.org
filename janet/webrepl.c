@@ -43,7 +43,8 @@ static const uint8_t *line_prompt = NULL;
 
 /* Yield to JS event loop from janet. Takes a repl prompt
  * and a buffer to fill with input data. */
-static Janet repl_yield(int32_t argc, Janet *argv) {
+JANET_FN(repl_yield, "(repl-yield prompt buf)",
+        "Yield to the repl line prompt") {
     janet_fixarity(argc, 2);
     line_prompt = janet_getstring(argv, 0);
     line_buffer = janet_getbuffer(argv, 1);
@@ -64,7 +65,8 @@ static int enter_loop(void) {
 }
 
 /* Allow JS interoperation from within janet */
-static Janet cfun_js(int32_t argc, Janet *argv) {
+JANET_FN(cfun_js, "(js source)",
+        "Execute raw JS source code") {
     janet_fixarity(argc, 1);
     JanetByteView bytes = janet_getbytes(argv, 0);
     emscripten_run_script((const char *)bytes.bytes);
@@ -79,12 +81,15 @@ void repl_init(void) {
 
     /* Set up VM */
     janet_init();
-    janet_register("repl-yield", repl_yield);
-    janet_register("js", cfun_js);
     env = janet_core_env(NULL);
 
-    janet_def(env, "repl-yield", janet_wrap_cfunction(repl_yield), NULL);
-    janet_def(env, "js", janet_wrap_cfunction(cfun_js), NULL);
+    const JanetRegExt regs[] = {
+        JANET_REG("repl-yield", repl_yield),
+        JANET_REG("js", cfun_js),
+        JANET_REG_END
+    };
+
+    janet_cfuns_ext(env, NULL, regs);
 
     /* Run startup script */
     Janet ret;
