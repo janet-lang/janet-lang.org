@@ -1,6 +1,6 @@
 CWD:=$(shell pwd)$(pwd:sh)
 UNAME:=$(shell uname -s)$(uname -s:sh)
-JSETTINGS=PATH=$(CWD)/build/bin:$(PATH) JANET_PATH=$(CWD)/build JANET_HEADERPATH=$(CWD)/janet
+JSETTINGS=PATH=$(CWD)/build/bin:$(PATH) JANET_PATH=$(CWD)/build JANET_HEADERPATH=$(CWD)/janet JANET_BINPATH=$(CWD)/build/bin
 CFLAGS=-std=c99 -Wall -Wextra -O2 -fvisibility=hidden
 CLIBS=-lm -lpthread
 LDFLAGS=-rdynamic
@@ -15,11 +15,15 @@ endif
 .PHONY: default
 default: build
 
-# Also set things up.
 build/bin/janet: janet/janet.c janet/janet.h janet/shell.c
 	mkdir -p build/bin
 	mkdir -p build/lib
+	mkdir -p build/share/man/man1
 	cc $(CFLAGS) -fPIC -o build/bin/janet -Ijanet janet/janet.c janet/shell.c $(LDFLAGS) $(CLIBS)
+	git clone https://github.com/janet-lang/jpm || true
+	cd jpm && git pull origin master || true
+	@cd jpm && $(JSETTINGS) JANET_PREFIX=$(CWD)/build/ $(CWD)/build/bin/janet cli.janet install
+	@$(JSETTINGS) build/bin/jpm install mendoza
 
 .PHONY: wasm
 wasm: static/js/janet.js
@@ -33,19 +37,19 @@ static/js/janet.js: janet/janet.c janet/janet.h janet/webrepl.c build/bin/janet
 
 .PHONY: build
 build: build/bin/janet
-	@$(JSETTINGS) mdz build
+	@$(JSETTINGS) build/bin/mdz build
 
 .PHONY: clean
 clean: build/bin/janet
-	@$(JSETTINGS) mdz clean
+	@$(JSETTINGS) build/bin/mdz clean
 
-.PHONY: watch
+.PHONY: watch 
 watch: build/bin/janet
-	@$(JSETTINGS) mdz watch
+	@$(JSETTINGS) build/bin/mdz watch
 
 .PHONY: run
 run: build/bin/janet
-	@$(JSETTINGS) mdz serve
+	@$(JSETTINGS) build/bin/mdz serve
 
 .PHONY: deploy
 deploy: build
