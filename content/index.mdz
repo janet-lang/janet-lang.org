@@ -88,7 +88,7 @@ repl:2:> (print "Hello, World!")
 Hello, World!
 nil
 repl:3:> (os/exit)
-john@tarragon:~$ janet -h
+$ janet -h
 usage: janet [options] script args...
 Options are:
   -h : Show this help
