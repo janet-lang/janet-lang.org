@@ -61,9 +61,9 @@ It is then up to the user to rethrow any panics caught after releasing (or unroo
 method, you MUST clean up after yourself!
 
 This is also why it is recommended to use @code`janet_call` over @code`janet_pcall` if you can. Since @code`janet_call` suspends
-the garbage collector (including all nested calls to things like @code`janet_pcall`), there is not need modify the gcroot
-list on regular basis. It is also recommended to not use too much re-entrant code, as it will often suspend the garbage collector.
-For example, if you run your entire application inside call to @code`janet_call`, the garbage collector will never run.
+the garbage collector (including all nested calls to things like @code`janet_pcall`), there is no need to modify the gcroot
+list on a regular basis. It is also recommended to not use too much re-entrant code, as it will often suspend the garbage collector.
+For example, if you run your entire application inside a call to @code`janet_call`, the garbage collector will never run.
 
 ## The @code`argv` array
 
