@@ -1,8 +1,7 @@
 {:title "Introduction"
  :template "docpage.html"
  :order 2
- :nav-title "Documentation"
- :permalinks ["introduction.html"]}
+ :nav-title "Documentation"}
 ---
 
 ## Installation
