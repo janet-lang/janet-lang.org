@@ -3,13 +3,29 @@
  :order 23}
 ---
 
-Most default installs of Janet come with a build tool, @code`jpm`, that makes
-managing dependencies, building Janet code, and distributing Janet applications
-easy. While @code`jpm` is not required by Janet, it is a very handy build tool
-that removes much of the boilerplate for creating new Janet projects, and is
-updated in step with Janet. @code`jpm` also works on Windows, Linux, and macOS
-so you don't need to write multiple build scripts and worry about platform
-quirks to make your scripts, binaries, and applications cross-platform.
+JPM is a build tool that can be installed along with Janet to help build and install
+libraries for Janet. The main uses are installing dependencies, compiling C/C++ to native libraries, and
+other project management tasks. The source code for JPM
+can be found at @link{https://github.com/janet-lang/jpm.git}.
+With janet already installed, JPM is also self bootstrapping.
+
+@codeblock```
+git clone --depth=1 https://github.com/janet-lang/jpm.git
+cd jpm
+sudo janet bootstrap.janet
+```
+
+The bootstrap script can also be configured to install jpm to different directories by setting the
+@code`PREFIX` environment variable. Ideally, jpm should be installed to the same tree as Janet, although
+this is not strictly required. See the JPM README in the repository for more information.
+
+## Updating JPM
+
+Once installed and configured, JPM can update itself from the git repository at any time.
+
+@codeblock```
+sudo jpm install jpm
+```
 
 @p{@code`jpm`'s main functions are installing dependencies and building native
     Janet modules, but it is meant to be used for much of the life-cycle for
@@ -58,6 +74,10 @@ jpm build
 jpm test
 jpm install
 ```
+
+#### Project Local install
+
+JPM also has some flags 
 
 ### Dependencies
 
