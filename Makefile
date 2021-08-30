@@ -22,7 +22,7 @@ build/bin/janet: janet/janet.c janet/janet.h janet/shell.c
 	cc $(CFLAGS) -fPIC -o build/bin/janet -Ijanet janet/janet.c janet/shell.c $(LDFLAGS) $(CLIBS)
 	git clone https://github.com/janet-lang/jpm || true
 	cd jpm && git pull origin master || true
-	@cd jpm && $(JSETTINGS) JANET_PREFIX=$(CWD)/build/ $(CWD)/build/bin/janet cli.janet install
+	@cd jpm && $(JSETTINGS) PREFIX=$(CWD)/build/ $(CWD)/build/bin/janet bootstrap.janet
 	@$(JSETTINGS) build/bin/jpm install mendoza
 
 .PHONY: wasm

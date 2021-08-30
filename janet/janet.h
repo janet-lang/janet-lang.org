@@ -27,9 +27,9 @@
 
 #define JANET_VERSION_MAJOR 1
 #define JANET_VERSION_MINOR 17
-#define JANET_VERSION_PATCH 0
+#define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.17.0"
+#define JANET_VERSION "1.17.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -1914,6 +1914,9 @@ JANET_API void janet_cfuns_ext(JanetTable *env, const char *regprefix, const Jan
 JANET_API void janet_cfuns_ext_prefix(JanetTable *env, const char *regprefix, const JanetRegExt *cfuns);
 JANET_API void janet_def_sm(JanetTable *env, const char *name, Janet val, const char *documentation, const char *source_file, int32_t source_line);
 JANET_API void janet_var_sm(JanetTable *env, const char *name, Janet val, const char *documentation, const char *source_file, int32_t source_line);
+
+/* Legacy definition of C functions */
+JANET_API void janet_register(const char *name, JanetCFunction cfun);
 
 /* Allow setting entry name for static libraries */
 #ifdef __cplusplus
