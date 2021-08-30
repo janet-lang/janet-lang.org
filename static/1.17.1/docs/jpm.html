@@ -89,15 +89,23 @@
         </div>
         
 
-<p>Most default installs of Janet come with a build tool, <code class="mendoza-code">jpm</code>, that makes
-managing dependencies, building Janet code, and distributing Janet applications
-easy. While <code class="mendoza-code">jpm</code> is not required by Janet, it is a very handy build tool
-that removes much of the boilerplate for creating new Janet projects, and is
-updated in step with Janet. <code class="mendoza-code">jpm</code> also works on Windows, Linux, and macOS
-so you don't need to write multiple build scripts and worry about platform
-quirks to make your scripts, binaries, and applications cross-platform.
+<p>JPM is a build tool that can be installed along with Janet to help build and install
+libraries for Janet. The main uses are installing dependencies, compiling C/C++ to native libraries, and
+other project management tasks. The source code for JPM
+can be found at <a href="https://github.com/janet-lang/jpm.git">https://github.com/janet-lang/jpm.git</a>.
+With janet already installed, JPM is also self bootstrapping.
 </p>
-<p><code class="mendoza-code">jpm</code>'s main functions are installing dependencies and building native
+<pre class="mendoza-codeblock"><code>git clone --depth=1 https://github.com/janet-lang/jpm.git
+cd jpm
+sudo janet bootstrap.janet</code></pre><p>The bootstrap script can also be configured to install jpm to different directories by setting the
+<code class="mendoza-code">PREFIX</code> environment variable. Ideally, jpm should be installed to the same tree as Janet, although
+this is not strictly required. See the JPM README in the repository for more information.
+</p>
+<h2 id="Updating-JPM">Updating JPM
+</h2>
+<p>Once installed and configured, JPM can update itself from the git repository at any time.
+</p>
+<pre class="mendoza-codeblock"><code>sudo jpm install jpm</code></pre><p><code class="mendoza-code">jpm</code>'s main functions are installing dependencies and building native
     Janet modules, but it is meant to be used for much of the life-cycle for
     Janet projects. Since Janet code doesn't usually need to be compiled, you
     don't always need <code class="mendoza-code">jpm</code>, especially for scripts, but <code class="mendoza-code">jpm</code> comes
@@ -135,7 +143,17 @@ user.)
 jpm deps
 jpm build
 jpm test
-jpm install</code></pre><h3 id="Dependencies">Dependencies
+jpm install</code></pre><h4 id="Project-local-install">Project local install
+</h4>
+<p>JPM also has some flags to install dependencies to a tree local to a project. Dependencies will
+be installed to ./jpm_tree/lib (and binaries installed to ./jpm_tree/bin) when passing the <code class="mendoza-code">-l</code>
+flag to jpm.
+</p>
+<pre class="mendoza-codeblock"><code>jpm -l deps
+jpm -l build
+jpm -l test
+# Run a janet interpreter in the local environment with access to all dependencies installed.
+jpm -l janet</code></pre><h3 id="Dependencies">Dependencies
 </h3>
 <p><code class="mendoza-code">jpm deps</code> is a command that installs Janet libraries that the project
     depends on recursively.  It will automatically fetch, build, and install all
@@ -300,7 +318,7 @@ at runtime, though.
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2021
-  <div class="gentag">Generated on August 30, 2021 at 02:09:48 (UTC) with Janet 1.17.1-e1c4fc2</div>
+  <div class="gentag">Generated on August 30, 2021 at 02:25:15 (UTC) with Janet 1.17.1-e1c4fc2</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>

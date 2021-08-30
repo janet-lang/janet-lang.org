@@ -6,7 +6,7 @@
 JPM is a build tool that can be installed along with Janet to help build and install
 libraries for Janet. The main uses are installing dependencies, compiling C/C++ to native libraries, and
 other project management tasks. The source code for JPM
-can be found at @link{https://github.com/janet-lang/jpm.git}.
+can be found at @link[https://github.com/janet-lang/jpm.git][https://github.com/janet-lang/jpm.git].
 With janet already installed, JPM is also self bootstrapping.
 
 @codeblock```
@@ -75,9 +75,19 @@ jpm test
 jpm install
 ```
 
-#### Project Local install
+#### Project local install
 
-JPM also has some flags 
+JPM also has some flags to install dependencies to a tree local to a project. Dependencies will
+be installed to ./jpm_tree/lib (and binaries installed to ./jpm_tree/bin) when passing the @code`-l`
+flag to jpm.
+
+@codeblock```
+jpm -l deps
+jpm -l build
+jpm -l test
+# Run a janet interpreter in the local environment with access to all dependencies installed.
+jpm -l janet
+```
 
 ### Dependencies
 
