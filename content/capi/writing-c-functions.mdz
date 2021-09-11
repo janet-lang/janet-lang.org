@@ -12,7 +12,7 @@ a template to ensure consistent and safe behavior.
     @li{Function logic.}
     @li{Return value or panic}}
 
-While not all C functions need to follow this pattern exactly, many functions can written in this manner, and
+While not all C functions need to follow this pattern exactly, many functions can be written in this manner, and
 the C API was designed with this use in mind. Most of the core's C functions were written in this style.
 Functions written like this will also give consistent
 error messages when called improperly, creating a better experience for users.
