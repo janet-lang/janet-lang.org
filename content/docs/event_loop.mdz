@@ -99,7 +99,7 @@ With these constraints, channels are preferred for things like internal queues a
 
 Channels are based around a queue abstraction, where producer tasks will add items to the channel with @code`ev/give`, and consumer tasks will remove items from the
 channel with @code`ev/take`. If there are no items in the channel when @code`ev/take` is called, the consumer will suspend until a producer gives an item
-to the channel. Similarly, if a task gives to a full channel, it will suspend until a consumer takes an item from the queue, freeing up space for the producer 
+to the channel. Similarly, if a task gives to a full channel, it will suspend until a consumer takes an item from the queue, freeing up space for the producer
 to put an item.
 
 Internally, channels are infinitely expanding queues, so one might think that they never need to be "full", but allowing channels to fill up and suspend writers
@@ -158,7 +158,7 @@ Macros like @code`try` and @code`protect` will continue to work just as if the c
 
 ## Supervisor Channels
 
-An interesting problem with supporting multiple tasks is error handling - if a task raises and error (or any other uncaught signal), who should handle it? The programmer
+An interesting problem with supporting multiple tasks is error handling - if a task raises an error (or any other uncaught signal), who should handle it? The programmer
 often wants to know when a task fails (or finishes), and then continue with some other code. Alternatively, it might be desirable to try again a number of times before
 really giving up.
 
@@ -203,4 +203,3 @@ when it completes successfully, with the message @code`[:ok fiber]`. The most us
 These events will be tuples of 2 arguments, @code`(signal fiber)`.
 
 A task can also write custom messages to its supervisor with @code`ev/give-supervisor`.
-
