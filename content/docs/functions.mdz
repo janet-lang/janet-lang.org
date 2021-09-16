@@ -254,3 +254,67 @@ arguments in curly brackets!
 # Turn struct into an array key, value, key, value, ... and splice into a call
 (make-recipe-3 ;(kvs args))
 ```
+
+## Optional Flags
+
+As a matter of style, some Janet functions allow you to optionally
+pass in multiple flags from a given set, as a single argument. (A
+"set" in the generic sense --- Janet doesn't have a @code`set` type.)
+
+For example, if your @code`foo` function takes a string argument, and may
+also be passed zero or more flags from the set "@code`:a`", "@code`:b`",
+and "@code`:c`", you could call @code`foo` like so:
+
+@codeblock[janet](```
+(foo "hi")       # No flags passed.
+(foo "hi" :a)    # Just the `:a` flag.
+(foo "hi" :ab)   # The `:a` and `:b` flags.
+(foo "hi" :ba)   # Same.
+(foo "hi" :cab)  # All three flags specified.
+```)
+
+The pattern is similar to passing multiple flags to a command in
+the shell:
+
+@codeblock(```
+$ my-command -abc      # is like
+$ my-command -a -b -c
+```)
+
+but with Janet we're using @code`:` instead of @code`-`.
+
+An example of using optional flags in your own functions:
+
+@codeblock[janet](```
+#!/usr/bin/env janet
+
+(defn my-cool-string
+  ``Decorates `some-str` with stars around it.
+
+  `flags` is set of flags; it is a keyword where each
+  character indicates a flag from this set:
+
+    * `:u` --- uppercase the string too.
+    * `:b` --- put braces around it as well.
+
+  Returns the decorated string.
+  ``
+  [some-str &opt flags]
+  (var u-flag-set false)
+  (var b-flag-set false)
+  (when flags
+    (set u-flag-set (string/check-set flags :u))
+    (set b-flag-set (string/check-set flags :b)))
+  (let [s (string "*" some-str "*")
+        s (if u-flag-set (string/ascii-upper s) s)
+        s (if b-flag-set (string "{" s "}")     s)]
+    s))
+
+(print (my-cool-string "I ♥ Janet"))      # *I ♥ Janet*
+(print (my-cool-string "I ♥ Janet" :u))   # *I ♥ JANET*
+(print (my-cool-string "I ♥ Janet" :b))   # {*I ♥ Janet*}
+(print (my-cool-string "I ♥ Janet" :ub))  # {*I ♥ JANET*}
+```)
+
+Built-in Janet functions that utilize this style include @code`file/open`,
+@code`fiber/new`, and @code`os/execute`.
