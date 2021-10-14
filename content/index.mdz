@@ -118,7 +118,7 @@ for Janet to help you get started with some interesting stuff. See @link[https:/
 for a more complete list. Packages in the listing can be installed via @code`jpm install pkg-name`.
 
 @ul{@li{@link[https://github.com/janet-lang/circlet]{Circlet} - An HTTP server for Janet}
-    @li{@link[https://joyframework.com/]{Joy Web Framework} - Framework for web development in Janet}
+    @li{@link[https://joy.swlkr.com/]{Joy Web Framework} - Framework for web development in Janet}
     @li{@link[https://github.com/janet-lang/json]{JSON} - A JSON parser and encoder}
     @li{@link[https://github.com/janet-lang/sqlite3]{SQLite3} - Bindings to SQLite}
     @li{@link[https://github.com/janet-lang/webview]{WebView} - Spawn a browser window for creating HTML+CSS UIs on any platform}
