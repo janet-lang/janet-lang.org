@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 17
+#define JANET_VERSION_MINOR 18
 #define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.17.1"
+#define JANET_VERSION "1.18.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -70,6 +70,7 @@
 /* #define JANET_OS_NAME my-custom-os */
 /* #define JANET_ARCH_NAME pdp-8 */
 /* #define JANET_EV_NO_EPOLL */
+/* #define JANET_EV_NO_KQUEUE */
 /* #define JANET_NO_INTERPRETER_INTERRUPT */
 
 /* Custom vm allocator support */
@@ -207,11 +208,6 @@ extern "C" {
 #define JANET_NO_UTC_MKTIME
 #endif
 
-/* Check thread library */
-#ifndef JANET_NO_THREADS
-#define JANET_THREADS
-#endif
-
 /* Define how global janet state is declared */
 /* Also enable the thread library only if not single-threaded */
 #ifdef JANET_SINGLE_THREADED
@@ -259,6 +255,16 @@ extern "C" {
 /* Enable or disable epoll on Linux */
 #if defined(JANET_LINUX) && !defined(JANET_EV_NO_EPOLL)
 #define JANET_EV_EPOLL
+#endif
+
+/* Enable or disable kqueue on BSD */
+#if defined(JANET_BSD) && !defined(JANET_EV_NO_KQUEUE)
+#define JANET_EV_KQUEUE
+#endif
+
+/* Enable or disable kqueue on Apple */
+#if defined(JANET_APPLE) && !defined(JANET_EV_NO_KQUEUE)
+#define JANET_EV_KQUEUE
 #endif
 
 /* How to export symbols */
@@ -383,11 +389,16 @@ typedef struct {
 /* Some extra includes if EV is enabled */
 #ifdef JANET_EV
 #ifdef JANET_WINDOWS
-#ifdef JANET_NET
-#include <winsock2.h>
-#endif
-#include <windows.h>
-typedef CRITICAL_SECTION JanetOSMutex;
+typedef struct JanetDudCriticalSection {
+    /* Avoid including windows.h here - instead, create a structure of the same size */
+    /* Needs to be same size as crtical section see WinNT.h for CRITCIAL_SECTION definition */
+    void *debug_info;
+    long lock_count;
+    long recursion_count;
+    void *owning_thread;
+    void *lock_semaphore;
+    unsigned long spin_count;
+} JanetOSMutex;
 #else
 #include <pthread.h>
 typedef pthread_mutex_t JanetOSMutex;
@@ -1575,6 +1586,7 @@ JANET_API int janet_loop_fiber(JanetFiber *fiber);
 
 /* Number scanning */
 JANET_API int janet_scan_number(const uint8_t *str, int32_t len, double *out);
+JANET_API int janet_scan_number_base(const uint8_t *str, int32_t len, int32_t base, double *out);
 JANET_API int janet_scan_int64(const uint8_t *str, int32_t len, int64_t *out);
 JANET_API int janet_scan_uint64(const uint8_t *str, int32_t len, uint64_t *out);
 
@@ -1591,6 +1603,7 @@ JANET_API JanetRNG *janet_default_rng(void);
 JANET_API void janet_rng_seed(JanetRNG *rng, uint32_t seed);
 JANET_API void janet_rng_longseed(JanetRNG *rng, const uint8_t *bytes, int32_t len);
 JANET_API uint32_t janet_rng_u32(JanetRNG *rng);
+JANET_API double janet_rng_double(JanetRNG *rng);
 
 /* Array functions */
 JANET_API JanetArray *janet_array(int32_t capacity);
@@ -2088,7 +2101,8 @@ typedef enum {
     RULE_READINT,      /* [(signedness << 4) | (endianess << 5) | bytewidth, tag] */
     RULE_LINE,         /* [tag] */
     RULE_COLUMN,       /* [tag] */
-    RULE_UNREF         /* [rule, tag] */
+    RULE_UNREF,        /* [rule, tag] */
+    RULE_CAPTURE_NUM   /* [rule, tag] */
 } JanetPegOpcod;
 
 typedef struct {
