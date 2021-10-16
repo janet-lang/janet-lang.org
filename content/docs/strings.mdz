@@ -102,6 +102,7 @@ Negative integers can be used to index from the end of the string.
 @codeblock[janet]```
 (string/slice "abcdefg") # -> "abcdefg"
 (string/slice "abcdefg" 1) # -> "bcdefg"
+(string/slice "abcdefg" 2 5) # -> "cde"
 (string/slice "abcdefg" 2 -2) # -> "cdef"
 (string/slice "abcdefg" -4 -2) # -> "ef"
 ```
