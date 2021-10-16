@@ -3,132 +3,121 @@
  :order 19}
 ---
 
-Starting in version 1.6.0, Janet has the ability to do true, non-cooperative
-multithreading with the @code`thread/` functions. Janet threads correspond to
-native threads on the host operating system, which may be either pthreads on
-POSIX systems or Windows threads. Each thread has its own Janet heap, which
+Multithreading is the process of running a program on multiple threads at the same time, usually
+to improve throughput. Threads allow your program to take full advantage of of the multiple
+processors on modern CPUs letting you do work in the background without stopping
+the main program flow, or breaking up an expensive operation to run on multiple processors.
+
+Janet's @code`ev/` module supports spawning native operating system threads in a way that
+is compatible with other @code`ev/` functions and will not block the event loop. 
+
+For the most part, Janet values are not shared between threads. Each thread has its own Janet heap, which
 means threads behave more like processes that communicate by message passing.
 However, this does not prevent native code from sharing memory across these
-threads.  Without native extensions, however, the only way for two Janet threads
-to communicate directly is through message passing.
+threads. Without native extensions, however, the only way for two Janet threads
+to communicate directly is through message passing with threaded channels.
+
+By default, a Janet program will no exit until all threads have terminated.
 
 ## Creating threads
 
-Use @code`(thread/new func &opt capacity)` to create a new thread. This thread
-will start and wait for a message containing a function that it will run as the
+The most primitive way to create a thread is @code`(ev/thread fiber &opt value flags supervisor)`.
+Thos will start and wait for a message containing a function that it will run as the
 main body. This function must also be able to take 1 parameter, the parent
-thread.  Each thread has its own mailbox, which can asynchronously receive
-messages. These messages are added to a queue, which has a configurable maximum
-capacity according to the second optional argument passed to @code`thread/new`.
-If unspecified, the mailbox will have an initial capacity of 10.
 
 @codeblock[janet]```
 (defn worker
-  [parent]
+  []
   (print "New thread started!"))
 
-# New thread's mailbox has capacity for 32 messages.
-(def thread (thread/new worker 32))
+# Create a new thread and wait for it to complete.
+(ev/thread (fiber/new worker :t))
+```
+
+By itself, the above code isn't very useful because the main fiber will suspend until the new thread
+is complete. But it is quite useful to have threads suspend execution of the calling fiber by
+default - we can then easily have a thread wrapped with a fiber to be handled like other asynchronous tasks
+in the @code`ev/` module. To run the thread in the background, you can either use the @code`:n` flag, or wrap the call to @code`ev/thread` in it's own fiber.
+
+@codeblock[janet]```
+(ev/thread (fiber/new worker :t) nil :n)
+
+(ev/spawn
+  (ev/thread (fiber/new worker :t)))
+```
+
+To make this process easier, Janet comes with a few built-in macros, @code`ev/spawn-thread` to run a
+block of code in a new thread, return immediately, and
+@code`ev/do-thread` to run a block of code but wait for it to return.
+
+@codeblock[janet]```
+(ev/spawn-thread
+  (print "New thread stated!"))
+
+(ev/do-thread
+  (print "New thread stated!"))
 ```
 
 ## Sending and receiving messages
 
-Threads in Janet do not share a memory heap and must communicate via message
-passing. Use @code`thread/send` to send a message to a thread, and
-@code`thread/receive` to get messages sent to the current thread.
+Threads in Janet do not share a memory heap and must communicate via threaded
+channels. Threaded channels behave much like normal channels in the @code`ev/` module, with
+the only difference being that they can send values between threads by copying messages. Threaded channels are
+used for both communication and coordination between threads.
+
+Threaded channels can be created with @code`ev/thread-chan`.
 
 @codeblock[janet]```
-(defn worker
-  [parent]
-  (print "waiting for message...")
-  (def msg (thread/receive))
-  (print "got message: " msg))
+# Create a threaded channel with space for 10 values
+(def thread-channel (ev/thread-chan 10))
 
-(def thread (thread/new worker))
-# Thread objects support the :send method as an alias for thread/send.
-(:send thread "Hello!")
+(ev/spawn-thread
+ (repeat 10
+  (def item (ev/take thread-channel))
+  (print "got " item)))
+
+(repeat 10
+ (os/sleep 0.2)
+ (ev/give thread-channel :item))
 ```
 
-## Limitations of messages
+## Thread Supervisors
 
-Since threads do not share Janet heaps, all values sent as messages are first
-marshalled to a byte sequence by the sending thread, and then unmarshalled by
-the receiving thread. For marshalling and unmarshalling, threads use the two
-tables @code`make-image-dict` and @code`load-image-dict`. This means you can
-send over core bindings, even if the underlying value cannot be marshalled.
-Semantically, messages sent with @code`(thread/send to msg)` are first converted
-to a buffer via @code`(marshal msg make-image-dict mailbox-buf)`, and then
-unmarshalled by the receiving thread via @code`(unmarshal mailbox-buf
-load-image-dict)`.
+Threaded channels can also be used as supervisors for spawned threads. A supervisor is a channel
+that receives messages whenever
+an event, like an error, occurs in the supervised thread. Another fiber or
+thread can then read from this supervisor channel and
+handle the errors, usually by either logging the event, retrying the operation, or canceling other operations.
 
-Values that cannot be marshalled, including thread values, cannot be sent as
-messages to other threads, or even as part of a message to another thread. For
-example, the following will not work because open file handles cannot be
-marshalled.
+Thread supervisors need to be specified when creating the thread.
 
 @codeblock[janet]```
-(def file (file/open "myfile.txt" :w))
+(def supervisor (ev/thread-chan 10))
+
 (defn worker
-  [parent]
-  (with-dyns [:out file]
-    (print "Writing to file.")))
+ []
+ (repeat 10
+  (if (< 0.9 (math/random))
+   (error "oops!")))
+ (print "done!"))
 
-# Will throw an error, as worker contains a reference to file, which cannot be marshalled.
-(thread/new worker)
+# Start a worker thread that will signal events on the supervisor channel
+(ev/thread worker nil :n supervisor)
+
+# Get one event from the supervisor channel (on the initial thread here)
+# It will either be (:error "oops!") or (:done nil).
+(def event (ev/take supervisor))
+(pp event)
 ```
+Events from thread supervisors are much like events from normal fiber
+supervisors, but the first argument is not an entire copy of the fiber
+or thread, it is the event name. In the above example, depending on whether
+or not the "oops!" error was triggered, @code`event` will be either
+@code`(:error "oops!")` or @code`(:done nil)`. This corresponds to
+@code`[(fiber/status f) (fiber/last-value f)]` of the main fiber of the
+child thread.
 
-The fix here is to move the file creation inside the worker function, since
-every worker thread is going to have its own copy of the file handle.
 
-@codeblock[janet]```
-(defn worker
-  [parent]
-  (def file (file/open "myfile.txt" :w))
-  (with-dyns [:out file]
-    (print "Writing to file.")))
 
-# No error
-(thread/new worker)
-```
 
-This limitation has been removed for some values (C functions and raw pointers)
-in version 1.9.0, to make use of threads with native modules more seamless,
-although certain abstract types like open files can still not be sent to threads
-via @code`thread/send` or @code`thread/new`.
 
-## Blocking and non-blocking sends and receives
-
-All sends and receives can be blocking or non-blocking by providing an optional
-timeout value. A timeout of @code`0` makes
-@code`(thread/send to msg &opt timeout)` and
-@code`(thread/receive &opt timeout)` non-blocking, while a positive timeout
-value indicates a blocking send or receive that will resume the current thread
-by throwing an error after timeout seconds. Timeouts are limited to 30 days,
-with exception the using @code`math/inf` for a timeout means that a timeout
-will never occur.
-
-@codeblock[janet]```
-(defn worker
-  [parent]
-  (for i 0 10
-    (os/sleep 0.5)
-    (:send parent :ping))
-  # sleep a long while to make the parent timeout
-  (os/sleep 2)
-  (:send parent :done))
-
-# Will print the first 10 pings, but timeout and throw an error before :done
-(try
-  (let [t (thread/new worker)]
-    (for i 0 11
-      (print "got message: " (thread/receive 1))))
-  ([err] (print "error: " err)))
-
-# Flush :done message
-(thread/receive math/inf)
-
-# Will not error and work successfully
-(let [t (thread/new worker)]
-  (for i 0 11
-    (print "got message: " (thread/receive math/inf))))
-```
