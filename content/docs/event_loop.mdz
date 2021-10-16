@@ -35,7 +35,7 @@ when an event (or sequence of events) that it is waiting for occurs. Generally, 
 resume tasks - the event loop will call @code`resume` when the completion event occurs.
 
 To be precise, a task is just any fiber that was scheduled to run by the event loop.
-Therefor, all tasks are fibers, but not all fibers are tasks. You can get the currently executing task in Janet with @code`(fiber/root-fiber)`.
+Therefore, all tasks are fibers, but not all fibers are tasks. You can get the currently executing task in Janet with @code`(fiber/root-fiber)`.
 
 ## Blocking the Event Loop
 
