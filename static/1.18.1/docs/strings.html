@@ -173,6 +173,7 @@ Negative integers can be used to index from the end of the string.
 </p>
 <pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span>) <span class="mdzsyn-comment"># -&gt; "abcdefg"</span>
 (<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># -&gt; "bcdefg"</span>
+(<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">5</span>) <span class="mdzsyn-comment"># -&gt; "cde"</span>
 (<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">-2</span>) <span class="mdzsyn-comment"># -&gt; "cdef"</span>
 (<span class="mdzsyn-coresym">string/slice</span> <span class="mdzsyn-string">"abcdefg"</span> <span class="mdzsyn-number">-4</span> <span class="mdzsyn-number">-2</span>) <span class="mdzsyn-comment"># -&gt; "ef"</span></code></pre><h3 id="Finding-substrings">Finding substrings
 </h3>
@@ -227,7 +228,7 @@ string that has all character in the appropriate case.
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2021
-  <div class="gentag">Generated on October 16, 2021 at 21:44:07 (UTC) with Janet 1.18.1-66c4e5a</div>
+  <div class="gentag">Generated on October 16, 2021 at 21:44:44 (UTC) with Janet 1.18.1-66c4e5a</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>

@@ -98,7 +98,7 @@ a template to ensure consistent and safe behavior.
 <ol><li>Assert the arity. This prevents callers from calling the function with the wrong arity</li>
     <li>Extract arguments. This does type checking on arguments and unwraps Janet values into C values for processing.</li>
     <li>Function logic.</li>
-    <li>Return value or panic</li></ol><p>While not all C functions need to follow this pattern exactly, many functions can written in this manner, and
+    <li>Return value or panic</li></ol><p>While not all C functions need to follow this pattern exactly, many functions can be written in this manner, and
 the C API was designed with this use in mind. Most of the core's C functions were written in this style.
 Functions written like this will also give consistent
 error messages when called improperly, creating a better experience for users.
@@ -281,7 +281,7 @@ use Janet's scratch memory API to allocate memory. The scratch memory API expose
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2021
-  <div class="gentag">Generated on October 16, 2021 at 21:44:07 (UTC) with Janet 1.18.1-66c4e5a</div>
+  <div class="gentag">Generated on October 16, 2021 at 21:44:44 (UTC) with Janet 1.18.1-66c4e5a</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>

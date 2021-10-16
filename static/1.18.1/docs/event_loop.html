@@ -179,7 +179,7 @@ the network.
 </h2>
 <p>Channels are based around a queue abstraction, where producer tasks will add items to the channel with <code class="mendoza-code">ev/give</code>, and consumer tasks will remove items from the
 channel with <code class="mendoza-code">ev/take</code>. If there are no items in the channel when <code class="mendoza-code">ev/take</code> is called, the consumer will suspend until a producer gives an item
-to the channel. Similarly, if a task gives to a full channel, it will suspend until a consumer takes an item from the queue, freeing up space for the producer 
+to the channel. Similarly, if a task gives to a full channel, it will suspend until a consumer takes an item from the queue, freeing up space for the producer
 to put an item.
 </p>
 <p>Internally, channels are infinitely expanding queues, so one might think that they never need to be "full", but allowing channels to fill up and suspend writers
@@ -230,7 +230,7 @@ task to be resumed but immediately error. From the point of view of the canceled
 (<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">2</span>)
 (<span class="mdzsyn-coresym">ev/cancel</span> <span class="mdzsyn-symbol">f</span> <span class="mdzsyn-string">"canceled"</span>)</code></pre><h2 id="Supervisor-Channels">Supervisor Channels
 </h2>
-<p>An interesting problem with supporting multiple tasks is error handling - if a task raises and error (or any other uncaught signal), who should handle it? The programmer
+<p>An interesting problem with supporting multiple tasks is error handling - if a task raises an error (or any other uncaught signal), who should handle it? The programmer
 often wants to know when a task fails (or finishes), and then continue with some other code. Alternatively, it might be desirable to try again a number of times before
 really giving up.
 </p>
@@ -272,7 +272,6 @@ These events will be tuples of 2 arguments, <code class="mendoza-code">(signal f
 </p>
 <p>A task can also write custom messages to its supervisor with <code class="mendoza-code">ev/give-supervisor</code>.
 </p>
-
         <div class="prevnext-bar">
           <span class="prev"><a href="networking.html"><span class="prevnext-text">Networking</span></a></span>
           <span class="next"><a href="documentation.html"><span class="prevnext-text">Documentation</span></a></span>
@@ -283,7 +282,7 @@ These events will be tuples of 2 arguments, <code class="mendoza-code">(signal f
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2021
-  <div class="gentag">Generated on October 16, 2021 at 21:44:07 (UTC) with Janet 1.18.1-66c4e5a</div>
+  <div class="gentag">Generated on October 16, 2021 at 21:44:44 (UTC) with Janet 1.18.1-66c4e5a</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>

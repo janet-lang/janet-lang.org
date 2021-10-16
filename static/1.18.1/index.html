@@ -122,13 +122,13 @@ to display the usage information. Individual scripts can be run with <code class
 by entering the command <code class="mendoza-code">all-bindings</code> into the REPL.
 </p>
 <pre class="mendoza-codeblock"><code>$ janet
-Janet 1.0.0-dev-cc1ff91  Copyright (C) 2017-2019 Calvin Rose
-janet:0:&gt; (+ 1 2 3)
+Janet 1.17.0-local linux/x64 - '(doc)' for help
+repl:1:&gt; (+ 1 2 3)
 6
-janet:10:&gt; (print "Hello, world!")
-Hello, world!
+repl:2:&gt; (print "Hello, World!")
+Hello, World!
 nil
-janet:34:&gt; (os/exit)
+repl:3:&gt; (os/exit)
 $ janet -h
 usage: janet [options] script args...
 Options are:
@@ -136,14 +136,19 @@ Options are:
   -v : Print the version string
   -s : Use raw stdin instead of getline like functionality
   -e code : Execute a string of janet
-  -r : Enter the repl after running all scripts
-  -p : Keep on executing if there is a top level error (persistent)
-  -q : Hide prompt, logo, and repl output (quiet)
-  -k : Compile scripts but do not execute
+  -E code arguments... : Evaluate  an expression as a short-fn with arguments
+  -d : Set the debug flag in the REPL
+  -r : Enter the REPL after running all scripts
+  -R : Disables loading profile.janet when JANET_PROFILE is present
+  -p : Keep on executing if there is a top-level error (persistent)
+  -q : Hide logo (quiet)
+  -k : Compile scripts but do not execute (flycheck)
   -m syspath : Set system path for loading global modules
   -c source output : Compile janet source code into an image
-  -n : Disable ANSI color output in the repl
-  -l path : Execute code in a file before running the main script
+  -n : Disable ANSI color output in the REPL
+  -l lib : Import a module before processing more arguments
+  -w level : Set the lint warning level - default is "normal"
+  -x level : Set the lint error level - default is "none"
   -- : Stop handling options</code></pre><h2 id="Modules-and-Libraries">Modules and Libraries
 </h2>
 <p>See some auxiliary projects on <a href="https://github.com/janet-lang">GitHub</a>. Here is a short list of libraries
@@ -151,7 +156,7 @@ for Janet to help you get started with some interesting stuff. See <a href="http
 for a more complete list. Packages in the listing can be installed via <code class="mendoza-code">jpm install pkg-name</code>.
 </p>
 <ul><li><a href="https://github.com/janet-lang/circlet">Circlet</a> - An HTTP server for Janet</li>
-    <li><a href="https://joyframework.com/">Joy Web Framework</a> - Framework for web development in Janet</li>
+    <li><a href="https://joy.swlkr.com">Joy Web Framework</a> - Framework for web development in Janet</li>
     <li><a href="https://github.com/janet-lang/json">JSON</a> - A JSON parser and encoder</li>
     <li><a href="https://github.com/janet-lang/sqlite3">SQLite3</a> - Bindings to SQLite</li>
     <li><a href="https://github.com/janet-lang/webview">WebView</a> - Spawn a browser window for creating HTML+CSS UIs on any platform</li>
@@ -192,7 +197,7 @@ Gitter provides matrix and IRC bridges as well for users who prefer those.
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2021
-  <div class="gentag">Generated on October 16, 2021 at 21:44:06 (UTC) with Janet 1.18.1-66c4e5a</div>
+  <div class="gentag">Generated on October 16, 2021 at 21:44:44 (UTC) with Janet 1.18.1-66c4e5a</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>

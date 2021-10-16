@@ -146,9 +146,9 @@ It is then up to the user to rethrow any panics caught after releasing (or unroo
 method, you MUST clean up after yourself!
 </p>
 <p>This is also why it is recommended to use <code class="mendoza-code">janet_call</code> over <code class="mendoza-code">janet_pcall</code> if you can. Since <code class="mendoza-code">janet_call</code> suspends
-the garbage collector (including all nested calls to things like <code class="mendoza-code">janet_pcall</code>), there is not need modify the gcroot
-list on regular basis. It is also recommended to not use too much re-entrant code, as it will often suspend the garbage collector.
-For example, if you run your entire application inside call to <code class="mendoza-code">janet_call</code>, the garbage collector will never run.
+the garbage collector (including all nested calls to things like <code class="mendoza-code">janet_pcall</code>), there is no need to modify the gcroot
+list on a regular basis. It is also recommended to not use too much re-entrant code, as it will often suspend the garbage collector.
+For example, if you run your entire application inside a call to <code class="mendoza-code">janet_call</code>, the garbage collector will never run.
 </p>
 <h2 id="The">The <code class="mendoza-code">argv</code> array
 </h2>
@@ -219,7 +219,7 @@ sure that we don't generate garbage in the common case.
     
 <footer>
   &copy; Calvin Rose &amp; contributors 2021
-  <div class="gentag">Generated on October 16, 2021 at 21:44:07 (UTC) with Janet 1.18.1-66c4e5a</div>
+  <div class="gentag">Generated on October 16, 2021 at 21:44:44 (UTC) with Janet 1.18.1-66c4e5a</div>
   <div class="see-problem">See a problem? Source
     <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
 </footer>
