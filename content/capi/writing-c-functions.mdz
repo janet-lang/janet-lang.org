@@ -144,6 +144,7 @@ The pretty printing formatters can take a precision argument
 to specify the maximum nesting depth to print.
 
 @tag`table`{@tr{@th{Formatter}@th{Description}@th{Type}}
+    @tr{@td{%c} @td{print a character} @td{@code`long`}}
     @tr{@td{%o} @td{print an octal integer} @td{@code`long`}}
     @tr{@td{%x} @td{print a hexidecimal integer (lowercase)} @td{@code`long`}}
     @tr{@td{%X} @td{print a hexidecimal integer (uppercase)} @td{@code`long`}}
