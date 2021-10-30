@@ -71,7 +71,7 @@ Next, to install the Janet Package Manager tool (@code`jpm`), clone the
 directory, run:
 
 @codeblock(```
-[sudo] janet cli.janet install
+[sudo] janet bootstrap.janet
 ```)
 
 ### FreeBSD
