@@ -33,7 +33,7 @@ such as threading, networking, an event loop, subprocess handling, regex-like li
     @li{Parsing Expression Grammars built in to the core library}
     @li{500+ functions and macros in the core library}
     @li{Export your projects to standalone executables with a companion build tool, jpm}
-    @li{Add to a project with just @code`janet.c` and `janet.h`}}
+    @li{Add to a project with just @code`janet.c` and @code`janet.h`}}
 
 ## Code Example
 
