@@ -4,7 +4,7 @@
 ---
 
 Multithreading is the process of running a program on multiple threads at the same time, usually
-to improve throughput. Threads allow your program to take full advantage of of the multiple
+to improve throughput. Threads allow your program to take full advantage of the multiple
 processors on modern CPUs letting you do work in the background without stopping
 the main program flow, or breaking up an expensive operation to run on multiple processors.
 
@@ -17,13 +17,13 @@ However, this does not prevent native code from sharing memory across these
 threads. Without native extensions, however, the only way for two Janet threads
 to communicate directly is through message passing with threaded channels.
 
-By default, a Janet program will no exit until all threads have terminated.
+By default, a Janet program will not exit until all threads have terminated.
 
 ## Creating threads
 
 The most primitive way to create a thread is @code`(ev/thread fiber &opt value flags supervisor)`.
-Thos will start and wait for a message containing a function that it will run as the
-main body. This function must also be able to take 1 parameter, the parent
+This will start and wait for a message containing a function that it will run as the
+main body.
 
 @codeblock[janet]```
 (defn worker
@@ -37,7 +37,7 @@ main body. This function must also be able to take 1 parameter, the parent
 By itself, the above code isn't very useful because the main fiber will suspend until the new thread
 is complete. But it is quite useful to have threads suspend execution of the calling fiber by
 default - we can then easily have a thread wrapped with a fiber to be handled like other asynchronous tasks
-in the @code`ev/` module. To run the thread in the background, you can either use the @code`:n` flag, or wrap the call to @code`ev/thread` in it's own fiber.
+in the @code`ev/` module. To run the thread in the background, you can either use the @code`:n` flag, or wrap the call to @code`ev/thread` in its own fiber.
 
 @codeblock[janet]```
 (ev/thread (fiber/new worker :t) nil :n)
