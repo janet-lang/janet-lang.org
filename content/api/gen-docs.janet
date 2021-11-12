@@ -62,7 +62,7 @@
                ;(if sm [{:tag "span" "class" "binding-type"
                          :content {:tag "a"
                                    "href" (string "https://github.com/janet-lang/janet/blob/" ver "/"
-                                                  (if (= "boot.janet" (get sm 0)) "src/boot/boot.janet" (get sm 0)) "#L" (sm 1))
+                                                  (if (= "boot.janet" (sm 0)) "src/boot/boot.janet" (sm 0)) "#L" (sm 1))
                                    :content "source"}}] []) " "
                {:tag "pre" "class" "binding-text" :content (or docstring "")}
                ;(if example [{:tag "div" "class" "example-title" :content "EXAMPLES"}
