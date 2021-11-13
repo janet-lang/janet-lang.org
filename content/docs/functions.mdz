@@ -262,8 +262,8 @@ pass in multiple flags from a given set, as a single argument. (A
 "set" in the generic sense --- Janet doesn't have a @code`set` type.)
 
 For example, if your @code`foo` function takes a string argument, and may
-also be passed zero or more flags from the set "@code`:a`", "@code`:b`",
-and "@code`:c`", you could call @code`foo` like so:
+also be passed zero or more flags from the set @code`:a`, @code`:b`,
+and @code`:c`, you could call @code`foo` like so:
 
 @codeblock[janet](```
 (foo "hi")       # No flags passed.
