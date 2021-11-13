@@ -1,6 +1,6 @@
 {:title "The Event Loop"
  :template "docpage.html"
- :order 21}
+ :order 19}
 ---
 
 Janet comes with a powerful concurrency model out of the box - the event loop. The event loop provides
