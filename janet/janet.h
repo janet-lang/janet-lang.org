@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 18
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 19
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.18.1"
+#define JANET_VERSION "1.19.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -930,7 +930,7 @@ struct JanetGCObject {
     union {
         JanetGCObject *next;
         int32_t refcount; /* For threaded abstract types */
-    };
+    } data;
 };
 
 /* A lightweight green thread in janet. Does not correspond to
@@ -1025,6 +1025,7 @@ struct JanetStructHead {
     int32_t length;
     int32_t hash;
     int32_t capacity;
+    const JanetKV *proto;
     const JanetKV data[];
 };
 
@@ -1684,10 +1685,13 @@ JANET_API JanetSymbol janet_symbol_gen(void);
 #define janet_struct_length(t) (janet_struct_head(t)->length)
 #define janet_struct_capacity(t) (janet_struct_head(t)->capacity)
 #define janet_struct_hash(t) (janet_struct_head(t)->hash)
+#define janet_struct_proto(t) (janet_struct_head(t)->proto)
 JANET_API JanetKV *janet_struct_begin(int32_t count);
 JANET_API void janet_struct_put(JanetKV *st, Janet key, Janet value);
 JANET_API JanetStruct janet_struct_end(JanetKV *st);
 JANET_API Janet janet_struct_get(JanetStruct st, Janet key);
+JANET_API Janet janet_struct_rawget(JanetStruct st, Janet key);
+JANET_API Janet janet_struct_get_ex(JanetStruct st, Janet key, JanetStruct *which);
 JANET_API JanetTable *janet_struct_to_table(JanetStruct st);
 JANET_API const JanetKV *janet_struct_find(JanetStruct st, Janet key);
 

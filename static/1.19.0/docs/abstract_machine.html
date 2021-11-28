@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>The Janet Abstract Machine</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="The Janet Abstract Machine" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span class="selected"><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.19.0-a0ddfcb Documentation<br>(Other Versions:
+          
+          <a href="../../1.18.1/docs/abstract_machine.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/abstract_machine.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/abstract_machine.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/abstract_machine.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/abstract_machine.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/abstract_machine.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/abstract_machine.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/abstract_machine.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/abstract_machine.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/abstract_machine.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/abstract_machine.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/abstract_machine.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/abstract_machine.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/abstract_machine.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/abstract_machine.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/abstract_machine.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">The Janet Abstract Machine</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="prototypes.html"><span class="prevnext-text">Prototypes</span></a></span>
+
+          <span class="next"><a href="event_loop.html"><span class="prevnext-text">The Event Loop</span></a></span>
+        </div>
+        
+<p>The Janet language is implemented on top of an abstract machine (AM). The
+compiler converts Janet data structures to this bytecode, which can then be
+efficiently executed from inside a C program. To understand Janet bytecode, it
+is useful to understand the abstractions used inside the Janet AM, as well as
+the C types used to implement these features.
+</p>
+<h2 id="The-stack-=-the-fiber">The stack = the fiber
+</h2>
+<p>A Janet fiber is the type used to represent multiple concurrent processes in
+Janet. It is basically a wrapper around the idea of a stack. The stack is
+divided into a number of stack frames (<code class="mendoza-code">JanetStackFrame *</code> in C), each of
+which contains information such as the function that created the stack frame,
+the program counter for the stack frame, a pointer to the previous frame, and
+the size of the frame. Each stack frame also is paired with a number of
+registers.
+</p>
+<pre class="mendoza-codeblock"><code>X: Slot
+
+X
+X - Stack Top, for next function call.
+-----
+Frame next
+-----
+X
+X
+X
+X
+X
+X
+X - Stack 0
+-----
+Frame 0
+-----
+X
+X
+X - Stack -1
+-----
+Frame -1
+-----
+X
+X
+X
+X
+X - Stack -2
+-----
+Frame -2
+-----
+...
+...
+...
+-----
+Bottom of stack</code></pre><p>Fibers also have an incomplete stack frame for the next function call on top of
+their stacks. Making a function call involves pushing arguments to this
+temporary stack frame, and then invoking either the <code class="mendoza-code">CALL</code> or <code class="mendoza-code">TCALL</code>
+instructions.  Arguments for the next function call are pushed via the
+<code class="mendoza-code">PUSH</code>, <code class="mendoza-code">PUSH2</code>, <code class="mendoza-code">PUSH3</code>, and <code class="mendoza-code">PUSHA</code> instructions. The
+stack of a fiber will grow as large as needed, although by default Janet will
+limit the maximum size of a fiber's stack.  The maximum stack size can be
+modified on a per-fiber basis.
+</p>
+<p>The slots in the stack are exposed as virtual registers to instructions. They
+can hold any Janet value.
+</p>
+<h2 id="Closures">Closures
+</h2>
+<p>All functions in Janet are closures; they combine some bytecode instructions
+with 0 or more environments. In the C source, a closure (hereby the same as a
+function) is represented by the type <code class="mendoza-code">JanetFunction *</code>. The bytecode
+instruction part of the function is represented by <code class="mendoza-code">JanetFuncDef *</code>, and a
+function environment is represented with <code class="mendoza-code">JanetFuncEnv *</code>.
+</p>
+<p>The function definition part of a function (the 'bytecode' part,
+<code class="mendoza-code">JanetFuncDef *</code>), also stores various metadata about the function which is
+useful for debugging, as well as constants referenced by the function.
+</p>
+<h2 id="C-functions">C functions
+</h2>
+<p>Janet uses C functions to bridge to native code. A C function
+(<code class="mendoza-code">JanetCFunction *</code> in C) is a C function pointer that can be called like a
+normal Janet closure. From the perspective of the bytecode instruction set,
+there is no difference in invoking a C function and invoking a normal Janet
+function.
+</p>
+<h2 id="Bytecode-format">Bytecode format
+</h2>
+<p>Janet bytecode operates on an array of identical registers that can hold any
+Janet value (<code class="mendoza-code">Janet *</code> in C). Most instructions have a destination
+register, and 1 or 2 source registers. Registers are simply indices into the
+stack frame, which can be thought of as a constant-sized array.
+</p>
+<p>Each instruction is a 32-bit integer, meaning that the instruction set is a
+constant-width RISC instruction set like MIPS. The opcode of each instruction is
+the least significant byte of the instruction. The highest bit of this leading
+byte is reserved for debugging purpose, so there are 128 possible opcodes
+encodable with this scheme. Not all of these possible opcodes are defined, and
+undefined opcodes will trap the interpreter and emit a debug signal. Note that
+this means an unknown opcode is still valid bytecode, it will just put the
+interpreter into a debug state when executed.
+</p>
+<pre class="mendoza-codeblock"><code>X - Payload bits
+O - Opcode bits
+
+   4    3    2    1
++----+----+----+----+
+| XX | XX | XX | OO |
++----+----+----+----+</code></pre><p>Using 8 bits for the opcode leaves 24 bits for the payload, which may or may
+not be utilized.  There are a few instruction variants that divide these
+payload bits.
+</p>
+<ul><li>0 arg - Used for noops, returning <code class="mendoza-code">nil</code>, or other instructions that
+        take no arguments. The payload is essentially ignored.</li>
+    <li>1 arg - All payload bits correspond to a single value, usually a signed
+        or unsigned integer.  Used for instructions of 1 argument, like
+        returning a value, yielding a value to the parent fiber, or doing a
+        (relative) jump.</li>
+    <li>2 arg - Payload is split into byte 2 and bytes 3 and 4. The first
+        argument is the 8-bit value from byte 2, and the second argument is the
+        16-bit value from bytes 3 and 4 (<code class="mendoza-code">instruction &gt;&gt; 16</code>). Used for
+        instructions of two arguments, like move, normal function calls,
+        conditionals, etc.</li>
+    <li>3 arg - Bytes 2, 3, and 4 each correspond to an 8-bit argument.
+        Used for arithmetic operations, emitting a signal, etc.</li></ul><p>These instruction variants can be further refined based on the semantics of the
+arguments.  Some instructions may treat an argument as a slot index, while other
+instructions will treat the argument as a signed integer literal, an index for a
+constant, an index for an environment, or an unsigned integer. Keeping the
+bytecode fairly uniform makes verification, compilation, and debugging simpler.
+</p>
+<h2 id="Instruction-reference">Instruction reference
+</h2>
+<p>A listing of all opcode values can be found in <code class="mendoza-code">janet.h</code>. The Janet
+assembly short names can be found in <code class="mendoza-code">src/core/asm.c</code>. In this document,
+we will refer to the instructions by their short names as presented to the
+assembler rather than their numerical values.
+</p>
+<p>Each instruction is also listed with a signature, which are the arguments the
+instruction expects. There are a handful of instruction signatures, which
+combine the arity and type of the instruction. The assembler does not do any
+type-checking per closure, but does prevent jumping to invalid instructions and
+failure to return or error.
+</p>
+<h3 id="Notation">Notation
+</h3>
+<ul><li>The '$' prefix indicates that an instruction parameter is acting as a
+        virtual register (slot). If a parameter does not have the '$' suffix in
+        the description, it is acting as some kind of literal (usually an
+        unsigned integer for indexes, and a signed integer for literal
+        integers).</li>
+    <li>Some operators in the description have the suffix 'i' or 'r'. These
+        indicate that these operators correspond to integers or real numbers
+        only, respectively. All bit-wise operators and bit shifts only work with
+        integers.</li>
+    <li>The <code class="mendoza-code">&gt;&gt;&gt;</code> indicates unsigned right shift, as in Java. Because all
+        integers in Janet are signed, we differentiate the two kinds of right
+        bit shift.</li>
+    <li>The 'im' suffix in the instruction name is short for "immediate".</li></ul><h3 id="Reference-table">Reference table
+</h3>
+<table><tr><th>Instruction</th><th>Signature</th><th>Description</th></tr><tr><td><code class="mendoza-code">add</code></td><td><code class="mendoza-code">(add dest lhs rhs)</code></td><td>$dest = $lhs + $rhs</td></tr><tr><td><code class="mendoza-code">addim</code></td><td><code class="mendoza-code">(addim dest lhs im)</code></td><td>$dest = $lhs + im</td></tr><tr><td><code class="mendoza-code">band</code></td><td><code class="mendoza-code">(band dest lhs rhs)</code></td><td>$dest = $lhs &amp; $rhs</td></tr><tr><td><code class="mendoza-code">bnot</code></td><td><code class="mendoza-code">(bnot dest operand)</code></td><td>$dest = ~$operand</td></tr><tr><td><code class="mendoza-code">bor</code></td><td><code class="mendoza-code">(bor dest lhs rhs)</code></td><td>$dest = $lhs | $rhs</td></tr><tr><td><code class="mendoza-code">bxor</code></td><td><code class="mendoza-code">(bxor dest lhs rhs)</code></td><td>$dest = $lhs ^ $rhs</td></tr><tr><td><code class="mendoza-code">call</code></td><td><code class="mendoza-code">(call dest callee)</code></td><td>$dest = call($callee, args)</td></tr><tr><td><code class="mendoza-code">clo</code></td><td><code class="mendoza-code">(clo dest index)</code></td><td>$dest = closure(defs[$index])</td></tr><tr><td><code class="mendoza-code">cmp</code></td><td><code class="mendoza-code">(cmp dest lhs rhs)</code></td><td>$dest = janet_compare($lhs, $rhs)</td></tr><tr><td><code class="mendoza-code">cncl</code></td><td><code class="mendoza-code">(cncl dest fiber err)</code></td><td>Resume fiber, but raise error immediately</td></tr><tr><td><code class="mendoza-code">div</code></td><td><code class="mendoza-code">(div dest lhs rhs)</code></td><td>$dest = $lhs / $rhs</td></tr><tr><td><code class="mendoza-code">divim</code></td><td><code class="mendoza-code">(divim dest lhs im)</code></td><td>$dest = $lhs / im</td></tr><tr><td><code class="mendoza-code">eq</code></td><td><code class="mendoza-code">(eq dest lhs rhs)</code></td><td>$dest = $lhs == $rhs</td></tr><tr><td><code class="mendoza-code">eqim</code></td><td><code class="mendoza-code">(eqim dest lhs im)</code></td><td>$dest = $lhs == im</td></tr><tr><td><code class="mendoza-code">eqn</code></td><td><code class="mendoza-code">(eqn dest lhs im)</code></td><td>$dest = $lhs .== $rhs</td></tr><tr><td><code class="mendoza-code">err</code></td><td><code class="mendoza-code">(err message)</code></td><td>Throw error $message.</td></tr><tr><td><code class="mendoza-code">get</code></td><td><code class="mendoza-code">(get dest ds key)</code></td><td>$dest = $ds[$key]</td></tr><tr><td><code class="mendoza-code">geti</code></td><td><code class="mendoza-code">(geti dest ds index)</code></td><td>$dest = $ds[index]</td></tr><tr><td><code class="mendoza-code">gt</code></td><td><code class="mendoza-code">(gt dest lhs rhs)</code></td><td>$dest = $lhs &gt; $rhs</td></tr><tr><td><code class="mendoza-code">gte</code></td><td><code class="mendoza-code">(gte dest lhs rhs)</code></td><td>$dest = $lhs .&gt;= $rhs</td></tr><tr><td><code class="mendoza-code">gtim</code></td><td><code class="mendoza-code">(gtim dest lhs im)</code></td><td>$dest = $lhs .&gt; im</td></tr><tr><td><code class="mendoza-code">in</code></td><td><code class="mendoza-code">(in dest ds key)</code></td><td>$dest = $ds[$key] using `in`</td></tr><tr><td><code class="mendoza-code">jmp</code></td><td><code class="mendoza-code">(jmp offset)</code></td><td>pc += offset</td></tr><tr><td><code class="mendoza-code">jmpif</code></td><td><code class="mendoza-code">(jmpif cond offset)</code></td><td>if $cond pc += offset else pc++</td></tr><tr><td><code class="mendoza-code">jmpni</code></td><td><code class="mendoza-code">(jmpni cond offset)</code></td><td>if $cond == nil pc += offset else pc++</td></tr><tr><td><code class="mendoza-code">jmpnn</code></td><td><code class="mendoza-code">(jmpnn cond offset)</code></td><td>if $cond != nil pc += offset else pc++</td></tr><tr><td><code class="mendoza-code">jmpno</code></td><td><code class="mendoza-code">(jmpno cond offset)</code></td><td>if $cond pc++ else pc += offset</td></tr><tr><td><code class="mendoza-code">ldc</code></td><td><code class="mendoza-code">(ldc dest index)</code></td><td>$dest = constants[index]</td></tr><tr><td><code class="mendoza-code">ldf</code></td><td><code class="mendoza-code">(ldf dest)</code></td><td>$dest = false</td></tr><tr><td><code class="mendoza-code">ldi</code></td><td><code class="mendoza-code">(ldi dest integer)</code></td><td>$dest = integer</td></tr><tr><td><code class="mendoza-code">ldn</code></td><td><code class="mendoza-code">(ldn dest)</code></td><td>$dest = nil</td></tr><tr><td><code class="mendoza-code">lds</code></td><td><code class="mendoza-code">(lds dest)</code></td><td>$dest = current closure (self)</td></tr><tr><td><code class="mendoza-code">ldt</code></td><td><code class="mendoza-code">(ldt dest)</code></td><td>$dest = true</td></tr><tr><td><code class="mendoza-code">ldu</code></td><td><code class="mendoza-code">(ldu dest env index)</code></td><td>$dest = envs[env][index]</td></tr><tr><td><code class="mendoza-code">len</code></td><td><code class="mendoza-code">(len dest ds)</code></td><td>$dest = length(ds)</td></tr><tr><td><code class="mendoza-code">lt</code></td><td><code class="mendoza-code">(lt dest lhs rhs)</code></td><td>$dest = $lhs &lt; $rhs</td></tr><tr><td><code class="mendoza-code">lte</code></td><td><code class="mendoza-code">(lte dest lhs rhs)</code></td><td>$dest = $lhs .&lt;= $rhs</td></tr><tr><td><code class="mendoza-code">ltim</code></td><td><code class="mendoza-code">(ltim dest lhs im)</code></td><td>$dest = $lhs .&lt; im</td></tr><tr><td><code class="mendoza-code">mkarr</code></td><td><code class="mendoza-code">(mkarr dest)</code></td><td>$dest = call(array, args)</td></tr><tr><td><code class="mendoza-code">mkbtp</code></td><td><code class="mendoza-code">(mkbtp dest)</code></td><td>$dest = call(tuple/brackets, args)</td></tr><tr><td><code class="mendoza-code">mkbuf</code></td><td><code class="mendoza-code">(mkbuf dest)</code></td><td>$dest = call(buffer, args)</td></tr><tr><td><code class="mendoza-code">mkstr</code></td><td><code class="mendoza-code">(mkstr dest)</code></td><td>$dest = call(string, args)</td></tr><tr><td><code class="mendoza-code">mkstu</code></td><td><code class="mendoza-code">(mkstu dest)</code></td><td>$dest = call(struct, args)</td></tr><tr><td><code class="mendoza-code">mktab</code></td><td><code class="mendoza-code">(mktab dest)</code></td><td>$dest = call(table, args)</td></tr><tr><td><code class="mendoza-code">mktup</code></td><td><code class="mendoza-code">(mktup dest)</code></td><td>$dest = call(tuple, args)</td></tr><tr><td><code class="mendoza-code">mod</code></td><td><code class="mendoza-code">(mod dest lhs rhs)</code></td><td>$dest = $lhs mod $rhs</td></tr><tr><td><code class="mendoza-code">movf</code></td><td><code class="mendoza-code">(movf src dest)</code></td><td>$dest = $src</td></tr><tr><td><code class="mendoza-code">movn</code></td><td><code class="mendoza-code">(movn dest src)</code></td><td>$dest = $src</td></tr><tr><td><code class="mendoza-code">mul</code></td><td><code class="mendoza-code">(mul dest lhs rhs)</code></td><td>$dest = $lhs * $rhs</td></tr><tr><td><code class="mendoza-code">mulim</code></td><td><code class="mendoza-code">(mulim dest lhs im)</code></td><td>$dest = $lhs * im</td></tr><tr><td><code class="mendoza-code">neq</code></td><td><code class="mendoza-code">(neq dest lhs rhs)</code></td><td>$dest = $lhs != $rhs</td></tr><tr><td><code class="mendoza-code">neqim</code></td><td><code class="mendoza-code">(neqim dest lhs im)</code></td><td>$dest = $lhs != $im</td></tr><tr><td><code class="mendoza-code">next</code></td><td><code class="mendoza-code">(next dest ds key)</code></td><td>$dest = next($ds, $key)</td></tr><tr><td><code class="mendoza-code">noop</code></td><td><code class="mendoza-code">(noop)</code></td><td>Does nothing.</td></tr><tr><td><code class="mendoza-code">prop</code></td><td><code class="mendoza-code">(prop val fiber)</code></td><td>Propagate (Re-raise) a signal that has been caught.</td></tr><tr><td><code class="mendoza-code">push</code></td><td><code class="mendoza-code">(push val)</code></td><td>Push $val on arg</td></tr><tr><td><code class="mendoza-code">push2</code></td><td><code class="mendoza-code">(push2 val1 val2)</code></td><td>Push $val1, $val2 on args</td></tr><tr><td><code class="mendoza-code">push3</code></td><td><code class="mendoza-code">(push3 val1 val2 val3)</code></td><td>Push $val1, $val2, $val3, on args</td></tr><tr><td><code class="mendoza-code">pusha</code></td><td><code class="mendoza-code">(pusha array)</code></td><td>Push values in $array on args</td></tr><tr><td><code class="mendoza-code">put</code></td><td><code class="mendoza-code">(put ds key val)</code></td><td>$ds[$key] = $val</td></tr><tr><td><code class="mendoza-code">puti</code></td><td><code class="mendoza-code">(puti ds index val)</code></td><td>$ds[index] = $val</td></tr><tr><td><code class="mendoza-code">rem</code></td><td><code class="mendoza-code">(rem dest lhs rhs)</code></td><td>$dest = $lhs % $rhs</td></tr><tr><td><code class="mendoza-code">res</code></td><td><code class="mendoza-code">(res dest fiber val)</code></td><td>$dest = resume $fiber with $val</td></tr><tr><td><code class="mendoza-code">ret</code></td><td><code class="mendoza-code">(ret val)</code></td><td>Return $val</td></tr><tr><td><code class="mendoza-code">retn</code></td><td><code class="mendoza-code">(retn)</code></td><td>Return nil</td></tr><tr><td><code class="mendoza-code">setu</code></td><td><code class="mendoza-code">(setu env index val)</code></td><td>envs[env][index] = $val</td></tr><tr><td><code class="mendoza-code">sig</code></td><td><code class="mendoza-code">(sig dest value sigtype)</code></td><td>$dest = emit $value as sigtype</td></tr><tr><td><code class="mendoza-code">sl</code></td><td><code class="mendoza-code">(sl dest lhs rhs)</code></td><td>$dest = $lhs &lt;&lt; $rhs</td></tr><tr><td><code class="mendoza-code">slim</code></td><td><code class="mendoza-code">(slim dest lhs shamt)</code></td><td>$dest = $lhs &lt;&lt; shamt</td></tr><tr><td><code class="mendoza-code">sr</code></td><td><code class="mendoza-code">(sr dest lhs rhs)</code></td><td>$dest = $lhs &gt;&gt; $rhs</td></tr><tr><td><code class="mendoza-code">srim</code></td><td><code class="mendoza-code">(srim dest lhs shamt)</code></td><td>$dest = $lhs &gt;&gt; shamt</td></tr><tr><td><code class="mendoza-code">sru</code></td><td><code class="mendoza-code">(sru dest lhs rhs)</code></td><td>$dest = $lhs &gt;&gt;&gt; $rhs</td></tr><tr><td><code class="mendoza-code">sruim</code></td><td><code class="mendoza-code">(sruim dest lhs shamt)</code></td><td>$dest = $lhs &gt;&gt;&gt; shamt</td></tr><tr><td><code class="mendoza-code">sub</code></td><td><code class="mendoza-code">(sub dest lhs rhs)</code></td><td>$dest = $lhs - $rhs</td></tr><tr><td><code class="mendoza-code">tcall</code></td><td><code class="mendoza-code">(tcall callee)</code></td><td>Return call($callee, args)</td></tr><tr><td><code class="mendoza-code">tchck</code></td><td><code class="mendoza-code">(tcheck slot types)</code></td><td>Assert $slot matches types</td></tr></table>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="prototypes.html"><span class="prevnext-text">Prototypes</span></a></span>
+          <span class="next"><a href="event_loop.html"><span class="prevnext-text">The Event Loop</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on November 28, 2021 at 13:55:54 (UTC) with Janet 1.19.0-a0ddfcb</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

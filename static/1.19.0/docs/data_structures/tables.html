@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Tables</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Tables" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../index.html">Documentation</a></span><ul><li><span><a href="../syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../specials.html">Special Forms</a></span></li><li><span><a href="../numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../comparison.html">Comparison Operators</a></span></li><li><span><a href="../bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../flow.html">Flow</a></span></li><li><span><a href="../functions.html">Functions</a></span></li><li><span><a href="../strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../loop.html">Looping</a></span></li><li><span><a href="../macros.html">Macros</a></span></li><li class="caret"><span><a href="index.html">Data Structures</a></span><ul><li><span><a href="arrays.html">Arrays</a></span></li><li><span><a href="buffers.html">Buffers</a></span></li><li><span class="selected"><a href="tables.html">Tables</a></span></li><li><span><a href="structs.html">Structs</a></span></li><li><span><a href="tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../fibers/index.html">Fibers</a></span><ul><li><span><a href="../fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../modules.html">Modules</a></span></li><li><span><a href="../object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../prototypes.html">Prototypes</a></span></li><li><span><a href="../abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../event_loop.html">The Event Loop</a></span></li><li><span><a href="../threads.html">Multithreading</a></span></li><li><span><a href="../networking.html">Networking</a></span></li><li><span><a href="../documentation.html">Documentation</a></span></li><li><span><a href="../jpm.html">jpm</a></span></li><li><span><a href="../linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.19.0-a0ddfcb Documentation<br>(Other Versions:
+          
+          <a href="../../../1.18.1/docs/data_structures/tables.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/docs/data_structures/tables.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/docs/data_structures/tables.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/docs/data_structures/tables.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/docs/data_structures/tables.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/docs/data_structures/tables.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/docs/data_structures/tables.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/docs/data_structures/tables.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/docs/data_structures/tables.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/docs/data_structures/tables.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/docs/data_structures/tables.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/docs/data_structures/tables.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/docs/data_structures/tables.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/docs/data_structures/tables.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/docs/data_structures/tables.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/docs/data_structures/tables.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Tables</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="buffers.html"><span class="prevnext-text">Buffers</span></a></span>
+
+          <span class="next"><a href="structs.html"><span class="prevnext-text">Structs</span></a></span>
+        </div>
+        
+
+<p>The table is one of the most flexible data structures in Janet and is modeled
+after the associative array or dictionary. Values are put into a table with a
+key, and can be looked up later with the same key. Tables are implemented with
+an underlying open hash table, so they are quite fast and cache friendly.
+</p>
+<p>Any Janet value except <code class="mendoza-code">nil</code> and <code class="mendoza-code">NaN</code> can be a key or a value in a
+Janet table, and a single Janet table can have any mixture of types as keys and
+values.
+</p>
+<h2 id="Creating-tables">Creating tables
+</h2>
+<p>The easiest way to create a table is via a table literal.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-tab</span> @{
+ <span class="mdzsyn-keyword">:key1</span> <span class="mdzsyn-number">1</span>
+ <span class="mdzsyn-string">"hello"</span> <span class="mdzsyn-string">"world!"</span>
+ <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>
+ '(<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">0</span>) @{<span class="mdzsyn-keyword">:another</span> <span class="mdzsyn-keyword">:table</span>}})</code></pre><p>Another way to create a table is via the <code class="mendoza-code">table</code> function. This has the
+advantage that <code class="mendoza-code">table</code> is an ordinary function that can be passed around
+like any other. For most cases, a table literal should be preferred.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-tab</span> (<span class="mdzsyn-coresym">table</span>
+             <span class="mdzsyn-keyword">:key1</span> <span class="mdzsyn-number">1</span>
+             <span class="mdzsyn-string">"hello"</span> <span class="mdzsyn-string">"world!"</span>
+             <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>
+             '(<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">0</span>) @{<span class="mdzsyn-keyword">:another</span> <span class="mdzsyn-keyword">:table</span>}))</code></pre><h2 id="Getting-and-setting-values">Getting and setting values
+</h2>
+<p>Like other data structures in Janet, values in a table can be retrieved with
+the <code class="mendoza-code">get</code> function, and new values in a table can be added via the
+<code class="mendoza-code">put</code> function or the <code class="mendoza-code">set</code> special. Inserting a value of <code class="mendoza-code">nil</code>
+into a table removes the key from the table. This means tables cannot contain
+<code class="mendoza-code">nil</code> values.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">t</span> @{})
+
+(<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">t</span> <span class="mdzsyn-keyword">:key</span>) <span class="mdzsyn-comment">#-&gt; nil</span>
+
+(<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-symbol">t</span> <span class="mdzsyn-keyword">:key</span> <span class="mdzsyn-string">"hello"</span>)
+(<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">t</span> <span class="mdzsyn-keyword">:key</span>) <span class="mdzsyn-comment">#-&gt; "hello")</span>
+
+(<span class="mdzsyn-coresym">set</span> (<span class="mdzsyn-symbol">t</span> <span class="mdzsyn-keyword">:cheese</span>) <span class="mdzsyn-keyword">:cake</span>)
+(<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">t</span> <span class="mdzsyn-keyword">:cheese</span>) <span class="mdzsyn-comment">#-&gt; :cake</span>
+
+<span class="mdzsyn-comment"># Tables can be called as functions</span>
+<span class="mdzsyn-comment"># that look up the argument</span>
+(<span class="mdzsyn-symbol">t</span> <span class="mdzsyn-keyword">:cheese</span>) <span class="mdzsyn-comment">#-&gt; :cake</span></code></pre><h2 id="Prototypes">Prototypes
+</h2>
+<p>All tables can have a prototype, a parent table that is checked when a key is
+not found in the first table. By default, tables have no prototype.  Prototypes
+are a flexible mechanism that, among other things, can be used to implement
+inheritance in Janet. Read more in the
+<a href="/docs/prototypes.html">documentation for prototypes</a>
+</p>
+<h2 id="Useful-functions-for-tables">Useful functions for tables
+</h2>
+<p>The Janet core library has many useful functions for manipulating tables. Below
+is a non-exhaustive list.
+</p>
+<ul><li><code class="mendoza-code">frequencies</code></li>
+    <li><code class="mendoza-code">keys</code></li>
+    <li><code class="mendoza-code">kvs</code></li>
+    <li><code class="mendoza-code">length</code></li>
+    <li><code class="mendoza-code">merge-into</code></li>
+    <li><code class="mendoza-code">merge</code></li>
+    <li><code class="mendoza-code">pairs</code></li>
+    <li><code class="mendoza-code">post-walk</code></li>
+    <li><code class="mendoza-code">pre-walk</code></li>
+    <li><code class="mendoza-code">table/getproto</code></li>
+    <li><code class="mendoza-code">table/setproto</code></li>
+    <li><code class="mendoza-code">update</code></li>
+    <li><code class="mendoza-code">values</code></li>
+    <li><code class="mendoza-code">walk</code></li>
+    <li><code class="mendoza-code">zipcoll</code></li></ul><p>See the <a href="/api/table.html">Table API</a> documentation for table-specific functions.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="buffers.html"><span class="prevnext-text">Buffers</span></a></span>
+          <span class="next"><a href="structs.html"><span class="prevnext-text">Structs</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2021
+  <div class="gentag">Generated on November 28, 2021 at 13:55:54 (UTC) with Janet 1.19.0-a0ddfcb</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

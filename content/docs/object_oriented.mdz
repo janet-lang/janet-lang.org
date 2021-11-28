@@ -70,9 +70,9 @@ such functionality, as it should be fairly simple to customize.
 
 ## Structs
 
-In addition to tables, Structs may also be used as objects. Structs are of
-limited use, however, because they do not have prototypes. This means that they
-cannot implement any form of inheritance. The above example would work for the
+In addition to tables, Structs may also be used as objects. As of Janet version
+1.19.0, structs can have prototypes as well as tables, although in prior version
+structs could still be used as objects, just without any inheritance. The above example would work for the
 first object @code`Car`, but @code`RedCar` could not inherit from @code`Car`.
 
 @codeblock[janet]```
@@ -87,6 +87,18 @@ first object @code`Car`, but @code`RedCar` could not inherit from @code`Car`.
 
 # Pass more arguments
 (:say Car "hello!") # prints "Car says: hello!"
+```
+To create a struct that inherits fields from another struct, we need to use the constructing function
+@code`struct/with-proto`. There is no analog to @code`table/setproto` for structs because they are immutable, and
+that goes for prototypes as well. Structs can only inherit from other structs, not tables.
+
+@codeblock[janet]```
+(def Car
+ {:_name "Car"
+  :honk (fn [self msg] (print "Car says: " msg))})
+
+(def my-car (struct/with-proto Car :color :silver))
+(:honk my-car "beep")
 ```
 
 ## Abstract types
