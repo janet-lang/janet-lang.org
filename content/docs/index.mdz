@@ -168,7 +168,7 @@ symbol. This is a function that simply prints its arguments to the console. The
 second argument is the string literal "Hello, world!", which is the one and only
 argument to the print function. Lastly, the @code[print] symbol and the string
 literal are wrapped in parentheses, forming a tuple. In Janet, parentheses and
-brackets are interchangeable, brackets are used mostly when the resulting tuple
+also brackets form a tuple; brackets are used mostly when the resulting tuple
 is not a function call. The tuple above indicates that the function @code[print]
 is to be called with one argument, @code["Hello, world"].
 
