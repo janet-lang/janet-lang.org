@@ -1,6 +1,6 @@
-CWD:=$(shell pwd)$(pwd:sh)
+CWD:="$(shell pwd)$(pwd:sh)"
 UNAME:=$(shell uname -s)$(uname -s:sh)
-JSETTINGS=PATH=$(CWD)/build/bin:$(PATH) JANET_PATH=$(CWD)/build JANET_HEADERPATH=$(CWD)/janet JANET_BINPATH=$(CWD)/build/bin
+JSETTINGS=PATH="$(CWD)/build/bin:$(PATH)" JANET_PATH="$(CWD)/build" JANET_HEADERPATH="$(CWD)/janet" JANET_BINPATH="$(CWD)/build/bin"
 CFLAGS=-std=c99 -Wall -Wextra -O2 -fvisibility=hidden
 CLIBS=-lm -lpthread
 LDFLAGS=-rdynamic
