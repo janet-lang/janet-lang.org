@@ -142,7 +142,7 @@ This function compares buffers like strings, and recursively compares arrays and
 
 @codeblock[janet](```
 (assert (deep= [:a :b] [:a :b]))
-(assert (deep= {:a 1} [:a 1]))
+(assert (deep= {:a 1} {:a 1}))
 (assert (deep= "abc" "abc"))
 
 (assert (deep=
