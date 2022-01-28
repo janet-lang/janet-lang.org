@@ -214,13 +214,19 @@ The declaration for an executable file is pretty simple.
 @codeblock[janet]```
 (declare-executable
  :name "myexec"
- :entry "main.janet")
+ :entry "main.janet"
+ :install true)
 ```
 
 @p{@code`jpm` is smart enough to figure out from the one entry file what
     libraries and other code your executable depends on, and bundles them into
     the final application for you. The final executable will be located at
     @code`build/myexec`, or @code`build\myexec.exe` on Windows.}
+
+If the optional key-value pair @code`:install true` is specified in the
+@code`declare-executable` form, by default, the appropriate @code`jpm install`
+command will install the resulting executable to the @code`JANET_BINPATH`
+\(but see the jpm man page for further details).
 
 Also note that the entry of an executable file should look different than a
 normal Janet script.  It should define a @code`main` function that can receive a
