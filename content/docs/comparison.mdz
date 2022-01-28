@@ -114,3 +114,41 @@ method for a table-based "object" can be implemented in Janet.  For more
 information on the latter see the @link[/docs/object_oriented.html][object
 oriented programming section] and the @link[/docs/prototypes.html][prototypes
 section] for more information on developing object oriented methods on tables.
+
+## Deep Equality Operator
+
+The primitive @code[=] operator does not compare the contents of mutable structures (arrays, tables, and buffers).
+Instead, it checks if the two values are the same object.
+
+@codeblock[janet](```
+# Even though they have the same contents these are considered *not* equal
+(assert (not= @{:a 1} @{:a 1}))
+(assert (not= @[:a :b] @[:a :b]))
+(assert (not= @"abc" @"abc"))
+
+# primitive equal will return true if they are same object
+(let [x @{:a 1}]
+  (assert (= x x)))
+
+# NOTE: = works as expected on immutable structures
+(assert (= [:a :b] [:a :b]))
+(assert (= {:a 1} {:a 1}))
+(assert (= "abc" "abc"))
+```)
+
+
+To compare the contents of mutable structures use the @code`deep=` function.
+This function compares buffers like strings, and recursively compares arrays and tables.
+
+@codeblock[janet](```
+(assert (deep= [:a :b] [:a :b]))
+(assert (deep= {:a 1} {:a 1}))
+(assert (deep= "abc" "abc"))
+
+(assert (deep=
+  @{ :x @[@{:a 1} 3 @"hi"] :y 2 }
+  @{ :x @[@{:a 1} 3 @"hi"] :y 2 }))
+
+# NOTE deep= uses primitive = when the values are not an array, table or buffer.
+(assert (deep-not= @{ :x (int/s64 1) } @{ :x (int/u64 1) }))
+```)
