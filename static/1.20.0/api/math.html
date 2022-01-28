@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Math Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Math Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="ev.html">ev</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span class="selected"><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.20.0-40ae2e8 Documentation<br>(Other Versions:
+          
+          <a href="../../1.19.0/api/math.html">1.19.0</a>
+          
+          <a href="../../1.18.1/api/math.html">1.18.1</a>
+          
+          <a href="../../1.17.1/api/math.html">1.17.1</a>
+          
+          <a href="../../1.16.1/api/math.html">1.16.1</a>
+          
+          <a href="../../1.15.0/api/math.html">1.15.0</a>
+          
+          <a href="../../1.13.1/api/math.html">1.13.1</a>
+          
+          <a href="../../1.12.2/api/math.html">1.12.2</a>
+          
+          <a href="../../1.11.1/api/math.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/math.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/math.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/math.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/math.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/math.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/math.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/math.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/math.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/math.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Math Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="int.html"><span class="prevnext-text">Integer Types Module</span></a></span>
+
+          <span class="next"><a href="module.html"><span class="prevnext-text">Module Module</span></a></span>
+        </div>
+        
+
+<h2 id="Index-7">Index
+</h2>
+<p><a href="#math/-inf">math/-inf</a> <a href="#math/abs">math/abs</a> <a href="#math/acos">math/acos</a> <a href="#math/acosh">math/acosh</a> <a href="#math/asin">math/asin</a> <a href="#math/asinh">math/asinh</a> <a href="#math/atan">math/atan</a> <a href="#math/atan2">math/atan2</a> <a href="#math/atanh">math/atanh</a> <a href="#math/cbrt">math/cbrt</a> <a href="#math/ceil">math/ceil</a> <a href="#math/cos">math/cos</a> <a href="#math/cosh">math/cosh</a> <a href="#math/e">math/e</a> <a href="#math/erf">math/erf</a> <a href="#math/erfc">math/erfc</a> <a href="#math/exp">math/exp</a> <a href="#math/exp2">math/exp2</a> <a href="#math/expm1">math/expm1</a> <a href="#math/floor">math/floor</a> <a href="#math/gamma">math/gamma</a> <a href="#math/gcd">math/gcd</a> <a href="#math/hypot">math/hypot</a> <a href="#math/inf">math/inf</a> <a href="#math/int-max">math/int-max</a> <a href="#math/int-min">math/int-min</a> <a href="#math/int32-max">math/int32-max</a> <a href="#math/int32-min">math/int32-min</a> <a href="#math/lcm">math/lcm</a> <a href="#math/log">math/log</a> <a href="#math/log-gamma">math/log-gamma</a> <a href="#math/log10">math/log10</a> <a href="#math/log1p">math/log1p</a> <a href="#math/log2">math/log2</a> <a href="#math/nan">math/nan</a> <a href="#math/next">math/next</a> <a href="#math/pi">math/pi</a> <a href="#math/pow">math/pow</a> <a href="#math/random">math/random</a> <a href="#math/rng">math/rng</a> <a href="#math/rng-buffer">math/rng-buffer</a> <a href="#math/rng-int">math/rng-int</a> <a href="#math/rng-uniform">math/rng-uniform</a> <a href="#math/round">math/round</a> <a href="#math/seedrandom">math/seedrandom</a> <a href="#math/sin">math/sin</a> <a href="#math/sinh">math/sinh</a> <a href="#math/sqrt">math/sqrt</a> <a href="#math/tan">math/tan</a> <a href="#math/tanh">math/tanh</a> <a href="#math/trunc">math/trunc</a> </p><hr><div class="binding"><span id="math/-inf" class="binding-sym">math/-inf</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L408">source</a></span> <pre class="binding-text">The number representing negative infinity</pre><a href="https://janetdocs.com/math/-inf">Community Examples</a></div><hr><div class="binding"><span id="math/abs" class="binding-sym">math/abs</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L285">source</a></span> <pre class="binding-text">(math/fabs x)
+
+Return the absolute value of x.</pre><a href="https://janetdocs.com/math/abs">Community Examples</a></div><hr><div class="binding"><span id="math/acos" class="binding-sym">math/acos</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L264">source</a></span> <pre class="binding-text">(math/acos x)
+
+Returns the arccosize of x.</pre><a href="https://janetdocs.com/math/acos">Community Examples</a></div><hr><div class="binding"><span id="math/acosh" class="binding-sym">math/acosh</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L269">source</a></span> <pre class="binding-text">(math/acosh x)
+
+Returns the hyperbolic arccosine of x.</pre><a href="https://janetdocs.com/math/acosh">Community Examples</a></div><hr><div class="binding"><span id="math/asin" class="binding-sym">math/asin</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L265">source</a></span> <pre class="binding-text">(math/asin x)
+
+Returns the arcsin of x.</pre><a href="https://janetdocs.com/math/asin">Community Examples</a></div><hr><div class="binding"><span id="math/asinh" class="binding-sym">math/asinh</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L272">source</a></span> <pre class="binding-text">(math/asinh x)
+
+Returns the hypberbolic arcsine of x.</pre><a href="https://janetdocs.com/math/asinh">Community Examples</a></div><hr><div class="binding"><span id="math/atan" class="binding-sym">math/atan</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L266">source</a></span> <pre class="binding-text">(math/atan x)
+
+Returns the arctangent of x.</pre><a href="https://janetdocs.com/math/atan">Community Examples</a></div><hr><div class="binding"><span id="math/atan2" class="binding-sym">math/atan2</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L303">source</a></span> <pre class="binding-text">(math/atan2 y x)
+
+Returns the arctangent of y/x. Works even when x is 0.</pre><a href="https://janetdocs.com/math/atan2">Community Examples</a></div><hr><div class="binding"><span id="math/atanh" class="binding-sym">math/atanh</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L275">source</a></span> <pre class="binding-text">(math/atanh x)
+
+Returns the hyperbolic arctangent of x.</pre><a href="https://janetdocs.com/math/atanh">Community Examples</a></div><hr><div class="binding"><span id="math/cbrt" class="binding-sym">math/cbrt</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L283">source</a></span> <pre class="binding-text">(math/cbrt x)
+
+Returns the cube root of x.</pre><a href="https://janetdocs.com/math/cbrt">Community Examples</a></div><hr><div class="binding"><span id="math/ceil" class="binding-sym">math/ceil</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L284">source</a></span> <pre class="binding-text">(math/ceil x)
+
+Returns the smallest integer value number that is not less than x.</pre><a href="https://janetdocs.com/math/ceil">Community Examples</a></div><hr><div class="binding"><span id="math/cos" class="binding-sym">math/cos</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L267">source</a></span> <pre class="binding-text">(math/cos x)
+
+Returns the cosine of x.</pre><a href="https://janetdocs.com/math/cos">Community Examples</a></div><hr><div class="binding"><span id="math/cosh" class="binding-sym">math/cosh</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L268">source</a></span> <pre class="binding-text">(math/cosh x)
+
+Returns the hyperbolic cosine of x.</pre><a href="https://janetdocs.com/math/cosh">Community Examples</a></div><hr><div class="binding"><span id="math/e" class="binding-sym">math/e</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L404">source</a></span> <pre class="binding-text">The base of the natural log.</pre><a href="https://janetdocs.com/math/e">Community Examples</a></div><hr><div class="binding"><span id="math/erf" class="binding-sym">math/erf</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L292">source</a></span> <pre class="binding-text">(math/erf x)
+
+Returns the error function of x.</pre><a href="https://janetdocs.com/math/erf">Community Examples</a></div><hr><div class="binding"><span id="math/erfc" class="binding-sym">math/erfc</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L293">source</a></span> <pre class="binding-text">(math/erfc x)
+
+Returns the complementary error function of x.</pre><a href="https://janetdocs.com/math/erfc">Community Examples</a></div><hr><div class="binding"><span id="math/exp" class="binding-sym">math/exp</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L276">source</a></span> <pre class="binding-text">(math/exp x)
+
+Returns e to the power of x.</pre><a href="https://janetdocs.com/math/exp">Community Examples</a></div><hr><div class="binding"><span id="math/exp2" class="binding-sym">math/exp2</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L277">source</a></span> <pre class="binding-text">(math/exp2 x)
+
+Returns 2 to the power of x.</pre><a href="https://janetdocs.com/math/exp2">Community Examples</a></div><hr><div class="binding"><span id="math/expm1" class="binding-sym">math/expm1</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L278">source</a></span> <pre class="binding-text">(math/expm1 x)
+
+Returns e to the power of x minus 1.</pre><a href="https://janetdocs.com/math/expm1">Community Examples</a></div><hr><div class="binding"><span id="math/floor" class="binding-sym">math/floor</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L286">source</a></span> <pre class="binding-text">(math/floor x)
+
+Returns the largest integer value number that is not greater than x.</pre><a href="https://janetdocs.com/math/floor">Community Examples</a></div><hr><div class="binding"><span id="math/gamma" class="binding-sym">math/gamma</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L289">source</a></span> <pre class="binding-text">(math/gamma x)
+
+Returns gamma(x).</pre><a href="https://janetdocs.com/math/gamma">Community Examples</a></div><hr><div class="binding"><span id="math/gcd" class="binding-sym">math/gcd</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L335">source</a></span> <pre class="binding-text">(math/gcd x y)
+
+Returns the greatest common divisor between x and y.</pre><a href="https://janetdocs.com/math/gcd">Community Examples</a></div><hr><div class="binding"><span id="math/hypot" class="binding-sym">math/hypot</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L305">source</a></span> <pre class="binding-text">(math/hypot a b)
+
+Returns c from the equation c^2 = a^2 + b^2.</pre><a href="https://janetdocs.com/math/hypot">Community Examples</a></div><hr><div class="binding"><span id="math/inf" class="binding-sym">math/inf</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L406">source</a></span> <pre class="binding-text">The number representing positive infinity</pre><a href="https://janetdocs.com/math/inf">Community Examples</a></div><hr><div class="binding"><span id="math/int-max" class="binding-sym">math/int-max</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L416">source</a></span> <pre class="binding-text">The maximum contiguous integer represtenable by a double (-(2^53))</pre><a href="https://janetdocs.com/math/int-max">Community Examples</a></div><hr><div class="binding"><span id="math/int-min" class="binding-sym">math/int-min</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L414">source</a></span> <pre class="binding-text">The minimum contiguous integer representable by a double (2^53)</pre><a href="https://janetdocs.com/math/int-min">Community Examples</a></div><hr><div class="binding"><span id="math/int32-max" class="binding-sym">math/int32-max</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L412">source</a></span> <pre class="binding-text">The maximum contiguous integer represtenable by a 32 bit signed integer</pre><a href="https://janetdocs.com/math/int32-max">Community Examples</a></div><hr><div class="binding"><span id="math/int32-min" class="binding-sym">math/int32-min</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L410">source</a></span> <pre class="binding-text">The minimum contiguous integer representable by a 32 bit signed integer</pre><a href="https://janetdocs.com/math/int32-min">Community Examples</a></div><hr><div class="binding"><span id="math/lcm" class="binding-sym">math/lcm</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L343">source</a></span> <pre class="binding-text">(math/lcm x y)
+
+Returns the least common multiple of x and y.</pre><a href="https://janetdocs.com/math/lcm">Community Examples</a></div><hr><div class="binding"><span id="math/log" class="binding-sym">math/log</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L279">source</a></span> <pre class="binding-text">(math/log x)
+
+Returns the natural logarithm of x.</pre><a href="https://janetdocs.com/math/log">Community Examples</a></div><hr><div class="binding"><span id="math/log-gamma" class="binding-sym">math/log-gamma</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L290">source</a></span> <pre class="binding-text">(math/lgamma x)
+
+Returns log-gamma(x).</pre><a href="https://janetdocs.com/math/log-gamma">Community Examples</a></div><hr><div class="binding"><span id="math/log10" class="binding-sym">math/log10</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L280">source</a></span> <pre class="binding-text">(math/log10 x)
+
+Returns the log base 10 of x.</pre><a href="https://janetdocs.com/math/log10">Community Examples</a></div><hr><div class="binding"><span id="math/log1p" class="binding-sym">math/log1p</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L291">source</a></span> <pre class="binding-text">(math/log1p x)
+
+Returns (log base e of x) + 1 more accurately than (+ (math/log x) 1)</pre><a href="https://janetdocs.com/math/log1p">Community Examples</a></div><hr><div class="binding"><span id="math/log2" class="binding-sym">math/log2</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L281">source</a></span> <pre class="binding-text">(math/log2 x)
+
+Returns the log base 2 of x.</pre><a href="https://janetdocs.com/math/log2">Community Examples</a></div><hr><div class="binding"><span id="math/nan" class="binding-sym">math/nan</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L418">source</a></span> <pre class="binding-text">Not a number (IEEE-754 NaN)</pre><a href="https://janetdocs.com/math/nan">Community Examples</a></div><hr><div class="binding"><span id="math/next" class="binding-sym">math/next</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L306">source</a></span> <pre class="binding-text">(math/next x y)
+
+Returns the next representable floating point vaue after x in the direction of y.</pre><a href="https://janetdocs.com/math/next">Community Examples</a></div><hr><div class="binding"><span id="math/pi" class="binding-sym">math/pi</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L402">source</a></span> <pre class="binding-text">The value pi.</pre><a href="https://janetdocs.com/math/pi">Community Examples</a></div><hr><div class="binding"><span id="math/pow" class="binding-sym">math/pow</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L304">source</a></span> <pre class="binding-text">(math/pow a x)
+
+Returns a to the power of x.</pre><a href="https://janetdocs.com/math/pow">Community Examples</a></div><hr><div class="binding"><span id="math/random" class="binding-sym">math/random</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L234">source</a></span> <pre class="binding-text">(math/random)
+
+Returns a uniformly distributed random number between 0 and 1</pre><a href="https://janetdocs.com/math/random">Community Examples</a></div><hr><div class="binding"><span id="math/rng" class="binding-sym">math/rng</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L125">source</a></span> <pre class="binding-text">(math/rng &amp;opt seed)
+
+Creates a Psuedo-Random number generator, with an optional seed. The seed should be an unsigned 32 bit integer or a buffer. Do not use this for cryptography. Returns a core/rng abstract type.</pre><a href="https://janetdocs.com/math/rng">Community Examples</a></div><hr><div class="binding"><span id="math/rng-buffer" class="binding-sym">math/rng-buffer</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L187">source</a></span> <pre class="binding-text">(math/rng-buffer rng n &amp;opt buf)
+
+Get n random bytes and put them in a buffer. Creates a new buffer if no buffer is provided, otherwise appends to the given buffer. Returns the buffer.</pre><a href="https://janetdocs.com/math/rng-buffer">Community Examples</a></div><hr><div class="binding"><span id="math/rng-int" class="binding-sym">math/rng-int</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L155">source</a></span> <pre class="binding-text">(math/rng-int rng &amp;opt max)
+
+Extract a random random integer in the range [0, max] from the RNG. If no max is given, the default is 2^31 - 1.</pre><a href="https://janetdocs.com/math/rng-int">Community Examples</a></div><hr><div class="binding"><span id="math/rng-uniform" class="binding-sym">math/rng-uniform</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L145">source</a></span> <pre class="binding-text">(math/rng-uniform rng)
+
+Extract a random number in the range [0, 1) from the RNG.</pre><a href="https://janetdocs.com/math/rng-uniform">Community Examples</a></div><hr><div class="binding"><span id="math/round" class="binding-sym">math/round</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L288">source</a></span> <pre class="binding-text">(math/round x)
+
+Returns the integer nearest to x.</pre><a href="https://janetdocs.com/math/round">Community Examples</a></div><hr><div class="binding"><span id="math/seedrandom" class="binding-sym">math/seedrandom</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L245">source</a></span> <pre class="binding-text">(math/seedrandom seed)
+
+Set the seed for the random number generator. seed should be an integer or a buffer.</pre><a href="https://janetdocs.com/math/seedrandom">Community Examples</a></div><hr><div class="binding"><span id="math/sin" class="binding-sym">math/sin</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L270">source</a></span> <pre class="binding-text">(math/sin x)
+
+Returns the sine of x.</pre><a href="https://janetdocs.com/math/sin">Community Examples</a></div><hr><div class="binding"><span id="math/sinh" class="binding-sym">math/sinh</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L271">source</a></span> <pre class="binding-text">(math/sinh x)
+
+Returns the hyperbolic sine of x.</pre><a href="https://janetdocs.com/math/sinh">Community Examples</a></div><hr><div class="binding"><span id="math/sqrt" class="binding-sym">math/sqrt</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L282">source</a></span> <pre class="binding-text">(math/sqrt x)
+
+Returns the square root of x.</pre><a href="https://janetdocs.com/math/sqrt">Community Examples</a></div><hr><div class="binding"><span id="math/tan" class="binding-sym">math/tan</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L273">source</a></span> <pre class="binding-text">(math/tan x)
+
+Returns the tangent of x.</pre><a href="https://janetdocs.com/math/tan">Community Examples</a></div><hr><div class="binding"><span id="math/tanh" class="binding-sym">math/tanh</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L274">source</a></span> <pre class="binding-text">(math/tanh x)
+
+Returns the hyperbolic tangent of x.</pre><a href="https://janetdocs.com/math/tanh">Community Examples</a></div><hr><div class="binding"><span id="math/trunc" class="binding-sym">math/trunc</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/40ae2e8/src/core/math.c#L287">source</a></span> <pre class="binding-text">(math/trunc x)
+
+Returns the integer between x and 0 nearest to x.</pre><a href="https://janetdocs.com/math/trunc">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="int.html"><span class="prevnext-text">Integer Types Module</span></a></span>
+          <span class="next"><a href="module.html"><span class="prevnext-text">Module Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on January 28, 2022 at 04:44:48 (UTC) with Janet 1.20.0-40ae2e8</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
