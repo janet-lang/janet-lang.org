@@ -123,13 +123,13 @@ supported escapes are:
 Strings can also contain literal newline characters that will be ignored.  This
 lets one define a multiline string that does not contain newline characters.
 
-### Long strings
+### Long-strings
 
-An alternative way of representing strings in Janet is the long string, or the
-backquote-delimited string. A string can also be defined to start with a certain
-number of backquotes, and will end the same number of backquotes. Long strings
+An alternative way of representing strings in Janet is the long-string, or the
+backquote-delimited string. A long-string can be defined to start with a certain
+number of backquotes, and will end the same number of backquotes. Long-strings
 do not contain escape sequences; all bytes will be parsed literally until the
-ending delimiter is found. This is useful for defining multi-line strings with
+ending delimiter is found. This is useful for defining multi-line strings containing
 literal newline characters, unprintable characters, or strings that would
 otherwise require many escape sequences.
 
@@ -151,6 +151,9 @@ This is
 a string.
 `
 ```
+
+Long-strings are often used for docstrings, as described in the
+@link[./documentation.html][Documentation chapter].
 
 ## Buffers
 
