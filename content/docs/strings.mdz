@@ -75,7 +75,7 @@ Literal text can be entered inside quotes, as we have seen above.
 # We can also add escape characters for newlines, double quotes, backslash, tabs, etc.
 "Hello\nThis is on line two\n\tThis is indented\n"
 
-# For long strings where you don't want to type a lot of escape characters,
+# For long-strings where you don't want to type a lot of escape characters,
 # you can use 1 or more backticks (`) to delimit a string.
 # To close this string, simply repeat the opening sequence of backticks
 ``
