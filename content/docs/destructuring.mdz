@@ -18,6 +18,13 @@ all. Janet supports destructuring, which means both the @code[def] and
 (def [_ _ _ _ lamb] my-array)
 (print lamb) # Again, prints :lamb
 
+# You can also collect trailing destructured values into a "more"
+# tuple, though note that it copies, and so may be costly space-wise.
+(def [p q & more] my-array)
+(print p) # :mary
+(print q) # :had
+(pp more) # (:a :little :lamb)
+
 # Destructuring works with tables as well
 (def person @{:name "Bob Dylan" :age 77})
 (def
