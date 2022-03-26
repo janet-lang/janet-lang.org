@@ -6,10 +6,8 @@
 
 ## Installation
 
-Install a stable version of Janet from the
-@link[https://github.com/janet-lang/janet/releases][releases page].  Janet is
-prebuilt for a few systems, but if you want to develop Janet, run Janet on a
-non-x86 system, or get the latest, you must build Janet from source.
+Janet is prebuilt for a few systems, but if you want to develop Janet, run Janet
+on a non-x86 system, or get the latest, you must build Janet from source.
 
 ### Windows
 
@@ -32,6 +30,10 @@ You can install either the latest git version or the latest stable version for
 Arch Linux from the Arch user repositories with
 @link[https://aur.archlinux.org/packages/janet-lang-git/][janet-lang-git] or
 @link[https://aur.archlinux.org/packages/janet-lang][janet-lang].
+
+#### Other Linux
+
+See instructions below for compiling and installing from source.
 
 ### macOS
 
