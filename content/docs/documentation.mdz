@@ -67,18 +67,18 @@ wrap the call to @code`(doc)` in a call to @code`(with-dyns)`.
   (doc my-function))
 ```
 
-## Using Long Strings
+## Using Long-Strings
 
 Janet provides two literal forms for expressing a strings: ordinary strings
 (that is, a sequence of characters delimited by the double quote character,
-@code`"`) and long strings (that is, a sequence of characters delimited by one
+@code`"`) and long-strings (that is, a sequence of characters delimited by one
 or more backquote characters, @code"`").
 
-While either form can be used for docstrings, long strings have two advantages
+While either form can be used for docstrings, long-strings have two advantages
 over ordinary strings. First, new lines are preserved. This makes it simple to
 write readable strings in code. Second, Janet will automatically removed
 indentation (so-called "dedenting") for whitespace that appears before the
-column in which the long string began. This is best seen with an example.
+column in which the long-string began. This is best seen with an example.
 
 @codeblock[janet]```
 (defn my-second-function
