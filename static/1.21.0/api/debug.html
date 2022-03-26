@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Debug Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Debug Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span class="selected"><a href="debug.html">debug</a></span></li><li><span><a href="ev.html">ev</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.20.1-b60ef68 Documentation<br>(Other Versions:
+          
+          <a href="../../1.20.0/api/debug.html">1.20.0</a>
+          
+          <a href="../../1.19.0/api/debug.html">1.19.0</a>
+          
+          <a href="../../1.18.1/api/debug.html">1.18.1</a>
+          
+          <a href="../../1.17.1/api/debug.html">1.17.1</a>
+          
+          <a href="../../1.16.1/api/debug.html">1.16.1</a>
+          
+          <a href="../../1.15.0/api/debug.html">1.15.0</a>
+          
+          <a href="../../1.13.1/api/debug.html">1.13.1</a>
+          
+          <a href="../../1.12.2/api/debug.html">1.12.2</a>
+          
+          <a href="../../1.11.1/api/debug.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/debug.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/debug.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/debug.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/debug.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/debug.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/debug.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/debug.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/debug.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/debug.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Debug Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="buffer.html"><span class="prevnext-text">Buffer Module</span></a></span>
+
+          <span class="next"><a href="ev.html"><span class="prevnext-text">Event Module</span></a></span>
+        </div>
+        
+
+<h2 id="Index-1">Index
+</h2>
+<p><a href="#debug/arg-stack">debug/arg-stack</a> <a href="#debug/break">debug/break</a> <a href="#debug/fbreak">debug/fbreak</a> <a href="#debug/lineage">debug/lineage</a> <a href="#debug/stack">debug/stack</a> <a href="#debug/stacktrace">debug/stacktrace</a> <a href="#debug/step">debug/step</a> <a href="#debug/unbreak">debug/unbreak</a> <a href="#debug/unfbreak">debug/unfbreak</a> </p><hr><div class="binding"><span id="debug/arg-stack" class="binding-sym">debug/arg-stack</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L383">source</a></span> <pre class="binding-text">(debug/arg-stack fiber)
+
+Gets all values currently on the fiber's argument stack. Normally, this should be empty unless the fiber signals while pushing arguments to make a function call. Returns a new array.</pre><a href="https://janetdocs.com/debug/arg-stack">Community Examples</a></div><hr><div class="binding"><span id="debug/break" class="binding-sym">debug/break</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L221">source</a></span> <pre class="binding-text">(debug/break source line col)
+
+Sets a breakpoint in `source` at a given line and column. Will throw an error if the breakpoint location cannot be found. For example
+
+	(debug/break "core.janet" 10 4)
+
+will set a breakpoint at line 10, 4th column of the file core.janet.</pre><a href="https://janetdocs.com/debug/break">Community Examples</a></div><hr><div class="binding"><span id="debug/fbreak" class="binding-sym">debug/fbreak</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L245">source</a></span> <pre class="binding-text">(debug/fbreak fun &amp;opt pc)
+
+Set a breakpoint in a given function. pc is an optional offset, which is in bytecode instructions. fun is a function value. Will throw an error if the offset is too large or negative.</pre><a href="https://janetdocs.com/debug/fbreak">Community Examples</a></div><hr><div class="binding"><span id="debug/lineage" class="binding-sym">debug/lineage</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L268">source</a></span> <pre class="binding-text">(debug/lineage fib)
+
+Returns an array of all child fibers from a root fiber. This function is useful when a fiber signals or errors to an ancestor fiber. Using this function, the fiber handling the error can see which fiber raised the signal. This function should be used mostly for debugging purposes.</pre><a href="https://janetdocs.com/debug/lineage">Community Examples</a></div><hr><div class="binding"><span id="debug/stack" class="binding-sym">debug/stack</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L350">source</a></span> <pre class="binding-text">(debug/stack fib)
+
+Gets information about the stack as an array of tables. Each table in the array contains information about a stack frame. The top-most, current stack frame is the first table in the array, and the bottom-most stack frame is the last value. Each stack frame contains some of the following attributes:
+
+* :c - true if the stack frame is a c function invocation
+
+* :source-column - the current source column of the stack frame
+
+* :function - the function that the stack frame represents
+
+* :source-line - the current source line of the stack frame
+
+* :name - the human-friendly name of the function
+
+* :pc - integer indicating the location of the program counter
+
+* :source - string with the file path or other identifier for the source code
+
+* :slots - array of all values in each slot
+
+* :tail - boolean indicating a tail call</pre><a href="https://janetdocs.com/debug/stack">Community Examples</a></div><hr><div class="binding"><span id="debug/stacktrace" class="binding-sym">debug/stacktrace</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L370">source</a></span> <pre class="binding-text">(debug/stacktrace fiber &amp;opt err prefix)
+
+Prints a nice looking stacktrace for a fiber. Can optionally provide an error value to print the stack trace with. If `err` is nil or not provided, and no prefix is given, will skip the error line. Returns the fiber.</pre><a href="https://janetdocs.com/debug/stacktrace">Community Examples</a></div><hr><div class="binding"><span id="debug/step" class="binding-sym">debug/step</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L396">source</a></span> <pre class="binding-text">(debug/step fiber &amp;opt x)
+
+Run a fiber for one virtual instruction of the Janet machine. Can optionally pass in a value that will be passed as the resuming value. Returns the signal value, which will usually be nil, as breakpoints raise nil signals.</pre><a href="https://janetdocs.com/debug/step">Community Examples</a></div><hr><div class="binding"><span id="debug/unbreak" class="binding-sym">debug/unbreak</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L233">source</a></span> <pre class="binding-text">(debug/unbreak source line column)
+
+Remove a breakpoint with a source key at a given line and column. Will throw an error if the breakpoint cannot be found.</pre><a href="https://janetdocs.com/debug/unbreak">Community Examples</a></div><hr><div class="binding"><span id="debug/unfbreak" class="binding-sym">debug/unfbreak</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/b60ef68/src/core/debug.c#L255">source</a></span> <pre class="binding-text">(debug/unfbreak fun &amp;opt pc)
+
+Unset a breakpoint set with debug/fbreak.</pre><a href="https://janetdocs.com/debug/unfbreak">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="buffer.html"><span class="prevnext-text">Buffer Module</span></a></span>
+          <span class="next"><a href="ev.html"><span class="prevnext-text">Event Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on March 26, 2022 at 15:36:17 (UTC) with Janet 1.20.1-b60ef68</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

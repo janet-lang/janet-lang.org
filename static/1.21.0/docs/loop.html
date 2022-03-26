@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Looping</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Looping" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span class="selected"><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.20.1-b60ef68 Documentation<br>(Other Versions:
+          
+          <a href="../../1.20.0/docs/loop.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/loop.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/loop.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/loop.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/loop.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/loop.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/loop.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/loop.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/loop.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/loop.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/loop.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/loop.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/loop.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/loop.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/loop.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/loop.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/loop.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/loop.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Looping</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="strings.html"><span class="prevnext-text">Strings, Keywords, and Symbols</span></a></span>
+
+          <span class="next"><a href="macros.html"><span class="prevnext-text">Macros</span></a></span>
+        </div>
+        
+
+<p>A very common and essential operation in all programming is looping. Most
+languages support looping of some kind, either with explicit loops or recursion.
+Janet supports both recursion and a primitive <code class="mendoza-code">while</code> loop. While recursion
+is useful in many cases, sometimes it is more convenient to use an explicit loop
+to iterate over a collection like an array.
+</p>
+<h2 id="Example-1:-Iterating-a-range">Example 1: Iterating a range
+</h2>
+<p>Suppose you want to calculate the sum of the first 10 natural numbers 0 through
+9. There are many ways to carry out this explicit calculation.  A succinct way
+in Janet is:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">+</span> ;(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">10</span>))</code></pre><p>We will limit ourselves however to using explicit looping and no functions like
+<code class="mendoza-code">(range n)</code> which generate a list of natural numbers for us.
+</p>
+<p>For our first version, we will use only the <code class="mendoza-code">while</code> form to iterate,
+similar to how one might sum natural numbers in a language such as C.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-number">0</span>)
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span>)
+(<span class="mdzsyn-coresym">while</span> (<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">10</span>)
+    (<span class="mdzsyn-coresym">+=</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-symbol">i</span>)
+    (<span class="mdzsyn-coresym">++</span> <span class="mdzsyn-symbol">i</span>))
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-coresym">sum</span>) <span class="mdzsyn-comment"># prints 45</span></code></pre><p>This is a very imperative program, and it is not the best way to write this in
+Janet.  We are manually updating a counter <code class="mendoza-code">i</code> in a loop. Using the macros
+<code class="mendoza-code">+=</code> and <code class="mendoza-code">++</code>, this style code is similar in density to C code.  It is
+recommended to instead use either macros (such as the <code class="mendoza-code">loop</code> or <code class="mendoza-code">for</code>
+macros) or a functional style in Janet.
+</p>
+<p>Since this is such a common pattern, Janet has a macro for this exact purpose.
+The <code class="mendoza-code">(for x start end body)</code> form captures this behavior of incrementing a
+counter in a loop.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-number">0</span>)
+(<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-number">10</span> (<span class="mdzsyn-coresym">+=</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-symbol">i</span>))
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-coresym">sum</span>) <span class="mdzsyn-comment"># prints 45</span></code></pre><p>We have completely wrapped the imperative counter in a macro. The <code class="mendoza-code">for</code>
+macro, while not very flexible, is very terse and covers a common case of
+iteration: iterating over an integer range.  The <code class="mendoza-code">for</code> macro will be
+expanded to something very similar to our original version with a <code class="mendoza-code">while</code>
+loop.
+</p>
+<p>We can do something similar with the more flexible <code class="mendoza-code">loop</code> macro.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-number">0</span>)
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">i</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">10</span>]] (<span class="mdzsyn-coresym">+=</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-symbol">i</span>))
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-coresym">sum</span>) <span class="mdzsyn-comment"># prints 45</span></code></pre><p>This is slightly more verbose than the <code class="mendoza-code">for</code> macro, but can be more easily
+extended.  Let's say that we wanted to only count even numbers towards the sum.
+We can do this easily with the <code class="mendoza-code">loop</code> macro.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-number">0</span>)
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">i</span> <span class="mdzsyn-keyword">:range</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">10</span>] <span class="mdzsyn-keyword">:when</span> (<span class="mdzsyn-coresym">even?</span> <span class="mdzsyn-symbol">i</span>)] (<span class="mdzsyn-coresym">+=</span> <span class="mdzsyn-coresym">sum</span> <span class="mdzsyn-symbol">i</span>))
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-coresym">sum</span>) <span class="mdzsyn-comment"># prints 20</span></code></pre><p>The <code class="mendoza-code">loop</code> macro has several verbs (<code class="mendoza-code">:range</code>) and modifiers
+(<code class="mendoza-code">:when</code>) that let the programmer more easily generate common looping
+idioms. The <code class="mendoza-code">loop</code> macro is similar to the Common Lisp <code class="mendoza-code">loop</code> macro,
+but smaller in scope and with a much simpler syntax. As with the <code class="mendoza-code">for</code>
+macro, the <code class="mendoza-code">loop</code> macro expands to similar code as our original
+<code class="mendoza-code">while</code> expression.
+</p>
+<h2 id="Example-2:-Iterating-over-an-indexed-data-structure">Example 2: Iterating over an indexed data structure
+</h2>
+<p>Another common usage for iteration in any language is iterating over the items
+in a data structure, like items in an array, characters in a string, or
+key-value pairs in a table.
+</p>
+<p>Say we have an array of names that we want to print out. We will again start
+with a simple <code class="mendoza-code">while</code> loop which we will refine into more idiomatic
+expressions.
+</p>
+<p>First, we will define our array of names:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">names</span>
+ @[<span class="mdzsyn-string">"Jean-Paul Sartre"</span>
+   <span class="mdzsyn-string">"Bob Dylan"</span>
+   <span class="mdzsyn-string">"Augusta Ada King"</span>
+   <span class="mdzsyn-string">"Frida Kahlo"</span>
+   <span class="mdzsyn-string">"Harriet Tubman"</span>])</code></pre><p>With our array of names, we can use a <code class="mendoza-code">while</code> loop to iterate through the
+indices of names, get the values, and then print them.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span>)
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">len</span> (<span class="mdzsyn-coresym">length</span> <span class="mdzsyn-symbol">names</span>))
+(<span class="mdzsyn-coresym">while</span> (<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-symbol">len</span>)
+    (<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">names</span> <span class="mdzsyn-symbol">i</span>))
+    (<span class="mdzsyn-coresym">++</span> <span class="mdzsyn-symbol">i</span>))</code></pre><p>This is rather verbose. Janet provides the <code class="mendoza-code">each</code> macro for iterating
+through the items in a tuple or array, or the bytes in a buffer, symbol, or
+string.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">each</span> <span class="mdzsyn-symbol">name</span> <span class="mdzsyn-symbol">names</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">name</span>))</code></pre><p>We can also use the <code class="mendoza-code">loop</code> macro for this case as well using the <code class="mendoza-code">:in</code>
+verb.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">name</span> <span class="mdzsyn-keyword">:in</span> <span class="mdzsyn-symbol">names</span>] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">name</span>))</code></pre><p>Lastly, we can use the <code class="mendoza-code">map</code> function to apply a function over each value
+in the array.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">map</span> <span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">names</span>)</code></pre><p>The <code class="mendoza-code">each</code> macro is actually more flexible than the normal loop, as it is
+able to iterate over data structures that are not like arrays. For example,
+<code class="mendoza-code">each</code> will iterate over the values in a table.
+</p>
+<h2 id="Example-3:-Iterating-a-dictionary">Example 3: Iterating a dictionary
+</h2>
+<p>In the previous example, we iterated over the values in an array. Another common
+use of looping in a Janet program is iterating over the keys or values in a
+table.  We cannot use the same method as iterating over an array because a table
+or struct does not contain a known integer range of keys. Instead we rely on a
+function <code class="mendoza-code">next</code>, which allows us to visit each of the keys in a struct or
+table. Note that iterating over a table will not visit the prototype table.
+</p>
+<p>As an example, let's iterate over a table of letters to a word that starts with
+that letter. We will print out the words to our simple children's book.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">alphabook</span>
+  @{<span class="mdzsyn-string">"A"</span> <span class="mdzsyn-string">"Apple"</span>
+    <span class="mdzsyn-string">"B"</span> <span class="mdzsyn-string">"Banana"</span>
+    <span class="mdzsyn-string">"C"</span> <span class="mdzsyn-string">"Cat"</span>
+    <span class="mdzsyn-string">"D"</span> <span class="mdzsyn-string">"Dog"</span>
+    <span class="mdzsyn-string">"E"</span> <span class="mdzsyn-string">"Elephant"</span>})</code></pre><p>As before, we can evaluate this loop using only a <code class="mendoza-code">while</code> loop and the
+<code class="mendoza-code">next</code> function. The <code class="mendoza-code">next</code> function is the primary way to iterate in
+Janet, and is overloaded to support all iterable types. Given a data structure
+and a key, it returns the next key in the data structure. If there are no more
+keys left, it returns <code class="mendoza-code">nil</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">key</span> (<span class="mdzsyn-coresym">next</span> <span class="mdzsyn-symbol">alphabook</span> <span class="mdzsyn-constant">nil</span>))
+(<span class="mdzsyn-coresym">while</span> (<span class="mdzsyn-coresym">not=</span> <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-symbol">key</span>)
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">key</span> <span class="mdzsyn-string">" is for "</span> (<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">alphabook</span> <span class="mdzsyn-symbol">key</span>))
+  (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">key</span> (<span class="mdzsyn-coresym">next</span> <span class="mdzsyn-symbol">alphabook</span> <span class="mdzsyn-symbol">key</span>)))</code></pre><p>However, we can do better than this with the <code class="mendoza-code">loop</code> macro using the
+<code class="mendoza-code">:pairs</code> or <code class="mendoza-code">:keys</code> verbs.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">loop</span> [[<span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-symbol">word</span>] <span class="mdzsyn-keyword">:pairs</span> <span class="mdzsyn-symbol">alphabook</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-string">" is for "</span> <span class="mdzsyn-symbol">word</span>))</code></pre><p>Using the <code class="mendoza-code">:keys</code> verb and shorthand notation for indexing a data
+structure:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-keyword">:keys</span> <span class="mdzsyn-symbol">alphabook</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-string">" is for "</span> (<span class="mdzsyn-symbol">alphabook</span> <span class="mdzsyn-symbol">letter</span>)))</code></pre><p>As an alternative to the <code class="mendoza-code">loop</code> macro here, we can also use the macros
+<code class="mendoza-code">eachk</code> and <code class="mendoza-code">eachp</code>, which behave like <code class="mendoza-code">each</code> but <code class="mendoza-code">loop</code>
+over the keys of a data structure and the key-value pairs in a data structure
+respectively.
+</p>
+<p>Data structures like tables and structs can be called like functions that look
+up their arguments. This allows for writing shorter code than what is possible
+with <code class="mendoza-code">(get alphabook letter)</code>.
+</p>
+<p>We can also use the core library functions <code class="mendoza-code">keys</code> and <code class="mendoza-code">pairs</code> to get
+arrays of the keys and pairs respectively of the alphabook.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">loop</span> [[<span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-symbol">word</span>] <span class="mdzsyn-keyword">:in</span> (<span class="mdzsyn-coresym">pairs</span> <span class="mdzsyn-symbol">alphabook</span>)]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-string">" is for "</span> <span class="mdzsyn-symbol">word</span>))
+
+(<span class="mdzsyn-coresym">loop</span> [<span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-keyword">:in</span> (<span class="mdzsyn-coresym">keys</span> <span class="mdzsyn-symbol">alphabook</span>)]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">letter</span> <span class="mdzsyn-string">" is for "</span> (<span class="mdzsyn-symbol">alphabook</span> <span class="mdzsyn-symbol">letter</span>)))</code></pre><p>Notice that iteration through the table is in no particular order. Iterating the
+keys of a table or struct guarantees no order. If you want to iterate in a
+specific order, use a different data structure or the <code class="mendoza-code">(sort indexed)</code>
+function.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="strings.html"><span class="prevnext-text">Strings, Keywords, and Symbols</span></a></span>
+          <span class="next"><a href="macros.html"><span class="prevnext-text">Macros</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on March 26, 2022 at 15:36:17 (UTC) with Janet 1.20.1-b60ef68</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Buffer C API</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Buffer C API" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="index.html">C API</a></span><ul><li><span><a href="wrapping.html">Wrapping Types</a></span></li><li><span><a href="embedding.html">Embedding</a></span></li><li><span><a href="configuration.html">Configuration</a></span></li><li><span><a href="array.html">Array C API</a></span></li><li><span class="selected"><a href="buffer.html">Buffer C API</a></span></li><li><span><a href="table.html">Table C API</a></span></li><li><span><a href="fiber.html">Fiber C API</a></span></li><li><span><a href="memory-model.html">Memory Model</a></span></li><li><span><a href="writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.20.1-b60ef68 Documentation<br>(Other Versions:
+          
+          <a href="../../1.20.0/capi/buffer.html">1.20.0</a>
+          
+          <a href="../../1.19.0/capi/buffer.html">1.19.0</a>
+          
+          <a href="../../1.18.1/capi/buffer.html">1.18.1</a>
+          
+          <a href="../../1.17.1/capi/buffer.html">1.17.1</a>
+          
+          <a href="../../1.16.1/capi/buffer.html">1.16.1</a>
+          
+          <a href="../../1.15.0/capi/buffer.html">1.15.0</a>
+          
+          <a href="../../1.13.1/capi/buffer.html">1.13.1</a>
+          
+          <a href="../../1.12.2/capi/buffer.html">1.12.2</a>
+          
+          <a href="../../1.11.1/capi/buffer.html">1.11.1</a>
+          
+          <a href="../../1.10.1/capi/buffer.html">1.10.1</a>
+          
+          <a href="../../1.9.1/capi/buffer.html">1.9.1</a>
+          
+          <a href="../../1.8.1/capi/buffer.html">1.8.1</a>
+          
+          <a href="../../1.7.0/capi/buffer.html">1.7.0</a>
+          
+          <a href="../../1.6.0/capi/buffer.html">1.6.0</a>
+          
+          <a href="../../1.5.1/capi/buffer.html">1.5.1</a>
+          
+          <a href="../../1.5.0/capi/buffer.html">1.5.0</a>
+          
+          <a href="../../1.4.0/capi/buffer.html">1.4.0</a>
+          
+          <a href="../../1.3.1/capi/buffer.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Buffer C API</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="array.html"><span class="prevnext-text">Array C API</span></a></span>
+
+          <span class="next"><a href="table.html"><span class="prevnext-text">Table C API</span></a></span>
+        </div>
+        
+
+<h2 id="Definition-0">Definition
+</h2>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-comment">/* A byte buffer type. Used as a mutable string or string builder. */</span>
+<span class="mdzsyn-type">struct</span> <span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-identifier">JanetGCObject</span> <span class="mdzsyn-identifier">gc</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">count</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">capacity</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">data</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-operator">}</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-keyword">typedef</span> <span class="mdzsyn-type">struct</span> <span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-identifier">JanetBuffer</span><span class="mdzsyn-operator">;</span></code></pre><h2 id="Functions-0">Functions
+</h2>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_buffer</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">capacity</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_buffer_init</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">capacity</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_deinit</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_ensure</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">capacity</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">growth</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_setcount</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">count</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_extra</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">n</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_push_bytes</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">string</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">len</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_push_string</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">string</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_push_cstring</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">char</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">cstring</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_push_u8</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_push_u16</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">uint16_t</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_push_u32</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">uint32_t</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_buffer_push_u64</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">buffer</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">uint64_t</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="array.html"><span class="prevnext-text">Array C API</span></a></span>
+          <span class="next"><a href="table.html"><span class="prevnext-text">Table C API</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on March 26, 2022 at 15:36:17 (UTC) with Janet 1.20.1-b60ef68</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

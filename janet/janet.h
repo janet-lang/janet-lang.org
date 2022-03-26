@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2021 Calvin Rose
+* Copyright (c) 2022 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -27,9 +27,9 @@
 
 #define JANET_VERSION_MAJOR 1
 #define JANET_VERSION_MINOR 20
-#define JANET_VERSION_PATCH 0
+#define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.20.0"
+#define JANET_VERSION "1.20.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -121,8 +121,8 @@ extern "C" {
 #define JANET_BSD 1
 #endif
 
-/* Check for Mac */
-#ifdef __APPLE__
+/* Check for macOS or OS X */
+#if defined(__APPLE__) && defined(__MACH__)
 #define JANET_APPLE 1
 #endif
 
