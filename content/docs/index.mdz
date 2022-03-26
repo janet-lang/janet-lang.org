@@ -148,14 +148,14 @@ uncommenting some lines in @code`src/conf/janetconf.h`.
 
 ## First program
 
-Following tradition, a simple Janet program will print "Hello, world!".
+Following tradition, a simple Janet program will print "Hello, World!".
 
 Put the following code in a file named @code[hello.janet], and run @code[janet
 hello.janet]:
 
-@codeblock[janet](```(print "Hello, world!")```)
+@codeblock[janet](```(print "Hello, World!")```)
 
-The words "Hello, world!" should be printed to the console, and then 
+The words "Hello, World!" should be printed to the console, and then 
 the program should immediately exit. You now have a working Janet program!
 
 Alternatively, run the program @code[janet] without any arguments to enter a
@@ -167,17 +167,47 @@ prototyping in Janet.
 This hello world program is about the simplest program one can write, and
 consists of only a few pieces of syntax. The first element is the @code[print]
 symbol. This is a function that simply prints its arguments to the console. The
-second argument is the string literal "Hello, world!", which is the one and only
+second argument is the string literal "Hello, World!", which is the one and only
 argument to the print function. Lastly, the @code[print] symbol and the string
 literal are wrapped in parentheses, forming a tuple. In Janet, parentheses and
 also brackets form a tuple; brackets are used mostly when the resulting tuple
 is not a function call. The tuple above indicates that the function @code[print]
-is to be called with one argument, @code["Hello, world"].
+is to be called with one argument, @code["Hello, World"].
 
 All operations in Janet are in prefix notation: the name of the operator is the
 first value in the tuple, and the arguments passed to it are in the rest of the
 tuple. While this may be familiar in function calls, in Janet this idea extends
 to arithmetic and all control forms.
+
+## Second program
+
+If you create a "main" function, @code`janet` will automatically call that
+for you when you run your script. Here's an example that prints out the
+command line args tuple passed to your program, its length, and a greeting
+to the whomever's named first on the command line:
+
+@codeblock[janet]```
+#!/usr/bin/env janet
+
+(defn print-greeting
+  [greetee]
+  (print "Hello, " greetee "!"))
+
+(defn main
+  [& args]
+  (pp args) # pretty-prints the args tuple
+  (print (length args))
+  (print-greeting (get args 1)))
+```
+
+Output:
+
+@codeblock```
+$ ./foo.janet World Famous Fries
+("./foo.janet" "World" "Famous" "Fries")
+4
+Hello, World!
+```
 
 ## The core library
 
