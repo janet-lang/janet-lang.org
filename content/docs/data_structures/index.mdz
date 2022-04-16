@@ -96,7 +96,7 @@ found.
 The @code`in` function (added in v1.5.0) for tables and structs behaves
 identically to @code`get`. However, the @code`in` function for arrays, tuples,
 and string-likes will throw errors on bad keys --- so to better detect errors,
-prefer @code`in` on these.
+prefer @code`in` for these.
 
 @codeblock[janet]```
 (get @[:a :b :c] 3) # -> nil
