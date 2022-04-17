@@ -72,31 +72,35 @@ data structure.
 (def my-buffer2 @``This is also mutable``)
 ```)
 
-To read the values in a data structure, use the @code`get` function. The first
+To read the values in a data structure, use the @code`get` or @code`in` functions.
+The first
 parameter is the data structure itself, and the second parameter is the key. An
 optional third parameter can be used to specify a default if the value is not
 found.
 
 @codeblock[janet]```
 (get @{:a 1} :a) # -> 1
-(get {:a 1} :a) # -> 1
+(get {:a 1} :a)  # -> 1
+(in  {:a 1} :a)  # -> 1
 (get @[:a :b :c] 2) # -> :c
+(in  @[:a :b :c] 2) # -> :c
 (get (tuple "a" "b" "c") 1) # -> "b"
 (get @"hello, world" 1) # -> 101
-(get "hello, world" 0) # -> 104
-(get {:a :b} :a) # -> :b
+(get "hello, world" 1)  # -> 101
+(in  "hello, world" 1)  # -> 101
+(get {:a :b} :a)    # -> :b
 (get {:a :b} :c :d) # -> :d
+(in  {:a :b} :c :d) # -> :d
 ```
 
-Similar to the @code`get` function and added in v1.5.0, the @code`in` function
-also get values contained in a data structure but will throw errors on bad keys
-to arrays, tuple, and string-likes. You should prefer @code`in` going forward as
-it can be used to better detect errors. For tables and structs, @code`in`
-behaves identically to @code`get`.
+The @code`in` function (added in v1.5.0) for tables and structs behaves
+identically to @code`get`. However, the @code`in` function for arrays, tuples,
+and string-likes will throw errors on bad keys --- so to better detect errors,
+prefer @code`in` for these.
 
 @codeblock[janet]```
-(in @[:a :b :c] 2) # -> :c
-(in @[:a :b :c] 3) # -> raises error
+(get @[:a :b :c] 3) # -> nil
+(in  @[:a :b :c] 3) # -> raises error
 ```
 
 To update a mutable data structure, use the @code[put] function. It takes 3
