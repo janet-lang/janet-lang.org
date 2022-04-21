@@ -79,9 +79,9 @@ Literal text can be entered inside double quotes, as we have seen above.
 # If your double-quoted string spans multiple lines, newline characters will
 # be removed but other whitespace is preserved.
 "Hello, this
-    is all
-one line
-here."   # -> "Hello, this    is allone linehere."
+    is al
+l one line
+here."   # -> "Hello, this    is all one linehere."
 
 # For long-strings where you don't want to type a lot of escape characters,
 # you can use 1 or more backticks (`) to delimit a string.
