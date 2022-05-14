@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Configuration</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Configuration" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="index.html">C API</a></span><ul><li><span><a href="wrapping.html">Wrapping Types</a></span></li><li><span><a href="embedding.html">Embedding</a></span></li><li><span class="selected"><a href="configuration.html">Configuration</a></span></li><li><span><a href="array.html">Array C API</a></span></li><li><span><a href="buffer.html">Buffer C API</a></span></li><li><span><a href="table.html">Table C API</a></span></li><li><span><a href="fiber.html">Fiber C API</a></span></li><li><span><a href="memory-model.html">Memory Model</a></span></li><li><span><a href="writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.22.0-5b2a402 Documentation<br>(Other Versions:
+          
+          <a href="../../1.21.0/capi/configuration.html">1.21.0</a>
+          
+          <a href="../../1.20.0/capi/configuration.html">1.20.0</a>
+          
+          <a href="../../1.19.0/capi/configuration.html">1.19.0</a>
+          
+          <a href="../../1.18.1/capi/configuration.html">1.18.1</a>
+          
+          <a href="../../1.17.1/capi/configuration.html">1.17.1</a>
+          
+          <a href="../../1.16.1/capi/configuration.html">1.16.1</a>
+          
+          <a href="../../1.15.0/capi/configuration.html">1.15.0</a>
+          
+          <a href="../../1.13.1/capi/configuration.html">1.13.1</a>
+          
+          <a href="../../1.12.2/capi/configuration.html">1.12.2</a>
+          
+          <a href="../../1.11.1/capi/configuration.html">1.11.1</a>
+          
+          <a href="../../1.10.1/capi/configuration.html">1.10.1</a>
+          
+          <a href="../../1.9.1/capi/configuration.html">1.9.1</a>
+          
+          <a href="../../1.8.1/capi/configuration.html">1.8.1</a>
+          
+          <a href="../../1.7.0/capi/configuration.html">1.7.0</a>
+          
+          <a href="../../1.6.0/capi/configuration.html">1.6.0</a>
+          
+          <a href="../../1.5.1/capi/configuration.html">1.5.1</a>
+          
+          <a href="../../1.5.0/capi/configuration.html">1.5.0</a>
+          
+          <a href="../../1.4.0/capi/configuration.html">1.4.0</a>
+          
+          <a href="../../1.3.1/capi/configuration.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Configuration</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="embedding.html"><span class="prevnext-text">Embedding</span></a></span>
+
+          <span class="next"><a href="array.html"><span class="prevnext-text">Array C API</span></a></span>
+        </div>
+        
+
+<p>Janet can be configured by editing the source header <code class="mendoza-code">janetconf.h</code>. To build
+Janet on certain platforms, disable features to save space, or integrated Janet
+into certain environments, editing this file may be required, although in most
+cases the default build of Janet should work.
+</p>
+<p>Not all combinations of flags are guaranteed to work, although in most cases they should.
+You should should probably run the test suite on a particular set of flags to verify that
+they can work together.
+</p>
+<h2 id="Defines">Defines
+</h2>
+<h3><code class="mendoza-code">#define JANET_MAJOR 1</code>
+</h3>
+<h3><code class="mendoza-code">#define JANET_MINOR 2</code>
+</h3>
+<h3><code class="mendoza-code">#define JANET_PATCH 3</code>
+</h3>
+<h3><code class="mendoza-code">#define JANET_EXTRA "-dev"</code>
+</h3>
+<h3><code class="mendoza-code">#define JANET_VERSION "1.2.3-dev"</code>
+</h3>
+<p>Use these defines to set the janet version.
+The major, minor, and patch values must be in sync with the version string.
+</p>
+<h3><code class="mendoza-code">#define JANET_BUILD "my-local-build"</code>
+</h3>
+<p>Set this to any string such as <code class="mendoza-code">"local"</code> to set what value <code class="mendoza-code">janet/build</code> will have at runtime.
+By default, is set to a git commit hash.
+</p>
+<h3><code class="mendoza-code">#define JANET_SINGLE_THREADED</code>
+</h3>
+<p>Define this if you know the interpreter will only run in a single threaded program or context. When
+this define is set, global Janet state will use normal global C variables rather than thread local
+variables.
+</p>
+<p>Setting this also disables the <code class="mendoza-code">thread/</code> module.
+</p>
+<h3><code class="mendoza-code">#define JANET_NO_DYNAMIC_MODULES</code>
+</h3>
+<p>Define this to disable loading of dynamic modules via the <code class="mendoza-code">native</code> function. This also lets
+Janet run on platforms without <code class="mendoza-code">dlopen</code> or Windows, as well as letting Janet be compiled
+without linking to <code class="mendoza-code">-ldl</code> on Posix.
+</p>
+<h3><code class="mendoza-code">#define JANET_NO_ASSEMBLER</code>
+</h3>
+<p>Define this to disable the functions <code class="mendoza-code">asm</code> and <code class="mendoza-code">disasm</code> in the core library. The assembler
+is not needed to run most programs, can is useful for inspecting functions, debugging, and writing
+a compiler for the Janet abstract machine.
+</p>
+<h3><code class="mendoza-code">#define JANET_NO_PEG</code>
+</h3>
+<p>Define this to disable the <code class="mendoza-code">peg</code> module. The core Janet library should work without the peg module, and
+be slightly smaller, but this flag is not recommended as the peg module itself is actually quite
+small. This disables the functions <code class="mendoza-code">peg/match</code> and <code class="mendoza-code">peg/compile</code>.
+</p>
+<h3><code class="mendoza-code">#define JANET_NO_INT_TYPES</code>
+</h3>
+<p>Define this to disable the `int` module. The `int` module contains abstract types and methods
+for integers that cannot fit in a Janet number. The only integer types currently support are signed
+and unsigned 64 bit integers. The current implementation makes this module quite large.
+</p>
+<h3><code class="mendoza-code">#define JANET_REDUCED_OS</code>
+</h3>
+<p>Define this to compile the `os` module with only the bar minimum needed for <code class="mendoza-code">boot.janet</code>. This
+is just <code class="mendoza-code">os/exit</code>, <code class="mendoza-code">os/getenv</code>, and <code class="mendoza-code">os/which</code>. All other functions in the <code class="mendoza-code">os</code>
+module will be disabled.
+</p>
+<h3><code class="mendoza-code">#define JANET_API __attribute__((visibility ("default")))</code>
+</h3>
+<p>Set this define to change how Janet symbols in the core library are exported. If using dynamic
+modules, all symbols in the Janet core library must be publicly visible. It is not recommended to change
+this unless you are dramatically changing the build system.
+</p>
+<h3><code class="mendoza-code">#define JANET_OUT_OF_MEMORY do { printf("oops!\n"); exit(1); } while (0)</code>
+</h3>
+<p>Set this macro to decide what Janet will do if it runs out of memory. Be default, the program
+will print an error message and exit, but you may want Janet to clean up resources or
+<code class="mendoza-code">longjmp</code> somewhere if using Janet in a larger application.
+</p>
+<h3><code class="mendoza-code">#define JANET_RECURSION_GUARD 1024</code>
+</h3>
+<p>Set this to a positive integer to prevent recursive functions in C from causing a segfault via
+a stack overflow. All recursive functions in Janet use a counter to keep them from overflowing
+the stack, and will error if the recursion gets too deep. Use this to set how many recursions
+are allowed before errors. Functions that have such a limitation are <code class="mendoza-code">compile</code> and <code class="mendoza-code">marshal</code>.
+</p>
+<h3><code class="mendoza-code">#define JANET_MAX_PROTO_DEPTH 200</code>
+</h3>
+<p>Set this define to determine how many tables to recursively check for prototypes before
+throwing an error. This is needed as it is easily possible to create tables that form
+a cyclic prototype loop, which would otherwise stall the VM if we do not detect it.
+</p>
+<h3><code class="mendoza-code">#define JANET_MAX_MACRO_EXPAND 200</code>
+</h3>
+<p>Set this define to limit the number of times a form can be macro expanded. This is also
+to limit the damage that could be caused by a recursive macro, although even simple recursive
+macros can stall the VM with even modest recursion limits.
+</p>
+<h3><code class="mendoza-code">#define JANET_STACK_MAX 16384</code>
+</h3>
+<p>Set the default maximum size of a fiber's stack in number of Janet values. This means that a max stack of
+1000 will be able to store approximately 1000 Janet values on the stack, <strong>NOT</strong> that the fiber can
+hold 1000 stack frames. This can also be changed on a per fiber basis at runtime, although each new fiber
+will have stack maximum set to this value by default. Setting a maximum stack size per stack is only useful
+for more quickly detecting stack overflow issues, but each fiber stack starts with a minimum amount of memory
+and only expands as needed. This means that setting this value to a lower value will not make Janet use less memory.
+</p>
+<h3><code class="mendoza-code">#define JANET_NO_NANBOX</code>
+</h3>
+<p>Internally, Janet uses a technique called nanboxing to make each Janet value take less memory and allow the VM to be faster
+(although Janet mainly uses the technique for the first reason). This technique, however, is not valid C of any kind, and will
+only work correctly on some architectures. Many 64 bit architectures will have trouble with the nanboxing code, so it is by
+default turned off on 64 bit, non x86 architectures. However, one may also want to turn off nanboxing for other reasons, so
+this flag is exposed for that reason. If an unsupported architecture mistakenly tries to use nanboxing, this could be
+considered a bug and the platform detection
+macros in <code class="mendoza-code">janet.h</code> should be updated to disable nanboxing for that platform.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="embedding.html"><span class="prevnext-text">Embedding</span></a></span>
+          <span class="next"><a href="array.html"><span class="prevnext-text">Array C API</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on May 14, 2022 at 20:58:27 (UTC) with Janet 1.22.0-5b2a402</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

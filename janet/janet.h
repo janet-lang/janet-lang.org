@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 20
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 22
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.20.1"
+#define JANET_VERSION "1.22.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -2036,7 +2036,6 @@ extern JANET_API const JanetAbstractType janet_file_type;
 #define JANET_FILE_CLOSED 32
 #define JANET_FILE_BINARY 64
 #define JANET_FILE_SERIALIZABLE 128
-#define JANET_FILE_PIPED 256
 #define JANET_FILE_NONIL 512
 
 JANET_API Janet janet_makefile(FILE *f, int32_t flags);

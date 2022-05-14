@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>PEG Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="PEG Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="ev.html">ev</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span class="selected"><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.22.0-5b2a402 Documentation<br>(Other Versions:
+          
+          <a href="../../1.21.0/api/peg.html">1.21.0</a>
+          
+          <a href="../../1.20.0/api/peg.html">1.20.0</a>
+          
+          <a href="../../1.19.0/api/peg.html">1.19.0</a>
+          
+          <a href="../../1.18.1/api/peg.html">1.18.1</a>
+          
+          <a href="../../1.17.1/api/peg.html">1.17.1</a>
+          
+          <a href="../../1.16.1/api/peg.html">1.16.1</a>
+          
+          <a href="../../1.15.0/api/peg.html">1.15.0</a>
+          
+          <a href="../../1.13.1/api/peg.html">1.13.1</a>
+          
+          <a href="../../1.12.2/api/peg.html">1.12.2</a>
+          
+          <a href="../../1.11.1/api/peg.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/peg.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/peg.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/peg.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/peg.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/peg.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/peg.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/peg.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/peg.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/peg.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">PEG Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="os.html"><span class="prevnext-text">OS Module</span></a></span>
+
+          <span class="next"><a href="parser.html"><span class="prevnext-text">Parser Module</span></a></span>
+        </div>
+        
+
+<p>See <a href="/docs/peg.html">The peg documentation</a> for more information.
+</p>
+<h2 id="Index-13">Index
+</h2>
+<p><a href="#peg/compile">peg/compile</a> <a href="#peg/find">peg/find</a> <a href="#peg/find-all">peg/find-all</a> <a href="#peg/match">peg/match</a> <a href="#peg/replace">peg/replace</a> <a href="#peg/replace-all">peg/replace-all</a> </p><hr><div class="binding"><span id="peg/compile" class="binding-sym">peg/compile</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/5b2a402/src/core/peg.c#L1606">source</a></span> <pre class="binding-text">(peg/compile peg)
+
+Compiles a peg source data structure into a &lt;core/peg&gt;. This will speed up matching if the same peg will be used multiple times. Will also use `(dyn :peg-grammar)` to suppliment the grammar of the peg for otherwise undefined peg keywords.</pre><a href="https://janetdocs.com/peg/compile">Community Examples</a></div><hr><div class="binding"><span id="peg/find" class="binding-sym">peg/find</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/5b2a402/src/core/peg.c#L1680">source</a></span> <pre class="binding-text">(peg/find peg text &amp;opt start &amp; args)
+
+Find first index where the peg matches in text. Returns an integer, or nil if not found.</pre><a href="https://janetdocs.com/peg/find">Community Examples</a></div><hr><div class="binding"><span id="peg/find-all" class="binding-sym">peg/find-all</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/5b2a402/src/core/peg.c#L1692">source</a></span> <pre class="binding-text">(peg/find-all peg text &amp;opt start &amp; args)
+
+Find all indexes where the peg matches in text. Returns an array of integers.</pre><a href="https://janetdocs.com/peg/find-all">Community Examples</a></div><hr><div class="binding"><span id="peg/match" class="binding-sym">peg/match</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/5b2a402/src/core/peg.c#L1672">source</a></span> <pre class="binding-text">(peg/match peg text &amp;opt start &amp; args)
+
+Match a Parsing Expression Grammar to a byte string and return an array of captured values. Returns nil if text does not match the language defined by peg. The syntax of PEGs is documented on the Janet website.</pre><a href="https://janetdocs.com/peg/match">Community Examples</a></div><hr><div class="binding"><span id="peg/replace" class="binding-sym">peg/replace</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/5b2a402/src/core/peg.c#L1740">source</a></span> <pre class="binding-text">(peg/replace peg repl text &amp;opt start &amp; args)
+
+Replace first match of peg in text with repl, returning a new buffer. The peg does not need to make captures to do replacement. If no matches are found, returns the input string in a new buffer.</pre><a href="https://janetdocs.com/peg/replace">Community Examples</a></div><hr><div class="binding"><span id="peg/replace-all" class="binding-sym">peg/replace-all</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/5b2a402/src/core/peg.c#L1733">source</a></span> <pre class="binding-text">(peg/replace-all peg repl text &amp;opt start &amp; args)
+
+Replace all matches of peg in text with repl, returning a new buffer. The peg does not need to make captures to do replacement.</pre><a href="https://janetdocs.com/peg/replace-all">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="os.html"><span class="prevnext-text">OS Module</span></a></span>
+          <span class="next"><a href="parser.html"><span class="prevnext-text">Parser Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on May 14, 2022 at 20:58:27 (UTC) with Janet 1.22.0-5b2a402</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

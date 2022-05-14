@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Wrapping Types</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Wrapping Types" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="index.html">C API</a></span><ul><li><span class="selected"><a href="wrapping.html">Wrapping Types</a></span></li><li><span><a href="embedding.html">Embedding</a></span></li><li><span><a href="configuration.html">Configuration</a></span></li><li><span><a href="array.html">Array C API</a></span></li><li><span><a href="buffer.html">Buffer C API</a></span></li><li><span><a href="table.html">Table C API</a></span></li><li><span><a href="fiber.html">Fiber C API</a></span></li><li><span><a href="memory-model.html">Memory Model</a></span></li><li><span><a href="writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.22.0-5b2a402 Documentation<br>(Other Versions:
+          
+          <a href="../../1.21.0/capi/wrapping.html">1.21.0</a>
+          
+          <a href="../../1.20.0/capi/wrapping.html">1.20.0</a>
+          
+          <a href="../../1.19.0/capi/wrapping.html">1.19.0</a>
+          
+          <a href="../../1.18.1/capi/wrapping.html">1.18.1</a>
+          
+          <a href="../../1.17.1/capi/wrapping.html">1.17.1</a>
+          
+          <a href="../../1.16.1/capi/wrapping.html">1.16.1</a>
+          
+          <a href="../../1.15.0/capi/wrapping.html">1.15.0</a>
+          
+          <a href="../../1.13.1/capi/wrapping.html">1.13.1</a>
+          
+          <a href="../../1.12.2/capi/wrapping.html">1.12.2</a>
+          
+          <a href="../../1.11.1/capi/wrapping.html">1.11.1</a>
+          
+          <a href="../../1.10.1/capi/wrapping.html">1.10.1</a>
+          
+          <a href="../../1.9.1/capi/wrapping.html">1.9.1</a>
+          
+          <a href="../../1.8.1/capi/wrapping.html">1.8.1</a>
+          
+          <a href="../../1.7.0/capi/wrapping.html">1.7.0</a>
+          
+          <a href="../../1.6.0/capi/wrapping.html">1.6.0</a>
+          
+          <a href="../../1.5.1/capi/wrapping.html">1.5.1</a>
+          
+          <a href="../../1.5.0/capi/wrapping.html">1.5.0</a>
+          
+          <a href="../../1.4.0/capi/wrapping.html">1.4.0</a>
+          
+          <a href="../../1.3.1/capi/wrapping.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Wrapping Types</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">The Janet C API</span></a></span>
+
+          <span class="next"><a href="embedding.html"><span class="prevnext-text">Embedding</span></a></span>
+        </div>
+        
+
+<p>Janet has several built-in fundamental data types. These data types are the
+bread and butter of the Janet C API, and most functions and macros in the
+API expect at least some of their arguments to be of these types. However, as Janet is
+a dynamically typed language, Janet internally uses a boxed representation of these
+types, simply called <code class="mendoza-code">Janet</code>.
+</p>
+<p>Functions that are specific to a particular type expect the unboxed or
+unwrapped type, while operations that are generic to Janet values will
+typically expect a <code class="mendoza-code">Janet</code>. It is important to be able to convert between
+these two representations in order to interact with Janet from C.
+</p>
+<h2 id="Wrapping-Functions">Wrapping Functions
+</h2>
+<p>These functions convert a C type into a generic Janet value.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_nil</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_number</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">double</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_true</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_false</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_boolean</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_string</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_symbol</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_keyword</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_array</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetArray</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_tuple</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_struct</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">JanetKV</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_fiber</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_buffer</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_function</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_cfunction</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetCFunction</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_table</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_abstract</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_pointer</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_wrap_integer</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><h2 id="Unwrapping-Functions">Unwrapping Functions
+</h2>
+<p>These function convert from a <code class="mendoza-code">Janet</code> to a
+more specific C type. If the Janet being unwrapped is
+not actually the returned type, the behavior is undefined.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">JanetKV</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_struct</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_tuple</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_fiber</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JanetArray</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_array</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_table</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JanetBuffer</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_buffer</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_string</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_symbol</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_keyword</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-type">void</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_abstract</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-type">void</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_pointer</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_unwrap_function</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JanetCFunction</span> <span class="mdzsyn-identifier">janet_unwrap_cfunction</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">janet_unwrap_boolean</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-type">double</span> <span class="mdzsyn-identifier">janet_unwrap_number</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">janet_unwrap_integer</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><h2 id="Janet-Types">Janet Types
+</h2>
+<p>Before unwrapping a Janet value, one should check the value is of the
+correct Janet type. Janet provides two macros for checking this, <code class="mendoza-code">janet_checktype</code>
+and <code class="mendoza-code">janet_checktypes</code>. These macros may be more efficient than the more
+obvious way of checking types via <code class="mendoza-code">janet_type(x) == JANET_ARRAY</code>, and so
+are preferred.
+</p>
+<p>The enum <code class="mendoza-code">JanetType</code> represents the base type of a Janet value. There are
+are exactly 16 basic types.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-keyword">typedef</span> <span class="mdzsyn-type">enum</span> <span class="mdzsyn-identifier">JanetType</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-identifier">JANET_NUMBER</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_NIL</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_BOOLEAN</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_FIBER</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STRING</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_SYMBOL</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_KEYWORD</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_ARRAY</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_TUPLE</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_TABLE</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STRUCT</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_BUFFER</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_FUNCTION</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_CFUNCTION</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_ABSTRACT</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_POINTER</span>
+<span class="mdzsyn-operator">}</span> <span class="mdzsyn-identifier">JanetType</span><span class="mdzsyn-operator">;</span></code></pre><hr><pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-comment">/* macro */</span>
+<span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">janet_checktype</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">JanetType</span> <span class="mdzsyn-identifier">type</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Checks the type x, and returns a non zero value if x is the correct type, and
+0 otherwise. Usually, you will want to use this function before unwrapping a value.
+</p>
+<hr><pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-comment">/* macro */</span>
+<span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">janet_checktypes</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">typeflags</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Similar to <code class="mendoza-code">janet_checktype</code>, but allows the programmer to check multiple types
+at once, in an efficient manner. <code class="mendoza-code">typeflags</code> should be a bit set of all of the types
+to check membership for. For example, to check if <code class="mendoza-code">x</code> is one of nil or a number, you
+would call
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">janet_checktypes</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">1</span> <span class="mdzsyn-operator">&lt;</span><span class="mdzsyn-operator">&lt;</span> <span class="mdzsyn-identifier">JANET_NIL</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">|</span> <span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">1</span> <span class="mdzsyn-operator">&lt;</span><span class="mdzsyn-operator">&lt;</span> <span class="mdzsyn-identifier">JANET_NUMBER</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">)</span></code></pre><p>There are also several aliases so you don't need to do the shift yourself.
+</p>
+<pre class="mendoza-codeblock"><code>#define JANET_TFLAG_NIL (1 &lt;&lt; JANET_NIL)
+#define JANET_TFLAG_BOOLEAN (1 &lt;&lt; JANET_BOOLEAN)
+#define JANET_TFLAG_FIBER (1 &lt;&lt; JANET_FIBER)
+#define JANET_TFLAG_NUMBER (1 &lt;&lt; JANET_NUMBER)
+#define JANET_TFLAG_STRING (1 &lt;&lt; JANET_STRING)
+#define JANET_TFLAG_SYMBOL (1 &lt;&lt; JANET_SYMBOL)
+#define JANET_TFLAG_KEYWORD (1 &lt;&lt; JANET_KEYWORD)
+#define JANET_TFLAG_ARRAY (1 &lt;&lt; JANET_ARRAY)
+#define JANET_TFLAG_TUPLE (1 &lt;&lt; JANET_TUPLE)
+#define JANET_TFLAG_TABLE (1 &lt;&lt; JANET_TABLE)
+#define JANET_TFLAG_STRUCT (1 &lt;&lt; JANET_STRUCT)
+#define JANET_TFLAG_BUFFER (1 &lt;&lt; JANET_BUFFER)
+#define JANET_TFLAG_FUNCTION (1 &lt;&lt; JANET_FUNCTION)
+#define JANET_TFLAG_CFUNCTION (1 &lt;&lt; JANET_CFUNCTION)
+#define JANET_TFLAG_ABSTRACT (1 &lt;&lt; JANET_ABSTRACT)
+#define JANET_TFLAG_POINTER (1 &lt;&lt; JANET_POINTER)
+
+/* Some abstractions */
+#define JANET_TFLAG_BYTES (JANET_TFLAG_STRING | JANET_TFLAG_SYMBOL | JANET_TFLAG_BUFFER | JANET_TFLAG_KEYWORD)
+#define JANET_TFLAG_INDEXED (JANET_TFLAG_ARRAY | JANET_TFLAG_TUPLE)
+#define JANET_TFLAG_DICTIONARY (JANET_TFLAG_TABLE | JANET_TFLAG_STRUCT)
+#define JANET_TFLAG_LENGTHABLE (JANET_TFLAG_BYTES | JANET_TFLAG_INDEXED | JANET_TFLAG_DICTIONARY)
+#define JANET_TFLAG_CALLABLE (JANET_TFLAG_FUNCTION | JANET_TFLAG_CFUNCTION | \
+        JANET_TFLAG_LENGTHABLE | JANET_TFLAG_ABSTRACT)</code></pre><p>The resulting call would look like:
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">janet_checktypes</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">JANET_TFLAG_NIL</span> <span class="mdzsyn-operator">|</span> <span class="mdzsyn-identifier">JANET_TFLAG_NUMBER</span><span class="mdzsyn-operator">)</span></code></pre><hr><pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-identifier">JanetType</span> <span class="mdzsyn-identifier">janet_type</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">x</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Returns the type of Janet value.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">The Janet C API</span></a></span>
+          <span class="next"><a href="embedding.html"><span class="prevnext-text">Embedding</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on May 14, 2022 at 20:58:27 (UTC) with Janet 1.22.0-5b2a402</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
