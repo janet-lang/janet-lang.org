@@ -61,19 +61,27 @@ symbol evaluate to itself, it must be quoted.
 
 Strings can be used similarly to keywords, but their primary usage is for
 defining either text or arbitrary sequences of bytes. Strings (and symbols) in
-Janet are what is sometimes known as ˝8-bit clean˝; they can hold any number of
+Janet are what is sometimes known as "8-bit clean"; they can hold any number of
 bytes, and are completely unaware of things like character encodings. This is
 completely compatible with ASCII and UTF-8, two of the most common character
 encodings. By being encoding agnostic, Janet strings can be simple, fast, and
 useful for other uses besides holding text.
 
-Literal text can be entered inside quotes, as we have seen above.
+Literal text can be entered inside double quotes, as we have seen above.
 
 @codeblock[janet]```
 "Hello, this is a string."
 
-# We can also add escape characters for newlines, double quotes, backslash, tabs, etc.
+# We can also add escape characters for newlines, double quotes, backslash,
+# tabs, etc.
 "Hello\nThis is on line two\n\tThis is indented\n"
+
+# If your double-quoted string spans multiple lines, newline characters will
+# be removed but other whitespace is preserved.
+"Hello, this
+    is al
+l one line
+here."   # -> "Hello, this    is all one linehere."
 
 # For long-strings where you don't want to type a lot of escape characters,
 # you can use 1 or more backticks (`) to delimit a string.
