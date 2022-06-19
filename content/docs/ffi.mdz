@@ -1,0 +1,289 @@
+{:title "Foreign Function Interface"
+ :template "docpage.html"
+ :order 25}
+---
+
+Starting in version 1.23.0, Janet includes a Foreign Function Interface module on x86-64, non-Windows
+systems. This lets programmers more easily call into native code without needing to write extensive
+native bindings in C, which is often very tedious. While the FFI is convenient and quite general, it
+lacks both the flexibility, safety, and speed of bindings written against the Janet C API.
+Programmers should be aware of this before choosing FFI bindings over a traditional
+native module. It is also possible to use a hybrid approach, where some core functionality is exposed via a
+C extension module, and the majority of an API is bound via FFI.
+
+The FFI Module contains both the low-level primitives to load dynamic libraries (as with @code`dlopen` on posix systems), get
+function pointers from those modules, and call those function pointers. On top of this, there is a macro based abstraction that makes it convenient to declare bindings and is sufficient in most cases.
+
+## Primitive Types
+
+Primitive types in the FFI syntax are specified with keywords, and map directly to primitive
+type in C. There are a number of aliases for common types, such as the Linux kernel source style aliases
+for sized integer types. More complex types can be built of from these primitive types. On x86-64, long
+doubles are unsupported.
+
+@tag[table]{
+    @tr{@th{Primitive Type} @th{Corresponding C Type}}
+    @tr{@td{@code`:void`} @td{void}}
+    @tr{@td{@code`:bool`} @td{bool}}
+    @tr{@td{@code`:ptr`} @td{void *}}
+    @tr{@td{@code`:string`} @td{const char *}}
+    @tr{@td{@code`:float`} @td{float}}
+    @tr{@td{@code`:double`} @td{double}}
+    @tr{@td{@code`:int8`} @td{int8_t}}
+    @tr{@td{@code`:uint8`} @td{uint8_t}}
+    @tr{@td{@code`:int16`} @td{int16_t}}
+    @tr{@td{@code`:uint16`} @td{uint16_t}}
+    @tr{@td{@code`:int32`} @td{int32_t}}
+    @tr{@td{@code`:uint32`} @td{uint32_t}}
+    @tr{@td{@code`:int64`} @td{int64_t}}
+    @tr{@td{@code`:uint64`} @td{uint64_t}}
+    @tr{@td{@code`:size`} @td{size}}
+    @tr{@td{@code`:ssize`} @td{ssize}}
+    @tr{@td{@code`:r32`} @td{float}}
+    @tr{@td{@code`:r64`} @td{double}}
+    @tr{@td{@code`:s8`} @td{int8_t}}
+    @tr{@td{@code`:u8`} @td{uint8_t}}
+    @tr{@td{@code`:s16`} @td{int16_t}}
+    @tr{@td{@code`:u16`} @td{uint16_t}}
+    @tr{@td{@code`:s32`} @td{int32_t}}
+    @tr{@td{@code`:u32`} @td{uint32_t}}
+    @tr{@td{@code`:s64`} @td{int64_t}}
+    @tr{@td{@code`:char`} @td{char}}
+    @tr{@td{@code`:short`} @td{short}}
+    @tr{@td{@code`:int`} @td{int}}
+    @tr{@td{@code`:long`} @td{long}}
+    @tr{@td{@code`:byte`} @td{uint8_t}}
+    @tr{@td{@code`:uchar`} @td{uint8_t}}
+    @tr{@td{@code`:ushort`} @td{unsigned short}}
+    @tr{@td{@code`:uint`} @td{unsigned int}}
+    @tr{@td{@code`:ulong`} @td{unsigned long}}
+}
+
+All primitive types with the exception of @code`:void`, @code`:bool`, @code`:ptr`, and @code`:string` are numeric
+types. 64 bit integer types can also be mapped to Janet's 64 bit integers if the @code`int/` module is enabled.
+The void type can only be used as a return value, and bool maps to either Janet @code`true` or Janet @code`false`.
+The @code`:string` type will map a Janet string to a @code`const char *` and vice-versa.
+
+The @code`:ptr` type is the most flexible, catch-all type. All bytes sequence types, raw pointers, nil and abstract types
+can be converted to raw pointers (NULL is mapped to nil). If the native function will mutate data in the pointer, be sure not to pass in strings, symbols
+and keywords, as these are expected to be immutable. Buffers can be mutated freely. Functions returning pointers
+(either directly or in a struct) will return raw, opaque pointers. Data in the pointer can be inspected with @code`ffi/read`
+if needed.
+
+## Structs
+
+FFI struct types (not to be confused with Janet structs) can be created with the @code`ffi/struct` function. All @code`ffi/` functions that take type arguments
+will implicitly create structs if passed tuples for convenience, but if you are going to reuse a struct definition, it
+is recommended to create the struct explicitly. Otherwise, multiple copies of identical struct definitions will be
+allocated.
+
+Struct creation simply takes all of the types inside the struct in layout order; elements are not
+named. However, this is sufficient for interfacing with libraries and reduces overhead when mapping
+to Janet values.
+
+@codeblock[janet]```
+(def my-struct (ffi/struct :int :int :ptr))
+# Maps to the following in C:
+# struct my_struct {
+#   int a;
+#   int b;
+#   void *c;
+# }
+```
+
+Packed structs are also supported, either for all struct members or for individual members.
+To specify a single member as packed, precede the member type with the keyword @code`:pack`.
+To indicate that all members of the struct should be packed, include @code`:pack-all`
+somewhere in the struct definition.
+
+@codeblock[janet]```
+(ffi/size (ffi/struct :char :int)) # -> 8
+(ffi/size (ffi/struct :char :pack :int)) # -> 5
+```
+
+C structs map to Janet tuples - that is, to pass a struct to an FFI function, pass in a tuple, and
+struct-returning functions will return tuples. To
+map C structs to other types (such as a Janet struct), you must do the conversion manually.
+
+## Array Types
+
+Array types are defined with a Janet array of one or two elements - the first element is the
+type of array elements, and the optional second
+element is the number of elements in the array. If there is no second element, the type is a 0 element array
+which can be used to implement flexible array members as defined in C99.
+
+(Although a zero-length has a size of zero, it has a required alignment so needs to be included
+ in struct definitions.)
+
+@codeblock[janet]```
+(ffi/size @[:int 10]) # -> 40
+(ffi/size @[:int 0]) # -> 0
+(ffi/size [:char]) # -> 1
+(ffi/size [:char @[:int]]) # -> 4
+```
+
+## Using Buffers - @code`ffi/write` and @code`ffi/read`
+
+While primitive types and nested struct types will be converted to and from Janet values automatically, the FFI
+will not dereference pointers for you as a general rule, with the exception of returning string types. You also
+cannot use the common C idiom of converting between arrays and pointers as needed since Janet values are not laid
+out in memory as any C ABI specifies. To pass a pointer to a struct or array of values to a native FFI
+function, one must use @code`ffi/write` to write Janet values to a buffer. That buffer can then be passed as
+a @code`:ptr` type to a function.
+
+@codeblock[janet]```
+(ffi/context "./mylib.so")
+(def my-type (ffi/struct :char [@:int 4]))
+(ffi/defbind takes_a_pointer :void [a :ptr])
+(def buf (ffi/write my-type [100 [0 1 2 3]]))
+(takes_a_pointer buf)
+```
+
+When using buffers in this manner, keep in mind that pointers written to the buffer cannot be followed by the garbage collector. Is up
+to the programmer to ensure such pointers do not become invalid by either keeping explicit references to these values or (temporarily) turning off the garbage collector.
+
+The inverse of this process is dereferencing a returned pointer. @code`ffi/read` takes
+either a byte sequence, an abstract type, or a raw pointer and extracts the data at that
+address into Janet values.
+
+@codeblock[janet]```
+(ffi/context "./mylib.so")
+(def my-type (ffi/struct :char [@:int 4]))
+(ffi/defbind returns_a_pointer :ptr [])
+(def pointer (returns_a_pointer))
+(pp (ffi/read my-type pointer))
+```
+
+## Getting Function Pointers and Calling Them
+
+The FFI module can use any opaque pointer as a function pointer, and while usually you
+will be loading functions from native modules loaded with @code`ffi/native`, you
+can use pointer values obtained from anywhere in your program. Of course, if these
+pointers are not actually C function pointers, your program will likely crash.
+
+To load a dynamic library (.so) file, use @code`(ffi/native path-to-lib)`. This
+will return an abstract type that can be used to look up symbols. You can pass @code`nil`
+as the path to return the current binary's symbols. The function
+@code`(ffi/lookup native-module symbol-name)` is then used to get pointers from the shared object.
+
+Once you have a function pointer, you will still need a function signature to call
+the function. Function signatures are created with
+@code`ffi/signature calling-convention return-type & args)`.
+Since certain functions may use calling conventions besides the default, you may specify
+the convention, such as @code`:sysv64`, or use @code`:default` to use the default
+calling convention on your system. As of version 1.23.0, @code`:sysv64` is the only
+supported calling convention. Not all systems and operating systems will support all
+calling conventions. Varargs are not supported.
+
+Once you have both a function pointer and a function signature, you can finally
+make a call to your function with @code`(ffi/call function-pointer function-signature & arguments)`
+You will probably want to save the function pointer and signature rather than recalculate them
+on each use.
+
+@codeblock[janet]```
+(def self-symbols (ffi/native))
+(def memcpy (ffi/lookup self-symbols "memcpy"))
+(def signature (ffi/signature :ptr :ptr :ptr :size))
+
+# Example usage of our memcpy binding
+(def buffer1 @"aaaa")
+(def buffer2 @"bbbb")
+(ffi/call memcpy signature buffer1 buffer2 4)
+(print buffer1) # prints bbbb
+```
+
+## High-Level API - @code`ffi/context` and @code`ffi/defbind`.
+
+Using the low-level api to manually load dynamic libraries can get rather tedious, so the FFI module has a few
+macros and functions to make it easier. The function @code`ffi/context` is used to select a native module that
+subsequent bindings will refer to. @code`ffi/defbind` will then lookup function pointers, create signature values, and
+create Janet wrappers around ffi/call for you. The memcpy example from above would look like so with the high level api:
+
+@codeblock[janet]```
+(ffi/context nil)
+(ffi/defbind memcpy :ptr
+  [dest :ptr src :ptr n :size])
+
+(def buffer1 @"aaaa")
+(def buffer2 @"bbbb")
+(memcpy buffer1 buffer2 4)
+(print buffer1) # prints bbbb
+```
+
+This code uses @code`ffi/native`, @code`ffi/lookup`, @code`ffi/signature`, @code`ffi/call` behind the scenes, and you can mix
+and match the @code`ffi/defbind` macro with explicit bindings.
+
+## Callbacks
+
+One limitation of Janet's FFI module is passing function pointers to C functions, such as in @code`qsort`.
+This is unsupported in the general case, as it requires runtime generation of machine code.
+Instead, callback functions must be written in C. Often, a C library will allow setting some kind
+of user data, which will then be passed back when the callback is invoked by the library. One could put a
+@code`JanetFunction *` into that user data slot and have a common "trampoline" native function
+that can be a sort of universal callback that would call that userdata parameter it received as a JanetFunction.
+While this is far from general, it is effective in many cases, and so the @code`ffi/module` provides
+one such function pointer out of the box with @code`ffi/trampoline`.
+
+## GTK Example
+
+One good use for FFI bindings are interfacing with GUI libraries.
+For example, one could be building a standalone binary
+that could detect available GUI libraries on the host system, and use FFI bindings to interact with the host
+GUI framework that was detected. Below is an example of what FFI with GTK might look
+like using the high-level, macro based abstraction with @code`ffi/context` and @code`ffi/defbind`.
+
+@codeblock[janet]```
+(ffi/context "/usr/lib/libgtk-3.so" :lazy true)
+
+(ffi/defbind
+  gtk-application-new :ptr
+  [title :string flags :uint])
+
+(ffi/defbind
+  g-signal-connect-data :ulong
+  [a :ptr b :ptr c :ptr d :ptr e :ptr f :int])
+
+(ffi/defbind
+  g-application-run :int
+  [app :ptr argc :int argv :ptr])
+
+(ffi/defbind
+  gtk-application-window-new :ptr
+  [a :ptr])
+
+(ffi/defbind
+  gtk-button-new-with-label :ptr
+  [a :ptr])
+
+(ffi/defbind
+  gtk-container-add :void
+  [a :ptr b :ptr])
+
+(ffi/defbind
+  gtk-widget-show-all :void
+  [a :ptr])
+
+(ffi/defbind
+  gtk-button-set-label :void
+  [a :ptr b :ptr])
+
+(def cb (delay (ffi/trampoline :default)))
+
+(defn on-active
+  [app]
+  (def window (gtk-application-window-new app))
+  (def btn (gtk-button-new-with-label "Click Me!"))
+  (g-signal-connect-data btn "clicked" (cb)
+                         (fn [btn] (gtk-button-set-label btn "Hello World"))
+                         nil 1)
+  (gtk-container-add window btn)
+  (gtk-widget-show-all window))
+
+(defn main
+  [&]
+  (def app (gtk-application-new "org.janet-lang.example.HelloApp" 0))
+  (g-signal-connect-data app "activate" (cb) on-active nil 1)
+  # manually build an array with ffi/write
+  (g-application-run app 0 nil))
+```
+
