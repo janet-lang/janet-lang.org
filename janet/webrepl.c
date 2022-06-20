@@ -24,7 +24,7 @@
 #include <emscripten.h>
 
 static const char startup[] =
-"(print (string `Janet ` janet/version `-` janet/build `  Copyright (C) 2017-2019 Calvin Rose`))\n"
+"(print (string `Janet ` janet/version `-` janet/build ` ` (os/which) `/` (os/arch) ` - '(doc)' for help`))\n"
 "(fiber/new (fn webrepl []\n"
 "             (setdyn :pretty-format `%.20P`)\n"
 "             (repl (fn get-line [buf p]\n"
