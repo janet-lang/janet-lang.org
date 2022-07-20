@@ -53,6 +53,21 @@ can build Janet from source.  Janet only uses Make and batch files to compile on
 POSIX and Windows respectively. To configure Janet, edit the header file
 @code`src/conf/janetconf.h` before compilation.
 
+### Non-root install (macOS and Unix-like)
+
+To build and install Janet (and jpm) to a local or temporary directory tree instead of the default
+prefix of @code`/usr/local`, set the @code`PREFIX` environment variable while building and installing.
+You will like likely also want to update your path to point to @code`PREFIX/bin` to use
+@code`janet`, @code`jpm`, and any scripts installed via @code`jpm`.
+
+@codeblock```
+export PREFIX="$HOME"/.local
+make -j
+make install
+make install-jpm-git # you can also do this manually by reading the janet-lang/jpm.git readme
+export PATH="$PREFIX"/bin:"$PATH"
+```
+
 ### macOS and Unix-like
 
 On most platforms, use Make to build Janet. The resulting files (including the
