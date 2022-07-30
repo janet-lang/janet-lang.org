@@ -295,6 +295,15 @@ grammars simpler.
         @td{ Duplicates the last capture with the tag @code`tag`. If no such
         capture exists then the match fails. }}
 
+    @tr{@td{@code`(unref patt ?tag)` }
+        @td{Lets a user "scope" tagged captures.
+        After the rule has matched, all captures with the given tag can no longer be
+        referred to by their tag. However, such captures from outside
+        rule are kept as is. If no tag is given, all tagged captures from rule
+        are unreferenced. Note that this doesn't drop the captures, merely
+        removes their association with the tag. This means subsequent calls to
+        backref and backmatch will no longer "see" these tagged captures. }}
+
     @tr{@td{@code`(-> tag ?tag)` }
         @td{ Alias for @code`(backref tag)`. }}
 
