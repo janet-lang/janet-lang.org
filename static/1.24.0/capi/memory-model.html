@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Janet's Memory Model</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Janet's Memory Model" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li><li><span><a href="../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="index.html">C API</a></span><ul><li><span><a href="wrapping.html">Wrapping Types</a></span></li><li><span><a href="embedding.html">Embedding</a></span></li><li><span><a href="configuration.html">Configuration</a></span></li><li><span><a href="array.html">Array C API</a></span></li><li><span><a href="buffer.html">Buffer C API</a></span></li><li><span><a href="table.html">Table C API</a></span></li><li><span><a href="fiber.html">Fiber C API</a></span></li><li><span class="selected"><a href="memory-model.html">Memory Model</a></span></li><li><span><a href="writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.24.0-34496ec Documentation<br>(Other Versions:
+          
+          <a href="../../1.23.0/capi/memory-model.html">1.23.0</a>
+          
+          <a href="../../1.22.0/capi/memory-model.html">1.22.0</a>
+          
+          <a href="../../1.21.0/capi/memory-model.html">1.21.0</a>
+          
+          <a href="../../1.20.0/capi/memory-model.html">1.20.0</a>
+          
+          <a href="../../1.19.0/capi/memory-model.html">1.19.0</a>
+          
+          <a href="../../1.18.1/capi/memory-model.html">1.18.1</a>
+          
+          <a href="../../1.17.1/capi/memory-model.html">1.17.1</a>
+          
+          <a href="../../1.16.1/capi/memory-model.html">1.16.1</a>
+          
+          <a href="../../1.15.0/capi/memory-model.html">1.15.0</a>
+          
+          <a href="../../1.13.1/capi/memory-model.html">1.13.1</a>
+          
+          <a href="../../1.12.2/capi/memory-model.html">1.12.2</a>
+          
+          <a href="../../1.11.1/capi/memory-model.html">1.11.1</a>
+          
+          <a href="../../1.10.1/capi/memory-model.html">1.10.1</a>
+          
+          <a href="../../1.9.1/capi/memory-model.html">1.9.1</a>
+          
+          <a href="../../1.8.1/capi/memory-model.html">1.8.1</a>
+          
+          <a href="../../1.7.0/capi/memory-model.html">1.7.0</a>
+          
+          <a href="../../1.6.0/capi/memory-model.html">1.6.0</a>
+          
+          <a href="../../1.5.1/capi/memory-model.html">1.5.1</a>
+          
+          <a href="../../1.5.0/capi/memory-model.html">1.5.0</a>
+          
+          <a href="../../1.4.0/capi/memory-model.html">1.4.0</a>
+          
+          <a href="../../1.3.1/capi/memory-model.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Janet's Memory Model</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="fiber.html"><span class="prevnext-text">Fiber C API</span></a></span>
+
+          <span class="next"><a href="writing-c-functions.html"><span class="prevnext-text">Writing C Functions</span></a></span>
+        </div>
+        
+
+<p>In order to write a functional and correct C extension to Janet, it
+is necessary to have a good understanding of Janet's memory model. Code
+that does not follow this model may leak memory, especially on errors (panics), and
+may trigger use after free bugs. It is the author's recommendation to test your
+extension with a tool like <a href="http://www.valgrind.org/">valgrind</a> or an address sanitizer
+to ensure that your extension does not access memory in an invalid way.
+</p>
+<h2 id="Janet&#39;s-Garbage-Collector">Janet's Garbage Collector
+</h2>
+<p>Like most dynamic languages, Janet has a garbage collector to clean up unused
+objects. The garbage collector cannot "see" objects allocated via <code class="mendoza-code">malloc</code>/<code class="mendoza-code">free</code>, only
+memory allocated through the function <code class="mendoza-code">janet_gcalloc</code>. It is recommended to not use this function
+at all, and instead use the Janet C API functions for creating Janet data structures that will
+be collected when needed. These data structures will be collected when no longer reachable, ensuring
+that your program does not leak memory. Janet's garbage collector can only run at certain times, meaning
+most of the time when writing a native function you can ignore it. However, any Janet C API function that
+may re-enter the interpreter may trigger a collection, which could collect any data structures you have just allocated.
+The notable exception to this is <code class="mendoza-code">janet_call</code>, which suspends garbage collection until it completes
+for convenience. Other re-entrant functions, like <code class="mendoza-code">janet_pcall</code>, <code class="mendoza-code">janet_continue</code>, <code class="mendoza-code">janet_dobytes</code>, and
+<code class="mendoza-code">janet_dostring</code> may trigger a collection.
+</p>
+<h2 id="Adding-Janet-values-to-the-GC-Root-list">Adding Janet values to the GC Root list
+</h2>
+<p>Janet keeps a global list of objects that are considered reachable. To determine
+all reachable objects, the garbage collector will traverse this list when needed.
+Any value not in this list, or not accessible via traversing this list, is considered
+garbage (with the exception of a few values, such as the current fiber). Notably, this
+means that values allocated in a C function, by default, are considered garbage and will
+be collected at the next collection. Most C functions take advantage of the fact that the
+GC will not run until the interpreter is resumed. However, sometimes it is necessary to
+add a value to the root list so that a temporary value isn't collected before you are finished with it.
+</p>
+<p>Below is an example C function that adds a value to the root list to prevent the garbage collector
+from deleting it.
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">make_some_table</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-identifier">janet_fixarity</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">table</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">janet_table</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">tablev</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">janet_wrap_table</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">table</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+
+    <span class="mdzsyn-comment">// Root the table before potentially calling collect, as
+</span>    <span class="mdzsyn-comment">// no live objects reference the table
+</span>    <span class="mdzsyn-identifier">janet_gcroot</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">tablev</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-identifier">janet_collect</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-identifier">janet_gcunroot</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">tablev</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+
+    <span class="mdzsyn-keyword">return</span> <span class="mdzsyn-identifier">tablev</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-operator">}</span></code></pre>
+</p>
+<p>This does have some downsides, though. First, it may leak memory if the code between <code class="mendoza-code">janet_gcroot</code> and
+<code class="mendoza-code">janet_gcunroot</code> can panic. This isn't as bad as it sounds, as most if not all of the functions in the
+Janet API that can enter the interpreter cannot panic, or will swallow panics and return a signal code instead.
+It is then up to the user to rethrow any panics caught after releasing (or unrooting) the values. Basically, if you use this
+method, you MUST clean up after yourself!
+</p>
+<p>This is also why it is recommended to use <code class="mendoza-code">janet_call</code> over <code class="mendoza-code">janet_pcall</code> if you can. Since <code class="mendoza-code">janet_call</code> suspends
+the garbage collector (including all nested calls to things like <code class="mendoza-code">janet_pcall</code>), there is no need to modify the gcroot
+list on a regular basis. It is also recommended to not use too much re-entrant code, as it will often suspend the garbage collector.
+For example, if you run your entire application inside a call to <code class="mendoza-code">janet_call</code>, the garbage collector will never run.
+</p>
+<h2 id="The">The <code class="mendoza-code">argv</code> array
+</h2>
+<p>Another gotcha in the memory model for the C API is the argument stack to native functions. This
+pointer to a sequence of Janet values is a pointer into the current fiber where the function arguments
+were pushed, and has a short lifespan. Any function that may cause the stack to resize invalidates this pointer, and
+the pointer should be considered invalid after the function returns.
+</p>
+<p>Functions that may cause the stack to resize are any function that modifies a fiber in the fiber API, as
+well as any function that invokes the interpreter. This means functions like <code class="mendoza-code">janet_call</code> will invalidate
+the <code class="mendoza-code">argv</code> pointer to your function!
+</p>
+<p>Example of buggy code:
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">my_bad_cfunc</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-keyword">for</span> <span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">i</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-identifier">i</span> <span class="mdzsyn-operator">&lt;</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-identifier">i</span><span class="mdzsyn-operator">+</span><span class="mdzsyn-operator">+</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+        <span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">func</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">janet_getfunction</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">i</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+        <span class="mdzsyn-identifier">janet_call</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">func</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-constant">NULL</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-operator">}</span>
+    <span class="mdzsyn-keyword">return</span> <span class="mdzsyn-identifier">janet_wrap_nil</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-operator">}</span></code></pre>
+</p>
+<p>This code is incorrect because it tries to access the <code class="mendoza-code">argv</code> pointer
+after <code class="mendoza-code">janet_call</code> has been called. The usual fix to this is to copy the argv
+data into a new array that will not be resized if the stack is. A tuple can
+handily be used for this.
+</p>
+<p>Better code:
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">my_bad_cfunc</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv2</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">janet_tuple_n</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-keyword">for</span> <span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">i</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-identifier">i</span> <span class="mdzsyn-operator">&lt;</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-identifier">i</span><span class="mdzsyn-operator">+</span><span class="mdzsyn-operator">+</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+        <span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">func</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">janet_getfunction</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">argv2</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">i</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+        <span class="mdzsyn-identifier">janet_call</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">func</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-constant">NULL</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-operator">}</span>
+    <span class="mdzsyn-keyword">return</span> <span class="mdzsyn-identifier">janet_wrap_nil</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-operator">}</span></code></pre>
+</p>
+<h2 id="Scratch-Memory">Scratch Memory
+</h2>
+<p>Many algorithms will need to allocate memory, but cleaning up the memory can be difficult to
+correctly integrate with Janet's memory model, considering that many functions in Janet's API
+can panic, longjumping over your clean up code. Rather than trying to prevent panics, it is much
+easier to accept that they can happen and allocate resources that can automatically be cleaned up for you.
+</p>
+<p>Janet brings the concept of scratch memory for this purpose, or memory that will certainly
+be cleaned up at the next collection. This memory can also be freed manually if no error is encountered, making
+sure that we don't generate garbage in the common case.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">*janet_smalloc</span>(<span class="mdzsyn-symbol">size_t</span> <span class="mdzsyn-symbol">size</span>);
+<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">*janet_srealloc</span>(<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">*p</span>, <span class="mdzsyn-symbol">size_t</span> <span class="mdzsyn-symbol">size</span>);
+<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">janet_sfree</span>(<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">*p</span>)</code></pre><h2 id="GC-API">GC API
+</h2>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">janet_mark</span>(<span class="mdzsyn-symbol">Janet</span> <span class="mdzsyn-symbol">x</span>);
+<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">janet_sweep</span>(<span class="mdzsyn-symbol">void</span>);
+<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">janet_collect</span>(<span class="mdzsyn-symbol">void</span>);
+<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">janet_clear_memory</span>(<span class="mdzsyn-symbol">void</span>);
+<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">janet_gcroot</span>(<span class="mdzsyn-symbol">Janet</span> <span class="mdzsyn-symbol">root</span>);
+<span class="mdzsyn-symbol">int</span> <span class="mdzsyn-symbol">janet_gcunroot</span>(<span class="mdzsyn-symbol">Janet</span> <span class="mdzsyn-symbol">root</span>);
+<span class="mdzsyn-symbol">int</span> <span class="mdzsyn-symbol">janet_gcunrootall</span>(<span class="mdzsyn-symbol">Janet</span> <span class="mdzsyn-symbol">root</span>);
+<span class="mdzsyn-symbol">int</span> <span class="mdzsyn-symbol">janet_gclock</span>(<span class="mdzsyn-symbol">void</span>);
+<span class="mdzsyn-symbol">void</span> <span class="mdzsyn-symbol">janet_gcunlock</span>(<span class="mdzsyn-symbol">int</span> <span class="mdzsyn-symbol">handle</span>)</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="fiber.html"><span class="prevnext-text">Fiber C API</span></a></span>
+          <span class="next"><a href="writing-c-functions.html"><span class="prevnext-text">Writing C Functions</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on August 16, 2022 at 00:18:32 (UTC) with Janet 1.24.0-34496ec</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

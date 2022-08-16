@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Foreign Function Interface</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Foreign Function Interface" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span class="selected"><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.24.0-34496ec Documentation<br>(Other Versions:
+          
+          <a href="../../1.23.0/docs/ffi.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/ffi.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/ffi.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/ffi.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/ffi.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/ffi.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/ffi.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/ffi.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/ffi.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/ffi.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/ffi.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/ffi.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/ffi.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/ffi.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/ffi.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/ffi.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/ffi.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/ffi.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/ffi.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/ffi.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/ffi.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Foreign Function Interface</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="linting.html"><span class="prevnext-text">Linting</span></a></span>
+
+          <span class="next"><a href="../api/index.html"><span class="prevnext-text">Core API</span></a></span>
+        </div>
+        
+
+<p>Starting in version 1.23.0, Janet includes a Foreign Function Interface module on x86-64, non-Windows
+systems. This lets programmers more easily call into native code without needing to write extensive
+native bindings in C, which is often very tedious. While the FFI is convenient and quite general, it
+lacks both the flexibility, safety, and speed of bindings written against the Janet C API.
+Programmers should be aware of this before choosing FFI bindings over a traditional
+native module. It is also possible to use a hybrid approach, where some core functionality is exposed via a
+C extension module, and the majority of an API is bound via FFI.
+</p>
+<p>The FFI Module contains both the low-level primitives to load dynamic libraries (as with <code class="mendoza-code">dlopen</code> on posix systems), get
+function pointers from those modules, and call those function pointers. On top of this, there is a macro based abstraction that makes it convenient to declare bindings and is sufficient in most cases.
+</p>
+<h2 id="Primitive-Types">Primitive Types
+</h2>
+<p>Primitive types in the FFI syntax are specified with keywords, and map directly to primitive
+type in C. There are a number of aliases for common types, such as the Linux kernel source style aliases
+for sized integer types. More complex types can be built of from these primitive types. On x86-64, long
+doubles are unsupported.
+</p>
+<table>
+    <tr><th>Primitive Type</th> <th>Corresponding C Type</th></tr>
+    <tr><td><code class="mendoza-code">:void</code></td> <td>void</td></tr>
+    <tr><td><code class="mendoza-code">:bool</code></td> <td>bool</td></tr>
+    <tr><td><code class="mendoza-code">:ptr</code></td> <td>void *</td></tr>
+    <tr><td><code class="mendoza-code">:string</code></td> <td>const char *</td></tr>
+    <tr><td><code class="mendoza-code">:float</code></td> <td>float</td></tr>
+    <tr><td><code class="mendoza-code">:double</code></td> <td>double</td></tr>
+    <tr><td><code class="mendoza-code">:int8</code></td> <td>int8_t</td></tr>
+    <tr><td><code class="mendoza-code">:uint8</code></td> <td>uint8_t</td></tr>
+    <tr><td><code class="mendoza-code">:int16</code></td> <td>int16_t</td></tr>
+    <tr><td><code class="mendoza-code">:uint16</code></td> <td>uint16_t</td></tr>
+    <tr><td><code class="mendoza-code">:int32</code></td> <td>int32_t</td></tr>
+    <tr><td><code class="mendoza-code">:uint32</code></td> <td>uint32_t</td></tr>
+    <tr><td><code class="mendoza-code">:int64</code></td> <td>int64_t</td></tr>
+    <tr><td><code class="mendoza-code">:uint64</code></td> <td>uint64_t</td></tr>
+    <tr><td><code class="mendoza-code">:size</code></td> <td>size</td></tr>
+    <tr><td><code class="mendoza-code">:ssize</code></td> <td>ssize</td></tr>
+    <tr><td><code class="mendoza-code">:r32</code></td> <td>float</td></tr>
+    <tr><td><code class="mendoza-code">:r64</code></td> <td>double</td></tr>
+    <tr><td><code class="mendoza-code">:s8</code></td> <td>int8_t</td></tr>
+    <tr><td><code class="mendoza-code">:u8</code></td> <td>uint8_t</td></tr>
+    <tr><td><code class="mendoza-code">:s16</code></td> <td>int16_t</td></tr>
+    <tr><td><code class="mendoza-code">:u16</code></td> <td>uint16_t</td></tr>
+    <tr><td><code class="mendoza-code">:s32</code></td> <td>int32_t</td></tr>
+    <tr><td><code class="mendoza-code">:u32</code></td> <td>uint32_t</td></tr>
+    <tr><td><code class="mendoza-code">:s64</code></td> <td>int64_t</td></tr>
+    <tr><td><code class="mendoza-code">:char</code></td> <td>char</td></tr>
+    <tr><td><code class="mendoza-code">:short</code></td> <td>short</td></tr>
+    <tr><td><code class="mendoza-code">:int</code></td> <td>int</td></tr>
+    <tr><td><code class="mendoza-code">:long</code></td> <td>long</td></tr>
+    <tr><td><code class="mendoza-code">:byte</code></td> <td>uint8_t</td></tr>
+    <tr><td><code class="mendoza-code">:uchar</code></td> <td>uint8_t</td></tr>
+    <tr><td><code class="mendoza-code">:ushort</code></td> <td>unsigned short</td></tr>
+    <tr><td><code class="mendoza-code">:uint</code></td> <td>unsigned int</td></tr>
+    <tr><td><code class="mendoza-code">:ulong</code></td> <td>unsigned long</td></tr>
+</table><p>All primitive types with the exception of <code class="mendoza-code">:void</code>, <code class="mendoza-code">:bool</code>, <code class="mendoza-code">:ptr</code>, and <code class="mendoza-code">:string</code> are numeric
+types. 64 bit integer types can also be mapped to Janet's 64 bit integers if the <code class="mendoza-code">int/</code> module is enabled.
+The void type can only be used as a return value, and bool maps to either Janet <code class="mendoza-code">true</code> or Janet <code class="mendoza-code">false</code>.
+The <code class="mendoza-code">:string</code> type will map a Janet string to a <code class="mendoza-code">const char *</code> and vice-versa.
+</p>
+<p>The <code class="mendoza-code">:ptr</code> type is the most flexible, catch-all type. All bytes sequence types, raw pointers, nil and abstract types
+can be converted to raw pointers (NULL is mapped to nil). If the native function will mutate data in the pointer, be sure not to pass in strings, symbols
+and keywords, as these are expected to be immutable. Buffers can be mutated freely. Functions returning pointers
+(either directly or in a struct) will return raw, opaque pointers. Data in the pointer can be inspected with <code class="mendoza-code">ffi/read</code>
+if needed.
+</p>
+<h2 id="Structs">Structs
+</h2>
+<p>FFI struct types (not to be confused with Janet structs) can be created with the <code class="mendoza-code">ffi/struct</code> function. All <code class="mendoza-code">ffi/</code> functions that take type arguments
+will implicitly create structs if passed tuples for convenience, but if you are going to reuse a struct definition, it
+is recommended to create the struct explicitly. Otherwise, multiple copies of identical struct definitions will be
+allocated.
+</p>
+<p>Struct creation simply takes all of the types inside the struct in layout order; elements are not
+named. However, this is sufficient for interfacing with libraries and reduces overhead when mapping
+to Janet values.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-struct</span> (<span class="mdzsyn-coresym">ffi/struct</span> <span class="mdzsyn-keyword">:int</span> <span class="mdzsyn-keyword">:int</span> <span class="mdzsyn-keyword">:ptr</span>))
+<span class="mdzsyn-comment"># Maps to the following in C:</span>
+<span class="mdzsyn-comment"># struct my_struct {</span>
+<span class="mdzsyn-comment">#   int a;</span>
+<span class="mdzsyn-comment">#   int b;</span>
+<span class="mdzsyn-comment">#   void *c;</span>
+<span class="mdzsyn-comment"># }</span></code></pre><p>Packed structs are also supported, either for all struct members or for individual members.
+To specify a single member as packed, precede the member type with the keyword <code class="mendoza-code">:pack</code>.
+To indicate that all members of the struct should be packed, include <code class="mendoza-code">:pack-all</code>
+somewhere in the struct definition.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ffi/size</span> (<span class="mdzsyn-coresym">ffi/struct</span> <span class="mdzsyn-keyword">:char</span> <span class="mdzsyn-keyword">:int</span>)) <span class="mdzsyn-comment"># -&gt; 8</span>
+(<span class="mdzsyn-coresym">ffi/size</span> (<span class="mdzsyn-coresym">ffi/struct</span> <span class="mdzsyn-keyword">:char</span> <span class="mdzsyn-keyword">:pack</span> <span class="mdzsyn-keyword">:int</span>)) <span class="mdzsyn-comment"># -&gt; 5</span></code></pre><p>C structs map to Janet tuples - that is, to pass a struct to an FFI function, pass in a tuple, and
+struct-returning functions will return tuples. To
+map C structs to other types (such as a Janet struct), you must do the conversion manually.
+</p>
+<h2 id="Array-Types">Array Types
+</h2>
+<p>Array types are defined with a Janet array of one or two elements - the first element is the
+type of array elements, and the optional second
+element is the number of elements in the array. If there is no second element, the type is a 0 element array
+which can be used to implement flexible array members as defined in C99.
+</p>
+<p>(Although a zero-length has a size of zero, it has a required alignment so needs to be included
+ in struct definitions.)
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ffi/size</span> @[<span class="mdzsyn-keyword">:int</span> <span class="mdzsyn-number">10</span>]) <span class="mdzsyn-comment"># -&gt; 40</span>
+(<span class="mdzsyn-coresym">ffi/size</span> @[<span class="mdzsyn-keyword">:int</span> <span class="mdzsyn-number">0</span>]) <span class="mdzsyn-comment"># -&gt; 0</span>
+(<span class="mdzsyn-coresym">ffi/size</span> [<span class="mdzsyn-keyword">:char</span>]) <span class="mdzsyn-comment"># -&gt; 1</span>
+(<span class="mdzsyn-coresym">ffi/size</span> [<span class="mdzsyn-keyword">:char</span> @[<span class="mdzsyn-keyword">:int</span>]]) <span class="mdzsyn-comment"># -&gt; 4</span></code></pre><h2 id="Using-Buffers--">Using Buffers - <code class="mendoza-code">ffi/write</code> and <code class="mendoza-code">ffi/read</code>
+</h2>
+<p>While primitive types and nested struct types will be converted to and from Janet values automatically, the FFI
+will not dereference pointers for you as a general rule, with the exception of returning string types. You also
+cannot use the common C idiom of converting between arrays and pointers as needed since Janet values are not laid
+out in memory as any C ABI specifies. To pass a pointer to a struct or array of values to a native FFI
+function, one must use <code class="mendoza-code">ffi/write</code> to write Janet values to a buffer. That buffer can then be passed as
+a <code class="mendoza-code">:ptr</code> type to a function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ffi/context</span> <span class="mdzsyn-string">"./mylib.so"</span>)
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-type</span> (<span class="mdzsyn-coresym">ffi/struct</span> <span class="mdzsyn-keyword">:char</span> [<span class="mdzsyn-symbol">@:int</span> <span class="mdzsyn-number">4</span>]))
+(<span class="mdzsyn-coresym">ffi/defbind</span> <span class="mdzsyn-symbol">takes_a_pointer</span> <span class="mdzsyn-keyword">:void</span> [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:ptr</span>])
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">buf</span> (<span class="mdzsyn-coresym">ffi/write</span> <span class="mdzsyn-symbol">my-type</span> [<span class="mdzsyn-number">100</span> [<span class="mdzsyn-number">0</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]]))
+(<span class="mdzsyn-symbol">takes_a_pointer</span> <span class="mdzsyn-symbol">buf</span>)</code></pre><p>When using buffers in this manner, keep in mind that pointers written to the buffer cannot be followed by the garbage collector. Is up
+to the programmer to ensure such pointers do not become invalid by either keeping explicit references to these values or (temporarily) turning off the garbage collector.
+</p>
+<p>The inverse of this process is dereferencing a returned pointer. <code class="mendoza-code">ffi/read</code> takes
+either a byte sequence, an abstract type, or a raw pointer and extracts the data at that
+address into Janet values.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ffi/context</span> <span class="mdzsyn-string">"./mylib.so"</span>)
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-type</span> (<span class="mdzsyn-coresym">ffi/struct</span> <span class="mdzsyn-keyword">:char</span> [<span class="mdzsyn-symbol">@:int</span> <span class="mdzsyn-number">4</span>]))
+(<span class="mdzsyn-coresym">ffi/defbind</span> <span class="mdzsyn-symbol">returns_a_pointer</span> <span class="mdzsyn-keyword">:ptr</span> [])
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">pointer</span> (<span class="mdzsyn-symbol">returns_a_pointer</span>))
+(<span class="mdzsyn-coresym">pp</span> (<span class="mdzsyn-coresym">ffi/read</span> <span class="mdzsyn-symbol">my-type</span> <span class="mdzsyn-symbol">pointer</span>))</code></pre><h2 id="Getting-Function-Pointers-and-Calling-Them">Getting Function Pointers and Calling Them
+</h2>
+<p>The FFI module can use any opaque pointer as a function pointer, and while usually you
+will be loading functions from native modules loaded with <code class="mendoza-code">ffi/native</code>, you
+can use pointer values obtained from anywhere in your program. Of course, if these
+pointers are not actually C function pointers, your program will likely crash.
+</p>
+<p>To load a dynamic library (.so) file, use <code class="mendoza-code">(ffi/native path-to-lib)</code>. This
+will return an abstract type that can be used to look up symbols. You can pass <code class="mendoza-code">nil</code>
+as the path to return the current binary's symbols. The function
+<code class="mendoza-code">(ffi/lookup native-module symbol-name)</code> is then used to get pointers from the shared object.
+</p>
+<p>Once you have a function pointer, you will still need a function signature to call
+the function. Function signatures are created with
+<code class="mendoza-code">ffi/signature calling-convention return-type &amp; args)</code>.
+Since certain functions may use calling conventions besides the default, you may specify
+the convention, such as <code class="mendoza-code">:sysv64</code>, or use <code class="mendoza-code">:default</code> to use the default
+calling convention on your system. As of version 1.23.0, <code class="mendoza-code">:sysv64</code> is the only
+supported calling convention. Not all systems and operating systems will support all
+calling conventions. Varargs are not supported.
+</p>
+<p>Once you have both a function pointer and a function signature, you can finally
+make a call to your function with <code class="mendoza-code">(ffi/call function-pointer function-signature &amp; arguments)</code>
+You will probably want to save the function pointer and signature rather than recalculate them
+on each use.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">self-symbols</span> (<span class="mdzsyn-coresym">ffi/native</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">memcpy</span> (<span class="mdzsyn-coresym">ffi/lookup</span> <span class="mdzsyn-symbol">self-symbols</span> <span class="mdzsyn-string">"memcpy"</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">signature</span> (<span class="mdzsyn-coresym">ffi/signature</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-keyword">:size</span>))
+
+<span class="mdzsyn-comment"># Example usage of our memcpy binding</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">buffer1</span> <span class="mdzsyn-string">@"aaaa"</span>)
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">buffer2</span> <span class="mdzsyn-string">@"bbbb"</span>)
+(<span class="mdzsyn-coresym">ffi/call</span> <span class="mdzsyn-symbol">memcpy</span> <span class="mdzsyn-symbol">signature</span> <span class="mdzsyn-symbol">buffer1</span> <span class="mdzsyn-symbol">buffer2</span> <span class="mdzsyn-number">4</span>)
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">buffer1</span>) <span class="mdzsyn-comment"># prints bbbb</span></code></pre><h2 id="High-Level-API--">High-Level API - <code class="mendoza-code">ffi/context</code> and <code class="mendoza-code">ffi/defbind</code>.
+</h2>
+<p>Using the low-level api to manually load dynamic libraries can get rather tedious, so the FFI module has a few
+macros and functions to make it easier. The function <code class="mendoza-code">ffi/context</code> is used to select a native module that
+subsequent bindings will refer to. <code class="mendoza-code">ffi/defbind</code> will then lookup function pointers, create signature values, and
+create Janet wrappers around ffi/call for you. The memcpy example from above would look like so with the high level api:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ffi/context</span> <span class="mdzsyn-constant">nil</span>)
+(<span class="mdzsyn-coresym">ffi/defbind</span> <span class="mdzsyn-symbol">memcpy</span> <span class="mdzsyn-keyword">:ptr</span>
+  [<span class="mdzsyn-symbol">dest</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">src</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">n</span> <span class="mdzsyn-keyword">:size</span>])
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">buffer1</span> <span class="mdzsyn-string">@"aaaa"</span>)
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">buffer2</span> <span class="mdzsyn-string">@"bbbb"</span>)
+(<span class="mdzsyn-symbol">memcpy</span> <span class="mdzsyn-symbol">buffer1</span> <span class="mdzsyn-symbol">buffer2</span> <span class="mdzsyn-number">4</span>)
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">buffer1</span>) <span class="mdzsyn-comment"># prints bbbb</span></code></pre><p>This code uses <code class="mendoza-code">ffi/native</code>, <code class="mendoza-code">ffi/lookup</code>, <code class="mendoza-code">ffi/signature</code>, <code class="mendoza-code">ffi/call</code> behind the scenes, and you can mix
+and match the <code class="mendoza-code">ffi/defbind</code> macro with explicit bindings.
+</p>
+<h2 id="Callbacks">Callbacks
+</h2>
+<p>One limitation of Janet's FFI module is passing function pointers to C functions, such as in <code class="mendoza-code">qsort</code>.
+This is unsupported in the general case, as it requires runtime generation of machine code.
+Instead, callback functions must be written in C. Often, a C library will allow setting some kind
+of user data, which will then be passed back when the callback is invoked by the library. One could put a
+<code class="mendoza-code">JanetFunction *</code> into that user data slot and have a common "trampoline" native function
+that can be a sort of universal callback that would call that userdata parameter it received as a JanetFunction.
+While this is far from general, it is effective in many cases, and so the <code class="mendoza-code">ffi/module</code> provides
+one such function pointer out of the box with <code class="mendoza-code">ffi/trampoline</code>.
+</p>
+<h2 id="GTK-Example">GTK Example
+</h2>
+<p>One good use for FFI bindings are interfacing with GUI libraries.
+For example, one could be building a standalone binary
+that could detect available GUI libraries on the host system, and use FFI bindings to interact with the host
+GUI framework that was detected. Below is an example of what FFI with GTK might look
+like using the high-level, macro based abstraction with <code class="mendoza-code">ffi/context</code> and <code class="mendoza-code">ffi/defbind</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ffi/context</span> <span class="mdzsyn-string">"/usr/lib/libgtk-3.so"</span> <span class="mdzsyn-keyword">:lazy</span> <span class="mdzsyn-constant">true</span>)
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">gtk-application-new</span> <span class="mdzsyn-keyword">:ptr</span>
+  [<span class="mdzsyn-symbol">title</span> <span class="mdzsyn-keyword">:string</span> <span class="mdzsyn-symbol">flags</span> <span class="mdzsyn-keyword">:uint</span>])
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">g-signal-connect-data</span> <span class="mdzsyn-keyword">:ulong</span>
+  [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">c</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">d</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">e</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">f</span> <span class="mdzsyn-keyword">:int</span>])
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">g-application-run</span> <span class="mdzsyn-keyword">:int</span>
+  [<span class="mdzsyn-symbol">app</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">argc</span> <span class="mdzsyn-keyword">:int</span> <span class="mdzsyn-symbol">argv</span> <span class="mdzsyn-keyword">:ptr</span>])
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">gtk-application-window-new</span> <span class="mdzsyn-keyword">:ptr</span>
+  [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:ptr</span>])
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">gtk-button-new-with-label</span> <span class="mdzsyn-keyword">:ptr</span>
+  [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:ptr</span>])
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">gtk-container-add</span> <span class="mdzsyn-keyword">:void</span>
+  [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-keyword">:ptr</span>])
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">gtk-widget-show-all</span> <span class="mdzsyn-keyword">:void</span>
+  [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:ptr</span>])
+
+(<span class="mdzsyn-coresym">ffi/defbind</span>
+  <span class="mdzsyn-symbol">gtk-button-set-label</span> <span class="mdzsyn-keyword">:void</span>
+  [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:ptr</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-keyword">:ptr</span>])
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">cb</span> (<span class="mdzsyn-coresym">delay</span> (<span class="mdzsyn-coresym">ffi/trampoline</span> <span class="mdzsyn-keyword">:default</span>)))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">on-active</span>
+  [<span class="mdzsyn-symbol">app</span>]
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">window</span> (<span class="mdzsyn-symbol">gtk-application-window-new</span> <span class="mdzsyn-symbol">app</span>))
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">btn</span> (<span class="mdzsyn-symbol">gtk-button-new-with-label</span> <span class="mdzsyn-string">"Click Me!"</span>))
+  (<span class="mdzsyn-symbol">g-signal-connect-data</span> <span class="mdzsyn-symbol">btn</span> <span class="mdzsyn-string">"clicked"</span> (<span class="mdzsyn-symbol">cb</span>)
+                         (<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">btn</span>] (<span class="mdzsyn-symbol">gtk-button-set-label</span> <span class="mdzsyn-symbol">btn</span> <span class="mdzsyn-string">"Hello World"</span>))
+                         <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-number">1</span>)
+  (<span class="mdzsyn-symbol">gtk-container-add</span> <span class="mdzsyn-symbol">window</span> <span class="mdzsyn-symbol">btn</span>)
+  (<span class="mdzsyn-symbol">gtk-widget-show-all</span> <span class="mdzsyn-symbol">window</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">main</span>
+  [<span class="mdzsyn-symbol">&amp;</span>]
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">app</span> (<span class="mdzsyn-symbol">gtk-application-new</span> <span class="mdzsyn-string">"org.janet-lang.example.HelloApp"</span> <span class="mdzsyn-number">0</span>))
+  (<span class="mdzsyn-symbol">g-signal-connect-data</span> <span class="mdzsyn-symbol">app</span> <span class="mdzsyn-string">"activate"</span> (<span class="mdzsyn-symbol">cb</span>) <span class="mdzsyn-symbol">on-active</span> <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-number">1</span>)
+  <span class="mdzsyn-comment"># manually build an array with ffi/write</span>
+  (<span class="mdzsyn-symbol">g-application-run</span> <span class="mdzsyn-symbol">app</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-constant">nil</span>))</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="linting.html"><span class="prevnext-text">Linting</span></a></span>
+          <span class="next"><a href="../api/index.html"><span class="prevnext-text">Core API</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on August 16, 2022 at 00:18:32 (UTC) with Janet 1.24.0-34496ec</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
