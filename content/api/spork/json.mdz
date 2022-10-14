@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/json :export true)
+
+{:title "JSON"
+ :nav-title "json"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[json/]

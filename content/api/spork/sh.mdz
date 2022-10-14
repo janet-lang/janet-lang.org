@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/test :export true)
+
+{:title "Shell Utilities"
+ :nav-title "sh"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[sh/]

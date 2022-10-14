@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm/dagbuild :export true)
+
+{:title "DAG Build"
+ :nav-title "dagbuild"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[dagbuild/]

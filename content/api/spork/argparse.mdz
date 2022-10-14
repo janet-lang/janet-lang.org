@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/argparse :export true)
+
+{:title "Argument Parsing"
+ :nav-title "argparse"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[spork/]

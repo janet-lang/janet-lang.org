@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/generators :export true)
+
+{:title "Generators"
+ :nav-title "generators"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[generators/]

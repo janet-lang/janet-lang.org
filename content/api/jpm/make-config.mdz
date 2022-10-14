@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm/make-config :export true)
+
+{:title "Configuration Generation"
+ :nav-title "make-config"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[make-config/]

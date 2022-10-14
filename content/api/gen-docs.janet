@@ -71,13 +71,15 @@
 
                {:tag "a" "href" (string "https://janetdocs.com/" (jdoc-escape key)) :content "Community Examples"}]}))
 
-(def- all-entries 
-  (sort (pairs (table/getproto (fiber/getenv (fiber/current))))))
+(defn- all-entries 
+  [&opt env]
+  (default env root-env)
+  (sort (pairs env)))
 
 (defn- get-from-prefix
   "Get all bindings that start with a prefix."
-  [prefix]
-  (seq [x :in all-entries
+  [prefix &opt env]
+  (seq [x :in (all-entries env)
         :let [[k entry] x]
         :when (symbol? k)
         :when (get entry :doc)
@@ -87,8 +89,8 @@
 
 (defn- get-from-peg
   "Get all bindings that start with a prefix."
-  [peg]
-  (seq [x :in all-entries
+  [peg &opt env]
+  (seq [x :in (all-entries env)
         :let [[k entry] x]
         :when (symbol? k)
         :when (get entry :doc)
@@ -98,8 +100,8 @@
 
 (defn gen-peg
   "Generate the document for all of the core api whose name matches the peg."
-  [peg]
-  (def entries (get-from-peg peg))
+  [peg &opt env]
+  (def entries (get-from-peg peg env))
   (def index
     (seq [[k entry] :in entries]
          [{:tag "a" "href" (string "#" k) :content k} " "]))
@@ -110,8 +112,13 @@
 
 (defn gen-prefix
   "Generate the documentation for some subset of the core api."
+  [prefix &opt env]
+  (gen-peg (peg/compile prefix) env))
+
+(defn gen-prefix-current
+  "Generate the documentation for some module in that has been loaded"
   [prefix]
-  (gen-peg (peg/compile prefix)))
+  (gen-peg (peg/compile prefix) (curenv)))
 
 (defn gen
   "Generate all bindings."

@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/cron :export true)
+
+{:title "Cron"
+ :nav-title "cron"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[cron/]

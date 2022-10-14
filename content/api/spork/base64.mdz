@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/base64 :export true)
+
+{:title "Base64"
+ :nav-title "base64"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[base64/]

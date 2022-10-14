@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm/cc :export true)
+
+{:title "C Compiler"
+ :nav-title "cc"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[cc/]

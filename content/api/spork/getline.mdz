@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/getline :export true)
+
+{:title "Getline"
+ :nav-title "getline"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[getline/]

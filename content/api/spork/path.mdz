@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/path :export true)
+
+{:title "Path Utilities"
+ :nav-title "path"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[path/]

@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm :export true)
+
+{:title "JPM"
+ :nav-title "jpm"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[jpm/]

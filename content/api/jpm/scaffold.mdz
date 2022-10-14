@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm/scaffold :export true)
+
+{:title "Project Scaffolding"
+ :nav-title "scaffold"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[scaffold/]

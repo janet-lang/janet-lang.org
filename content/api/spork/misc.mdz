@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/misc :export true)
+
+{:title "Miscellaneous Functions"
+ :nav-title "misc"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[misc/]

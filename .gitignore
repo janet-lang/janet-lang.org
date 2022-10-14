@@ -2,4 +2,4 @@ out
 site
 janet_modules
 build
-jpm/
+/jpm/

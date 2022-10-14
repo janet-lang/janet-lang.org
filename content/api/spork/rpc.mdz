@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/rpc :export true)
+
+{:title "Remote Procedure Calls"
+ :nav-title "rpc"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[rpc/]

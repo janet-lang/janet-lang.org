@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/fmt :export true)
+
+{:title "Format"
+ :nav-title "fmt"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[fmt/]

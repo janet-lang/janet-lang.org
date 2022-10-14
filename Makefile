@@ -24,6 +24,7 @@ build/bin/janet: janet/janet.c janet/janet.h janet/shell.c
 	cd jpm && git pull origin master || true
 	@cd jpm && $(JSETTINGS) PREFIX=$(CWD)/build/ $(CWD)/build/bin/janet bootstrap.janet
 	@$(JSETTINGS) build/bin/jpm install mendoza
+	@$(JSETTINGS) build/bin/jpm install spork
 
 .PHONY: wasm
 wasm: static/js/janet.js

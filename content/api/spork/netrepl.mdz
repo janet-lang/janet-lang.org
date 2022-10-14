@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/netrepl :export true)
+
+{:title "NetREPL"
+ :nav-title "netrepl"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[netrepl/]

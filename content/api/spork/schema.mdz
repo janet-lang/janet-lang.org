@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/schema :export true)
+
+{:title "Schema"
+ :nav-title "schema"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[schema/]

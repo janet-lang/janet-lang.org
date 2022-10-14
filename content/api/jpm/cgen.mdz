@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm/cgen :export true)
+
+{:title "C Source Generation"
+ :nav-title "cgen"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[cgen/]

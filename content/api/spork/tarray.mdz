@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/tarray :export true)
+
+{:title "Typed Arrays"
+ :nav-title "tarray"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[tarray/]

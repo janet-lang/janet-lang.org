@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import spork/msg :export true)
+
+{:title "Simple Messaging Protocol"
+ :nav-title "msg"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[msg/]

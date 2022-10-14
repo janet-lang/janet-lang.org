@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm/shutil :export true)
+
+{:title "Shell Utilities"
+ :nav-title "shutil"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[shutil/]

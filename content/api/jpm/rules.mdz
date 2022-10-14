@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+(import jpm/rules :export true)
+
+{:title "Build Rules"
+ :nav-title "rules"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[rules/]
