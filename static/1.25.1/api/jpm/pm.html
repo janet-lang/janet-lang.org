@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Project Management</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Project Management" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/jpm.html">jpm</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../index.html">API</a></span><ul><li><span><a href="../array.html">array</a></span></li><li><span><a href="../buffer.html">buffer</a></span></li><li><span><a href="../debug.html">debug</a></span></li><li><span><a href="../ev.html">ev</a></span></li><li><span><a href="../ffi.html">ffi</a></span></li><li><span><a href="../fiber.html">fiber</a></span></li><li><span><a href="../file.html">file</a></span></li><li><span><a href="../int.html">int</a></span></li><li class="caret"><span><a href="index.html">jpm</a></span><ul><li><span><a href="rules.html">rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="cgen.html">cgen</a></span></li><li><span><a href="cli.html">cli</a></span></li><li><span><a href="commands.html">commands</a></span></li><li><span><a href="config.html">config</a></span></li><li><span><a href="make-config.html">make-config</a></span></li><li><span><a href="dagbuild.html">dagbuild</a></span></li><li><span class="selected"><a href="pm.html">pm</a></span></li><li><span><a href="scaffold.html">scaffold</a></span></li><li><span><a href="shutil.html">shutil</a></span></li></ul></li><li><span><a href="../math.html">math</a></span></li><li><span><a href="../module.html">module</a></span></li><li><span><a href="../net.html">net</a></span></li><li><span><a href="../os.html">os</a></span></li><li><span><a href="../peg.html">peg</a></span></li><li><span><a href="../parser.html">parser</a></span></li><li class="caret"><span><a href="../spork/index.html">spork</a></span><ul><li><span><a href="../spork/argparse.html">argparse</a></span></li><li><span><a href="../spork/base64.html">base64</a></span></li><li><span><a href="../spork/cron.html">cron</a></span></li><li><span><a href="../spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../spork/fmt.html">fmt</a></span></li><li><span><a href="../spork/generators.html">generators</a></span></li><li><span><a href="../spork/getline.html">getline</a></span></li><li><span><a href="../spork/http.html">http</a></span></li><li><span><a href="../spork/httpf.html">httpf</a></span></li><li><span><a href="../spork/json.html">json</a></span></li><li><span><a href="../spork/math.html">math</a></span></li><li><span><a href="../spork/misc.html">misc</a></span></li><li><span><a href="../spork/netrepl.html">netrepl</a></span></li><li><span><a href="../spork/path.html">path</a></span></li><li><span><a href="../spork/rawterm.html">rawterm</a></span></li><li><span><a href="../spork/regex.html">regex</a></span></li><li><span><a href="../spork/rpc.html">rpc</a></span></li><li><span><a href="../spork/schema.html">schema</a></span></li><li><span><a href="../spork/sh.html">sh</a></span></li><li><span><a href="../spork/msg.html">msg</a></span></li><li><span><a href="../spork/test.html">test</a></span></li><li><span><a href="../spork/tarray.html">tarray</a></span></li></ul></li><li><span><a href="../string.html">string</a></span></li><li><span><a href="../table.html">table</a></span></li><li><span><a href="../misc.html">misc</a></span></li><li><span><a href="../tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.25.1-894cd0e Documentation<br>(Other Versions:
+          
+          <a href="../../../1.24.0/api/jpm/pm.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/api/jpm/pm.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/api/jpm/pm.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/api/jpm/pm.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/api/jpm/pm.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/api/jpm/pm.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/api/jpm/pm.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/api/jpm/pm.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/api/jpm/pm.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/api/jpm/pm.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/api/jpm/pm.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/api/jpm/pm.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/api/jpm/pm.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/api/jpm/pm.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/api/jpm/pm.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/api/jpm/pm.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/api/jpm/pm.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/api/jpm/pm.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/api/jpm/pm.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/api/jpm/pm.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/api/jpm/pm.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/api/jpm/pm.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Project Management</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="dagbuild.html"><span class="prevnext-text">DAG Build</span></a></span>
+
+          <span class="next"><a href="scaffold.html"><span class="prevnext-text">Project Scaffolding</span></a></span>
+        </div>
+        
+
+<h2 id="Index-16">Index
+</h2>
+<p><a href="#pm/bundle-install">pm/bundle-install</a> <a href="#pm/curl">pm/curl</a> <a href="#pm/do-rule">pm/do-rule</a> <a href="#pm/download-bundle">pm/download-bundle</a> <a href="#pm/download-git-bundle">pm/download-git-bundle</a> <a href="#pm/download-tar-bundle">pm/download-tar-bundle</a> <a href="#pm/git">pm/git</a> <a href="#pm/import-rules">pm/import-rules</a> <a href="#pm/load-lockfile">pm/load-lockfile</a> <a href="#pm/load-project-meta">pm/load-project-meta</a> <a href="#pm/make-jpm-env">pm/make-jpm-env</a> <a href="#pm/make-lockfile">pm/make-lockfile</a> <a href="#pm/out-of-tree-config">pm/out-of-tree-config</a> <a href="#pm/post-deps">pm/post-deps</a> <a href="#pm/require-jpm">pm/require-jpm</a> <a href="#pm/resolve-bundle">pm/resolve-bundle</a> <a href="#pm/tar">pm/tar</a> <a href="#pm/update-git-bundle">pm/update-git-bundle</a> <a href="#pm/update-installed">pm/update-installed</a> </p><hr><div class="binding"><span id="pm/bundle-install" class="binding-sym">pm/bundle-install</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L209">source</a></span> <pre class="binding-text">(bundle-install bundle &amp;opt no-deps)
+
+Install a bundle from a git repository.</pre><a href="https://janetdocs.com/pm/bundle-install">Community Examples</a></div><hr><div class="binding"><span id="pm/curl" class="binding-sym">pm/curl</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L104">source</a></span> <pre class="binding-text">(curl &amp; args)
+
+Make a call to curl</pre><a href="https://janetdocs.com/pm/curl">Community Examples</a></div><hr><div class="binding"><span id="pm/do-rule" class="binding-sym">pm/do-rule</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L296">source</a></span> <pre class="binding-text">(do-rule target)
+
+Evaluate a given rule in a one-off manner.</pre><a href="https://janetdocs.com/pm/do-rule">Community Examples</a></div><hr><div class="binding"><span id="pm/download-bundle" class="binding-sym">pm/download-bundle</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L195">source</a></span> <pre class="binding-text">(download-bundle url bundle-type &amp;opt tag shallow)
+
+Download the package source (using git) to the local cache. Return the path to the downloaded or cached soure code.</pre><a href="https://janetdocs.com/pm/download-bundle">Community Examples</a></div><hr><div class="binding"><span id="pm/download-git-bundle" class="binding-sym">pm/download-git-bundle</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L163">source</a></span> <pre class="binding-text">(download-git-bundle bundle-dir url tag shallow)
+
+Download a git bundle from a remote respository</pre><a href="https://janetdocs.com/pm/download-git-bundle">Community Examples</a></div><hr><div class="binding"><span id="pm/download-tar-bundle" class="binding-sym">pm/download-tar-bundle</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L181">source</a></span> <pre class="binding-text">(download-tar-bundle bundle-dir url &amp;opt force-gz)
+
+Download a dependency from a tape archive. The archive should have exactly one top level directory that contains the contents of the project.</pre><a href="https://janetdocs.com/pm/download-tar-bundle">Community Examples</a></div><hr><div class="binding"><span id="pm/git" class="binding-sym">pm/git</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L94">source</a></span> <pre class="binding-text">(git &amp; args)
+
+Make a call to git.</pre><a href="https://janetdocs.com/pm/git">Community Examples</a></div><hr><div class="binding"><span id="pm/import-rules" class="binding-sym">pm/import-rules</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L84">source</a></span> <pre class="binding-text">(import-rules path &amp;opt base-env)
+
+Import another file that defines more rules. This ruleset is merged into the current ruleset.</pre><a href="https://janetdocs.com/pm/import-rules">Community Examples</a></div><hr><div class="binding"><span id="pm/load-lockfile" class="binding-sym">pm/load-lockfile</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L280">source</a></span> <pre class="binding-text">(load-lockfile &amp;opt filename)
+
+Load packages from a lockfile.</pre><a href="https://janetdocs.com/pm/load-lockfile">Community Examples</a></div><hr><div class="binding"><span id="pm/load-project-meta" class="binding-sym">pm/load-project-meta</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L64">source</a></span> <pre class="binding-text">(load-project-meta &amp;opt path)
+
+Load the metadata from a project.janet file without doing a full evaluation of the project.janet file. Returns a struct with the project metadata. Raises an error if no metadata found.</pre><a href="https://janetdocs.com/pm/load-project-meta">Community Examples</a></div><hr><div class="binding"><span id="pm/make-jpm-env" class="binding-sym">pm/make-jpm-env</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L24">source</a></span> <pre class="binding-text">(make-jpm-env &amp;opt base-env)
+
+Create an environment that is preloaded with jpm symbols.</pre><a href="https://janetdocs.com/pm/make-jpm-env">Community Examples</a></div><hr><div class="binding"><span id="pm/make-lockfile" class="binding-sym">pm/make-lockfile</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L240">source</a></span> <pre class="binding-text">(make-lockfile &amp;opt filename)
+
+</pre><a href="https://janetdocs.com/pm/make-lockfile">Community Examples</a></div><hr><div class="binding"><span id="pm/out-of-tree-config" class="binding-sym">pm/out-of-tree-config</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L318">source</a></span> <pre class="binding-text">(out-of-tree-config path &amp;opt options)
+
+Create an out of tree build configuration. This lets a user have a debug or release build, as well as other configuration on a one time basis. This works by creating a new directory with a project.janet that loads in the original project.janet file with some settings changed.</pre><a href="https://janetdocs.com/pm/out-of-tree-config">Community Examples</a></div><hr><div class="binding"><span id="pm/post-deps" class="binding-sym">pm/post-deps</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L288">source</a></span> <pre class="binding-text">(post-deps &amp; body)
+
+Run code at the top level if jpm dependencies are installed. Build code that imports dependencies should be wrapped with this macro, as project.janet needs to be able to run successfully even without dependencies installed.</pre><a href="https://janetdocs.com/pm/post-deps">Community Examples</a></div><hr><div class="binding"><span id="pm/require-jpm" class="binding-sym">pm/require-jpm</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L54">source</a></span> <pre class="binding-text">(require-jpm path &amp;opt base-env)
+
+Require a jpm file project file. This is different from a normal require in that code is loaded in the jpm environment.</pre><a href="https://janetdocs.com/pm/require-jpm">Community Examples</a></div><hr><div class="binding"><span id="pm/resolve-bundle" class="binding-sym">pm/resolve-bundle</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L126">source</a></span> <pre class="binding-text">(resolve-bundle bundle)
+
+Convert any bundle string/table to the normalized table form.</pre><a href="https://janetdocs.com/pm/resolve-bundle">Community Examples</a></div><hr><div class="binding"><span id="pm/tar" class="binding-sym">pm/tar</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L99">source</a></span> <pre class="binding-text">(tar &amp; args)
+
+Make a call to tar.</pre><a href="https://janetdocs.com/pm/tar">Community Examples</a></div><hr><div class="binding"><span id="pm/update-git-bundle" class="binding-sym">pm/update-git-bundle</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L150">source</a></span> <pre class="binding-text">(update-git-bundle bundle-dir tag shallow)
+
+Fetch latest tag version from remote repository</pre><a href="https://janetdocs.com/pm/update-git-bundle">Community Examples</a></div><hr><div class="binding"><span id="pm/update-installed" class="binding-sym">pm/update-installed</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/894cd0e//home/calvin/code/janet-lang.org/build/jpm/pm.janet#L301">source</a></span> <pre class="binding-text">(update-installed)
+
+Update all previously installed packages to their latest versions.</pre><a href="https://janetdocs.com/pm/update-installed">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="dagbuild.html"><span class="prevnext-text">DAG Build</span></a></span>
+          <span class="next"><a href="scaffold.html"><span class="prevnext-text">Project Scaffolding</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2022
+  <div class="gentag">Generated on October 29, 2022 at 20:11:09 (UTC) with Janet 1.25.1-894cd0e</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
