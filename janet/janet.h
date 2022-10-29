@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 24
+#define JANET_VERSION_MINOR 25
 #define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.24.1"
+#define JANET_VERSION "1.25.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -300,7 +300,7 @@ extern "C" {
 /* Maximum depth to follow table prototypes before giving up and returning nil. */
 #define JANET_MAX_PROTO_DEPTH 200
 
-/* Maximum depth to follow table prototypes before giving up and returning nil. */
+/* Prevent macros to expand too deeply and error out. */
 #define JANET_MAX_MACRO_EXPAND 200
 
 /* Define default max stack size for stacks before raising a stack overflow error.
@@ -1735,6 +1735,7 @@ JANET_API JanetModule janet_native(const char *name, JanetString *error);
 
 /* Marshaling */
 #define JANET_MARSHAL_UNSAFE 0x20000
+#define JANET_MARSHAL_NO_CYCLES 0x40000
 
 JANET_API void janet_marshal(
     JanetBuffer *buf,
