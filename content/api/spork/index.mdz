@@ -1,5 +1,6 @@
 (import ../gen-docs :as gen-docs)
 (import spork :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
 
 {:title "Spork"
  :nav-title "spork"

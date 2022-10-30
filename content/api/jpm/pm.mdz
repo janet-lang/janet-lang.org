@@ -1,5 +1,6 @@
 (import ../gen-docs :as gen-docs)
 (import jpm/pm :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 
 {:title "Project Management"
  :nav-title "pm"

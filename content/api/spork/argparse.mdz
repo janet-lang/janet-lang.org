@@ -1,5 +1,6 @@
 (import ../gen-docs :as gen-docs)
 (import spork/argparse :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
 
 {:title "Argument Parsing"
  :nav-title "argparse"
@@ -8,4 +9,4 @@
 
 ## Index
 
-@gen-docs/gen-prefix-current[spork/]
+@gen-docs/gen-prefix-current[argparse/]

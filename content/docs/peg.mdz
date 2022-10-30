@@ -318,6 +318,18 @@ grammars simpler.
     @tr{@td{@code`(drop patt)` }
         @td{ Ignores (drops) all captures from patt. }}
 
+    @tr{@td{@code`(uint num-bytes)` }
+        @td{ Capture a little endian, unsigned, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+
+    @tr{@td{@code`(uint-be num-bytes)` }
+        @td{ Capture a big endian, unsigned, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+
+    @tr{@td{@code`(int num-bytes)` }
+        @td{ Capture a little endian, signed, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+
+    @tr{@td{@code`(int-be num-bytes)` }
+        @td{ Capture a big endian, signed, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+
     @tr{@td{@code`(lenprefix n patt)` }
         @td{ Matches n repetitions of a pattern, where n is supplied from other
         parsed input and is not a constant. }}}

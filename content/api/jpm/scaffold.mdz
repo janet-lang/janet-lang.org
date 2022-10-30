@@ -1,5 +1,6 @@
 (import ../gen-docs :as gen-docs)
 (import jpm/scaffold :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 
 {:title "Project Scaffolding"
  :nav-title "scaffold"
