@@ -52,10 +52,10 @@ block of code in a new thread, return immediately, and
 
 @codeblock[janet]```
 (ev/spawn-thread
-  (print "New thread stated!"))
+  (print "New thread started!"))
 
 (ev/do-thread
-  (print "New thread stated!"))
+  (print "New thread started!"))
 ```
 
 ## Sending and receiving messages
