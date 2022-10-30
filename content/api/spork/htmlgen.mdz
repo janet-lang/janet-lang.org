@@ -1,0 +1,12 @@
+(import ../gen-docs :as gen-docs)
+(import spork/htmlgen :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+
+{:title "HTML Generation"
+ :nav-title "htmlgen"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[htmlgen/]
