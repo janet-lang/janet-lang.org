@@ -324,14 +324,14 @@ Built-in Janet functions that utilize this style include @code`file/open`,
 Starting in version 1.23.0, functions support named arguments. This is a more
 convenient syntax for keyword arguments. Functions with named arguments are
 implicitly variadic and will not reject badly named arguments. All symbols after
-the symbol @code`&named` symbol in the parameter list need to be passed to the function as arguments
+the @code`&named` symbol in the parameter list need to be passed to the function as arguments
 preceded by a keyword of the same name.
 
 @codeblock[janet]```
 (defn named-fn
   [x &named person1 person2]
-  (print "giving " x " to person1")
-  (print "giving " x " to person2"))
+  (print "giving " x " to " person1)
+  (print "giving " x " to " person2))
 
 (name-fn "apple" :person1 "bob" :person2 "sally")
 ```
