@@ -333,5 +333,5 @@ preceded by a keyword of the same name.
   (print "giving " x " to " person1)
   (print "giving " x " to " person2))
 
-(name-fn "apple" :person1 "bob" :person2 "sally")
+(named-fn "apple" :person1 "bob" :person2 "sally")
 ```
