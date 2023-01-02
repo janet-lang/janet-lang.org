@@ -183,7 +183,7 @@ on each use.
 @codeblock[janet]```
 (def self-symbols (ffi/native))
 (def memcpy (ffi/lookup self-symbols "memcpy"))
-(def signature (ffi/signature :ptr :ptr :ptr :size))
+(def signature (ffi/signature :default :ptr :ptr :ptr :size))
 
 # Example usage of our memcpy binding
 (def buffer1 @"aaaa")
