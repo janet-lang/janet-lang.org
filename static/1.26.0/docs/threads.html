@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Multithreading</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Multithreading" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org&focus=yes" frameborder="0"></iframe> 
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span class="selected"><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.26.0-c28df14 Documentation<br>(Other Versions:
+          
+          <a href="../../1.25.1/docs/threads.html">1.25.1</a>
+          
+          <a href="../../1.24.0/docs/threads.html">1.24.0</a>
+          
+          <a href="../../1.23.0/docs/threads.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/threads.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/threads.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/threads.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/threads.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/threads.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/threads.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/threads.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/threads.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/threads.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/threads.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/threads.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/threads.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/threads.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/threads.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/threads.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/threads.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/threads.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/threads.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/threads.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/threads.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Multithreading</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="event_loop.html"><span class="prevnext-text">The Event Loop</span></a></span>
+
+          <span class="next"><a href="networking.html"><span class="prevnext-text">Networking</span></a></span>
+        </div>
+        
+
+<p>Multithreading is the process of running a program on multiple threads at the same time, usually
+to improve throughput. Threads allow your program to take full advantage of the multiple
+processors on modern CPUs letting you do work in the background without stopping
+the main program flow, or breaking up an expensive operation to run on multiple processors.
+</p>
+<p>Janet's <code class="mendoza-code">ev/</code> module supports spawning native operating system threads in a way that
+is compatible with other <code class="mendoza-code">ev/</code> functions and will not block the event loop. 
+</p>
+<p>For the most part, Janet values are not shared between threads. Each thread has its own Janet heap, which
+means threads behave more like processes that communicate by message passing.
+However, this does not prevent native code from sharing memory across these
+threads. Without native extensions, however, the only way for two Janet threads
+to communicate directly is through message passing with threaded channels.
+</p>
+<p>By default, a Janet program will not exit until all threads have terminated.
+</p>
+<h2 id="Creating-threads">Creating threads
+</h2>
+<p>The most primitive way to create a thread is <code class="mendoza-code">(ev/thread fiber &amp;opt value flags supervisor)</code>.
+This will start and wait for a message containing a function that it will run as the
+main body.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  []
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"New thread started!"</span>))
+
+<span class="mdzsyn-comment"># Create a new thread and wait for it to complete.</span>
+(<span class="mdzsyn-coresym">ev/thread</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-keyword">:t</span>))</code></pre><p>By itself, the above code isn't very useful because the main fiber will suspend until the new thread
+is complete. But it is quite useful to have threads suspend execution of the calling fiber by
+default - we can then easily have a thread wrapped with a fiber to be handled like other asynchronous tasks
+in the <code class="mendoza-code">ev/</code> module. To run the thread in the background, you can either use the <code class="mendoza-code">:n</code> flag, or wrap the call to <code class="mendoza-code">ev/thread</code> in its own fiber.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ev/thread</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-keyword">:t</span>) <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-keyword">:n</span>)
+
+(<span class="mdzsyn-coresym">ev/spawn</span>
+  (<span class="mdzsyn-coresym">ev/thread</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-keyword">:t</span>)))</code></pre><p>To make this process easier, Janet comes with a few built-in macros, <code class="mendoza-code">ev/spawn-thread</code> to run a
+block of code in a new thread, return immediately, and
+<code class="mendoza-code">ev/do-thread</code> to run a block of code but wait for it to return.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">ev/spawn-thread</span>
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"New thread started!"</span>))
+
+(<span class="mdzsyn-coresym">ev/do-thread</span>
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"New thread started!"</span>))</code></pre><h2 id="Sending-and-receiving-messages">Sending and receiving messages
+</h2>
+<p>Threads in Janet do not share a memory heap and must communicate via threaded
+channels. Threaded channels behave much like normal channels in the <code class="mendoza-code">ev/</code> module, with
+the only difference being that they can send values between threads by copying messages. Threaded channels are
+used for both communication and coordination between threads.
+</p>
+<p>Threaded channels can be created with <code class="mendoza-code">ev/thread-chan</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Create a threaded channel with space for 10 values</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">thread-channel</span> (<span class="mdzsyn-coresym">ev/thread-chan</span> <span class="mdzsyn-number">10</span>))
+
+(<span class="mdzsyn-coresym">ev/spawn-thread</span>
+ (<span class="mdzsyn-coresym">repeat</span> <span class="mdzsyn-number">10</span>
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">item</span> (<span class="mdzsyn-coresym">ev/take</span> <span class="mdzsyn-symbol">thread-channel</span>))
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"got "</span> <span class="mdzsyn-symbol">item</span>)))
+
+(<span class="mdzsyn-coresym">repeat</span> <span class="mdzsyn-number">10</span>
+ (<span class="mdzsyn-coresym">os/sleep</span> <span class="mdzsyn-number">0.2</span>)
+ (<span class="mdzsyn-coresym">ev/give</span> <span class="mdzsyn-symbol">thread-channel</span> <span class="mdzsyn-keyword">:item</span>))</code></pre><h2 id="Thread-Supervisors">Thread Supervisors
+</h2>
+<p>Threaded channels can also be used as supervisors for spawned threads. A supervisor is a channel
+that receives messages whenever
+an event, like an error, occurs in the supervised thread. Another fiber or
+thread can then read from this supervisor channel and
+handle the errors, usually by either logging the event, retrying the operation, or canceling other operations.
+</p>
+<p>Thread supervisors need to be specified when creating the thread.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">supervisor</span> (<span class="mdzsyn-coresym">ev/thread-chan</span> <span class="mdzsyn-number">10</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+ []
+ (<span class="mdzsyn-coresym">repeat</span> <span class="mdzsyn-number">10</span>
+  (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-number">0.9</span> (<span class="mdzsyn-coresym">math/random</span>))
+   (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"oops!"</span>)))
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"done!"</span>))
+
+<span class="mdzsyn-comment"># Start a worker thread that will signal events on the supervisor channel</span>
+(<span class="mdzsyn-coresym">ev/thread</span> <span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-keyword">:n</span> <span class="mdzsyn-symbol">supervisor</span>)
+
+<span class="mdzsyn-comment"># Get one event from the supervisor channel (on the initial thread here)</span>
+<span class="mdzsyn-comment"># It will either be (:error "oops!") or (:done nil).</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">event</span> (<span class="mdzsyn-coresym">ev/take</span> <span class="mdzsyn-symbol">supervisor</span>))
+(<span class="mdzsyn-coresym">pp</span> <span class="mdzsyn-symbol">event</span>)</code></pre><p>Events from thread supervisors are much like events from normal fiber
+supervisors, but the first argument is not an entire copy of the fiber
+or thread, it is the event name. In the above example, depending on whether
+or not the "oops!" error was triggered, <code class="mendoza-code">event</code> will be either
+<code class="mendoza-code">(:error "oops!")</code> or <code class="mendoza-code">(:done nil)</code>. This corresponds to
+<code class="mendoza-code">[(fiber/status f) (fiber/last-value f)]</code> of the main fiber of the
+child thread.
+</p>
+
+
+
+
+
+        <div class="prevnext-bar">
+          <span class="prev"><a href="event_loop.html"><span class="prevnext-text">The Event Loop</span></a></span>
+          <span class="next"><a href="networking.html"><span class="prevnext-text">Networking</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on January 8, 2023 at 02:43:22 (UTC) with Janet 1.26.0-c28df14</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

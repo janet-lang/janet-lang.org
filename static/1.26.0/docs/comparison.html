@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Comparison Operators</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Comparison Operators" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org&focus=yes" frameborder="0"></iframe> 
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span class="selected"><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.26.0-c28df14 Documentation<br>(Other Versions:
+          
+          <a href="../../1.25.1/docs/comparison.html">1.25.1</a>
+          
+          <a href="../../1.24.0/docs/comparison.html">1.24.0</a>
+          
+          <a href="../../1.23.0/docs/comparison.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/comparison.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/comparison.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/comparison.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/comparison.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/comparison.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/comparison.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/comparison.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/comparison.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/comparison.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/comparison.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/comparison.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/comparison.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/comparison.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/comparison.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/comparison.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/comparison.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/comparison.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/comparison.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/comparison.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/comparison.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Comparison Operators</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="numbers.html"><span class="prevnext-text">Numbers and Arithmetic</span></a></span>
+
+          <span class="next"><a href="bindings.html"><span class="prevnext-text">Bindings (def and var)</span></a></span>
+        </div>
+        
+
+<p>Comparison operators are used for comparing values in Janet, in order to
+establish equality or ordering.  Janet has two types of comparison operators,
+which we refer to as "primitive" comparison operators, and "polymorphic"
+comparison operators, respectively.
+</p>
+<h2 id="Primitive-Comparison-Operators">Primitive Comparison Operators
+</h2>
+<p>The primitive comparison operators are <code class="mendoza-code">=</code>, <code class="mendoza-code">&lt;</code>, <code class="mendoza-code">&lt;=</code>, <code class="mendoza-code">&gt;</code>,
+<code class="mendoza-code">&gt;=</code>.  In the simple case, each operator can be used to compare two values
+as follows: <code class="mendoza-code">(&lt; a b)</code> will return true if a &lt; b, and false otherwise.
+Similarly <code class="mendoza-code">(= a b)</code> will be true only if a == b.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">3</span>)          <span class="mdzsyn-comment"># true</span>
+(<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">3</span>)          <span class="mdzsyn-comment"># true</span>
+(<span class="mdzsyn-coresym">&gt;=</span> <span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:a</span>)       <span class="mdzsyn-comment"># true</span>
+(<span class="mdzsyn-coresym">&gt;</span> <span class="mdzsyn-string">"bar"</span> <span class="mdzsyn-string">"foo"</span>)  <span class="mdzsyn-comment"># false -- strings compare lexicographically</span>
+(<span class="mdzsyn-coresym">&lt;=</span> <span class="mdzsyn-keyword">:bar</span> <span class="mdzsyn-keyword">:foo</span>)   <span class="mdzsyn-comment"># true -- keywords compare lexicographically by keyword name</span>
+(<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-constant">nil</span>)      <span class="mdzsyn-comment"># true -- nil always equal to itself and only itself</span></code></pre><p>More generally, each of these operators can take any number of arguments
+(from 0) and will return true if the arguments do not violate the ordering
+implied by the operator.  So <code class="mendoza-code">(&lt; 1 2 3)</code> returns true but
+<code class="mendoza-code">(&gt; 3 2 4)</code> returns false.  As an extreme, <code class="mendoza-code">(&lt;)</code> returns true
+since its (nonexistent) arguments do not violate the ordering.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">1</span>)  <span class="mdzsyn-comment"># true</span>
+(<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">5</span>)  <span class="mdzsyn-comment"># true</span>
+(<span class="mdzsyn-coresym">&gt;=</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">7</span>) <span class="mdzsyn-comment"># false</span>
+(<span class="mdzsyn-coresym">&gt;</span> <span class="mdzsyn-number">1</span>)      <span class="mdzsyn-comment"># true</span></code></pre><p>The primitive comparison operators provide a total ordering for all Janet
+types, but importantly, these operators compare values of different types in a
+way that the user might find surprising.  If two arguments of a primitive
+comparison are of different types, they will be ordered by Janet's internal
+type number.  This is not necessarily what the user needs, for example, when
+comparing Janet int/s64 types to Janet numbers.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># surprisingly evaluates to false:</span>
+(<span class="mdzsyn-coresym">=</span> (<span class="mdzsyn-coresym">int/s64</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">int/u64</span> <span class="mdzsyn-number">1</span>))
+<span class="mdzsyn-comment"># surprisingly evaluates to true but this due to Janet internal type number</span>
+<span class="mdzsyn-comment"># for int/u64 types being greater than the internal type number for numbers!</span>
+(<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-number">3</span> (<span class="mdzsyn-coresym">int/u64</span> <span class="mdzsyn-number">2</span>))</code></pre><p>If you require comparison between types to be ordered by something other than
+type number (e.g. "numeric value") then, use the polymorphic comparison
+operators, described below.
+</p>
+<h2 id="Polymorphic-Comparison-Operators">Polymorphic Comparison Operators
+</h2>
+<p>The polymorphic comparison operators are used for comparing different types in
+some manner rather than just by internal Janet type number.  The semantics are
+determined by the types involved.  The purpose of these operators is to allow
+comparison to work in some "less surprising" way (relative to the primitive
+comparison operators) when two types have a natural ordering between them.
+</p>
+<p>The polymorphic comparison operators are <code class="mendoza-code">compare=</code>, <code class="mendoza-code">compare&lt;</code>,
+<code class="mendoza-code">compare&lt;=</code>, <code class="mendoza-code">compare&gt;</code>, <code class="mendoza-code">compare&gt;=</code>.  In general, they work
+similarly to the primitive operators:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">compare&lt;</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">3</span>)          <span class="mdzsyn-comment"># true</span>
+(<span class="mdzsyn-coresym">compare&gt;</span> <span class="mdzsyn-string">"bar"</span> <span class="mdzsyn-string">"foo"</span>)  <span class="mdzsyn-comment"># false -- strings compare lexicographically</span>
+(<span class="mdzsyn-coresym">compare&lt;=</span> <span class="mdzsyn-keyword">:bar</span> <span class="mdzsyn-keyword">:foo</span>)   <span class="mdzsyn-comment"># true -- keywords compare lexicographically by keyword name</span>
+(<span class="mdzsyn-coresym">compare=</span> <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-constant">nil</span>)      <span class="mdzsyn-comment"># true -- nil always equal to itself and only itself</span>
+(<span class="mdzsyn-coresym">compare&lt;</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>)        <span class="mdzsyn-comment"># true -- just like &lt;</span></code></pre><p>However, when comparing between int/s64, int/u64, and number types, these operators
+will "do the right thing".
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">compare=</span> (<span class="mdzsyn-coresym">int/s64</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">int/u64</span> <span class="mdzsyn-number">1</span>))  <span class="mdzsyn-comment"># true -- they are "semantically" equal</span>
+(<span class="mdzsyn-coresym">compare&lt;</span> <span class="mdzsyn-number">3</span> (<span class="mdzsyn-coresym">int/u64</span> <span class="mdzsyn-number">2</span>))            <span class="mdzsyn-comment"># false -- semantically 3 is not &lt; 2</span></code></pre><p>In general the polymorphic operators are slower than the primitive ones, so
+use the primitive ones unless you need the extra polymorphic features.
+</p>
+<h2 id="Implementing-Polymorphic-Comparison">Implementing Polymorphic Comparison
+</h2>
+<p>If you just want to use the polymorphic comparison for the built in types, you
+can skip this section, which is about how to implement polymorphic comparison
+for your own types.
+</p>
+<p>The polymorphic comparison operators all use a function called <code class="mendoza-code">compare</code>
+to establish an ordering between janet values.  The <code class="mendoza-code">compare</code> function
+compares two values (here called <code class="mendoza-code">a</code> and <code class="mendoza-code">b</code>), and returns -1, 0, or
+1 for <code class="mendoza-code">a &lt; b</code>, <code class="mendoza-code">a = b</code>, <code class="mendoza-code">a &gt; b</code> respectively.  This result is
+used by the comparison operator, like <code class="mendoza-code">compare&lt;</code>, to return false or true.
+(The comparison operators are extended to work for multiple arguments using
+multiple calls to <code class="mendoza-code">compare</code>).  The algorithm for the <code class="mendoza-code">compare</code>
+function is as follows:
+</p>
+<ul><li>if <code class="mendoza-code">a</code> implements <code class="mendoza-code">:compare</code> and <code class="mendoza-code">(:compare a b)</code> is not nil, then return <code class="mendoza-code">(:compare a b)</code></li>
+  <li>if <code class="mendoza-code">b</code> implements <code class="mendoza-code">:compare</code> and <code class="mendoza-code">(:compare b a)</code> is not nil, then return <code class="mendoza-code">(- (:compare a b))</code></li>
+  <li>else return <code class="mendoza-code">(cond (&lt; a b) -1 (= a b) 0 1)</code></li></ul><p>Since compare defers to the primitive operators as a last resort, the
+polymorphic comparison operators produce a total ordering of Janet types.
+</p>
+<p>The compare method on an abstract type can be implemented in C, and the compare
+method for a table-based "object" can be implemented in Janet.  For more
+information on the latter see the <a href="/docs/object_oriented.html">object
+oriented programming section</a> and the <a href="/docs/prototypes.html">prototypes
+section</a> for more information on developing object oriented methods on tables.
+</p>
+<h2 id="Deep-Equality-Operator">Deep Equality Operator
+</h2>
+<p>The primitive <code class="mendoza-code">=</code> operator does not compare the contents of mutable structures (arrays, tables, and buffers).
+Instead, it checks if the two values are the same object.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Even though they have the same contents these are considered *not* equal</span>
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">not=</span> @{<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>} @{<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>}))
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">not=</span> @[<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>] @[<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>]))
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">not=</span> <span class="mdzsyn-string">@"abc"</span> <span class="mdzsyn-string">@"abc"</span>))
+
+<span class="mdzsyn-comment"># primitive equal will return true if they are same object</span>
+(<span class="mdzsyn-coresym">let</span> [<span class="mdzsyn-symbol">x</span> @{<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>}]
+  (<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span>)))
+
+<span class="mdzsyn-comment"># NOTE: = works as expected on immutable structures</span>
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">=</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>] [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>]))
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">=</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>} {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>}))
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-string">"abc"</span> <span class="mdzsyn-string">"abc"</span>))</code></pre><p>To compare the contents of mutable structures use the <code class="mendoza-code">deep=</code> function.
+This function compares buffers like strings, and recursively compares arrays and tables.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">deep=</span> [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>] [<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>]))
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">deep=</span> {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>} {<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>}))
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">deep=</span> <span class="mdzsyn-string">"abc"</span> <span class="mdzsyn-string">"abc"</span>))
+
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">deep=</span>
+  @{ <span class="mdzsyn-keyword">:x</span> @[@{<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>} <span class="mdzsyn-number">3</span> <span class="mdzsyn-string">@"hi"</span>] <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-number">2</span> }
+  @{ <span class="mdzsyn-keyword">:x</span> @[@{<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-number">1</span>} <span class="mdzsyn-number">3</span> <span class="mdzsyn-string">@"hi"</span>] <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-number">2</span> }))
+
+<span class="mdzsyn-comment"># NOTE deep= uses primitive = when the values are not an array, table or buffer.</span>
+(<span class="mdzsyn-coresym">assert</span> (<span class="mdzsyn-coresym">deep-not=</span> @{ <span class="mdzsyn-keyword">:x</span> (<span class="mdzsyn-coresym">int/s64</span> <span class="mdzsyn-number">1</span>) } @{ <span class="mdzsyn-keyword">:x</span> (<span class="mdzsyn-coresym">int/u64</span> <span class="mdzsyn-number">1</span>) }))</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="numbers.html"><span class="prevnext-text">Numbers and Arithmetic</span></a></span>
+          <span class="next"><a href="bindings.html"><span class="prevnext-text">Bindings (def and var)</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on January 8, 2023 at 02:43:22 (UTC) with Janet 1.26.0-c28df14</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

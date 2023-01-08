@@ -12,8 +12,6 @@ The few features that are not standard C (dynamic library loading, compiler spec
 are fairly straightforward. Janet can be easily ported to new platforms. While Janet is embeddable, it comes with a bit more out of the box than many other such easily embeddable languages
 such as threading, networking, an event loop, subprocess handling, regex-like library called PEG, and more.
 
-
-
 ## Features
 
 @ul{@li{Minimal setup - one binary and you are good to go!}

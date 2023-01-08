@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2022 Calvin Rose
+* Copyright (c) 2023 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 25
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 26
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.25.1"
+#define JANET_VERSION "1.26.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -55,6 +55,8 @@
 /* #define JANET_NO_SYMLINKS */
 /* #define JANET_NO_UMASK */
 /* #define JANET_NO_THREADS */
+/* #define JANET_NO_FFI */
+/* #define JANET_NO_FFI_JIT */
 
 /* Other settings */
 /* #define JANET_DEBUG */
@@ -232,6 +234,13 @@ extern "C" {
 #ifndef JANET_NO_FFI
 #if !defined(__EMSCRIPTEN__) && (defined(__x86_64__) || defined(_M_X64))
 #define JANET_FFI
+#endif
+#endif
+
+/* If FFI is enabled and FFI-JIT is not disabled... */
+#ifdef JANET_FFI
+#ifndef JANET_NO_FFI_JIT
+#define JANET_FFI_JIT
 #endif
 #endif
 
@@ -1157,6 +1166,8 @@ struct JanetAbstractType {
     int32_t (*hash)(void *p, size_t len);
     Janet(*next)(void *p, Janet key);
     Janet(*call)(void *p, int32_t argc, Janet *argv);
+    size_t (*length)(void *p, size_t len);
+    JanetByteView(*bytes)(void *p, size_t len);
 };
 
 /* Some macros to let us add extra types to JanetAbstract types without
@@ -1174,7 +1185,9 @@ struct JanetAbstractType {
 #define JANET_ATEND_COMPARE     NULL,JANET_ATEND_HASH
 #define JANET_ATEND_HASH        NULL,JANET_ATEND_NEXT
 #define JANET_ATEND_NEXT        NULL,JANET_ATEND_CALL
-#define JANET_ATEND_CALL
+#define JANET_ATEND_CALL        NULL,JANET_ATEND_LENGTH
+#define JANET_ATEND_LENGTH      NULL,JANET_ATEND_BYTES
+#define JANET_ATEND_BYTES
 
 struct JanetReg {
     const char *name;

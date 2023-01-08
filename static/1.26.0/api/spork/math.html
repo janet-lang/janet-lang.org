@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Math extended</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Math extended" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org&focus=yes" frameborder="0"></iframe> 
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/jpm.html">jpm</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../index.html">API</a></span><ul><li><span><a href="../array.html">array</a></span></li><li><span><a href="../buffer.html">buffer</a></span></li><li><span><a href="../debug.html">debug</a></span></li><li><span><a href="../ev.html">ev</a></span></li><li><span><a href="../ffi.html">ffi</a></span></li><li><span><a href="../fiber.html">fiber</a></span></li><li><span><a href="../file.html">file</a></span></li><li><span><a href="../int.html">int</a></span></li><li class="caret"><span><a href="../jpm/index.html">jpm</a></span><ul><li><span><a href="../jpm/rules.html">rules</a></span></li><li><span><a href="../jpm/cc.html">cc</a></span></li><li><span><a href="../jpm/cgen.html">cgen</a></span></li><li><span><a href="../jpm/cli.html">cli</a></span></li><li><span><a href="../jpm/commands.html">commands</a></span></li><li><span><a href="../jpm/config.html">config</a></span></li><li><span><a href="../jpm/make-config.html">make-config</a></span></li><li><span><a href="../jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/pm.html">pm</a></span></li><li><span><a href="../jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../math.html">math</a></span></li><li><span><a href="../module.html">module</a></span></li><li><span><a href="../net.html">net</a></span></li><li><span><a href="../os.html">os</a></span></li><li><span><a href="../peg.html">peg</a></span></li><li><span><a href="../parser.html">parser</a></span></li><li class="caret"><span><a href="index.html">spork</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="json.html">json</a></span></li><li><span class="selected"><a href="math.html">math</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li><li><span><a href="../string.html">string</a></span></li><li><span><a href="../table.html">table</a></span></li><li><span><a href="../misc.html">misc</a></span></li><li><span><a href="../tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.26.0-c28df14 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.25.1/api/spork/math.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/api/spork/math.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/api/spork/math.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/api/spork/math.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/api/spork/math.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/api/spork/math.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/api/spork/math.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/api/spork/math.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/api/spork/math.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/api/spork/math.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/api/spork/math.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/api/spork/math.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/api/spork/math.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/api/spork/math.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/api/spork/math.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/api/spork/math.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/api/spork/math.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/api/spork/math.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/api/spork/math.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/api/spork/math.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/api/spork/math.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/api/spork/math.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/api/spork/math.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Math extended</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="json.html"><span class="prevnext-text">JSON</span></a></span>
+
+          <span class="next"><a href="misc.html"><span class="prevnext-text">Miscellaneous Functions</span></a></span>
+        </div>
+        
+
+<h2 id="Index-40">Index
+</h2>
+<p><a href="#math/add">math/add</a> <a href="#math/add-to-mean">math/add-to-mean</a> <a href="#math/approx-eq">math/approx-eq</a> <a href="#math/bernoulli-distribution">math/bernoulli-distribution</a> <a href="#math/binominal-coeficient">math/binominal-coeficient</a> <a href="#math/binominal-distribution">math/binominal-distribution</a> <a href="#math/check-propability">math/check-propability</a> <a href="#math/chi-squared-distribution-table">math/chi-squared-distribution-table</a> <a href="#math/cols">math/cols</a> <a href="#math/cumulative-std-normal-probability">math/cumulative-std-normal-probability</a> <a href="#math/det">math/det</a> <a href="#math/dot">math/dot</a> <a href="#math/epsilon">math/epsilon</a> <a href="#math/extent">math/extent</a> <a href="#math/factorial">math/factorial</a> <a href="#math/geometric-mean">math/geometric-mean</a> <a href="#math/get-only-el">math/get-only-el</a> <a href="#math/harmonic-mean">math/harmonic-mean</a> <a href="#math/ident">math/ident</a> <a href="#math/interquartile-range">math/interquartile-range</a> <a href="#math/linear-regression">math/linear-regression</a> <a href="#math/linear-regression-line">math/linear-regression-line</a> <a href="#math/median">math/median</a> <a href="#math/median-absolute-deviation">math/median-absolute-deviation</a> <a href="#math/minor">math/minor</a> <a href="#math/mode">math/mode</a> <a href="#math/mop">math/mop</a> <a href="#math/mul">math/mul</a> <a href="#math/perm">math/perm</a> <a href="#math/permutation-test">math/permutation-test</a> <a href="#math/permutations">math/permutations</a> <a href="#math/poisson-distribution">math/poisson-distribution</a> <a href="#math/quantile">math/quantile</a> <a href="#math/quantile-rank">math/quantile-rank</a> <a href="#math/quantile-rank-sorted">math/quantile-rank-sorted</a> <a href="#math/quantile-sorted">math/quantile-sorted</a> <a href="#math/quickselect">math/quickselect</a> <a href="#math/relative-err">math/relative-err</a> <a href="#math/root-mean-square">math/root-mean-square</a> <a href="#math/rows">math/rows</a> <a href="#math/sample-correlation">math/sample-correlation</a> <a href="#math/sample-covariance">math/sample-covariance</a> <a href="#math/sample-skewness">math/sample-skewness</a> <a href="#math/sample-standard-deviation">math/sample-standard-deviation</a> <a href="#math/sample-variance">math/sample-variance</a> <a href="#math/scalar">math/scalar</a> <a href="#math/shuffle-in-place">math/shuffle-in-place</a> <a href="#math/size">math/size</a> <a href="#math/sop">math/sop</a> <a href="#math/standard-deviation">math/standard-deviation</a> <a href="#math/standard-normal-table">math/standard-normal-table</a> <a href="#math/sum-compensated">math/sum-compensated</a> <a href="#math/sum-nth-power-deviations">math/sum-nth-power-deviations</a> <a href="#math/swap">math/swap</a> <a href="#math/t-test">math/t-test</a> <a href="#math/t-test-2">math/t-test-2</a> <a href="#math/trans">math/trans</a> <a href="#math/variance">math/variance</a> <a href="#math/z-score">math/z-score</a> <a href="#math/zero">math/zero</a> </p><hr><div class="binding"><span id="math/add" class="binding-sym">math/add</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1072">source</a></span> <pre class="binding-text">(add m a)
+
+Add `a` to matrix `m` where it can be matrix or scalar.
+Matrix `m` is mutated.</pre><a href="https://janetdocs.com/math/add">Community Examples</a></div><hr><div class="binding"><span id="math/add-to-mean" class="binding-sym">math/add-to-mean</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L166">source</a></span> <pre class="binding-text">(add-to-mean m n v)
+
+Adds new value `v` to mean `m` from `n` values.</pre><a href="https://janetdocs.com/math/add-to-mean">Community Examples</a></div><hr><div class="binding"><span id="math/approx-eq" class="binding-sym">math/approx-eq</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L194">source</a></span> <pre class="binding-text">(approx-eq a e &amp;opt t)
+
+Approximate equality between actual number `a`
+and expected number `e`. Default tolerance `t`
+is `epsilon`.</pre><a href="https://janetdocs.com/math/approx-eq">Community Examples</a></div><hr><div class="binding"><span id="math/bernoulli-distribution" class="binding-sym">math/bernoulli-distribution</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L368">source</a></span> <pre class="binding-text">(bernoulli-distribution p)
+
+Creates Bernoulli distribution from popability `p` in the tuple.</pre><a href="https://janetdocs.com/math/bernoulli-distribution">Community Examples</a></div><hr><div class="binding"><span id="math/binominal-coeficient" class="binding-sym">math/binominal-coeficient</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L950">source</a></span> <pre class="binding-text">(binominal-coeficient n k)
+
+Computes binominal coeficient from set of size `n`
+and sample size `k`.</pre><a href="https://janetdocs.com/math/binominal-coeficient">Community Examples</a></div><hr><div class="binding"><span id="math/binominal-distribution" class="binding-sym">math/binominal-distribution</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L374">source</a></span> <pre class="binding-text">(binominal-distribution t p)
+
+Creates binominal distribution from trials `t`
+and propability `p` in the tuple.</pre><a href="https://janetdocs.com/math/binominal-distribution">Community Examples</a></div><hr><div class="binding"><span id="math/check-propability" class="binding-sym">math/check-propability</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L363">source</a></span> <pre class="binding-text">(check-propability p)
+
+Asserts that probability in in the [0 1] range.</pre><a href="https://janetdocs.com/math/check-propability">Community Examples</a></div><hr><div class="binding"><span id="math/chi-squared-distribution-table" class="binding-sym">math/chi-squared-distribution-table</span> <span class="binding-type">struct</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L526">source</a></span> <pre class="binding-text">Chi Squared distribution table.</pre><a href="https://janetdocs.com/math/chi-squared-distribution-table">Community Examples</a></div><hr><div class="binding"><span id="math/cols" class="binding-sym">math/cols</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1001">source</a></span> <pre class="binding-text">(cols m)
+
+Returns numbers of columns of matrix `m`.</pre><a href="https://janetdocs.com/math/cols">Community Examples</a></div><hr><div class="binding"><span id="math/cumulative-std-normal-probability" class="binding-sym">math/cumulative-std-normal-probability</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L936">source</a></span> <pre class="binding-text">(cumulative-std-normal-probability z)
+
+Computes standard normal probability for `y`.</pre><a href="https://janetdocs.com/math/cumulative-std-normal-probability">Community Examples</a></div><hr><div class="binding"><span id="math/det" class="binding-sym">math/det</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1138">source</a></span> <pre class="binding-text">(det m)
+
+Computes determinant of matrix `m`.</pre><a href="https://janetdocs.com/math/det">Community Examples</a></div><hr><div class="binding"><span id="math/dot" class="binding-sym">math/dot</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1082">source</a></span> <pre class="binding-text">(dot mx my)
+
+Computes dot product of matrices or vectors `x` and `y`.</pre><a href="https://janetdocs.com/math/dot">Community Examples</a></div><hr><div class="binding"><span id="math/epsilon" class="binding-sym">math/epsilon</span> <span class="binding-type">number</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L192">source</a></span> <pre class="binding-text">Epsilon constant</pre><a href="https://janetdocs.com/math/epsilon">Community Examples</a></div><hr><div class="binding"><span id="math/extent" class="binding-sym">math/extent</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L5">source</a></span> <pre class="binding-text">(extent xs)
+
+Returns the minimum &amp; maximum number in an `xs` as tuple.</pre><a href="https://janetdocs.com/math/extent">Community Examples</a></div><hr><div class="binding"><span id="math/factorial" class="binding-sym">math/factorial</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L945">source</a></span> <pre class="binding-text">(factorial n)
+
+Returns factorial of `n`.</pre><a href="https://janetdocs.com/math/factorial">Community Examples</a></div><hr><div class="binding"><span id="math/geometric-mean" class="binding-sym">math/geometric-mean</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L214">source</a></span> <pre class="binding-text">(geometric-mean xs)
+
+Gets the geometric mean from `xs`.</pre><a href="https://janetdocs.com/math/geometric-mean">Community Examples</a></div><hr><div class="binding"><span id="math/get-only-el" class="binding-sym">math/get-only-el</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L988">source</a></span> <pre class="binding-text">(get-only-el m)
+
+Convenience macro for geting first element
+from first row of the two dimensional array `m`.</pre><a href="https://janetdocs.com/math/get-only-el">Community Examples</a></div><hr><div class="binding"><span id="math/harmonic-mean" class="binding-sym">math/harmonic-mean</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L204">source</a></span> <pre class="binding-text">(harmonic-mean xs)
+
+Gets the harmonic mean from `xs`.</pre><a href="https://janetdocs.com/math/harmonic-mean">Community Examples</a></div><hr><div class="binding"><span id="math/ident" class="binding-sym">math/ident</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1033">source</a></span> <pre class="binding-text">(ident c)
+
+Creates identity matrix with `c` x `c` size.</pre><a href="https://janetdocs.com/math/ident">Community Examples</a></div><hr><div class="binding"><span id="math/interquartile-range" class="binding-sym">math/interquartile-range</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L298">source</a></span> <pre class="binding-text">(interquartile-range xs)
+
+Gets the interquartile range from `xs`.</pre><a href="https://janetdocs.com/math/interquartile-range">Community Examples</a></div><hr><div class="binding"><span id="math/linear-regression" class="binding-sym">math/linear-regression</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L333">source</a></span> <pre class="binding-text">(linear-regression coords)
+
+Computes the slope `:m` and y-intercept `:b`
+of the function in the struct from set of coordinates.</pre><a href="https://janetdocs.com/math/linear-regression">Community Examples</a></div><hr><div class="binding"><span id="math/linear-regression-line" class="binding-sym">math/linear-regression-line</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L357">source</a></span> <pre class="binding-text">(linear-regression-line {:m m :b b})
+
+Constructs function from struct returned by linear regression.</pre><a href="https://janetdocs.com/math/linear-regression-line">Community Examples</a></div><hr><div class="binding"><span id="math/median" class="binding-sym">math/median</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L178">source</a></span> <pre class="binding-text">(median xs)
+
+Gets the median value from `xs`</pre><a href="https://janetdocs.com/math/median">Community Examples</a></div><hr><div class="binding"><span id="math/median-absolute-deviation" class="binding-sym">math/median-absolute-deviation</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L289">source</a></span> <pre class="binding-text">(median-absolute-deviation xs)
+
+Gets median absolute deviation from `xs`.</pre><a href="https://janetdocs.com/math/median-absolute-deviation">Community Examples</a></div><hr><div class="binding"><span id="math/minor" class="binding-sym">math/minor</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1113">source</a></span> <pre class="binding-text">(minor m x y)
+
+Computes minor matrix of matrix `m` and `x`, `y`.</pre><a href="https://janetdocs.com/math/minor">Community Examples</a></div><hr><div class="binding"><span id="math/mode" class="binding-sym">math/mode</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L171">source</a></span> <pre class="binding-text">(mode xs)
+
+Gets the mode value from `xs`.</pre><a href="https://janetdocs.com/math/mode">Community Examples</a></div><hr><div class="binding"><span id="math/mop" class="binding-sym">math/mop</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1062">source</a></span> <pre class="binding-text">(mop m op a)
+
+Mutates every cell of the matrix `m` with `op`
+and corresponding cell from matrix arg `a`.</pre><a href="https://janetdocs.com/math/mop">Community Examples</a></div><hr><div class="binding"><span id="math/mul" class="binding-sym">math/mul</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1099">source</a></span> <pre class="binding-text">(mul m a)
+
+Multiply matrix `m` with `a` which can be matrix or vector.
+Matrix `m` is mutated.</pre><a href="https://janetdocs.com/math/mul">Community Examples</a></div><hr><div class="binding"><span id="math/perm" class="binding-sym">math/perm</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1152">source</a></span> <pre class="binding-text">(perm m)
+
+Computes permanent of the matrix `m`.</pre><a href="https://janetdocs.com/math/perm">Community Examples</a></div><hr><div class="binding"><span id="math/permutation-test" class="binding-sym">math/permutation-test</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L487">source</a></span> <pre class="binding-text">(permutation-test xs ys &amp;opt a k)
+
+Conducts a permutation test to determine if two data sets
+`xs` and `ys` are *significantly* different from each other.
+You can use alternative hypotesis `a`, which defaults to `:two-side`,
+with `:greater` and `:lesser` being the other two options.
+The last optional argument is `k` number of values
+in permutation distribution</pre><a href="https://janetdocs.com/math/permutation-test">Community Examples</a></div><hr><div class="binding"><span id="math/permutations" class="binding-sym">math/permutations</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L964">source</a></span> <pre class="binding-text">(permutations s &amp;opt k)
+
+Returns permutations of length `k` from members of `s`</pre><a href="https://janetdocs.com/math/permutations">Community Examples</a></div><hr><div class="binding"><span id="math/poisson-distribution" class="binding-sym">math/poisson-distribution</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L397">source</a></span> <pre class="binding-text">(poisson-distribution lambda)
+
+Creates Poisson distribution from `lambda` in tuple.</pre><a href="https://janetdocs.com/math/poisson-distribution">Community Examples</a></div><hr><div class="binding"><span id="math/quantile" class="binding-sym">math/quantile</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L112">source</a></span> <pre class="binding-text">(quantile xs p)
+
+Gets the quantile value from `xs` at `p` from unsorted population.</pre><a href="https://janetdocs.com/math/quantile">Community Examples</a></div><hr><div class="binding"><span id="math/quantile-rank" class="binding-sym">math/quantile-rank</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L161">source</a></span> <pre class="binding-text">(quantile-rank xs p)
+
+Gets the quantile rank of value `v` from unsorted `xs`.</pre><a href="https://janetdocs.com/math/quantile-rank">Community Examples</a></div><hr><div class="binding"><span id="math/quantile-rank-sorted" class="binding-sym">math/quantile-rank-sorted</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L121">source</a></span> <pre class="binding-text">(quantile-rank-sorted xs v)
+
+Gets the quantile rank of value `v` from sorted `xs`.</pre><a href="https://janetdocs.com/math/quantile-rank-sorted">Community Examples</a></div><hr><div class="binding"><span id="math/quantile-sorted" class="binding-sym">math/quantile-sorted</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L81">source</a></span> <pre class="binding-text">(quantile-sorted xs p)
+
+Gets the quantile value from `xs` at `p` from sorted population.</pre><a href="https://janetdocs.com/math/quantile-sorted">Community Examples</a></div><hr><div class="binding"><span id="math/quickselect" class="binding-sym">math/quickselect</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L39">source</a></span> <pre class="binding-text">(quickselect arr k &amp;opt left right)
+
+Rearrange items in `arr` so that all items in `[left, k]` range
+are the smallest.
+The `k`-th element will have the `(k - left + 1)`-th smallest value
+in `[left, right]`.
+Mutates `arr`.</pre><a href="https://janetdocs.com/math/quickselect">Community Examples</a></div><hr><div class="binding"><span id="math/relative-err" class="binding-sym">math/relative-err</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L183">source</a></span> <pre class="binding-text">(relative-err a e)
+
+Gets the relative err between actual number `a`
+and expected number `e`.</pre><a href="https://janetdocs.com/math/relative-err">Community Examples</a></div><hr><div class="binding"><span id="math/root-mean-square" class="binding-sym">math/root-mean-square</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L224">source</a></span> <pre class="binding-text">(root-mean-square xs)
+
+Gets the root mean square from `xs`.</pre><a href="https://janetdocs.com/math/root-mean-square">Community Examples</a></div><hr><div class="binding"><span id="math/rows" class="binding-sym">math/rows</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L996">source</a></span> <pre class="binding-text">(rows m)
+
+Returns numbers of rows of matrix `m`.</pre><a href="https://janetdocs.com/math/rows">Community Examples</a></div><hr><div class="binding"><span id="math/sample-correlation" class="binding-sym">math/sample-correlation</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L326">source</a></span> <pre class="binding-text">(sample-correlation xs ys)
+
+Gets the sample correlation between `xs` and `ys`.</pre><a href="https://janetdocs.com/math/sample-correlation">Community Examples</a></div><hr><div class="binding"><span id="math/sample-covariance" class="binding-sym">math/sample-covariance</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L311">source</a></span> <pre class="binding-text">(sample-covariance xs ys)
+
+Gets the sample covariance between `xs` and `ys`.</pre><a href="https://janetdocs.com/math/sample-covariance">Community Examples</a></div><hr><div class="binding"><span id="math/sample-skewness" class="binding-sym">math/sample-skewness</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L233">source</a></span> <pre class="binding-text">(sample-skewness xs)
+
+Gets the sample skeweness from the `xs`.</pre><a href="https://janetdocs.com/math/sample-skewness">Community Examples</a></div><hr><div class="binding"><span id="math/sample-standard-deviation" class="binding-sym">math/sample-standard-deviation</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L284">source</a></span> <pre class="binding-text">(sample-standard-deviation xs)
+
+Gets sample standard deviation from `xs`.</pre><a href="https://janetdocs.com/math/sample-standard-deviation">Community Examples</a></div><hr><div class="binding"><span id="math/sample-variance" class="binding-sym">math/sample-variance</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L268">source</a></span> <pre class="binding-text">(sample-variance xs)
+
+Get the sample variance from `xs`.</pre><a href="https://janetdocs.com/math/sample-variance">Community Examples</a></div><hr><div class="binding"><span id="math/scalar" class="binding-sym">math/scalar</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1022">source</a></span> <pre class="binding-text">(scalar c s)
+
+Creates scalar `s` matrix with `c` x `c` size.</pre><a href="https://janetdocs.com/math/scalar">Community Examples</a></div><hr><div class="binding"><span id="math/shuffle-in-place" class="binding-sym">math/shuffle-in-place</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L470">source</a></span> <pre class="binding-text">(shuffle-in-place xs)
+
+Generate random permutation of the array `xs`
+which is shuffled in place.</pre><a href="https://janetdocs.com/math/shuffle-in-place">Community Examples</a></div><hr><div class="binding"><span id="math/size" class="binding-sym">math/size</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1006">source</a></span> <pre class="binding-text">(size m)
+
+Returns tuple with the matrix `m` size [rows cols].</pre><a href="https://janetdocs.com/math/size">Community Examples</a></div><hr><div class="binding"><span id="math/sop" class="binding-sym">math/sop</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1050">source</a></span> <pre class="binding-text">(sop m op &amp; a)
+
+Mutates every cell of the matrix `m` with `op`
+and variadic args `a`.</pre><a href="https://janetdocs.com/math/sop">Community Examples</a></div><hr><div class="binding"><span id="math/standard-deviation" class="binding-sym">math/standard-deviation</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L277">source</a></span> <pre class="binding-text">(standard-deviation xs)
+
+Gets the standard deviation from `ds`.</pre><a href="https://janetdocs.com/math/standard-deviation">Community Examples</a></div><hr><div class="binding"><span id="math/standard-normal-table" class="binding-sym">math/standard-normal-table</span> <span class="binding-type">tuple</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L430">source</a></span> <pre class="binding-text">Computed standard normal table.</pre><a href="https://janetdocs.com/math/standard-normal-table">Community Examples</a></div><hr><div class="binding"><span id="math/sum-compensated" class="binding-sym">math/sum-compensated</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L10">source</a></span> <pre class="binding-text">(sum-compensated xs)
+
+Returns sum of the members of `xs` with Kahan-Babushka algorithm.</pre><a href="https://janetdocs.com/math/sum-compensated">Community Examples</a></div><hr><div class="binding"><span id="math/sum-nth-power-deviations" class="binding-sym">math/sum-nth-power-deviations</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L252">source</a></span> <pre class="binding-text">(sum-nth-power-deviations xs n)
+
+Get the sum of deviations to the n power.</pre><a href="https://janetdocs.com/math/sum-nth-power-deviations">Community Examples</a></div><hr><div class="binding"><span id="math/swap" class="binding-sym">math/swap</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L28">source</a></span> <pre class="binding-text">(swap arr i j)
+
+Swaps members with indices `i` and `j` of arr.
+Noop when `i` equals `j`.</pre><a href="https://janetdocs.com/math/swap">Community Examples</a></div><hr><div class="binding"><span id="math/t-test" class="binding-sym">math/t-test</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L438">source</a></span> <pre class="binding-text">(t-test xs expv)
+
+Computes one sample t-test comparing the mean of `xs`
+to known value `expv`.</pre><a href="https://janetdocs.com/math/t-test">Community Examples</a></div><hr><div class="binding"><span id="math/t-test-2" class="binding-sym">math/t-test-2</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L449">source</a></span> <pre class="binding-text">(t-test-2 xs ys &amp;opt d)
+
+Computes two sample t-test of two samples `xs` and `ys`
+with difference optional `d` which defaults to 0.</pre><a href="https://janetdocs.com/math/t-test-2">Community Examples</a></div><hr><div class="binding"><span id="math/trans" class="binding-sym">math/trans</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1038">source</a></span> <pre class="binding-text">(trans m)
+
+Returns a new transposed matrix from `m`.</pre><a href="https://janetdocs.com/math/trans">Community Examples</a></div><hr><div class="binding"><span id="math/variance" class="binding-sym">math/variance</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L262">source</a></span> <pre class="binding-text">(variance xs)
+
+Get the variance from the `xs`.</pre><a href="https://janetdocs.com/math/variance">Community Examples</a></div><hr><div class="binding"><span id="math/z-score" class="binding-sym">math/z-score</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L303">source</a></span> <pre class="binding-text">(z-score x m d)
+
+Gets the standard score for number `x` from mean `m` 
+and standard deviation `d`.</pre><a href="https://janetdocs.com/math/z-score">Community Examples</a></div><hr><div class="binding"><span id="math/zero" class="binding-sym">math/zero</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/87a2aae508a86d45363ae4cc747141847e463ee4//spork/math.janet#L1011">source</a></span> <pre class="binding-text">(zero c &amp;opt r)
+
+Creates vector of length `c`, or matrix if `r`
+is provided, and fills it with zeros.</pre><a href="https://janetdocs.com/math/zero">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="json.html"><span class="prevnext-text">JSON</span></a></span>
+          <span class="next"><a href="misc.html"><span class="prevnext-text">Miscellaneous Functions</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on January 8, 2023 at 02:43:22 (UTC) with Janet 1.26.0-c28df14</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
