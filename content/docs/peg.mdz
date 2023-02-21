@@ -334,6 +334,12 @@ grammars simpler.
         @td{ Matches n repetitions of a pattern, where n is supplied from other
         parsed input and is not a constant. }}}
 
+    @tr{@td{@code`(number patt ?base ?tag)` }
+        @td{ Capture a number parsed from the matched pattern. This uses the
+         same parser as Janet itself, so it supports all numeric notation
+         allowed in Janet files. To tag the capture without forcing a
+         particular base, use @code`(number patt nil :tag)`. }}}
+
 ## Grammars and recursion
 
 The feature that makes PEGs so much more powerful than pattern matching
