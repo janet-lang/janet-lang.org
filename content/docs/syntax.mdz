@@ -204,7 +204,7 @@ Structs are represented by a sequence of whitespace-delimited key-value pairs
 surrounded by curly braces. The sequence is defined as key1, value1, key2,
 value2, etc.  There must be an even number of items between curly braces or the
 parser will signal a parse error. Any value can be a key or value. Using
-@code`nil` or @code`NaN` as a key, however, will drop that pair from the parsed
+@code`nil` or @code`math/nan` as a key, however, will drop that pair from the parsed
 struct.
 
 @codeblock[janet]```
