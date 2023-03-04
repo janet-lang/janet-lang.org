@@ -175,7 +175,8 @@ Yet another buffer
 
 Tuples are a sequence of whitespace separated values surrounded by either
 parentheses or brackets. The parser considers any of the characters ASCII 32,
-@code`\0`, @code`\f`, @code`\n`, @code`\r` or @code`\t` to be whitespace.
+@code`\0`, @code`\f`, @code`\n`, @code`\r`, @code`\t`, or @code`\v` to be
+whitespace.
 
 @codeblock[janet]```
 (do 1 2 3)
