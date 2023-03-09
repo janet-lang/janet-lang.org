@@ -33,6 +33,9 @@
 #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
 #endif
+#ifndef ENABLE_VIRTUAL_TERMINAL_INPUT
+#define ENABLE_VIRTUAL_TERMINAL_INPUT 0x0200
+#endif
 #endif
 
 void janet_line_init();
@@ -296,6 +299,7 @@ static char *sdup(const char *s) {
     return memcpy(mem, s, len);
 }
 
+#ifndef _WIN32
 static int curpos(void) {
     char buf[32];
     int cols, rows;
@@ -311,6 +315,7 @@ static int curpos(void) {
     if (sscanf(buf + 2, "%d;%d", &rows, &cols) != 2) return -1;
     return cols;
 }
+#endif
 
 static int getcols(void) {
 #ifdef _WIN32
@@ -950,6 +955,7 @@ static int line() {
                 break;
 #ifndef _WIN32
             case 26: /* ctrl-z */
+                clearlines();
                 norawmode();
                 kill(getpid(), SIGSTOP);
                 rawmode();

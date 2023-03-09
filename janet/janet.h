@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 26
+#define JANET_VERSION_MINOR 27
 #define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.26.0"
+#define JANET_VERSION "1.27.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -133,6 +133,11 @@ extern "C" {
 #define JANET_LINUX 1
 #endif
 
+/* Check for Cygwin */
+#if defined(__CYGWIN__)
+#define JANET_CYGWIN 1
+#endif
+
 /* Check Unix */
 #if defined(_AIX) \
     || defined(__APPLE__) /* Darwin */ \
@@ -153,6 +158,16 @@ extern "C" {
 #define JANET_WINDOWS 1
 #endif
 
+/* Check if compiling with MSVC - else assume a GCC-like compiler by default */
+#ifdef _MSC_VER
+#define JANET_MSVC
+#endif
+
+/* Check Mingw 32-bit and 64-bit */
+#ifdef __MINGW32__
+#define JANET_MINGW
+#endif
+
 /* Check 64-bit vs 32-bit */
 #if ((defined(__x86_64__) || defined(_M_X64)) \
      && (defined(JANET_POSIX) || defined(JANET_WINDOWS))) \
@@ -162,7 +177,8 @@ extern "C" {
     || (defined(__sparc__) && defined(__arch64__) || defined (__sparcv9)) /* BE */ \
     || defined(__s390x__) /* S390 64-bit (BE) */ \
     || (defined(__ppc64__) || defined(__PPC64__)) \
-    || defined(__aarch64__) /* ARM 64-bit */
+    || defined(__aarch64__) /* ARM 64-bit */ \
+    || (defined(__riscv) && (__riscv_xlen == 64)) /* RISC-V 64-bit */
 #define JANET_64 1
 #else
 #define JANET_32 1
@@ -330,10 +346,11 @@ extern "C" {
 #ifndef JANET_NO_NANBOX
 #ifdef JANET_32
 #define JANET_NANBOX_32
-#elif defined(__x86_64__) || defined(_WIN64)
+#elif defined(__x86_64__) || defined(_WIN64) || defined(__riscv)
 /* We will only enable nanboxing by default on 64 bit systems
- * on x86. This is mainly because the approach is tied to the
- * implicit 47 bit address space. */
+ * for x64 and risc-v. This is mainly because the approach is tied to the
+ * implicit 47 bit address space. Many arches allow/require this, but not all,
+ * and it requires cooperation from the OS. ARM should also work in many configurations. */
 #define JANET_NANBOX_64
 #endif
 #endif
@@ -406,7 +423,7 @@ typedef struct JanetOSRWLock JanetOSRWLock;
 
 /* What to do when out of memory */
 #ifndef JANET_OUT_OF_MEMORY
-#define JANET_OUT_OF_MEMORY do { fprintf(stderr, "janet out of memory\n"); exit(1); } while (0)
+#define JANET_OUT_OF_MEMORY do { fprintf(stderr, "%s:%d - janet out of memory\n", __FILE__, __LINE__); exit(1); } while (0)
 #endif
 
 #ifdef JANET_BSD
@@ -498,6 +515,7 @@ typedef struct JanetReg JanetReg;
 typedef struct JanetRegExt JanetRegExt;
 typedef struct JanetMethod JanetMethod;
 typedef struct JanetSourceMapping JanetSourceMapping;
+typedef struct JanetSymbolMap JanetSymbolMap;
 typedef struct JanetView JanetView;
 typedef struct JanetByteView JanetByteView;
 typedef struct JanetDictView JanetDictView;
@@ -1053,6 +1071,7 @@ struct JanetAbstractHead {
 /* Some function definition flags */
 #define JANET_FUNCDEF_FLAG_VARARG 0x10000
 #define JANET_FUNCDEF_FLAG_NEEDSENV 0x20000
+#define JANET_FUNCDEF_FLAG_HASSYMBOLMAP 0x40000
 #define JANET_FUNCDEF_FLAG_HASNAME 0x80000
 #define JANET_FUNCDEF_FLAG_HASSOURCE 0x100000
 #define JANET_FUNCDEF_FLAG_HASDEFS 0x200000
@@ -1068,6 +1087,14 @@ struct JanetSourceMapping {
     int32_t column;
 };
 
+/* Symbol to slot mapping & lifetime structure. */
+struct JanetSymbolMap {
+    uint32_t birth_pc;
+    uint32_t death_pc;
+    uint32_t slot_index;
+    const uint8_t *symbol;
+};
+
 /* A function definition. Contains information needed to instantiate closures. */
 struct JanetFuncDef {
     JanetGCObject gc;
@@ -1081,6 +1108,7 @@ struct JanetFuncDef {
     JanetSourceMapping *sourcemap;
     JanetString source;
     JanetString name;
+    JanetSymbolMap *symbolmap;
 
     int32_t flags;
     int32_t slotcount; /* The amount of stack space required for the function */
@@ -1091,6 +1119,7 @@ struct JanetFuncDef {
     int32_t bytecode_length;
     int32_t environments_length;
     int32_t defs_length;
+    int32_t symbolmap_length;
 };
 
 /* A function environment */
@@ -1622,8 +1651,10 @@ JANET_API Janet janet_array_pop(JanetArray *array);
 JANET_API Janet janet_array_peek(JanetArray *array);
 
 /* Buffer functions */
+#define JANET_BUFFER_FLAG_NO_REALLOC 0x10000
 JANET_API JanetBuffer *janet_buffer(int32_t capacity);
 JANET_API JanetBuffer *janet_buffer_init(JanetBuffer *buffer, int32_t capacity);
+JANET_API JanetBuffer *janet_pointer_buffer_unsafe(void *memory, int32_t capacity, int32_t count);
 JANET_API void janet_buffer_deinit(JanetBuffer *buffer);
 JANET_API void janet_buffer_ensure(JanetBuffer *buffer, int32_t capacity, int32_t growth);
 JANET_API void janet_buffer_setcount(JanetBuffer *buffer, int32_t count);
@@ -1835,6 +1866,24 @@ JANET_API Janet janet_call(JanetFunction *fun, int32_t argc, const Janet *argv);
 JANET_API Janet janet_mcall(const char *name, int32_t argc, Janet *argv);
 JANET_API void janet_stacktrace(JanetFiber *fiber, Janet err);
 JANET_API void janet_stacktrace_ext(JanetFiber *fiber, Janet err, const char *prefix);
+
+/* Sandboxing API */
+#define JANET_SANDBOX_SANDBOX 1
+#define JANET_SANDBOX_SUBPROCESS 2
+#define JANET_SANDBOX_NET_CONNECT 4
+#define JANET_SANDBOX_NET_LISTEN 8
+#define JANET_SANDBOX_FFI 16
+#define JANET_SANDBOX_FS_WRITE 32
+#define JANET_SANDBOX_FS_READ 64
+#define JANET_SANDBOX_HRTIME 128
+#define JANET_SANDBOX_ENV 256
+#define JANET_SANDBOX_DYNAMIC_MODULES 512
+#define JANET_SANDBOX_FS_TEMP 1024
+#define JANET_SANDBOX_FS (JANET_SANDBOX_FS_WRITE | JANET_SANDBOX_FS_READ | JANET_SANDBOX_FS_TEMP)
+#define JANET_SANDBOX_NET (JANET_SANDBOX_NET_CONNECT | JANET_SANDBOX_NET_LISTEN)
+#define JANET_SANDBOX_ALL (UINT32_MAX)
+JANET_API void janet_sandbox(uint32_t flags);
+JANET_API void janet_sandbox_assert(uint32_t forbidden_flags);
 
 /* Scratch Memory API */
 typedef void (*JanetScratchFinalizer)(void *);
