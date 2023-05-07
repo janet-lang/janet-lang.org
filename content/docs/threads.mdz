@@ -105,7 +105,7 @@ Thread supervisors need to be specified when creating the thread.
 (ev/thread worker nil :n supervisor)
 
 # Get one event from the supervisor channel (on the initial thread here)
-# It will either be (:error "oops!") or (:done nil).
+# It will either be (:error "oops!" nil) or (:ok nil nil).
 (def event (ev/take supervisor))
 (pp event)
 ```
@@ -113,9 +113,12 @@ Events from thread supervisors are much like events from normal fiber
 supervisors, but the first argument is not an entire copy of the fiber
 or thread, it is the event name. In the above example, depending on whether
 or not the "oops!" error was triggered, @code`event` will be either
-@code`(:error "oops!")` or @code`(:done nil)`. This corresponds to
-@code`[(fiber/status f) (fiber/last-value f)]` of the main fiber of the
-child thread.
+@code`(:error "oops!" nil)` or @code`(:ok nil nil)`. @code`:error` and
+@code`:ok` correspond to @code`(fiber/status f)`, while @code`"oops!"` and
+@code`nil` to @code`(fiber/last-value)` of the main fiber of the child
+thread.  The third element of the tuple is the associated
+task id, if the fiber has an associated environment, or @code`nil`
+otherwise.
 
 
 
