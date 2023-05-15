@@ -3,10 +3,11 @@
  :order 3}
 ---
 
-Janet can be configured by editing the source header @code`janetconf.h`. To build
-Janet on certain platforms, disable features to save space, or integrated Janet
-into certain environments, editing this file may be required, although in most
-cases the default build of Janet should work.
+Janet can be configured by editing the source header
+@code`janetconf.h`. To build Janet on certain platforms, disable
+features to save space, or integrate Janet into certain environments,
+editing this file may be required, although in most cases the default
+build of Janet should work.
 
 Not all combinations of flags are guaranteed to work, although in most cases they should.
 You should should probably run the test suite on a particular set of flags to verify that
@@ -38,8 +39,6 @@ Define this if you know the interpreter will only run in a single threaded progr
 this define is set, global Janet state will use normal global C variables rather than thread local
 variables.
 
-Setting this also disables the @code`thread/` module.
-
 ### @code`#define JANET_NO_DYNAMIC_MODULES`
 
 Define this to disable loading of dynamic modules via the @code`native` function. This also lets
@@ -48,15 +47,19 @@ without linking to @code`-ldl` on Posix.
 
 ### @code`#define JANET_NO_ASSEMBLER`
 
-Define this to disable the functions @code`asm` and @code`disasm` in the core library. The assembler
-is not needed to run most programs, can is useful for inspecting functions, debugging, and writing
-a compiler for the Janet abstract machine.
+Define this to disable the functions @code`asm` and @code`disasm` in
+the core library. The assembler is not needed to run most programs,
+but can be useful for inspecting functions, debugging, and writing a
+compiler for the Janet abstract machine.
 
 ### @code`#define JANET_NO_PEG`
 
-Define this to disable the @code`peg` module. The core Janet library should work without the peg module, and
-be slightly smaller, but this flag is not recommended as the peg module itself is actually quite
-small. This disables the functions @code`peg/match` and @code`peg/compile`.
+Define this to disable the @code`peg` module. The core Janet library
+should work without the peg module, and be slightly smaller, but this
+flag is not recommended as the peg module itself is actually quite
+small. This disables the functions @code`peg/match`,
+@code`peg/compile`, @code`peg/find`, @code`peg/find-all`,
+@code`peg/replace`, and @code`peg/replace-all`.
 
 ### @code`#define JANET_NO_INT_TYPES`
 
@@ -66,9 +69,10 @@ and unsigned 64 bit integers. The current implementation makes this module quite
 
 ### @code`#define JANET_REDUCED_OS`
 
-Define this to compile the `os` module with only the bar minimum needed for @code`boot.janet`. This
-is just @code`os/exit`, @code`os/getenv`, and @code`os/which`. All other functions in the @code`os`
-module will be disabled.
+Define this to compile the `os` module with only the bare minimum
+needed for @code`boot.janet`. This is just @code`os/arch`,
+@code`os/compiler`, @code`os/exit`, and @code`os/which`. All other
+functions in the @code`os` module will be disabled.
 
 ### @code `#define JANET_API __attribute__((visibility ("default")))`
 
@@ -112,10 +116,14 @@ and only expands as needed. This means that setting this value to a lower value 
 
 ### @code`#define JANET_NO_NANBOX`
 
-Internally, Janet uses a technique called nanboxing to make each Janet value take less memory and allow the VM to be faster
-(although Janet mainly uses the technique for the first reason). This technique, however, is not valid C of any kind, and will
-only work correctly on some architectures. Many 64 bit architectures will have trouble with the nanboxing code, so it is by
-default turned off on 64 bit, non x86 architectures. However, one may also want to turn off nanboxing for other reasons, so
-this flag is exposed for that reason. If an unsupported architecture mistakenly tries to use nanboxing, this could be
-considered a bug and the platform detection
-macros in @code`janet.h` should be updated to disable nanboxing for that platform.
+Internally, Janet uses a technique called nanboxing to make each Janet
+value take less memory and allow the VM to be faster (although Janet
+mainly uses the technique for the first reason). This technique,
+however, is not valid C of any kind, and will only work correctly on
+some architectures. Many 64 bit architectures will have trouble with
+the nanboxing code, so it is by default turned off on 64 bit, non x86
+architectures. However, the flag is exposed because one may also want
+to turn off nanboxing for other reasons. If an unsupported
+architecture mistakenly tries to use nanboxing, this could be
+considered a bug and the platform detection macros in @code`janet.h`
+should be updated to disable nanboxing for that platform.
