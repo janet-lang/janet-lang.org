@@ -146,15 +146,14 @@ to specify the maximum nesting depth to print.
 @tag`table`{@tr{@th{Formatter}@th{Description}@th{Type}}
     @tr{@td{%c} @td{print a character} @td{@code`long`}}
     @tr{@td{%o} @td{print an octal integer} @td{@code`long`}}
-    @tr{@td{%x} @td{print a hexidecimal integer (lowercase)} @td{@code`long`}}
-    @tr{@td{%X} @td{print a hexidecimal integer (uppercase)} @td{@code`long`}}
-    @tr{@td{%f} @td{print a double} @td{@code`double`}}
+    @tr{@td{%x} @td{print a hexadecimal integer (lowercase)} @td{@code`long`}}
+    @tr{@td{%X} @td{print a hexadecimal integer (uppercase)} @td{@code`long`}}
     @tr{@td{%d} @td{print an integer} @td{@code`long`}}
     @tr{@td{%i} @td{print an integer (same as d)} @td{@code`long`}}
     @tr{@td{%s} @td{print a NULL-terminated C string} @td{@code`const char *`}}
     @tr{@td{%f} @td{print a floating point number} @td{@code`double`}}
-    @tr{@td{%A} @td{print a hexidecimal floating point number (uppercase)} @td{@code`double`}}
-    @tr{@td{%a} @td{print a hexidecimal floating point number (lowercase)} @td{@code`double`}}
+    @tr{@td{%A} @td{print a hexadecimal floating point number (uppercase)} @td{@code`double`}}
+    @tr{@td{%a} @td{print a hexadecimal floating point number (lowercase)} @td{@code`double`}}
     @tr{@td{%E} @td{print a number in scientifc notation} @td{@code`double`}}
     @tr{@td{%g} @td{print a number in its shortest form} @td{@code`double`}}
     @tr{@td{%G} @td{print a number in its shortest form (uppercase)} @td{@code`double`}}
