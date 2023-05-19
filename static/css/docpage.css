@@ -103,29 +103,46 @@
 .binding {
     margin: 10px;
     font-size: 1rem;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .binding-type {
-    display: block;
+    display: inline-block;
     font-size: 0.8em;
     color: #888;
+    float: right;
 }
 
-.binding-sym {
+.binding-signature {
     font-family: serif;
-    font-weight: 600;
+    display: block;
+    color: #557;
+    font-weight: normal;
+}
+
+.binding-key {
+    font-weight: bolder;
+    color: #000;
 }
 
 .binding-text {
     color: #444;
-    margin-top: 14px;
+    margin-top: 0.5em;
     font-family: 'Dosis','Helvetica', sans-serif;
+    padding-left: 30px;
+}
+
+.binding-links {
+    font-size: 0.8em;
+    padding-left: 30px;
 }
 
 .example-title {
     margin-top: 28px;
     color: #888;
     font-family: 'Dosis','Helvetica', sans-serif;
+    padding-left: 2em;
 }
 
 /* Toc Toggle */
