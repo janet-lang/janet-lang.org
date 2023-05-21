@@ -109,12 +109,19 @@
         docstring (remove-extra-spaces docstring)
         source-linker (dyn :source-linker janet-source-linker)
         example (check-example key)
-        [module symbol args docstring] (split key docstring)]
+        callable (or (= :macro binding-type)
+                     (= :function binding-type)
+                     (= :cfunction binding-type))
+        [module symbol args docstring] (if callable
+                                         (split key docstring)
+                                         [nil key nil docstring])]
     {:tag "div" "class" "binding"
      :content [
                {:tag "span" "class" "binding-type" :content binding-type} " "
-               {:tag "span" "class" "binding-signature" "id" key :content [
-                 "(" module {:tag "span" "class" "binding-key" :content symbol} " " args ")"]}
+               {:tag "span" "class" "binding-signature" "id" key
+                :content [(when callable "(") module
+                          {:tag "span" "class" "binding-key" :content symbol} " " args
+                          (when callable ")")]}
                {:tag "pre" "class" "binding-text" :content (or docstring "")}
                ;(if example [{:tag "div" "class" "example-title" :content "Example:"}
                              {:tag "pre" "class" "mendoza-codeblock"
