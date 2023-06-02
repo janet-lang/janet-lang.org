@@ -7,4 +7,4 @@
 (product "hello") # -> 1.35996e+10
 
 # Product over values in a table or struct
-(sum {:a 1 :b 2 :c 4}) # -> 8
+(product {:a 1 :b 2 :c 4}) # -> 8
