@@ -133,7 +133,7 @@ a @code`:ptr` type to a function.
 
 @codeblock[janet]```
 (ffi/context "./mylib.so")
-(def my-type (ffi/struct :char [@:int 4]))
+(def my-type (ffi/struct :char @[:int 4]))
 (ffi/defbind takes_a_pointer :void [a :ptr])
 (def buf (ffi/write my-type [100 [0 1 2 3]]))
 (takes_a_pointer buf)
@@ -148,7 +148,7 @@ address into Janet values.
 
 @codeblock[janet]```
 (ffi/context "./mylib.so")
-(def my-type (ffi/struct :char [@:int 4]))
+(def my-type (ffi/struct :char @[:int 4]))
 (ffi/defbind returns_a_pointer :ptr [])
 (def pointer (returns_a_pointer))
 (pp (ffi/read my-type pointer))
