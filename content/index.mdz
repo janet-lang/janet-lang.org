@@ -133,6 +133,7 @@ For editor support:
     @li{@link[https://github.com/ALSchwalm/janet-mode]{janet-mode} - Janet major mode for Emacs}
     @li{@link[https://github.com/velkyel/inf-janet]{inf-janet} - Inferior lisp Janet mode for Emacs}
     @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}
+    @li{@link[https://github.com/archydragon/sublime-janet]{sublime-janet} - Sublime Text 3 & 4 support for Janet.}
     @li{@link[https://github.com/pepe/janet.kak]{janet.kak} - Kakoune Editor support for Janet.}}
 
 ## Community
