@@ -44,11 +44,11 @@ its second clause.
 
 @codeblock[janet]```
 (try
- (do
-   (print "inside block...")
-   (error "oops")
-   (print "will never get here"))
- ([err] (print "caught error: " err)))
+  (do
+    (print "inside block...")
+    (error "oops")
+    (print "will never get here"))
+  ([err] (print "caught error: " err)))
 ```
 
 ### @code`protect`
