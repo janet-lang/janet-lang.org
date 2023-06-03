@@ -23,13 +23,14 @@ fiber yields or throws an error, control is returned to the calling fiber. The
 parent fiber must then check what kind of state the fiber is in to differentiate
 errors from return values from user-defined signals.
 
-To create a fiber, user the @code[fiber/new] function. The fiber constructor
-take one or two arguments.  The first, necessary argument is the function that
-the fiber will execute. This function must accept an arity of zero. The next
-optional argument is a collection of flags checking what kinds of signals to
-trap and return via @code[resume]. This is useful so the programmer does not
-need to handle all different kinds of signals from a fiber. Any un-trapped
-signals are simply propagated to the previous calling fiber.
+To create a fiber, use the @code[fiber/new] function. The fiber
+constructor takes one or two arguments.  The first argument (required)
+is the function that the fiber will execute. This function must accept
+an arity of zero. The next argument (optional) is a collection of
+flags checking what kinds of signals to trap and return via
+@code[resume]. This is useful so the programmer does not need to
+handle all of the different kinds of signals from a fiber. Any
+untrapped signals are simply propagated to the previous calling fiber.
 
 @codeblock[janet](```
 (def f (fiber/new (fn []
@@ -55,7 +56,7 @@ signals are simply propagated to the previous calling fiber.
 ## Using fibers to capture errors
 
 Besides being used as coroutines, fibers can be used to implement error handling
-(ie: exceptions).
+(i.e. exceptions).
 
 @codeblock[janet](```
 (defn my-function-that-errors []
