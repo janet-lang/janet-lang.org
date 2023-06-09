@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Config</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Config" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/jpm.html">jpm</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../index.html">API</a></span><ul><li><span><a href="../array.html">array</a></span></li><li><span><a href="../buffer.html">buffer</a></span></li><li><span><a href="../debug.html">debug</a></span></li><li><span><a href="../ev.html">ev</a></span></li><li><span><a href="../ffi.html">ffi</a></span></li><li><span><a href="../fiber.html">fiber</a></span></li><li><span><a href="../file.html">file</a></span></li><li><span><a href="../int.html">int</a></span></li><li class="caret"><span><a href="index.html">jpm</a></span><ul><li><span><a href="rules.html">rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="cgen.html">cgen</a></span></li><li><span><a href="cli.html">cli</a></span></li><li><span><a href="commands.html">commands</a></span></li><li><span class="selected"><a href="config.html">config</a></span></li><li><span><a href="make-config.html">make-config</a></span></li><li><span><a href="dagbuild.html">dagbuild</a></span></li><li><span><a href="pm.html">pm</a></span></li><li><span><a href="scaffold.html">scaffold</a></span></li><li><span><a href="shutil.html">shutil</a></span></li></ul></li><li><span><a href="../math.html">math</a></span></li><li><span><a href="../module.html">module</a></span></li><li><span><a href="../net.html">net</a></span></li><li><span><a href="../os.html">os</a></span></li><li><span><a href="../peg.html">peg</a></span></li><li><span><a href="../parser.html">parser</a></span></li><li class="caret"><span><a href="../spork/index.html">spork</a></span><ul><li><span><a href="../spork/argparse.html">argparse</a></span></li><li><span><a href="../spork/base64.html">base64</a></span></li><li><span><a href="../spork/crc.html">crc</a></span></li><li><span><a href="../spork/cron.html">cron</a></span></li><li><span><a href="../spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../spork/fmt.html">fmt</a></span></li><li><span><a href="../spork/generators.html">generators</a></span></li><li><span><a href="../spork/getline.html">getline</a></span></li><li><span><a href="../spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../spork/http.html">http</a></span></li><li><span><a href="../spork/httpf.html">httpf</a></span></li><li><span><a href="../spork/json.html">json</a></span></li><li><span><a href="../spork/math.html">math</a></span></li><li><span><a href="../spork/misc.html">misc</a></span></li><li><span><a href="../spork/netrepl.html">netrepl</a></span></li><li><span><a href="../spork/path.html">path</a></span></li><li><span><a href="../spork/rawterm.html">rawterm</a></span></li><li><span><a href="../spork/regex.html">regex</a></span></li><li><span><a href="../spork/rpc.html">rpc</a></span></li><li><span><a href="../spork/schema.html">schema</a></span></li><li><span><a href="../spork/sh.html">sh</a></span></li><li><span><a href="../spork/msg.html">msg</a></span></li><li><span><a href="../spork/test.html">test</a></span></li><li><span><a href="../spork/tarray.html">tarray</a></span></li><li><span><a href="../spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../string.html">string</a></span></li><li><span><a href="../table.html">table</a></span></li><li><span><a href="../misc.html">misc</a></span></li><li><span><a href="../tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.28.0-358f5a0 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.27.0/api/jpm/config.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/api/jpm/config.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/api/jpm/config.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/api/jpm/config.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/api/jpm/config.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/api/jpm/config.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/api/jpm/config.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/api/jpm/config.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/api/jpm/config.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/api/jpm/config.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/api/jpm/config.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/api/jpm/config.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/api/jpm/config.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/api/jpm/config.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/api/jpm/config.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/api/jpm/config.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/api/jpm/config.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/api/jpm/config.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/api/jpm/config.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/api/jpm/config.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/api/jpm/config.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/api/jpm/config.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/api/jpm/config.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/api/jpm/config.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/api/jpm/config.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Config</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="commands.html"><span class="prevnext-text">Commands</span></a></span>
+
+          <span class="next"><a href="make-config.html"><span class="prevnext-text">Configuration Generation</span></a></span>
+        </div>
+        
+
+<h2 id="Index-12">Index
+</h2>
+<p><a href="#config/builtin-configs">config/builtin-configs</a> <a href="#config/config-checkers">config/config-checkers</a> <a href="#config/config-docs">config/config-docs</a> <a href="#config/config-options">config/config-options</a> <a href="#config/config-parsers">config/config-parsers</a> <a href="#config/config-set">config/config-set</a> <a href="#config/defconf">config/defconf</a> <a href="#config/dyn:ar">config/dyn:ar</a> <a href="#config/dyn:auto-shebang">config/dyn:auto-shebang</a> <a href="#config/dyn:binpath">config/dyn:binpath</a> <a href="#config/dyn:build-type">config/dyn:build-type</a> <a href="#config/dyn:buildpath">config/dyn:buildpath</a> <a href="#config/dyn:c++">config/dyn:c++</a> <a href="#config/dyn:c++-link">config/dyn:c++-link</a> <a href="#config/dyn:cc">config/dyn:cc</a> <a href="#config/dyn:cc-link">config/dyn:cc-link</a> <a href="#config/dyn:cflags">config/dyn:cflags</a> <a href="#config/dyn:cflags-verbose">config/dyn:cflags-verbose</a> <a href="#config/dyn:config-file">config/dyn:config-file</a> <a href="#config/dyn:cppflags">config/dyn:cppflags</a> <a href="#config/dyn:curlpath">config/dyn:curlpath</a> <a href="#config/dyn:dest-dir">config/dyn:dest-dir</a> <a href="#config/dyn:dynamic-cflags">config/dyn:dynamic-cflags</a> <a href="#config/dyn:dynamic-lflags">config/dyn:dynamic-lflags</a> <a href="#config/dyn:gitpath">config/dyn:gitpath</a> <a href="#config/dyn:headerpath">config/dyn:headerpath</a> <a href="#config/dyn:is-msvc">config/dyn:is-msvc</a> <a href="#config/dyn:janet">config/dyn:janet</a> <a href="#config/dyn:janet-cflags">config/dyn:janet-cflags</a> <a href="#config/dyn:janet-importlib">config/dyn:janet-importlib</a> <a href="#config/dyn:janet-lflags">config/dyn:janet-lflags</a> <a href="#config/dyn:ldflags">config/dyn:ldflags</a> <a href="#config/dyn:lflags">config/dyn:lflags</a> <a href="#config/dyn:libpath">config/dyn:libpath</a> <a href="#config/dyn:local">config/dyn:local</a> <a href="#config/dyn:manpath">config/dyn:manpath</a> <a href="#config/dyn:modext">config/dyn:modext</a> <a href="#config/dyn:modpath">config/dyn:modpath</a> <a href="#config/dyn:nocolor">config/dyn:nocolor</a> <a href="#config/dyn:offline">config/dyn:offline</a> <a href="#config/dyn:optimize">config/dyn:optimize</a> <a href="#config/dyn:pkglist">config/dyn:pkglist</a> <a href="#config/dyn:silent">config/dyn:silent</a> <a href="#config/dyn:statext">config/dyn:statext</a> <a href="#config/dyn:tarpath">config/dyn:tarpath</a> <a href="#config/dyn:test">config/dyn:test</a> <a href="#config/dyn:tree">config/dyn:tree</a> <a href="#config/dyn:update-pkgs">config/dyn:update-pkgs</a> <a href="#config/dyn:use-batch-shell">config/dyn:use-batch-shell</a> <a href="#config/dyn:verbose">config/dyn:verbose</a> <a href="#config/dyn:workers">config/dyn:workers</a> <a href="#config/load-config">config/load-config</a> <a href="#config/load-config-file">config/load-config-file</a> <a href="#config/load-default">config/load-default</a> <a href="#config/load-options">config/load-options</a> <a href="#config/opt">config/opt</a> <a href="#config/read-env-variables">config/read-env-variables</a> <a href="#config/save-config">config/save-config</a> <a href="#config/shorthand-mapping">config/shorthand-mapping</a> </p><hr><div class="binding"><span id="config/builtin-configs" class="binding-sym">config/builtin-configs</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L39">source</a></span> <pre class="binding-text">Table of all built-in options, as opposed to project deifned options.</pre><a href="https://janetdocs.com/config/builtin-configs">Community Examples</a></div><hr><div class="binding"><span id="config/config-checkers" class="binding-sym">config/config-checkers</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L27">source</a></span> <pre class="binding-text">A table of all of the dynamic config bindings to checkers (validators).</pre><a href="https://janetdocs.com/config/config-checkers">Community Examples</a></div><hr><div class="binding"><span id="config/config-docs" class="binding-sym">config/config-docs</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L31">source</a></span> <pre class="binding-text">Table of all of the help text for each config option.</pre><a href="https://janetdocs.com/config/config-docs">Community Examples</a></div><hr><div class="binding"><span id="config/config-options" class="binding-sym">config/config-options</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L23">source</a></span> <pre class="binding-text">A table of possible options for enum option types.</pre><a href="https://janetdocs.com/config/config-options">Community Examples</a></div><hr><div class="binding"><span id="config/config-parsers" class="binding-sym">config/config-parsers</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L19">source</a></span> <pre class="binding-text">A table of all of the dynamic config bindings to parsers.</pre><a href="https://janetdocs.com/config/config-parsers">Community Examples</a></div><hr><div class="binding"><span id="config/config-set" class="binding-sym">config/config-set</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L35">source</a></span> <pre class="binding-text">Listing of all config dyns.</pre><a href="https://janetdocs.com/config/config-set">Community Examples</a></div><hr><div class="binding"><span id="config/defconf" class="binding-sym">config/defconf</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L121">source</a></span> <pre class="binding-text">(defconf kw &amp;opt parser docs options)
+
+Define a function that wraps (dyn :keyword). This will allow use of dynamic bindings with static runtime checks.</pre><a href="https://janetdocs.com/config/defconf">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:ar" class="binding-sym">config/dyn:ar</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L254">source</a></span> <pre class="binding-text">(dyn:ar &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:ar">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:auto-shebang" class="binding-sym">config/dyn:auto-shebang</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L275">source</a></span> <pre class="binding-text">(dyn:auto-shebang &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:auto-shebang">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:binpath" class="binding-sym">config/dyn:binpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L236">source</a></span> <pre class="binding-text">(dyn:binpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:binpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:build-type" class="binding-sym">config/dyn:build-type</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L284">source</a></span> <pre class="binding-text">(dyn:build-type &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:build-type">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:buildpath" class="binding-sym">config/dyn:buildpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L251">source</a></span> <pre class="binding-text">(dyn:buildpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:buildpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:c++" class="binding-sym">config/dyn:c++</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L255">source</a></span> <pre class="binding-text">(dyn:c++ &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:c++">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:c++-link" class="binding-sym">config/dyn:c++-link</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L256">source</a></span> <pre class="binding-text">(dyn:c++-link &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:c++-link">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:cc" class="binding-sym">config/dyn:cc</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L257">source</a></span> <pre class="binding-text">(dyn:cc &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:cc">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:cc-link" class="binding-sym">config/dyn:cc-link</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L258">source</a></span> <pre class="binding-text">(dyn:cc-link &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:cc-link">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:cflags" class="binding-sym">config/dyn:cflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L259">source</a></span> <pre class="binding-text">(dyn:cflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:cflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:cflags-verbose" class="binding-sym">config/dyn:cflags-verbose</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L261">source</a></span> <pre class="binding-text">(dyn:cflags-verbose &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:cflags-verbose">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:config-file" class="binding-sym">config/dyn:config-file</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L237">source</a></span> <pre class="binding-text">(dyn:config-file &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:config-file">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:cppflags" class="binding-sym">config/dyn:cppflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L260">source</a></span> <pre class="binding-text">(dyn:cppflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:cppflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:curlpath" class="binding-sym">config/dyn:curlpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L240">source</a></span> <pre class="binding-text">(dyn:curlpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:curlpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:dest-dir" class="binding-sym">config/dyn:dest-dir</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L283">source</a></span> <pre class="binding-text">(dyn:dest-dir &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:dest-dir">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:dynamic-cflags" class="binding-sym">config/dyn:dynamic-cflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L262">source</a></span> <pre class="binding-text">(dyn:dynamic-cflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:dynamic-cflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:dynamic-lflags" class="binding-sym">config/dyn:dynamic-lflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L263">source</a></span> <pre class="binding-text">(dyn:dynamic-lflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:dynamic-lflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:gitpath" class="binding-sym">config/dyn:gitpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L238">source</a></span> <pre class="binding-text">(dyn:gitpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:gitpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:headerpath" class="binding-sym">config/dyn:headerpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L241">source</a></span> <pre class="binding-text">(dyn:headerpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:headerpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:is-msvc" class="binding-sym">config/dyn:is-msvc</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L264">source</a></span> <pre class="binding-text">(dyn:is-msvc &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:is-msvc">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:janet" class="binding-sym">config/dyn:janet</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L243">source</a></span> <pre class="binding-text">(dyn:janet &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:janet">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:janet-cflags" class="binding-sym">config/dyn:janet-cflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L271">source</a></span> <pre class="binding-text">(dyn:janet-cflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:janet-cflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:janet-importlib" class="binding-sym">config/dyn:janet-importlib</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L272">source</a></span> <pre class="binding-text">(dyn:janet-importlib &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:janet-importlib">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:janet-lflags" class="binding-sym">config/dyn:janet-lflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L270">source</a></span> <pre class="binding-text">(dyn:janet-lflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:janet-lflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:ldflags" class="binding-sym">config/dyn:ldflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L265">source</a></span> <pre class="binding-text">(dyn:ldflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:ldflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:lflags" class="binding-sym">config/dyn:lflags</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L266">source</a></span> <pre class="binding-text">(dyn:lflags &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:lflags">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:libpath" class="binding-sym">config/dyn:libpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L244">source</a></span> <pre class="binding-text">(dyn:libpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:libpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:local" class="binding-sym">config/dyn:local</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L281">source</a></span> <pre class="binding-text">(dyn:local &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:local">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:manpath" class="binding-sym">config/dyn:manpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L242">source</a></span> <pre class="binding-text">(dyn:manpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:manpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:modext" class="binding-sym">config/dyn:modext</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L267">source</a></span> <pre class="binding-text">(dyn:modext &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:modext">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:modpath" class="binding-sym">config/dyn:modpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L246">source</a></span> <pre class="binding-text">(dyn:modpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:modpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:nocolor" class="binding-sym">config/dyn:nocolor</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L279">source</a></span> <pre class="binding-text">(dyn:nocolor &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:nocolor">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:offline" class="binding-sym">config/dyn:offline</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L249">source</a></span> <pre class="binding-text">(dyn:offline &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:offline">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:optimize" class="binding-sym">config/dyn:optimize</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L247">source</a></span> <pre class="binding-text">(dyn:optimize &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:optimize">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:pkglist" class="binding-sym">config/dyn:pkglist</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L248">source</a></span> <pre class="binding-text">(dyn:pkglist &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:pkglist">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:silent" class="binding-sym">config/dyn:silent</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L276">source</a></span> <pre class="binding-text">(dyn:silent &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:silent">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:statext" class="binding-sym">config/dyn:statext</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L268">source</a></span> <pre class="binding-text">(dyn:statext &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:statext">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:tarpath" class="binding-sym">config/dyn:tarpath</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L239">source</a></span> <pre class="binding-text">(dyn:tarpath &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:tarpath">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:test" class="binding-sym">config/dyn:test</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L280">source</a></span> <pre class="binding-text">(dyn:test &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:test">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:tree" class="binding-sym">config/dyn:tree</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L282">source</a></span> <pre class="binding-text">(dyn:tree &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:tree">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:update-pkgs" class="binding-sym">config/dyn:update-pkgs</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L250">source</a></span> <pre class="binding-text">(dyn:update-pkgs &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:update-pkgs">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:use-batch-shell" class="binding-sym">config/dyn:use-batch-shell</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L269">source</a></span> <pre class="binding-text">(dyn:use-batch-shell &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:use-batch-shell">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:verbose" class="binding-sym">config/dyn:verbose</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L277">source</a></span> <pre class="binding-text">(dyn:verbose &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:verbose">Community Examples</a></div><hr><div class="binding"><span id="config/dyn:workers" class="binding-sym">config/dyn:workers</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L278">source</a></span> <pre class="binding-text">(dyn:workers &amp;opt dflt)
+
+</pre><a href="https://janetdocs.com/config/dyn:workers">Community Examples</a></div><hr><div class="binding"><span id="config/load-config" class="binding-sym">config/load-config</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L150">source</a></span> <pre class="binding-text">(load-config settings &amp;opt override)
+
+Load a configuration from a table or struct.</pre><a href="https://janetdocs.com/config/load-config">Community Examples</a></div><hr><div class="binding"><span id="config/load-config-file" class="binding-sym">config/load-config-file</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L172">source</a></span> <pre class="binding-text">(load-config-file path &amp;opt override)
+
+Load a configuration from a file. If override is set, will override already set values. Otherwise will prefer the current value over the settings from the config file.</pre><a href="https://janetdocs.com/config/load-config-file">Community Examples</a></div><hr><div class="binding"><span id="config/load-default" class="binding-sym">config/load-default</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L182">source</a></span> <pre class="binding-text">(load-default &amp;opt override)
+
+Load the default configuration.</pre><a href="https://janetdocs.com/config/load-default">Community Examples</a></div><hr><div class="binding"><span id="config/load-options" class="binding-sym">config/load-options</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L189">source</a></span> <pre class="binding-text">(load-options &amp;opt path)
+
+Load a file that contains config options that can be set. If no such file exists, then do nothing.</pre><a href="https://janetdocs.com/config/load-options">Community Examples</a></div><hr><div class="binding"><span id="config/opt" class="binding-sym">config/opt</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L8">source</a></span> <pre class="binding-text">(opt opts key &amp;opt dflt)
+
+Get an option, allowing overrides via dynamic bindings AND some default value dflt if no dynamic binding is set.</pre><a href="https://janetdocs.com/config/opt">Community Examples</a></div><hr><div class="binding"><span id="config/read-env-variables" class="binding-sym">config/read-env-variables</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L211">source</a></span> <pre class="binding-text">(read-env-variables)
+
+Read environment variables that correspond to config variables into dyns.</pre><a href="https://janetdocs.com/config/read-env-variables">Community Examples</a></div><hr><div class="binding"><span id="config/save-config" class="binding-sym">config/save-config</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L138">source</a></span> <pre class="binding-text">(save-config path)
+
+Write the current configuration information to a file.</pre><a href="https://janetdocs.com/config/save-config">Community Examples</a></div><hr><div class="binding"><span id="config/shorthand-mapping" class="binding-sym">config/shorthand-mapping</span> <span class="binding-type">struct</span> <span class="binding-type"><a href="https://github.com/janet-lang/jpm/blob/bdf59999a0b52db39eced245fbdad953bac71cd8//jpm/config.janet#L226">source</a></span> <pre class="binding-text">Map some single characters to long options.</pre><a href="https://janetdocs.com/config/shorthand-mapping">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="commands.html"><span class="prevnext-text">Commands</span></a></span>
+          <span class="next"><a href="make-config.html"><span class="prevnext-text">Configuration Generation</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 9, 2023 at 04:38:36 (UTC) with Janet 1.28.0-358f5a0</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

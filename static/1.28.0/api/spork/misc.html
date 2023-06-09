@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Miscellaneous Functions</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Miscellaneous Functions" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/jpm.html">jpm</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../index.html">API</a></span><ul><li><span><a href="../array.html">array</a></span></li><li><span><a href="../buffer.html">buffer</a></span></li><li><span><a href="../debug.html">debug</a></span></li><li><span><a href="../ev.html">ev</a></span></li><li><span><a href="../ffi.html">ffi</a></span></li><li><span><a href="../fiber.html">fiber</a></span></li><li><span><a href="../file.html">file</a></span></li><li><span><a href="../int.html">int</a></span></li><li class="caret"><span><a href="../jpm/index.html">jpm</a></span><ul><li><span><a href="../jpm/rules.html">rules</a></span></li><li><span><a href="../jpm/cc.html">cc</a></span></li><li><span><a href="../jpm/cgen.html">cgen</a></span></li><li><span><a href="../jpm/cli.html">cli</a></span></li><li><span><a href="../jpm/commands.html">commands</a></span></li><li><span><a href="../jpm/config.html">config</a></span></li><li><span><a href="../jpm/make-config.html">make-config</a></span></li><li><span><a href="../jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/pm.html">pm</a></span></li><li><span><a href="../jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../math.html">math</a></span></li><li><span><a href="../module.html">module</a></span></li><li><span><a href="../net.html">net</a></span></li><li><span><a href="../os.html">os</a></span></li><li><span><a href="../peg.html">peg</a></span></li><li><span><a href="../parser.html">parser</a></span></li><li class="caret"><span><a href="index.html">spork</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span class="selected"><a href="misc.html">misc</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li><li><span><a href="../string.html">string</a></span></li><li><span><a href="../table.html">table</a></span></li><li><span><a href="../misc.html">misc</a></span></li><li><span><a href="../tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.28.0-358f5a0 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.27.0/api/spork/misc.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/api/spork/misc.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/api/spork/misc.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/api/spork/misc.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/api/spork/misc.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/api/spork/misc.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/api/spork/misc.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/api/spork/misc.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/api/spork/misc.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/api/spork/misc.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/api/spork/misc.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/api/spork/misc.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/api/spork/misc.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/api/spork/misc.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/api/spork/misc.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/api/spork/misc.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/api/spork/misc.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/api/spork/misc.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/api/spork/misc.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/api/spork/misc.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/api/spork/misc.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/api/spork/misc.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/api/spork/misc.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/api/spork/misc.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/api/spork/misc.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Miscellaneous Functions</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="math.html"><span class="prevnext-text">Math extended</span></a></span>
+
+          <span class="next"><a href="netrepl.html"><span class="prevnext-text">NetREPL</span></a></span>
+        </div>
+        
+
+<h2 id="Index-41">Index
+</h2>
+<p><a href="#misc/always">misc/always</a> <a href="#misc/antepenultimate">misc/antepenultimate</a> <a href="#misc/caperr">misc/caperr</a> <a href="#misc/capout">misc/capout</a> <a href="#misc/cond->">misc/cond-&gt;</a> <a href="#misc/cond->>">misc/cond-&gt;&gt;</a> <a href="#misc/dedent">misc/dedent</a> <a href="#misc/defs">misc/defs</a> <a href="#misc/dfs">misc/dfs</a> <a href="#misc/do-def">misc/do-def</a> <a href="#misc/do-var">misc/do-var</a> <a href="#misc/format-table">misc/format-table</a> <a href="#misc/gett">misc/gett</a> <a href="#misc/insert-sorted">misc/insert-sorted</a> <a href="#misc/insert-sorted-by">misc/insert-sorted-by</a> <a href="#misc/int->string">misc/int-&gt;string</a> <a href="#misc/int/">misc/int/</a> <a href="#misc/log">misc/log</a> <a href="#misc/make">misc/make</a> <a href="#misc/make-id">misc/make-id</a> <a href="#misc/map-keys">misc/map-keys</a> <a href="#misc/map-vals">misc/map-vals</a> <a href="#misc/penultimate">misc/penultimate</a> <a href="#misc/print-table">misc/print-table</a> <a href="#misc/randomize-array">misc/randomize-array</a> <a href="#misc/second">misc/second</a> <a href="#misc/select-keys">misc/select-keys</a> <a href="#misc/set*">misc/set*</a> <a href="#misc/string->int">misc/string-&gt;int</a> <a href="#misc/table-filter">misc/table-filter</a> <a href="#misc/third">misc/third</a> <a href="#misc/trim-prefix">misc/trim-prefix</a> <a href="#misc/trim-suffix">misc/trim-suffix</a> <a href="#misc/until">misc/until</a> <a href="#misc/vars">misc/vars</a> </p><hr><div class="binding"><span id="misc/always" class="binding-sym">misc/always</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L354">source</a></span> <pre class="binding-text">(always x)
+
+Return a function that discards any arguments and always returns `x`.</pre><a href="https://janetdocs.com/misc/always">Community Examples</a></div><hr><div class="binding"><span id="misc/antepenultimate" class="binding-sym">misc/antepenultimate</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L374">source</a></span> <pre class="binding-text">(antepenultimate xs)
+
+Get the third-to-last element from an indexed data structure.</pre><a href="https://janetdocs.com/misc/antepenultimate">Community Examples</a></div><hr><div class="binding"><span id="misc/caperr" class="binding-sym">misc/caperr</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L334">source</a></span> <pre class="binding-text">(caperr &amp; body)
+
+Captures the standart error output of the variadic `body` and returns it
+as a buffer.</pre><a href="https://janetdocs.com/misc/caperr">Community Examples</a></div><hr><div class="binding"><span id="misc/capout" class="binding-sym">misc/capout</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L326">source</a></span> <pre class="binding-text">(capout &amp; body)
+
+Captures the standart output of the variadic `body` and returns it as
+a buffer.</pre><a href="https://janetdocs.com/misc/capout">Community Examples</a></div><hr><div class="binding"><span id="misc/cond->" class="binding-sym">misc/cond-&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L250">source</a></span> <pre class="binding-text">(cond-&gt; val &amp; clauses)
+
+Threading conditional macro. It takes `val` to mutate,
+and `clauses` pairs with condition and operation to which the `val`,
+is put as first argument. All conditions are tried and
+for truthy conditions the operation is executed.
+Returns the value mutated if any condition is truthy.</pre><a href="https://janetdocs.com/misc/cond->">Community Examples</a></div><hr><div class="binding"><span id="misc/cond->>" class="binding-sym">misc/cond-&gt;&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L273">source</a></span> <pre class="binding-text">(cond-&gt;&gt; val &amp; clauses)
+
+Threading conditional macro. It takes `val` to mutate,
+and `clauses` pairs of condition and operation to which the `val`,
+is put as last argument. All conditions are tried and
+for truthy the operation is ran.
+Returns mutated value if any condition is truthy.</pre><a href="https://janetdocs.com/misc/cond->>">Community Examples</a></div><hr><div class="binding"><span id="misc/dedent" class="binding-sym">misc/dedent</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L9">source</a></span> <pre class="binding-text">(dedent &amp; xs)
+
+Remove indentation after concatenating the arguments. Works by removing
+leading whitespace, and then removing that same pattern of whitepsace after
+new lines.</pre><a href="https://janetdocs.com/misc/dedent">Community Examples</a></div><hr><div class="binding"><span id="misc/defs" class="binding-sym">misc/defs</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L348">source</a></span> <pre class="binding-text">(defs &amp; bindings)
+
+Defines many constants as in let `bindings`, but without creating new scope.</pre><a href="https://janetdocs.com/misc/defs">Community Examples</a></div><hr><div class="binding"><span id="misc/dfs" class="binding-sym">misc/dfs</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L159">source</a></span> <pre class="binding-text">(dfs data visit-leaf &amp;opt node-before node-after get-children seen)
+
+Do a depth first, pre-order traversal over a data structure.
+Also allow for callbacks before and after visiting the children
+of a node. Also allow for a custom `get-children` function to
+change traversal as needed. Will detect cycles if an empty table
+is passed as the `seen` parameter, which is used to cached values
+that have been visited.</pre><a href="https://janetdocs.com/misc/dfs">Community Examples</a></div><hr><div class="binding"><span id="misc/do-def" class="binding-sym">misc/do-def</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L311">source</a></span> <pre class="binding-text">(do-def c d &amp; body)
+
+Convenience macro for defining constant named `c` with value `d` before `body`
+and returning it after evaluating `body`, that presumably modifies 
+the `c` refered content. For example buffer, table or array.</pre><a href="https://janetdocs.com/misc/do-def">Community Examples</a></div><hr><div class="binding"><span id="misc/do-var" class="binding-sym">misc/do-var</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L303">source</a></span> <pre class="binding-text">(do-var v d &amp; body)
+
+Convenience macro for defining varible named `v` with value `d` before `body`
+and returning it after evaluating `body`, that presumably modifies `v`.</pre><a href="https://janetdocs.com/misc/do-var">Community Examples</a></div><hr><div class="binding"><span id="misc/format-table" class="binding-sym">misc/format-table</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L53">source</a></span> <pre class="binding-text">(format-table buf-into data &amp;opt columns header-mapping column-mapping)
+
+Same as print-table but pushes table into a buffer.</pre><a href="https://janetdocs.com/misc/format-table">Community Examples</a></div><hr><div class="binding"><span id="misc/gett" class="binding-sym">misc/gett</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L384">source</a></span> <pre class="binding-text">(gett ds &amp; keys)
+
+Recursive macro (get). Similar to get-in, but keys are variadic argument.</pre><a href="https://janetdocs.com/misc/gett">Community Examples</a></div><hr><div class="binding"><span id="misc/insert-sorted" class="binding-sym">misc/insert-sorted</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L458">source</a></span> <pre class="binding-text">(insert-sorted arr &lt;? &amp; xs)
+
+Insert elements in `arr` such that it remains sorted by the comparator. If
+`arr` is not sorted beforehand, the results are undefined. Returns `arr`.</pre><a href="https://janetdocs.com/misc/insert-sorted">Community Examples</a></div><hr><div class="binding"><span id="misc/insert-sorted-by" class="binding-sym">misc/insert-sorted-by</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L471">source</a></span> <pre class="binding-text">(insert-sorted-by arr f &amp; xs)
+
+Insert elements in `arr` such that it remains sorted by the value returned
+when `f` is called with the element, comparing the values with &lt;. If `arr` is
+not sorted beforehand, the results are undefined. Returns `arr`.</pre><a href="https://janetdocs.com/misc/insert-sorted-by">Community Examples</a></div><hr><div class="binding"><span id="misc/int->string" class="binding-sym">misc/int-&gt;string</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L433">source</a></span> <pre class="binding-text">(int-&gt;string int &amp;opt base)
+
+Stringify an integer in a particular base. Defaults to decimal (base 10).</pre><a href="https://janetdocs.com/misc/int->string">Community Examples</a></div><hr><div class="binding"><span id="misc/int/" class="binding-sym">misc/int/</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L379">source</a></span> <pre class="binding-text">(int/ &amp; xs)
+
+Perform integer division.</pre><a href="https://janetdocs.com/misc/int/">Community Examples</a></div><hr><div class="binding"><span id="misc/log" class="binding-sym">misc/log</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L211">source</a></span> <pre class="binding-text">(log level &amp; args)
+
+Print to a dynamic binding stream if that stream is set, otherwise do
+nothing. Evaluate to nil. 
+For example, `(log :err "value error: %V" my-value)` will print 
+to `(dyn :err)` only if `(dyn :err)` has been set.</pre><a href="https://janetdocs.com/misc/log">Community Examples</a></div><hr><div class="binding"><span id="misc/make" class="binding-sym">misc/make</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L294">source</a></span> <pre class="binding-text">(make prototype &amp; pairs)
+
+Convenience macro for creating new table from even number of kvs pairs in a variadic `table-or-pairs`
+arguments and setting its prototype to `prototype`.
+Factory function for creating new objects from prototypes.</pre><a href="https://janetdocs.com/misc/make">Community Examples</a></div><hr><div class="binding"><span id="misc/make-id" class="binding-sym">misc/make-id</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L486">source</a></span> <pre class="binding-text">(make-id &amp;opt prefix)
+
+Create a random, printable keyword id with 10 bytes of entropy
+with an optional prefix.</pre><a href="https://janetdocs.com/misc/make-id">Community Examples</a></div><hr><div class="binding"><span id="misc/map-keys" class="binding-sym">misc/map-keys</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L223">source</a></span> <pre class="binding-text">(map-keys f data)
+
+Returns new table with function `f` applied to `data`'s
+keys recursively.</pre><a href="https://janetdocs.com/misc/map-keys">Community Examples</a></div><hr><div class="binding"><span id="misc/map-vals" class="binding-sym">misc/map-vals</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L235">source</a></span> <pre class="binding-text">(map-vals f data)
+
+Returns new table with function `f` applied to `data`'s values.</pre><a href="https://janetdocs.com/misc/map-vals">Community Examples</a></div><hr><div class="binding"><span id="misc/penultimate" class="binding-sym">misc/penultimate</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L369">source</a></span> <pre class="binding-text">(penultimate xs)
+
+Get the second-to-last element from an indexed data structure.</pre><a href="https://janetdocs.com/misc/penultimate">Community Examples</a></div><hr><div class="binding"><span id="misc/print-table" class="binding-sym">misc/print-table</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L134">source</a></span> <pre class="binding-text">(print-table data &amp;opt columns header-mapping column-mapping)
+
+Iterate through the rows of a data structure and print a table in a human
+readable way, with padding and heading information. Can optionally provide
+a function use to print a row, as well as optionally select column keys
+for each row. Lastly, a `header-mapping` dictionary can be provided that
+changes the printed header names by mapping column keys to the desired
+header name. If no mapping is found, then the column key will be used as
+the header name. Returns nil.</pre><a href="https://janetdocs.com/misc/print-table">Community Examples</a></div><hr><div class="binding"><span id="misc/randomize-array" class="binding-sym">misc/randomize-array</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L181">source</a></span> <pre class="binding-text">(randomize-array arr &amp;opt rng)
+
+Randomizes array using the fisher-yates shuffle, takes an optional random
+number generator.</pre><a href="https://janetdocs.com/misc/randomize-array">Community Examples</a></div><hr><div class="binding"><span id="misc/second" class="binding-sym">misc/second</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L359">source</a></span> <pre class="binding-text">(second xs)
+
+Get the second element from an indexed data structure.</pre><a href="https://janetdocs.com/misc/second">Community Examples</a></div><hr><div class="binding"><span id="misc/select-keys" class="binding-sym">misc/select-keys</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L242">source</a></span> <pre class="binding-text">(select-keys data keyz)
+
+Returns new table with selected `keyz` from dictionary `data`.</pre><a href="https://janetdocs.com/misc/select-keys">Community Examples</a></div><hr><div class="binding"><span id="misc/set*" class="binding-sym">misc/set*</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L33">source</a></span> <pre class="binding-text">(set* tgts exprs)
+
+Parallel `set` function. Takes a list of targets and
+expressions, evaluates all the expressions, and then
+assigns them to the targets. Each target can be a variable
+or a 2-tuple, just like in the normal `set` special form.</pre><a href="https://janetdocs.com/misc/set*">Community Examples</a></div><hr><div class="binding"><span id="misc/string->int" class="binding-sym">misc/string-&gt;int</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L411">source</a></span> <pre class="binding-text">(string-&gt;int str &amp;opt base)
+
+Parse an integer in the given base. Defaults to decimal (base 10). Differs
+from scan-number in that this does not recognize floating point notation.</pre><a href="https://janetdocs.com/misc/string->int">Community Examples</a></div><hr><div class="binding"><span id="misc/table-filter" class="binding-sym">misc/table-filter</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L397">source</a></span> <pre class="binding-text">(table-filter pred dict)
+
+Filter a key-value structure info a table. Semantics are the same as for
+built-in `filter`, except that `pred` takes two arguments (key and value.)
+Does not consider prototypes.</pre><a href="https://janetdocs.com/misc/table-filter">Community Examples</a></div><hr><div class="binding"><span id="misc/third" class="binding-sym">misc/third</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L364">source</a></span> <pre class="binding-text">(third xs)
+
+Get the third element from an indexed data structure.</pre><a href="https://janetdocs.com/misc/third">Community Examples</a></div><hr><div class="binding"><span id="misc/trim-prefix" class="binding-sym">misc/trim-prefix</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L197">source</a></span> <pre class="binding-text">(trim-prefix prefix str)
+
+Trim the specified prefix of a string if it has one</pre><a href="https://janetdocs.com/misc/trim-prefix">Community Examples</a></div><hr><div class="binding"><span id="misc/trim-suffix" class="binding-sym">misc/trim-suffix</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L204">source</a></span> <pre class="binding-text">(trim-suffix suffix str)
+
+Trim the specified suffix of a string if it has one</pre><a href="https://janetdocs.com/misc/trim-suffix">Community Examples</a></div><hr><div class="binding"><span id="misc/until" class="binding-sym">misc/until</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L389">source</a></span> <pre class="binding-text">(until cnd &amp; body)
+
+Repeat `body` while the `cnd` is false.
+Equivalent to (while (not cnd) ;body).</pre><a href="https://janetdocs.com/misc/until">Community Examples</a></div><hr><div class="binding"><span id="misc/vars" class="binding-sym">misc/vars</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/f6f5dd1d4ab437305cf73ab4772c75ff5e67842a//spork/misc.janet#L342">source</a></span> <pre class="binding-text">(vars &amp; bindings)
+
+Defines many variables as in let `bindings`, but without creating new scope.</pre><a href="https://janetdocs.com/misc/vars">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="math.html"><span class="prevnext-text">Math extended</span></a></span>
+          <span class="next"><a href="netrepl.html"><span class="prevnext-text">NetREPL</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 9, 2023 at 04:38:36 (UTC) with Janet 1.28.0-358f5a0</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

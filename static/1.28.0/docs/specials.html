@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Special Forms</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Special Forms" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span class="selected"><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.28.0-358f5a0 Documentation<br>(Other Versions:
+          
+          <a href="../../1.27.0/docs/specials.html">1.27.0</a>
+          
+          <a href="../../1.26.0/docs/specials.html">1.26.0</a>
+          
+          <a href="../../1.25.1/docs/specials.html">1.25.1</a>
+          
+          <a href="../../1.24.0/docs/specials.html">1.24.0</a>
+          
+          <a href="../../1.23.0/docs/specials.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/specials.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/specials.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/specials.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/specials.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/specials.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/specials.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/specials.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/specials.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/specials.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/specials.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/specials.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/specials.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/specials.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/specials.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/specials.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/specials.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/specials.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/specials.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/specials.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/specials.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Special Forms</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="syntax.html"><span class="prevnext-text">Syntax and the Parser</span></a></span>
+
+          <span class="next"><a href="numbers.html"><span class="prevnext-text">Numbers and Arithmetic</span></a></span>
+        </div>
+        
+
+<p>This document serves as an overview of all of the special forms in Janet.
+</p>
+<p>Tuples are used to represent function calls, macros, and special forms. Most
+functionality is exposed through functions, some through macros, and a minimal
+amount through special forms. Special forms are neither functions nor macros
+&mdash; they are used by the compiler to directly express a low-level
+construct that cannot be expressed through macros or functions.  Special forms
+can be thought of as forming the real 'core' language of Janet. There are only
+13 special forms in Janet.
+</p>
+<h2><code class="mendoza-code">(def name meta... value)</code>
+</h2>
+<p>This special form binds a value to a symbol. The symbol can be substituted for
+the value in subsequent expressions for the same result. A binding made by
+<code class="mendoza-code">def</code> is a constant and cannot be updated. A symbol can be redefined to a
+new value, but previous uses of the binding will refer to the previous value of
+the binding.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">anumber</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span>))
+
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">anumber</span>) <span class="mdzsyn-comment"># prints 15</span></code></pre><p><code class="mendoza-code">def</code> can also take a tuple, array, table or struct to perform
+    destructuring on the value. This allows us to do multiple assignments in one
+    <code class="mendoza-code">def</code>.</p><pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">c</span>] (<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">10</span>))
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-string">" "</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-string">" "</span> <span class="mdzsyn-symbol">c</span>) <span class="mdzsyn-comment"># prints 0 1 2</span>
+
+(<span class="mdzsyn-coresym">def</span> {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-symbol">x</span>} @{<span class="mdzsyn-keyword">:x</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>)})
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>) <span class="mdzsyn-comment"># prints 3</span>
+
+(<span class="mdzsyn-coresym">def</span> [<span class="mdzsyn-symbol">y</span> {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-symbol">x</span>}] @[<span class="mdzsyn-keyword">:hi</span> @{<span class="mdzsyn-keyword">:x</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>)}])
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">x</span>) <span class="mdzsyn-comment"># prints hi3</span></code></pre><p><code class="mendoza-code">def</code> can also append metadata and a docstring to the symbol when in the
+    global scope.  If not in the global scope, the extra metadata will be
+    ignored.</p><pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mydef</span> <span class="mdzsyn-keyword">:private</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># Adds the :private key to the metadata table.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mydef2</span> <span class="mdzsyn-keyword">:private</span> <span class="mdzsyn-string">"A docstring"</span> <span class="mdzsyn-number">4</span>) <span class="mdzsyn-comment"># Add a docstring</span>
+
+<span class="mdzsyn-comment"># The metadata will be ignored here because mydef is</span>
+<span class="mdzsyn-comment"># not accessible outside of the do form.</span>
+(<span class="mdzsyn-coresym">do</span>
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mydef</span> <span class="mdzsyn-keyword">:private</span> <span class="mdzsyn-number">3</span>)
+ (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">mydef</span> <span class="mdzsyn-number">1</span>))</code></pre><h2><code class="mendoza-code">(var name meta... value)</code>
+</h2>
+<p>Similar to <code class="mendoza-code">def</code>, but bindings set in this manner can be updated using set.
+In all other respects it is the same as <code class="mendoza-code">def</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">1</span>)
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">printa</span> [] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">a</span>))
+
+(<span class="mdzsyn-symbol">printa</span>) <span class="mdzsyn-comment"># prints 1</span>
+(<span class="mdzsyn-coresym">++</span> <span class="mdzsyn-symbol">a</span>)
+(<span class="mdzsyn-symbol">printa</span>) <span class="mdzsyn-comment"># prints 2</span>
+(<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-keyword">:hi</span>)
+(<span class="mdzsyn-symbol">printa</span>) <span class="mdzsyn-comment"># prints hi</span></code></pre><h2><code class="mendoza-code">(fn name? args body...)</code>
+</h2>
+<p>Compile a function literal (closure). A function literal consists of an optional
+name, an argument list, and a function body. The optional name is allowed so
+that functions can more easily be recursive. The argument list is a tuple of
+named parameters, and the body is 0 or more forms. The function will evaluate to
+the last form in the body. The other forms will only be evaluated for side
+effects.
+</p>
+<p>Functions also introduce a new lexical scope, meaning the <code class="mendoza-code">def</code>s and
+<code class="mendoza-code">var</code>s inside a function body will not escape outside the body.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">fn</span> []) <span class="mdzsyn-comment"># The simplest function literal. Takes no arguments and returns nil.</span>
+(<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">x</span>] <span class="mdzsyn-symbol">x</span>) <span class="mdzsyn-comment"># The identity function</span>
+(<span class="mdzsyn-coresym">fn</span> <span class="mdzsyn-coresym">identity</span> [<span class="mdzsyn-symbol">x</span>] <span class="mdzsyn-symbol">x</span>) <span class="mdzsyn-comment"># The name will make stacktraces nicer</span>
+(<span class="mdzsyn-coresym">fn</span> [] <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span>) <span class="mdzsyn-comment"># A function that returns 5</span>
+(<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>] (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>)) <span class="mdzsyn-comment"># A function that adds its two arguments.</span>
+
+(<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">&amp;</span> <span class="mdzsyn-symbol">args</span>] (<span class="mdzsyn-coresym">length</span> <span class="mdzsyn-symbol">args</span>)) <span class="mdzsyn-comment"># A variadic function that counts its arguments.</span>
+
+<span class="mdzsyn-comment"># A function that doesn't strictly check the number of arguments.</span>
+<span class="mdzsyn-comment"># Extra arguments are ignored.</span>
+(<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">w</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">z</span> <span class="mdzsyn-symbol">&amp;</span>] (<span class="mdzsyn-coresym">tuple</span> <span class="mdzsyn-symbol">w</span> <span class="mdzsyn-symbol">w</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">z</span> <span class="mdzsyn-symbol">z</span>))</code></pre><p>For more information on functions, see the <a href="/docs/functions.html">Functions
+section</a>.
+</p>
+<h2><code class="mendoza-code">(do body...)</code>
+</h2>
+<p>Execute a series of forms for side effects and evaluates to the final form. Also
+introduces a new lexical scope without creating or calling a function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">do</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>) <span class="mdzsyn-comment"># Evaluates to 4</span>
+
+<span class="mdzsyn-comment"># Prints 1, 2 and 3, then evaluates to (print 3), which is nil</span>
+(<span class="mdzsyn-coresym">do</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">2</span>) (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">3</span>))
+
+<span class="mdzsyn-comment"># Prints 1</span>
+(<span class="mdzsyn-coresym">do</span>
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">1</span>)
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">a</span>))
+
+<span class="mdzsyn-comment"># a is not defined here, so fails</span>
+<span class="mdzsyn-symbol">a</span></code></pre><h2><code class="mendoza-code">(quote x)</code>
+</h2>
+<p>Evaluates to the literal value of the first argument. The argument is not
+compiled and is simply used as a constant value in the compiled code. Preceding
+a form with a single quote is shorthand for <code class="mendoza-code">(quote expression)</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">quote</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-comment"># evaluates to 1</span>
+(<span class="mdzsyn-coresym">quote</span> <span class="mdzsyn-symbol">hi</span>) <span class="mdzsyn-comment"># evaluates to the symbol hi</span>
+(<span class="mdzsyn-coresym">quote</span> <span class="mdzsyn-coresym">quote</span>) <span class="mdzsyn-comment"># evaluates to the symbol quote</span>
+
+'(<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># Evaluates to a tuple (1 2 3)</span>
+'(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># Evaluates to a tuple (print 1 2 3)</span></code></pre><h2><code class="mendoza-code">(if condition when-true when-false?)</code>
+</h2>
+<p>Introduce a branching construct. The first form is the condition, the second
+form is the form to evaluate when the condition is true, and the optional third
+form is the form to evaluate when the condition is false. If no third form is
+provided it defaults to <code class="mendoza-code">nil</code>.
+</p>
+<p>The <code class="mendoza-code">if</code> special form will not evaluate the when-true or when-false forms
+unless it needs to - it is a lazy form, which is why it cannot be a function or
+macro.
+</p>
+<p>The condition is considered false only if it evaluates to <code class="mendoza-code">nil</code> or
+<code class="mendoza-code">false</code> - all other values are considered <code class="mendoza-code">true</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">if</span> <span class="mdzsyn-constant">true</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># evaluates to 10</span>
+(<span class="mdzsyn-coresym">if</span> <span class="mdzsyn-constant">false</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># evaluates to nil</span>
+(<span class="mdzsyn-coresym">if</span> <span class="mdzsyn-constant">true</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">2</span>)) <span class="mdzsyn-comment"># prints 1 but not 2</span>
+(<span class="mdzsyn-coresym">if</span> <span class="mdzsyn-number">0</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">2</span>)) <span class="mdzsyn-comment"># prints 1</span>
+(<span class="mdzsyn-coresym">if</span> <span class="mdzsyn-constant">nil</span> (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">2</span>)) <span class="mdzsyn-comment"># prints 2</span>
+(<span class="mdzsyn-coresym">if</span> @[] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-number">2</span>)) <span class="mdzsyn-comment"># prints 1</span></code></pre><h2><code class="mendoza-code">(splice x)</code>
+</h2>
+<p>The <code class="mendoza-code">splice</code> special form is an interesting form that allows an array or
+tuple to be put into another form inline.  It only has an effect in two places -
+as an argument in a function call or literal constructor, or as the argument to
+the unquote form. Outside of these two settings, the splice special form simply
+evaluates directly to its argument <code class="mendoza-code">x</code>. The shorthand for <code class="mendoza-code">splice</code> is
+prefixing a form with a semicolon. The <code class="mendoza-code">splice</code> special form has no effect
+on the behavior of other special forms, except as an argument to <code class="mendoza-code">unquote</code>.
+</p>
+<p>In the context of a function call, <code class="mendoza-code">splice</code> will insert <em>the contents</em>
+of <code class="mendoza-code">x</code> in the parameter list.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># evaluates to 6</span>
+
+(<span class="mdzsyn-coresym">+</span> @[<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># bad</span>
+
+(<span class="mdzsyn-coresym">+</span> (<span class="mdzsyn-coresym">splice</span> @[<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>])) <span class="mdzsyn-comment"># also evaluates to 6</span>
+
+(<span class="mdzsyn-coresym">+</span> ;@[<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># Same as above</span>
+
+(<span class="mdzsyn-coresym">+</span> ;(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">100</span>)) <span class="mdzsyn-comment"># Sum the first 100 natural numbers</span>
+
+(<span class="mdzsyn-coresym">+</span> ;(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">100</span>) <span class="mdzsyn-number">1000</span>) <span class="mdzsyn-comment"># Sum the first 100 natural numbers and 1000</span>
+
+[;(<span class="mdzsyn-coresym">range</span> <span class="mdzsyn-number">100</span>)] <span class="mdzsyn-comment"># First 100 integers in a tuple instead of an array.</span>
+
+(<span class="mdzsyn-coresym">def</span> ;[<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">10</span>]) <span class="mdzsyn-comment"># this will not work as def is a special form.</span></code></pre><p>Notice that this means we rarely need the <code class="mendoza-code">apply</code> function, as the
+<code class="mendoza-code">splice</code> operator is more flexible.
+</p>
+<p>A <code class="mendoza-code">splice</code> form can also be used as the argument to an <code class="mendoza-code">unquote</code> form,
+where it will behave like an <code class="mendoza-code">unquote-splicing</code> special in Common Lisp.
+Using the short form of both of these specials, this can be abbreviated
+<code class="mendoza-code">,;some-array-expression</code>.
+</p>
+<h2><code class="mendoza-code">(while condition body...)</code>
+</h2>
+<p>The <code class="mendoza-code">while</code> special form compiles to a C-like <code class="mendoza-code">while</code> loop. The body
+of the form will be continuously evaluated until the condition is <code class="mendoza-code">false</code>
+or <code class="mendoza-code">nil</code>. Therefore, it is expected that the body will contain some side
+effects or the loop will go on forever. The <code class="mendoza-code">while</code> loop always evaluates
+to <code class="mendoza-code">nil</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span>)
+(<span class="mdzsyn-coresym">while</span> (<span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">10</span>)
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">i</span>)
+ (<span class="mdzsyn-coresym">++</span> <span class="mdzsyn-symbol">i</span>))</code></pre><h2><code class="mendoza-code">(break value?)</code>
+</h2>
+<p>Break from a <code class="mendoza-code">while</code> loop or return early from a function. The <code class="mendoza-code">break</code>
+special form can only break from the inner-most loop. Since a <code class="mendoza-code">while</code> loop
+always returns <code class="mendoza-code">nil</code>, the optional <code class="mendoza-code">value</code> parameter has no effect when
+used in a <code class="mendoza-code">while</code> loop, but when returning from a function, the
+<code class="mendoza-code">value</code> parameter is the function's return value.
+</p>
+<p>The <code class="mendoza-code">break</code> special form is most useful as a low level construct for
+macros. You should try to avoid using it in handwritten code, although it can be
+very useful for handling early exit conditions without requiring deeply indented
+code (try the <code class="mendoza-code">cond</code> macro first, though).
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Breaking from a while loop</span>
+(<span class="mdzsyn-coresym">while</span> <span class="mdzsyn-constant">true</span>
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">x</span> (<span class="mdzsyn-coresym">math/random</span>))
+ (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">&gt;</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">0.95</span>) (<span class="mdzsyn-coresym">break</span>))
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>))</code></pre><pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Early exit example using (break)</span>
+(<span class="mdzsyn-coresym">fn</span> <span class="mdzsyn-symbol">myfn</span>
+ [<span class="mdzsyn-symbol">x</span>]
+ (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:one</span>) (<span class="mdzsyn-coresym">break</span>))
+ (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:three</span>) (<span class="mdzsyn-coresym">break</span> <span class="mdzsyn-symbol">x</span>))
+ (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">and</span> (<span class="mdzsyn-coresym">number?</span> <span class="mdzsyn-symbol">x</span>) (<span class="mdzsyn-coresym">even?</span> <span class="mdzsyn-symbol">x</span>)) (<span class="mdzsyn-coresym">break</span>))
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"x = "</span> <span class="mdzsyn-symbol">x</span>)
+ <span class="mdzsyn-symbol">x</span>)
+
+<span class="mdzsyn-comment"># Example using (cond)</span>
+(<span class="mdzsyn-coresym">fn</span> <span class="mdzsyn-symbol">myfn</span>
+ [<span class="mdzsyn-symbol">x</span>]
+ (<span class="mdzsyn-coresym">cond</span>
+  (<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:one</span>) <span class="mdzsyn-constant">nil</span>
+  (<span class="mdzsyn-coresym">=</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-keyword">:three</span>) <span class="mdzsyn-symbol">x</span>
+  (<span class="mdzsyn-coresym">and</span> (<span class="mdzsyn-coresym">number?</span> <span class="mdzsyn-symbol">x</span>) (<span class="mdzsyn-coresym">even?</span> <span class="mdzsyn-symbol">x</span>)) <span class="mdzsyn-constant">nil</span>
+  (<span class="mdzsyn-coresym">do</span>
+   (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"x = "</span> <span class="mdzsyn-symbol">x</span>)
+   <span class="mdzsyn-symbol">x</span>)))</code></pre><h2><code class="mendoza-code">(set l-value r-value)</code>
+</h2>
+<p>Update the value of the var <code class="mendoza-code">l-value</code> with the new <code class="mendoza-code">r-value</code>. The
+<code class="mendoza-code">set</code> special form will then evaluate to <code class="mendoza-code">r-value</code>.
+</p>
+<p>The <code class="mendoza-code">r-value</code> can be any expression, and the <code class="mendoza-code">l-value</code> should be a
+bound var or a pair of a data structure and key. This allows set to behave like
+<code class="mendoza-code">setf</code> or <code class="mendoza-code">setq</code> in Common Lisp.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">10</span>)
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">prx</span> [] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">x</span>))
+(<span class="mdzsyn-symbol">prx</span>) <span class="mdzsyn-comment"># prints 10</span>
+(<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">11</span>)
+(<span class="mdzsyn-symbol">prx</span>) <span class="mdzsyn-comment"># prints 11</span>
+(<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-constant">nil</span>)
+(<span class="mdzsyn-symbol">prx</span>) <span class="mdzsyn-comment"># prints nil</span>
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">tab</span> @{})
+(<span class="mdzsyn-coresym">set</span> (<span class="mdzsyn-symbol">tab</span> <span class="mdzsyn-keyword">:property</span>) <span class="mdzsyn-string">"hello"</span>)
+(<span class="mdzsyn-coresym">pp</span> <span class="mdzsyn-symbol">tab</span>) <span class="mdzsyn-comment"># prints @{:property "hello"}</span></code></pre><h2><code class="mendoza-code">(quasiquote x)</code>
+</h2>
+<p>Similar to <code class="mendoza-code">(quote x)</code>, but allows for unquoting within <code class="mendoza-code">x</code>. This
+makes <code class="mendoza-code">quasiquote</code> useful for writing macros, as a macro definition often
+generates a lot of templated code with a few custom values. The shorthand for
+quasiquote is a leading tilde <code class="mendoza-code">~</code> before a form. With that form,
+<code class="mendoza-code">(unquote x)</code> will evaluate and insert <code class="mendoza-code">x</code> into the <code class="mendoza-code">unquote</code>
+form. The shorthand for <code class="mendoza-code">(unquote x)</code> is <code class="mendoza-code">,x</code>.
+</p>
+<h2><code class="mendoza-code">(unquote x)</code>
+</h2>
+<p>Unquote a form within a <code class="mendoza-code">quasiquote</code>. Outside of a <code class="mendoza-code">quasiquote</code>,
+<code class="mendoza-code">unquote</code> is invalid.
+</p>
+<h2><code class="mendoza-code">(upscope &amp; body)</code>
+</h2>
+<p>Similar to <code class="mendoza-code">do</code>, <code class="mendoza-code">upscope</code> evaluates a number of forms and sequence and evaluates to the
+result of the last form. However, <code class="mendoza-code">upscope</code> does not create a new lexical scope, which means
+that bindings created inside it are visible in the scope where upscope is declared. This is
+useful for writing macros that make several def and var declarations at once.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">upscope</span>
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">1</span>)
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-number">2</span>)
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">c</span> <span class="mdzsyn-number">3</span>)) <span class="mdzsyn-comment"># -&gt; 3</span>
+
+(<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">c</span>) <span class="mdzsyn-comment"># -&gt; 6</span></code></pre><p>In general, use this macro as a last resort. There are other, often better ways to do this, including
+using destructuring.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">c</span>] [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>])</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="syntax.html"><span class="prevnext-text">Syntax and the Parser</span></a></span>
+          <span class="next"><a href="numbers.html"><span class="prevnext-text">Numbers and Arithmetic</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 9, 2023 at 04:38:36 (UTC) with Janet 1.28.0-358f5a0</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
