@@ -26,17 +26,17 @@ For our first version, we will use only the @code`while` form to iterate,
 similar to how one might sum natural numbers in a language such as C.
 
 @codeblock[janet]```
-(var sum 0)
+(var total 0)
 (var i 0)
 (while (< i 10)
-    (+= sum i)
+    (+= total i)
     (++ i))
-(print sum) # prints 45
+(print total) # prints 45
 ```
 
 This is a very imperative program, and it is not the best way to write this in
 Janet.  We are manually updating a counter @code[i] in a loop. Using the macros
-@code[+=] and @code[++], this style code is similar in density to C code.  It is
+@code[+=] and @code[++], this style of code is similar in density to C code.  It is
 recommended to instead use either macros (such as the @code`loop` or @code`for`
 macros) or a functional style in Janet.
 
@@ -45,9 +45,9 @@ The @code[(for x start end body)] form captures this behavior of incrementing a
 counter in a loop.
 
 @codeblock[janet]```
-(var sum 0)
-(for i 0 10 (+= sum i))
-(print sum) # prints 45
+(var total 0)
+(for i 0 10 (+= total i))
+(print total) # prints 45
 ```
 
 We have completely wrapped the imperative counter in a macro. The @code`for`
@@ -59,9 +59,9 @@ loop.
 We can do something similar with the more flexible @code`loop` macro.
 
 @codeblock[janet]```
-(var sum 0)
-(loop [i :range [0 10]] (+= sum i))
-(print sum) # prints 45
+(var total 0)
+(loop [i :range [0 10]] (+= total i))
+(print total) # prints 45
 ```
 
 This is slightly more verbose than the @code`for` macro, but can be more easily
@@ -69,17 +69,17 @@ extended.  Let's say that we wanted to only count even numbers towards the sum.
 We can do this easily with the @code`loop` macro.
 
 @codeblock[janet]```
-(var sum 0)
-(loop [i :range [0 10] :when (even? i)] (+= sum i))
-(print sum) # prints 20
+(var total 0)
+(loop [i :range [0 10] :when (even? i)] (+= total i))
+(print total) # prints 20
 ```
 
-The @code`loop` macro has several verbs (@code`:range`) and modifiers
-(@code`:when`) that let the programmer more easily generate common looping
-idioms. The @code`loop` macro is similar to the Common Lisp @code`loop` macro,
-but smaller in scope and with a much simpler syntax. As with the @code`for`
-macro, the @code`loop` macro expands to similar code as our original
-@code`while` expression.
+The @code`loop` macro has several verbs (e.g. @code`:range`) and
+modifiers (e.g. @code`:when`) that let the programmer more easily
+generate common looping idioms. The @code`loop` macro is similar to
+the Common Lisp @code`loop` macro, but smaller in scope and with a
+much simpler syntax. As with the @code`for` macro, the @code`loop`
+macro expands to similar code as our original @code`while` expression.
 
 ## Example 2: Iterating over an indexed data structure
 
@@ -213,3 +213,14 @@ Notice that iteration through the table is in no particular order. Iterating the
 keys of a table or struct guarantees no order. If you want to iterate in a
 specific order, use a different data structure or the @code[(sort indexed)]
 function.
+
+Note that the above examples can also be expressed as:
+
+@codeblock[janet]```
+(loop [[letter word] :pairs alphabook]
+  (print letter " is for " word))
+
+(loop [letter :keys alphabook]
+  (print letter " is for " (alphabook letter)))
+```
+

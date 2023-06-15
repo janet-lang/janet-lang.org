@@ -7,14 +7,17 @@ The internet is a huge part of our daily lives in the 21st century, and the
 situation is no different for programmers. Janet has basic
 support for connecting to the internet out of the box with the @code`net/` module.
 
-The @code`net/` module provides a socket-based networking interface that is portable, simple, and
-general. The net module provides both client and server abstractions for TCP sockets
-(streams), UDP (datagrams), IPv4, IPv6, DNS, and unix domain sockets on supported platforms.
-All operations on sockets are non-blocking, so servers can handle multiple clients on a single thread.
-For more general information on
-socket programming, see @link[https://beej.us/guide/bgnet/html/]{Beej's Guide to Network Programming}, which
-gives a thorough overview in C. There are also example programs in example directory of the Janet source
-code which show how to create simple servers and clients.
+The @code`net/` module provides a socket-based networking interface
+that is portable, simple, and general. The net module provides both
+client and server abstractions for TCP sockets (streams), UDP
+(datagrams), IPv4, IPv6, DNS, and unix domain sockets on supported
+platforms.  All operations on sockets are non-blocking, so servers can
+handle multiple clients on a single thread.  For more general
+information on socket programming, see
+@link[https://beej.us/guide/bgnet/html/]{Beej's Guide to Network
+Programming}, which gives a thorough overview in C. There are also
+example programs in the example directory of the Janet source code
+which show how to create simple servers and clients.
 
 The @code`net/` module does not provide any protocol abstractions over sockets - this means
 no TLS and no HTTP out of the box. Such protocols need to be provided in third-party libraries.

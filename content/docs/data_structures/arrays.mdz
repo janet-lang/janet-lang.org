@@ -48,7 +48,7 @@ arr # -> @[:one :two :three :four]
 Arrays are not of much use without being able to get and set values inside
 them. To get values from an array, use the @code`in` or @code`get` function.
 @code`in` will require an index within bounds and will throw an error
-otherwise. @code`get` requires an index and an optional default value. If the
+otherwise. @code`get` takes an index and an optional default value. If the
 index is out of bounds it will return @code`nil` or the given default value.
 
 @codeblock[janet](```

@@ -54,7 +54,7 @@ sub strings (or sub buffers) from inside any sequence of bytes.
 
 @codeblock[janet](```
 (def buf @"abcdefg")
-(def buf1 (buffer/slice buf)) # -> @"abcdef", but a different buffer
+(def buf1 (buffer/slice buf)) # -> @"abcdefg", but a different buffer
 (def buf2 (buffer/slice buf 2)) # -> @"cdefg"
 (def buf3 (buffer/slice buf 2 -2)) # -> @"cdef"
 
@@ -91,7 +91,9 @@ There are also many functions to push data into a buffer. Since buffers are
 commonly used to accumulate data, there are a variety of functions for pushing
 data into a buffer.
 
-@ul{@li{@code[buffer/push-byte]}
+@ul{@li{@code[buffer/push]}
+    @li{@code[buffer/push-at]}
+    @li{@code[buffer/push-byte]}
     @li{@code[buffer/push-word]}
     @li{@code[buffer/push-string]}}
 

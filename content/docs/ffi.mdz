@@ -11,15 +11,19 @@ Programmers should be aware of this before choosing FFI bindings over a traditio
 native module. It is also possible to use a hybrid approach, where some core functionality is exposed via a
 C extension module, and the majority of an API is bound via FFI.
 
-The FFI Module contains both the low-level primitives to load dynamic libraries (as with @code`dlopen` on posix systems), get
-function pointers from those modules, and call those function pointers. On top of this, there is a macro based abstraction that makes it convenient to declare bindings and is sufficient in most cases.
+The FFI Module contains both the low-level primitives to load dynamic
+libraries (as with @code`dlopen` on posix systems), get function
+pointers from those modules, and call those function pointers. On top
+of this, there is a macro-based abstraction that makes it convenient
+to declare bindings and is sufficient in most cases.
 
 ## Primitive Types
 
-Primitive types in the FFI syntax are specified with keywords, and map directly to primitive
-type in C. There are a number of aliases for common types, such as the Linux kernel source style aliases
-for sized integer types. More complex types can be built of from these primitive types. On x86-64, long
-doubles are unsupported.
+Primitive types in the FFI syntax are specified with keywords, and map
+directly to primitive type in C. There are a number of aliases for
+common types, such as the Linux kernel source style aliases for sized
+integer types. More complex types can be built from these primitive
+types. On x86-64, long doubles are unsupported.
 
 @tag[table]{
     @tr{@th{Primitive Type} @th{Corresponding C Type}}

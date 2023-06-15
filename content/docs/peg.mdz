@@ -78,10 +78,10 @@ languages.
     @tr{@th{Pattern Signature}
         @th{What it matches}}
 
-    @tr{@td{string ("cat")}
+    @tr{@td{"cat" (a string)}
         @td{ The literal string. }}
 
-    @tr{@td{integer (3)}
+    @tr{@td{3 (an integer)}
         @td{ Matches a number of characters, and advances that many characters.
         If negative, matches if not that many characters and does not advance.
         For example, -1 will match the end of a string. }}
@@ -295,6 +295,9 @@ grammars simpler.
         @td{ Duplicates the last capture with the tag @code`tag`. If no such
         capture exists then the match fails. }}
 
+    @tr{@td{@code`(-> tag ?tag)` }
+        @td{ Alias for @code`(backref tag)`. }}
+
     @tr{@td{@code`(unref patt ?tag)` }
         @td{Lets a user "scope" tagged captures.
         After the rule has matched, all captures with the given tag can no longer be
@@ -304,35 +307,36 @@ grammars simpler.
         removes their association with the tag. This means subsequent calls to
         backref and backmatch will no longer "see" these tagged captures. }}
 
-    @tr{@td{@code`(-> tag ?tag)` }
-        @td{ Alias for @code`(backref tag)`. }}
-
     @tr{@td{@code`(error ?patt)` }
         @td{ Throws a Janet error.  If optional argument @code`patt` is
         provided and it matches successfully, the error thrown will be the
         last capture of @code`patt`, or a generic error if @code`patt`
         produces no captures. If no argument is provided, a generic error is
-        thrown.
+        thrown. If @code`patt` does not match, no error will be thrown.
         }}
 
     @tr{@td{@code`(drop patt)` }
         @td{ Ignores (drops) all captures from patt. }}
 
-    @tr{@td{@code`(uint num-bytes)` }
-        @td{ Capture a little endian, unsigned, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+    @tr{@td{@code`(uint num-bytes ?tag)` }
+        @td{ Capture a little endian, unsigned, two's complement integer from 
+        @code`num-bytes`. Works for 1 to 8 byte integers. }}
 
-    @tr{@td{@code`(uint-be num-bytes)` }
-        @td{ Capture a big endian, unsigned, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+    @tr{@td{@code`(uint-be num-bytes ?tag)` }
+        @td{ Capture a big endian, unsigned, two's complement integer from 
+        @code`num-bytes`. Works for 1 to 8 byte integers. }}
 
-    @tr{@td{@code`(int num-bytes)` }
-        @td{ Capture a little endian, signed, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+    @tr{@td{@code`(int num-bytes ?tag)` }
+        @td{ Capture a little endian, signed, two's complement integer from 
+        @code`num-bytes`. Works for 1 to 8 byte integers. }}
 
-    @tr{@td{@code`(int-be num-bytes)` }
-        @td{ Capture a big endian, signed, two's complement integer from @code`num-bytes`. Works for 1 to 8 byte integers. }}
+    @tr{@td{@code`(int-be num-bytes ?tag)` }
+        @td{ Capture a big endian, signed, two's complement integer from 
+        @code`num-bytes`. Works for 1 to 8 byte integers. }}
 
-    @tr{@td{@code`(lenprefix n patt)` }
+    @tr{@td{@code`(lenprefix n patt ?tag)` }
         @td{ Matches n repetitions of a pattern, where n is supplied from other
-        parsed input and is not a constant. }}}
+        parsed input and is not a constant. }}
 
     @tr{@td{@code`(number patt ?base ?tag)` }
         @td{ Capture a number parsed from the matched pattern. This uses the
@@ -429,7 +433,7 @@ in patterns.
 
 (peg/match where-are-the-dogs? "dog dog cat dog") # -> @[0 4 12]
 
-# Our finder function also works any pattern, not just strings.
+# Our finder function also works on any pattern, not just strings.
 
 (def find-cats (finder '(* "c" (some "a") "t")))
 

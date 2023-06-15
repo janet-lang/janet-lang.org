@@ -47,12 +47,12 @@ data structure.
 @code[O(n)] time where @code[n] is the number of elements in the array.
 
 @codeblock[janet](```
-(def mytuple (tuple 1 2 3))
+(def my-tuple (tuple 1 2 3))
 
-(def myarray @(1 2 3))
-(def myarray (array 1 2 3))
+(def my-array @(1 2 3))
+(def my-array (array 1 2 3))
 
-(def mystruct {
+(def my-struct {
  :key "value"
  :key2 "another"
  1 2
@@ -103,10 +103,10 @@ prefer @code`in` for these.
 (in  @[:a :b :c] 3) # -> raises error
 ```
 
-To update a mutable data structure, use the @code[put] function. It takes 3
-arguments, the data structure, the key, and the value, and returns the data
-structure. The allowed types keys and values depend on the data structure passed
-in.
+To update a mutable data structure, use the @code[put] function. It
+takes 3 arguments, the data structure, the key, and the value, and
+returns the data structure. The allowed types of keys and values
+depend on the data structure passed in.
 
 @codeblock[janet]```
 (put @[] 100 :a)

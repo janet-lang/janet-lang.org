@@ -15,9 +15,11 @@ cd jpm
 sudo janet bootstrap.janet
 ```
 
-The bootstrap script can also be configured to install jpm to different directories by setting the
-@code`DESTDIR` environment variable. Ideally, jpm should be installed to the same tree as Janet, although
-this is not strictly required. See the JPM README in the repository for more information.
+The bootstrap script can also be configured to install jpm to
+different directories by setting the @code`DESTDIR` environment
+variable. Ideally, jpm should be installed to the same tree as Janet,
+although this is not strictly required. See the README in jpm's
+repository for more information.
 
 ## Updating JPM
 
@@ -38,14 +40,15 @@ sudo jpm install jpm
 
 ## Glossary
 
-A self contained unit of Janet source code as recognized by @code`jpm` is called
-a project. A project is a directory containing a @code`project.janet` file,
-which contains build recipes. Often, a project will correspond to a single git
-repository, and contain a single library. However, a project's
-@code`project.janet` file can contain build recipes for as many libraries,
-native extensions, and executables as it wants. Each of these recipes builds an
-artifact. Artifacts are the output files that will either be distributed or
-installed on the end-user or developer's machine.
+A self-contained unit of Janet source code as recognized by @code`jpm`
+is called a project. A project is a directory containing a
+@code`project.janet` file, which contains build recipes. Often, a
+project will correspond to a single git repository, and contain a
+single library. However, a project's @code`project.janet` file can
+contain build recipes for as many libraries, native extensions, and
+executables as it wants. Each of these recipes builds an
+artifact. Artifacts are the output files that will either be
+distributed or installed on the end-user or developer's machine.
 
 ## Building projects with @code`jpm`
 
@@ -301,12 +304,16 @@ to libraries as backwards-compatible as possible, and release new libraries for 
 cases. For creators of executable programs (versus a library author), it is recommended to use a local tree
 and lockfiles to pin versions for consistent builds.
 
-As a matter of style, it is also recommended to group small libraries together into "bundles"
-that are updated, tested, and deployed together. Since Janet libraries are often quite small, the cost of
-downloading more functionality that one might need isn't particularly high, and JPM can remove unused functions
-and bindings from generated standalone binaries and images, so there is not runtime cost either. By avoiding
-a plethora of tiny libraries, users of libraries do not manage as many dependencies, and modules are more
-likely to work together they can be tested together.
+As a matter of style, it is also recommended to group small libraries
+together into "bundles" that are updated, tested, and deployed
+together. Since Janet libraries are often quite small, the cost of
+downloading more functionality that one might need isn't particularly
+high, and JPM can remove unused functions and bindings from generated
+standalone binaries and images, so there is no runtime cost either. By
+avoiding a plethora of tiny libraries, users of libraries do not
+manage as many dependencies, and modules are more likely to work
+together they can be tested together.
 
-While @code`jpm` may superficially resemble @code`npm`, it is the authors opinion that it is suited
-to a different style of development.
+While @code`jpm` may superficially resemble @code`npm`, it is the
+author's opinion that it is suited to a different style of
+development.

@@ -83,7 +83,7 @@ After building, run @code[make install] to install the @code`janet` binary and
 libraries.  This will install in @code[/usr/local] by default, see the Makefile
 to customize.
 
-Next, to install the Janet Package Manager tool (@code`jpm`), clone the
+Next, to install the Janet Project Manager tool (@code`jpm`), clone the
 @link[https://github.com/janet-lang/jpm][jpm repository], and from within that
 directory, run:
 

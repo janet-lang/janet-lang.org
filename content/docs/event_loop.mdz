@@ -21,7 +21,7 @@ All programs in Janet are wrapped in an implicit loop that will run until all ta
 describing how the event loop works - the event loop code is all actually implemented directly in the runtime for efficiency.
 
 @codeblock[janet]```
-# Functions that yield to the event loop will put (fiber/root-fiber) here.
+# Functions that yield to the event loop will put (fiber/root) here.
 (def pending-tasks @[])
 
 # Pseudo-code of the event loop scheduler
@@ -35,17 +35,21 @@ when an event (or sequence of events) that it is waiting for occurs. Generally, 
 resume tasks - the event loop will call @code`resume` when the completion event occurs.
 
 To be precise, a task is just any fiber that was scheduled to run by the event loop.
-Therefore, all tasks are fibers, but not all fibers are tasks. You can get the currently executing task in Janet with @code`(fiber/root-fiber)`.
+Therefore, all tasks are fibers, but not all fibers are tasks. You can get the currently executing task in Janet with @code`(fiber/root)`.
 
 ## Blocking the Event Loop
 
-When using the event loop, it is important to be aware that CPU bound loops will block all other tasks on the
-event loop. For example, an infinite while loop that does not yield to the event will bring the entire thread to a halt!
-This is generally considered to be one of the biggest drawbacks to cooperative multi-threading, so be cautious and do not mix in
-blocking functions into a program that uses the event loop. Many functions in Janet's core library will not block when the event loop is enabled, but
-a few will. All functions in the @code`file/` module will block, so be careful when using these with networked files.
-These
-functions may be changed or deprecated in the future. Other blocking functions include @code`os/sleep` and
+When using the event loop, it is important to be aware that CPU bound
+loops will block all other tasks on the event loop. For example, an
+infinite while loop that does not yield to the event loop will bring
+the entire thread to a halt!  This is generally considered to be one
+of the biggest drawbacks to cooperative multi-threading, so be
+cautious and do not mix in blocking functions into a program that uses
+the event loop. Many functions in Janet's core library will not block
+when the event loop is enabled, but a few will. All functions in the
+@code`file/` module will block, so be careful when using these with
+networked files.  These functions may be changed or deprecated in the
+future. Other blocking functions include @code`os/sleep` and
 @code`getline`.
 
 NOTE: This means that getting input from the repl will block the event loop! Be careful of this when trying to use @code`ev/` functions
@@ -124,6 +128,8 @@ allows for back pressure. Back pressure means that a task can indicate to other 
 
 (ev/call consumer "bob" 1)
 (ev/call consumer "sally" 0.63)
+
+# Call (ev/sleep 1) to see some results
 ```
 
 ## Streams
@@ -139,8 +145,12 @@ For some examples on how to use streams, see documentation on @link[networking.h
 
 ## Cancellation
 
-Sometimes, IO operations can take too long or even hang indefinitely. Janet offers @code`ev/cancel` to interrupt and cancel an ongoing IO operation. This will cause the canceled
-task to be resumed but immediately error. From the point of view of the canceled task, it will look as though the last function that yielded to event loop raised an error.
+Sometimes, IO operations can take too long or even hang
+indefinitely. Janet offers @code`ev/cancel` to interrupt and cancel an
+ongoing IO operation. This will cause the canceled task to be resumed
+but immediately error. From the point of view of the canceled task, it
+will look as though the last function that yielded to the event loop
+raised an error.
 
 Macros like @code`try` and @code`protect` will continue to work just as if the cancellation error was any other error.
 
@@ -162,9 +172,14 @@ An interesting problem with supporting multiple tasks is error handling - if a t
 often wants to know when a task fails (or finishes), and then continue with some other code. Alternatively, it might be desirable to try again a number of times before
 really giving up.
 
-Janet has the concept of supervisor channels to support this. When a new task is scheduled with @code`ev/go`, one can optional specify a channel to set as the new tasks supervisor.
-When the task yields to the event loop, or raises any kind of fiber signal, a message is automatically written to the supervisor channel. Another task can then continuously listen on that
-channel to monitor other tasks, handling errors or restarting them. This is a powerful pattern that can be used to build robust applications that gracefully handle failure.
+Janet has the concept of supervisor channels to support this. When a
+new task is scheduled with @code`ev/go`, one can optionally specify a
+channel to set as the new tasks supervisor.  When the task yields to
+the event loop, or raises any kind of fiber signal, a message is
+automatically written to the supervisor channel. Another task can then
+continuously listen on that channel to monitor other tasks, handling
+errors or restarting them. This is a powerful pattern that can be used
+to build robust applications that gracefully handle failure.
 
 @codeblock[janet]```
 (def channel (ev/chan))
