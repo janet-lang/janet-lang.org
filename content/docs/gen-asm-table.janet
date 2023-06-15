@@ -20,7 +20,6 @@
    ['divim '(divim dest lhs im) "$dest = $lhs / im"]
    ['eq '(eq dest lhs rhs) "$dest = $lhs == $rhs"]
    ['eqim '(eqim dest lhs im) "$dest = $lhs == im"]
-   ['eqn '(eqn dest lhs im) "$dest = $lhs .== $rhs"]
    ['err '(err message) "Throw error $message."]
    ['get '(get dest ds key) "$dest = $ds[$key]"]
    ['geti '(geti dest ds index) "$dest = $ds[index]"]
