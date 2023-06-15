@@ -8,9 +8,9 @@ after the associative array or dictionary. Values are put into a table with a
 key, and can be looked up later with the same key. Tables are implemented with
 an underlying open hash table, so they are quite fast and cache friendly.
 
-Any Janet value except @code`nil` and @code`NaN` can be a key or a value in a
-Janet table, and a single Janet table can have any mixture of types as keys and
-values.
+Any Janet value except @code`nil` and @code`math/nan` can be a key or
+a value in a Janet table, and a single Janet table can have any
+mixture of types as keys and values.
 
 ## Creating tables
 
@@ -66,7 +66,7 @@ All tables can have a prototype, a parent table that is checked when a key is
 not found in the first table. By default, tables have no prototype.  Prototypes
 are a flexible mechanism that, among other things, can be used to implement
 inheritance in Janet. Read more in the
-@link[/docs/prototypes.html][documentation for prototypes]
+@link[/docs/prototypes.html][documentation for prototypes].
 
 ## Useful functions for tables
 

@@ -3,9 +3,9 @@
 ---
 
 Tuples are immutable, sequential types that are similar to arrays. They are
-represented in source code with either parenthesis or brackets surrounding
+represented in source code with either parentheses or brackets surrounding
 their items. Note that Janet differs from traditional Lisps here, which
-commonly use the term "lists" to describe forms wrapped in parenthesis. Like
+commonly use the term "lists" to describe forms wrapped in parentheses. Like
 all data structures, tuple contents can be retrieved with the @code`get`
 function and their length retrieved with the @code`length` function.
 
@@ -86,7 +86,7 @@ tuples differ:
     @li{When printed via @code`pp`, bracket tuples are printed with square
         brackets instead of parentheses.}
     @li{When passed as an argument to @code`tuple/type`, bracket tuples will
-        returns @code`:brackets` instead of @code`:parens`.}}
+        return @code`:brackets` instead of @code`:parens`.}}
 
 In all other ways, bracketed tuples behave identically to normal tuples. It is
 not recommended to use bracketed tuples for anything outside of macros and

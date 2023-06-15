@@ -71,8 +71,8 @@ arguments and assert that certain invariants are held when invoking a macro.
  ~(,+ ,x ,y))
 ```
 
-Use of @code`maclintf` over other methods of reporting warnings is preferred as the programmer has the
-ability to customize how the handle different levels of lint messages.
-For fatal errors inside the macro, use
-the @code`error` function as usual.
+Use of @code`maclintf` over other methods of reporting warnings is
+preferred as the programmer has the ability to customize how to handle
+different levels of lint messages.  For fatal errors inside the macro,
+use the @code`error` function as usual.
 
