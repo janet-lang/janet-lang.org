@@ -70,7 +70,7 @@
    ['res '(res dest fiber val) "$dest = resume $fiber with $val"]
    ['ret '(ret val) "Return $val"]
    ['retn '(retn) "Return nil"]
-   ['setu '(setu env index val) "envs[env][index] = $val"]
+   ['setu '(setu val env index) "envs[env][index] = $val"]
    ['sig '(sig dest value sigtype) "$dest = emit $value as sigtype"]
    ['sl '(sl dest lhs rhs) "$dest = $lhs << $rhs"]
    ['slim '(slim dest lhs shamt) "$dest = $lhs << shamt"]
