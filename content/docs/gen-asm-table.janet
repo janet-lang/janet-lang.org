@@ -59,18 +59,18 @@
    ['neqim '(neqim dest lhs im) "$dest = $lhs != $im"]
    ['next '(next dest ds key) "$dest = next($ds, $key)"]
    ['noop '(noop) "Does nothing."]
-   ['prop '(prop val fiber) "Propagate (Re-raise) a signal that has been caught."]
+   ['prop '(prop dest val fiber) "Propagate (Re-raise) a signal that has been caught."]
    ['push '(push val) "Push $val on args"]
    ['push2 '(push2 val1 val2) "Push $val1, $val2 on args"]
    ['push3 '(push3 val1 val2 val3) "Push $val1, $val2, $val3, on args"]
    ['pusha '(pusha array) "Push values in $array on args"]
    ['put '(put ds key val) "$ds[$key] = $val"]
-   ['puti '(puti ds index val) "$ds[index] = $val"]
+   ['puti '(puti ds val index) "$ds[index] = $val"]
    ['rem '(rem dest lhs rhs) "$dest = $lhs % $rhs"]
    ['res '(res dest fiber val) "$dest = resume $fiber with $val"]
    ['ret '(ret val) "Return $val"]
    ['retn '(retn) "Return nil"]
-   ['setu '(setu env index val) "envs[env][index] = $val"]
+   ['setu '(setu val env index) "envs[env][index] = $val"]
    ['sig '(sig dest value sigtype) "$dest = emit $value as sigtype"]
    ['sl '(sl dest lhs rhs) "$dest = $lhs << $rhs"]
    ['slim '(slim dest lhs shamt) "$dest = $lhs << shamt"]
@@ -80,7 +80,7 @@
    ['sruim '(sruim dest lhs shamt) "$dest = $lhs >>> shamt"]
    ['sub '(sub dest lhs rhs) "$dest = $lhs - $rhs"]
    ['tcall '(tcall callee) "Return call($callee, args)"]
-   ['tchck '(tcheck slot types) "Assert $slot matches types"]])
+   ['tchck '(tchck slot types) "Assert $slot matches types"]])
 
 (defn gen
   "Reference table for assembly instructions."
