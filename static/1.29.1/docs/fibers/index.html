@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Fiber Overview</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Fiber Overview" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../index.html">Documentation</a></span><ul><li><span><a href="../syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../specials.html">Special Forms</a></span></li><li><span><a href="../numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../comparison.html">Comparison Operators</a></span></li><li><span><a href="../bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../flow.html">Flow</a></span></li><li><span><a href="../functions.html">Functions</a></span></li><li><span><a href="../strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../loop.html">Looping</a></span></li><li><span><a href="../macros.html">Macros</a></span></li><li class="caret"><span><a href="../data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../data_structures/tables.html">Tables</a></span></li><li><span><a href="../data_structures/structs.html">Structs</a></span></li><li><span><a href="../data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../destructuring.html">Destructuring</a></span></li><li class="caret"><span class="selected"><a href="index.html">Fibers</a></span><ul><li><span><a href="dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../modules.html">Modules</a></span></li><li><span><a href="../object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../prototypes.html">Prototypes</a></span></li><li><span><a href="../abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../event_loop.html">The Event Loop</a></span></li><li><span><a href="../threads.html">Multithreading</a></span></li><li><span><a href="../networking.html">Networking</a></span></li><li><span><a href="../documentation.html">Documentation</a></span></li><li><span><a href="../jpm.html">jpm</a></span></li><li><span><a href="../linting.html">Linting</a></span></li><li><span><a href="../ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li class="caret"><span><a href="../../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../../api/jpm/rules.html">rules</a></span></li><li><span><a href="../../api/jpm/cc.html">cc</a></span></li><li><span><a href="../../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../../api/jpm/cli.html">cli</a></span></li><li><span><a href="../../api/jpm/commands.html">commands</a></span></li><li><span><a href="../../api/jpm/config.html">config</a></span></li><li><span><a href="../../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../api/jpm/pm.html">pm</a></span></li><li><span><a href="../../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../../api/spork/index.html">spork</a></span><ul><li><span><a href="../../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../../api/spork/base64.html">base64</a></span></li><li><span><a href="../../api/spork/crc.html">crc</a></span></li><li><span><a href="../../api/spork/cron.html">cron</a></span></li><li><span><a href="../../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../../api/spork/generators.html">generators</a></span></li><li><span><a href="../../api/spork/getline.html">getline</a></span></li><li><span><a href="../../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../../api/spork/http.html">http</a></span></li><li><span><a href="../../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../../api/spork/json.html">json</a></span></li><li><span><a href="../../api/spork/math.html">math</a></span></li><li><span><a href="../../api/spork/misc.html">misc</a></span></li><li><span><a href="../../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../../api/spork/path.html">path</a></span></li><li><span><a href="../../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../../api/spork/regex.html">regex</a></span></li><li><span><a href="../../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../../api/spork/schema.html">schema</a></span></li><li><span><a href="../../api/spork/sh.html">sh</a></span></li><li><span><a href="../../api/spork/msg.html">msg</a></span></li><li><span><a href="../../api/spork/test.html">test</a></span></li><li><span><a href="../../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.29.1-3a4d56a Documentation<br>(Other Versions:
+          
+          <a href="../../../1.28.0/docs/fibers/index.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/docs/fibers/index.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/docs/fibers/index.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/docs/fibers/index.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/docs/fibers/index.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/docs/fibers/index.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/docs/fibers/index.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/docs/fibers/index.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/docs/fibers/index.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/docs/fibers/index.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/docs/fibers/index.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/docs/fibers/index.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/docs/fibers/index.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/docs/fibers/index.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/docs/fibers/index.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/docs/fibers/index.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/docs/fibers/index.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/docs/fibers/index.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/docs/fibers/index.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/docs/fibers/index.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/docs/fibers/index.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/docs/fibers/index.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/docs/fibers/index.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/docs/fibers/index.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/docs/fibers/index.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/docs/fibers/index.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Fiber Overview</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../destructuring.html"><span class="prevnext-text">Destructuring</span></a></span>
+
+          <span class="next"><a href="dynamic_bindings.html"><span class="prevnext-text">Dynamic Bindings</span></a></span>
+        </div>
+        
+
+<p>Janet has support for single-core asynchronous programming via coroutines or
+fibers.  Fibers allow a process to stop and resume execution later, essentially
+enabling multiple returns from a function. This allows many patterns such as
+schedules, generators, iterators, live debugging, and robust error handling.
+Janet's error handling is actually built on top of fibers (when an error is
+thrown, control is returned to the parent fiber).
+</p>
+<p>A temporary return from a fiber is called a yield, and can be invoked with the
+<code class="mendoza-code">yield</code> function.  To resume a fiber that has been yielded, use the
+<code class="mendoza-code">resume</code> function. When <code class="mendoza-code">resume</code> is called on a fiber, it will only
+return when that fiber either returns, yields, throws an error, or otherwise
+emits a signal.
+</p>
+<p>Different from traditional coroutines, Janet's fibers implement a signaling
+mechanism, which is used to differentiate different kinds of returns. When a
+fiber yields or throws an error, control is returned to the calling fiber. The
+parent fiber must then check what kind of state the fiber is in to differentiate
+errors from return values from user-defined signals.
+</p>
+<p>To create a fiber, use the <code class="mendoza-code">fiber/new</code> function. The fiber
+constructor takes one or two arguments.  The first argument (required)
+is the function that the fiber will execute. This function must accept
+an arity of zero. The next argument (optional) is a collection of
+flags checking what kinds of signals to trap and return via
+<code class="mendoza-code">resume</code>. This is useful so the programmer does not need to
+handle all of the different kinds of signals from a fiber. Any
+untrapped signals are simply propagated to the previous calling fiber.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">f</span> (<span class="mdzsyn-coresym">fiber/new</span> (<span class="mdzsyn-coresym">fn</span> []
+                   (<span class="mdzsyn-coresym">yield</span> <span class="mdzsyn-number">1</span>)
+                   (<span class="mdzsyn-coresym">yield</span> <span class="mdzsyn-number">2</span>)
+                   (<span class="mdzsyn-coresym">yield</span> <span class="mdzsyn-number">3</span>)
+                   (<span class="mdzsyn-coresym">yield</span> <span class="mdzsyn-number">4</span>)
+                   <span class="mdzsyn-number">5</span>)))
+
+<span class="mdzsyn-comment"># Get the status of the fiber (:alive, :dead, :debug, :new, :pending, or :user0-:user9)</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">fiber/status</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; :new</span>
+
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; prints 1</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; prints 2</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; prints 3</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; prints 4</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">fiber/status</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; :pending</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; prints 5</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">fiber/status</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; :dead</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>)) <span class="mdzsyn-comment"># -&gt; throws an error because the fiber is dead</span></code></pre><h2 id="Using-fibers-to-capture-errors">Using fibers to capture errors
+</h2>
+<p>Besides being used as coroutines, fibers can be used to implement error handling
+(i.e. exceptions).
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">my-function-that-errors</span> []
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"start function"</span>)
+ (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"oops!"</span>)
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"never gets here"</span>))
+
+<span class="mdzsyn-comment"># Use the :e flag to only trap errors.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">f</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">my-function-that-errors</span> <span class="mdzsyn-keyword">:e</span>))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">result</span> (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>))
+(<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">=</span> (<span class="mdzsyn-coresym">fiber/status</span> <span class="mdzsyn-symbol">f</span>) <span class="mdzsyn-keyword">:error</span>)
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"result contains the error"</span>)
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"result contains the good result"</span>))</code></pre><p>Since the above code is rather verbose, Janet provides a <code class="mendoza-code">try</code> macro which
+is similar to try/catch in other languages.  It wraps the body in a new fiber,
+<code class="mendoza-code">resume</code>s the fiber, and then checks the result. If the fiber has errored,
+an error clause is evaluated.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">try</span>
+ (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-number">1</span>)
+ ([<span class="mdzsyn-symbol">err</span>] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"got error: "</span> <span class="mdzsyn-symbol">err</span>)))
+<span class="mdzsyn-comment"># evaluates to nil and prints "got error: 1"</span>
+
+(<span class="mdzsyn-coresym">try</span>
+ (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>)
+ ([<span class="mdzsyn-symbol">err</span>] (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"oops"</span>)))
+<span class="mdzsyn-comment"># Evaluates to 6 - no error thrown</span></code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../destructuring.html"><span class="prevnext-text">Destructuring</span></a></span>
+          <span class="next"><a href="dynamic_bindings.html"><span class="prevnext-text">Dynamic Bindings</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 19, 2023 at 12:21:57 (UTC) with Janet 1.29.1-3a4d56a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

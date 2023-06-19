@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>HTML Generation</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="HTML Generation" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/jpm.html">jpm</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../index.html">API</a></span><ul><li><span><a href="../array.html">array</a></span></li><li><span><a href="../buffer.html">buffer</a></span></li><li><span><a href="../debug.html">debug</a></span></li><li><span><a href="../ev.html">ev</a></span></li><li><span><a href="../ffi.html">ffi</a></span></li><li><span><a href="../fiber.html">fiber</a></span></li><li><span><a href="../file.html">file</a></span></li><li><span><a href="../int.html">int</a></span></li><li class="caret"><span><a href="../jpm/index.html">jpm</a></span><ul><li><span><a href="../jpm/rules.html">rules</a></span></li><li><span><a href="../jpm/cc.html">cc</a></span></li><li><span><a href="../jpm/cgen.html">cgen</a></span></li><li><span><a href="../jpm/cli.html">cli</a></span></li><li><span><a href="../jpm/commands.html">commands</a></span></li><li><span><a href="../jpm/config.html">config</a></span></li><li><span><a href="../jpm/make-config.html">make-config</a></span></li><li><span><a href="../jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/pm.html">pm</a></span></li><li><span><a href="../jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../math.html">math</a></span></li><li><span><a href="../module.html">module</a></span></li><li><span><a href="../net.html">net</a></span></li><li><span><a href="../os.html">os</a></span></li><li><span><a href="../peg.html">peg</a></span></li><li><span><a href="../parser.html">parser</a></span></li><li class="caret"><span><a href="index.html">spork</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span class="selected"><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li><li><span><a href="../string.html">string</a></span></li><li><span><a href="../table.html">table</a></span></li><li><span><a href="../misc.html">misc</a></span></li><li><span><a href="../tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.29.1-3a4d56a Documentation<br>(Other Versions:
+          
+          <a href="../../../1.28.0/api/spork/htmlgen.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/api/spork/htmlgen.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/api/spork/htmlgen.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/api/spork/htmlgen.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/api/spork/htmlgen.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/api/spork/htmlgen.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/api/spork/htmlgen.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/api/spork/htmlgen.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/api/spork/htmlgen.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/api/spork/htmlgen.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/api/spork/htmlgen.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/api/spork/htmlgen.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/api/spork/htmlgen.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/api/spork/htmlgen.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/api/spork/htmlgen.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/api/spork/htmlgen.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/api/spork/htmlgen.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/api/spork/htmlgen.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/api/spork/htmlgen.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/api/spork/htmlgen.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/api/spork/htmlgen.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/api/spork/htmlgen.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/api/spork/htmlgen.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/api/spork/htmlgen.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/api/spork/htmlgen.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/api/spork/htmlgen.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">HTML Generation</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="getline.html"><span class="prevnext-text">Getline</span></a></span>
+
+          <span class="next"><a href="http.html"><span class="prevnext-text">HTTP</span></a></span>
+        </div>
+        
+
+<h2 id="Index-35">Index
+</h2>
+<p><a href="#htmlgen/doctype-html">htmlgen/doctype-html</a> <a href="#htmlgen/escape">htmlgen/escape</a> <a href="#htmlgen/html">htmlgen/html</a> <a href="#htmlgen/raw">htmlgen/raw</a> </p><hr><div class="binding"><span id="htmlgen/doctype-html" class="binding-sym">htmlgen/doctype-html</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/285fced0323c318d26e6ecf767f2870aa948a3cf//spork/htmlgen.janet#L115">source</a></span> <pre class="binding-text">The html5 doctype header</pre><a href="https://janetdocs.com/htmlgen/doctype-html">Community Examples</a></div><hr><div class="binding"><span id="htmlgen/escape" class="binding-sym">htmlgen/escape</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/285fced0323c318d26e6ecf767f2870aa948a3cf//spork/htmlgen.janet#L13">source</a></span> <pre class="binding-text">(escape x)
+
+Escape characters in a string for HTML</pre><a href="https://janetdocs.com/htmlgen/escape">Community Examples</a></div><hr><div class="binding"><span id="htmlgen/html" class="binding-sym">htmlgen/html</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/285fced0323c318d26e6ecf767f2870aa948a3cf//spork/htmlgen.janet#L119">source</a></span> <pre class="binding-text">(html data &amp;opt buf)
+
+Render HTML from standard data structures. Fills the provided optional buffer, or new one if it is not provided, with the html bytes.</pre><a href="https://janetdocs.com/htmlgen/html">Community Examples</a></div><hr><div class="binding"><span id="htmlgen/raw" class="binding-sym">htmlgen/raw</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/285fced0323c318d26e6ecf767f2870aa948a3cf//spork/htmlgen.janet#L109">source</a></span> <pre class="binding-text">(raw text)
+
+Get an object that can be used to splice in HTML literals. `text` is not escaped in the output string.</pre><a href="https://janetdocs.com/htmlgen/raw">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="getline.html"><span class="prevnext-text">Getline</span></a></span>
+          <span class="next"><a href="http.html"><span class="prevnext-text">HTTP</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 19, 2023 at 12:21:57 (UTC) with Janet 1.29.1-3a4d56a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

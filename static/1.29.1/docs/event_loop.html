@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>The Event Loop</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="The Event Loop" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span class="selected"><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.29.1-3a4d56a Documentation<br>(Other Versions:
+          
+          <a href="../../1.28.0/docs/event_loop.html">1.28.0</a>
+          
+          <a href="../../1.27.0/docs/event_loop.html">1.27.0</a>
+          
+          <a href="../../1.26.0/docs/event_loop.html">1.26.0</a>
+          
+          <a href="../../1.25.1/docs/event_loop.html">1.25.1</a>
+          
+          <a href="../../1.24.0/docs/event_loop.html">1.24.0</a>
+          
+          <a href="../../1.23.0/docs/event_loop.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/event_loop.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/event_loop.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/event_loop.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/event_loop.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/event_loop.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/event_loop.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/event_loop.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/event_loop.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/event_loop.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/event_loop.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/event_loop.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/event_loop.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/event_loop.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/event_loop.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/event_loop.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/event_loop.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/event_loop.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/event_loop.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/event_loop.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/event_loop.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">The Event Loop</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="abstract_machine.html"><span class="prevnext-text">The Janet Abstract Machine</span></a></span>
+
+          <span class="next"><a href="threads.html"><span class="prevnext-text">Multithreading</span></a></span>
+        </div>
+        
+
+<p>Janet comes with a powerful concurrency model out of the box - the event loop. The event loop provides
+concurrency within a single thread by allowing cooperating fibers to yield instead of
+blocking forward progress. This is a form of cooperative multi-threading that can be useful in many applications, like
+situations where there are many concurrent, IO-bound tasks. This means tasks that spend most of their execution time waiting for
+network or disk, rather than using CPU time.
+</p>
+<p>Most event loop functionality in Janet is exposed through the <code class="mendoza-code">ev/</code> module, but many other functions outside this module
+will interact with the event loop.
+</p>
+<h2 id="An-Overview-of-the-Event-Loop">An Overview of the Event Loop
+</h2>
+<p>Janet is by no means the first language to provide an event loop, and most languages or tools that provide them work
+in the same general way.
+</p>
+<p>All programs in Janet are wrapped in an implicit loop that will run until all tasks are complete. The following is pseudo-code
+describing how the event loop works - the event loop code is all actually implemented directly in the runtime for efficiency.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Functions that yield to the event loop will put (fiber/root) here.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">pending-tasks</span> @[])
+
+<span class="mdzsyn-comment"># Pseudo-code of the event loop scheduler</span>
+(<span class="mdzsyn-coresym">while</span> (<span class="mdzsyn-coresym">not</span> (<span class="mdzsyn-coresym">empty?</span> <span class="mdzsyn-symbol">pending-tasks</span>))
+  (<span class="mdzsyn-coresym">def</span> [<span class="mdzsyn-symbol">root-fiber</span> <span class="mdzsyn-symbol">data</span>] (<span class="mdzsyn-symbol">wait-for-next-event</span>))
+  (<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">root-fiber</span> <span class="mdzsyn-symbol">data</span>))</code></pre><p>Each <code class="mendoza-code">root-fiber</code>, or task, is a fiber that will be automatically resumed
+when an event (or sequence of events) that it is waiting for occurs. Generally, one should not manually
+resume tasks - the event loop will call <code class="mendoza-code">resume</code> when the completion event occurs.
+</p>
+<p>To be precise, a task is just any fiber that was scheduled to run by the event loop.
+Therefore, all tasks are fibers, but not all fibers are tasks. You can get the currently executing task in Janet with <code class="mendoza-code">(fiber/root)</code>.
+</p>
+<h2 id="Blocking-the-Event-Loop">Blocking the Event Loop
+</h2>
+<p>When using the event loop, it is important to be aware that CPU bound
+loops will block all other tasks on the event loop. For example, an
+infinite while loop that does not yield to the event loop will bring
+the entire thread to a halt!  This is generally considered to be one
+of the biggest drawbacks to cooperative multi-threading, so be
+cautious and do not mix in blocking functions into a program that uses
+the event loop. Many functions in Janet's core library will not block
+when the event loop is enabled, but a few will. All functions in the
+<code class="mendoza-code">file/</code> module will block, so be careful when using these with
+networked files.  These functions may be changed or deprecated in the
+future. Other blocking functions include <code class="mendoza-code">os/sleep</code> and
+<code class="mendoza-code">getline</code>.
+</p>
+<p>NOTE: This means that getting input from the repl will block the event loop! Be careful of this when trying to use <code class="mendoza-code">ev/</code> functions
+from the built in repl. Instead, you can use a stream-based repl such as <code class="mendoza-code">spork/netrepl</code> which will interact well with the event loop.
+</p>
+<h2 id="Creating-Tasks">Creating Tasks
+</h2>
+<p>A default Janet program has a single task that will run until complete. To create new tasks, Janet provides two
+built-in functions - <code class="mendoza-code">ev/go</code> and <code class="mendoza-code">ev/call</code>. <code class="mendoza-code">ev/call</code> is implemented in terms of <code class="mendoza-code">ev/go</code>, and other
+macros and functions are wrappers around these two functions.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  <span class="mdzsyn-string">"Does some work."</span>
+  [<span class="mdzsyn-symbol">name</span> <span class="mdzsyn-symbol">n</span>]
+  (<span class="mdzsyn-coresym">for</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-symbol">n</span>
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">name</span> <span class="mdzsyn-string">" working "</span> <span class="mdzsyn-symbol">i</span> <span class="mdzsyn-string">"..."</span>)
+    (<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">0.5</span>))
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">name</span> <span class="mdzsyn-string">" is done!"</span>))
+
+<span class="mdzsyn-comment"># Start bob working in a new task with ev/call</span>
+(<span class="mdzsyn-coresym">ev/call</span> <span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-string">"bob"</span> <span class="mdzsyn-number">10</span>)
+
+(<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">0.25</span>)
+
+<span class="mdzsyn-comment"># Start sally working in a new task with ev/go</span>
+(<span class="mdzsyn-coresym">ev/go</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">|</span>(<span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-string">"sally"</span> <span class="mdzsyn-number">20</span>)))
+
+(<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">11</span>)
+(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"Everyone should be done by now!"</span>)</code></pre><p>This example will start two worker tasks that will run concurrently with each other. The <code class="mendoza-code">ev/call</code> function takes a function as well as its arguments
+and calls that function inside a new task. <code class="mendoza-code">ev/call</code> returns the newly created task fiber immediately.
+</p>
+<p>The more general way to start new tasks is <code class="mendoza-code">ev/go</code>, which takes as an argument a fiber to be resumed by the event loop scheduler.
+<code class="mendoza-code">ev/go</code> allows the programmer to customize fiber flags as well as specify a supervisor channel for the newly created task.
+</p>
+<p>Lastly, there is the <code class="mendoza-code">ev/spawn</code> macro for concisely running a series of forms in a new task.
+</p>
+<h3 id="Task-Communication">Task Communication
+</h3>
+<p>To communicate between tasks, the <code class="mendoza-code">ev/</code> module offers two abstractions: streams and channels. Both abstraction works as FIFO (First In, First Out) data structures, but operate
+on different kinds of data. Channels allow the programmer to communicate by sending any Janet value as messages, and only work inside a thread - they do not allow communication
+between threads, processes, or over the network. Streams are wrappers around file descriptors and operate on streams of bytes. Streams can communicate across threads, processes, and across
+the network.
+</p>
+<p>With these constraints, channels are preferred for things like internal queues and between-task communication, where streams are useful for most everything else.
+</p>
+<h2 id="Channels">Channels
+</h2>
+<p>Channels are based around a queue abstraction, where producer tasks will add items to the channel with <code class="mendoza-code">ev/give</code>, and consumer tasks will remove items from the
+channel with <code class="mendoza-code">ev/take</code>. If there are no items in the channel when <code class="mendoza-code">ev/take</code> is called, the consumer will suspend until a producer gives an item
+to the channel. Similarly, if a task gives to a full channel, it will suspend until a consumer takes an item from the queue, freeing up space for the producer
+to give an item to the channel.
+</p>
+<p>Internally, channels are infinitely expanding queues, so one might think that they never need to be "full", but allowing channels to fill up and suspend writers
+allows for back pressure. Back pressure means that a task can indicate to other tasks that it is "backed up", and that they should stop sending it "work".
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Create a new channel with a limit of 10 items.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">channel</span> (<span class="mdzsyn-coresym">ev/chan</span> <span class="mdzsyn-number">10</span>))
+
+<span class="mdzsyn-comment"># Write to the channel forever</span>
+(<span class="mdzsyn-coresym">ev/spawn</span>
+  (<span class="mdzsyn-coresym">forever</span>
+    (<span class="mdzsyn-coresym">ev/give</span> <span class="mdzsyn-symbol">channel</span> (<span class="mdzsyn-coresym">math/random</span>))))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">consumer</span>
+  <span class="mdzsyn-string">"Take from the channel forever."</span>
+  [<span class="mdzsyn-symbol">name</span> <span class="mdzsyn-coresym">delay</span>]
+  (<span class="mdzsyn-coresym">forever</span>
+    (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">item</span> (<span class="mdzsyn-coresym">ev/take</span> <span class="mdzsyn-symbol">channel</span>))
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">name</span> <span class="mdzsyn-string">" got item "</span> <span class="mdzsyn-symbol">item</span>)
+    (<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-coresym">delay</span>)))
+
+(<span class="mdzsyn-coresym">ev/call</span> <span class="mdzsyn-symbol">consumer</span> <span class="mdzsyn-string">"bob"</span> <span class="mdzsyn-number">1</span>)
+(<span class="mdzsyn-coresym">ev/call</span> <span class="mdzsyn-symbol">consumer</span> <span class="mdzsyn-string">"sally"</span> <span class="mdzsyn-number">0.63</span>)
+
+<span class="mdzsyn-comment"># Call (ev/sleep 1) to see some results</span></code></pre><h2 id="Streams">Streams
+</h2>
+<p>Streams let Janet do IO without blocking. They provide a very similar interface to files, with a few extra caveats and capabilities. There are several ways to acquire streams, such
+as using the <code class="mendoza-code">net/</code> module, <code class="mendoza-code">os/open</code>, and <code class="mendoza-code">os/pipe</code>.
+</p>
+<p>To read from a stream, use <code class="mendoza-code">ev/read</code> or <code class="mendoza-code">ev/chunk</code>. These can also be accessed with <code class="mendoza-code">:read</code> and <code class="mendoza-code">:chunk</code> methods on streams.
+</p>
+<p>To write to a stream, use the function <code class="mendoza-code">ev/write</code>. This can be referenced as the <code class="mendoza-code">:write</code> method on streams as well.
+</p>
+<p>For some examples on how to use streams, see documentation on <a href="networking.html">networking</a> in Janet.
+</p>
+<h2 id="Cancellation">Cancellation
+</h2>
+<p>Sometimes, IO operations can take too long or even hang
+indefinitely. Janet offers <code class="mendoza-code">ev/cancel</code> to interrupt and cancel an
+ongoing IO operation. This will cause the canceled task to be resumed
+but immediately error. From the point of view of the canceled task, it
+will look as though the last function that yielded to the event loop
+raised an error.
+</p>
+<p>Macros like <code class="mendoza-code">try</code> and <code class="mendoza-code">protect</code> will continue to work just as if the cancellation error was any other error.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">f</span>
+  (<span class="mdzsyn-coresym">ev/spawn</span>
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"starting long io..."</span>)
+    (<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">10000</span>)
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"finished long io!"</span>)))
+
+<span class="mdzsyn-comment"># wait 2 seconds before canceling the long IO.</span>
+(<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">2</span>)
+(<span class="mdzsyn-coresym">ev/cancel</span> <span class="mdzsyn-symbol">f</span> <span class="mdzsyn-string">"canceled"</span>)</code></pre><h2 id="Supervisor-Channels">Supervisor Channels
+</h2>
+<p>An interesting problem with supporting multiple tasks is error handling - if a task raises an error (or any other uncaught signal), who should handle it? The programmer
+often wants to know when a task fails (or finishes), and then continue with some other code. Alternatively, it might be desirable to try again a number of times before
+really giving up.
+</p>
+<p>Janet has the concept of supervisor channels to support this. When a
+new task is scheduled with <code class="mendoza-code">ev/go</code>, one can optionally specify a
+channel to set as the new tasks supervisor.  When the task yields to
+the event loop, or raises any kind of fiber signal, a message is
+automatically written to the supervisor channel. Another task can then
+continuously listen on that channel to monitor other tasks, handling
+errors or restarting them. This is a powerful pattern that can be used
+to build robust applications that gracefully handle failure.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">channel</span> (<span class="mdzsyn-coresym">ev/chan</span>))
+
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">counter</span> <span class="mdzsyn-number">0</span>)
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">worker</span>
+  <span class="mdzsyn-string">"A worker that is unreliable and sometimes fails."</span>
+  []
+  (<span class="mdzsyn-coresym">repeat</span> <span class="mdzsyn-number">50</span>
+    (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"working..."</span>)
+    (<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">0.1</span>)
+    (<span class="mdzsyn-coresym">when</span> (<span class="mdzsyn-coresym">&gt;</span> <span class="mdzsyn-number">0.05</span> (<span class="mdzsyn-coresym">math/random</span>))
+      (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"worker errored out!"</span>)
+      (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"unexpected error"</span>))
+    (<span class="mdzsyn-coresym">++</span> <span class="mdzsyn-symbol">counter</span>))
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"worker finished normally!"</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">start-worker</span>
+  <span class="mdzsyn-string">"Start a worker with the given channel as its supervisor"</span>
+  []
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"starting new worker..."</span>)
+  (<span class="mdzsyn-coresym">ev/go</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">worker</span> <span class="mdzsyn-keyword">:tp</span>) <span class="mdzsyn-constant">nil</span> <span class="mdzsyn-symbol">channel</span>))
+
+<span class="mdzsyn-comment"># make sure there are always two workers until counter gets to 100</span>
+(<span class="mdzsyn-symbol">start-worker</span>)
+(<span class="mdzsyn-coresym">forever</span>
+  (<span class="mdzsyn-symbol">start-worker</span>)
+  (<span class="mdzsyn-coresym">def</span> [<span class="mdzsyn-symbol">status</span> <span class="mdzsyn-symbol">fiber</span>] (<span class="mdzsyn-coresym">ev/take</span> <span class="mdzsyn-symbol">channel</span>))
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"worker "</span> <span class="mdzsyn-symbol">fiber</span> <span class="mdzsyn-string">" completed with status :"</span> <span class="mdzsyn-symbol">status</span>)
+  (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">&gt;=</span> <span class="mdzsyn-symbol">counter</span> <span class="mdzsyn-number">100</span>) (<span class="mdzsyn-coresym">break</span>)))</code></pre><p>The fiber mask argument (<code class="mendoza-code">:tp</code> above) determines what signals are automatically written to the supervisor channel. By default, the fiber will only write to the supervisor channel
+when it completes successfully, with the message <code class="mendoza-code">[:ok fiber]</code>. The most useful setting here is <code class="mendoza-code">:t</code>, which causes the fiber to write an event to the supervisor channel when it terminates.
+These events will be tuples of 2 arguments, <code class="mendoza-code">(signal fiber)</code>.
+</p>
+<p>A task can also write custom messages to its supervisor with <code class="mendoza-code">ev/give-supervisor</code>.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="abstract_machine.html"><span class="prevnext-text">The Janet Abstract Machine</span></a></span>
+          <span class="next"><a href="threads.html"><span class="prevnext-text">Multithreading</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 19, 2023 at 12:21:57 (UTC) with Janet 1.29.1-3a4d56a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

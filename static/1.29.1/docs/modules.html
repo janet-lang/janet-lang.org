@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Modules</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Modules" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span class="selected"><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.29.1-3a4d56a Documentation<br>(Other Versions:
+          
+          <a href="../../1.28.0/docs/modules.html">1.28.0</a>
+          
+          <a href="../../1.27.0/docs/modules.html">1.27.0</a>
+          
+          <a href="../../1.26.0/docs/modules.html">1.26.0</a>
+          
+          <a href="../../1.25.1/docs/modules.html">1.25.1</a>
+          
+          <a href="../../1.24.0/docs/modules.html">1.24.0</a>
+          
+          <a href="../../1.23.0/docs/modules.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/modules.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/modules.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/modules.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/modules.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/modules.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/modules.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/modules.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/modules.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/modules.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/modules.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/modules.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/modules.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/modules.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/modules.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/modules.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/modules.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/modules.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/modules.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/modules.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/modules.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Modules</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="fibers/error_handling.html"><span class="prevnext-text">Error Handling</span></a></span>
+
+          <span class="next"><a href="object_oriented.html"><span class="prevnext-text">Object-Oriented Programming</span></a></span>
+        </div>
+        
+
+<p>As programs grow, they should be broken into smaller pieces for maintainability.
+Janet has the concept of modules to this end. A module is a collection of
+bindings and its associated environment.  By default, modules correspond
+one-to-one with source files in Janet, although you may override this and
+structure modules however you like.
+</p>
+<h2 id="Installing-a-module">Installing a module
+</h2>
+<p>Using <code class="mendoza-code">jpm</code>, the <code class="mendoza-code">path</code> module can be installed like so from the
+command line:
+</p>
+<pre class="mendoza-codeblock"><code>sudo jpm install https://github.com/janet-lang/path.git</code></pre><p>The use of <code class="mendoza-code">sudo</code> is not required in some setups, but is often needed for a
+global install on POSIX systems. You can pass in a git repository URL to the
+<code class="mendoza-code">install</code> command, and <code class="mendoza-code">jpm</code> will install that package globally on
+your system.
+</p>
+<p>If you are not using <code class="mendoza-code">jpm</code>, you can place the file <code class="mendoza-code">path.janet</code> from
+the repository in your current directory, and Janet will be able to import it as
+well. However, for more complicated packages or packages containing native C
+extensions, <code class="mendoza-code">jpm</code> will usually be much easier.
+</p>
+<h2 id="Importing-a-module">Importing a module
+</h2>
+<p>To use a module, the best way is to use the <code class="mendoza-code">(import)</code> macro,
+which looks for a module with the given name on your system and
+imports its symbols into the current environment, usually prefixed
+with the name of the module.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">path</span>)
+
+(<span class="mdzsyn-symbol">path/join</span> (<span class="mdzsyn-coresym">os/cwd</span>) <span class="mdzsyn-string">"temp"</span>)</code></pre><p>Once <code class="mendoza-code">path</code> is imported, all of its symbols are available to the host
+program, but prefixed with <code class="mendoza-code">path/</code>. To import the symbols with a custom
+prefix or without any prefix, use the <code class="mendoza-code">:prefix</code> argument to the
+<code class="mendoza-code">import</code> macro.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">path</span> <span class="mdzsyn-keyword">:prefix</span> <span class="mdzsyn-string">""</span>)
+
+(<span class="mdzsyn-symbol">join</span> (<span class="mdzsyn-coresym">os/cwd</span>) <span class="mdzsyn-string">"temp"</span>)</code></pre><p>You may also use the <code class="mendoza-code">:as</code> argument to specify the prefix in a more natural
+way.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">path</span> <span class="mdzsyn-keyword">:as</span> <span class="mdzsyn-symbol">p</span>)
+
+(<span class="mdzsyn-symbol">p/join</span> (<span class="mdzsyn-coresym">os/cwd</span>) <span class="mdzsyn-string">"temp"</span>)</code></pre><h2 id="Custom-loaders-(">Custom loaders (<code class="mendoza-code">module/paths</code> and <code class="mendoza-code">module/loaders</code>)
+</h2>
+<p>The <code class="mendoza-code">module/paths</code> and <code class="mendoza-code">module/loaders</code> data structures determine how
+Janet will load a given module name. <code class="mendoza-code">module/paths</code> is a list of patterns
+and methods to use to try and find a given module. The entries in
+<code class="mendoza-code">module/paths</code> will be checked in order, as it is possible that multiple
+entries could match.  If a module name matches a pattern (which usually means
+that some file exists), then we use the corresponding loader in
+<code class="mendoza-code">module/loaders</code> to evaluate that file, source code, URL, or whatever else
+we want to derive from the module name. The resulting value, usually an
+environment table, is then cached so that it can be reused later without
+evaluating a module twice.
+</p>
+<p>By modifying <code class="mendoza-code">module/paths</code> and <code class="mendoza-code">module/loaders</code>, you can create
+custom module schemes, handlers for file extensions, or even your own module
+system. It is recommended to not modify existing entries in <code class="mendoza-code">module/paths</code>
+or <code class="mendoza-code">module/loader</code>, and simply add to the existing entries. This is rather
+advanced usage, but can be incredibly useful in creating DSLs that feel native
+to Janet.
+</p>
+<h3><code class="mendoza-code">module/paths</code>
+</h3>
+<p>This is an array of file paths to search for modules in the file
+system. Each element in this array is a tuple <code class="mendoza-code">[path type
+predicate]</code>, where <code class="mendoza-code">path</code> is a templated file path, which
+determines what path corresponds to a module name, and where
+<code class="mendoza-code">type</code> is the loading method used to load the module. <code class="mendoza-code">type</code>
+can be one of <code class="mendoza-code">:native</code>, <code class="mendoza-code">:source</code>, <code class="mendoza-code">:image</code>, or any
+key in the <code class="mendoza-code">module/loaders</code> table.
+</p>
+<p><code class="mendoza-code">predicate</code> is an optional function or file extension used to further
+    filter whether or not a module name should match.  It's mainly useful when
+    <code class="mendoza-code">path</code> is a string and you want to further refine the pattern.</p><p><code class="mendoza-code">path</code> can also be a function that checks if a module name matches. If
+    the module name matches, the function should return a string that will be
+    used as the main identifier for the module. Most of the time, this should be
+    the absolute path to the module, but it can be any unique key that
+    identifies the module such as an absolute URL. It is this key that is used
+    to determine if a module has been loaded already.  This mechanism lets
+    <code class="mendoza-code">./mymod</code> and <code class="mendoza-code">mymod</code> refer to the same module even though they
+    are different names passed to <code class="mendoza-code">import</code>.</p><h3><code class="mendoza-code">module/loaders</code>
+</h3>
+<p>Once a primary module identifier and module type has been chosen, Janet's import
+machinery (defined mostly in <code class="mendoza-code">require</code> and <code class="mendoza-code">module/find</code>) will use the
+appropriate loader from <code class="mendoza-code">module/loaders</code> to get an environment table.  Each
+loader in the table is just a function that takes the primary module identifier
+(usually an absolute path to the module) as well as optionally any other
+arguments passed to <code class="mendoza-code">require</code> or <code class="mendoza-code">import</code>, and returns the environment
+table.  For example, the <code class="mendoza-code">:source</code> type is a thin wrapper around
+<code class="mendoza-code">dofile</code>, the <code class="mendoza-code">:image</code> type is a wrapper around <code class="mendoza-code">load-image</code>, and
+the <code class="mendoza-code">:native</code> type is a wrapper around <code class="mendoza-code">native</code>.
+</p>
+<h3 id="URL-loader-example">URL loader example
+</h3>
+<p>An example from <code class="mendoza-code">examples/urlloader.janet</code> in the source
+repository shows how a loader can be a wrapper around curl and
+<code class="mendoza-code">dofile</code> to load source files from HTTP URLs.  To use it, simply
+evaluate this file somewhere in your program before you require code
+from a URL. Don't use this as-is in production code, because if
+<code class="mendoza-code">url</code> contains spaces in <code class="mendoza-code">load-url</code>, the module will not
+load correctly. A more robust solution would quote the URL.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn-</span> <span class="mdzsyn-symbol">load-url</span>
+  [<span class="mdzsyn-symbol">url</span> <span class="mdzsyn-symbol">args</span>]
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">p</span> (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"curl"</span> <span class="mdzsyn-symbol">url</span> <span class="mdzsyn-string">"-s"</span>] <span class="mdzsyn-keyword">:p</span> {<span class="mdzsyn-keyword">:out</span> <span class="mdzsyn-keyword">:pipe</span>}))
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">res</span> (<span class="mdzsyn-coresym">dofile</span> (<span class="mdzsyn-symbol">p</span> <span class="mdzsyn-keyword">:out</span>) <span class="mdzsyn-keyword">:source</span> <span class="mdzsyn-symbol">url</span> ;<span class="mdzsyn-symbol">args</span>))
+  (<span class="mdzsyn-keyword">:wait</span> <span class="mdzsyn-symbol">p</span>)
+  <span class="mdzsyn-symbol">res</span>)
+
+(<span class="mdzsyn-coresym">defn-</span> <span class="mdzsyn-symbol">check-http-url</span>
+  [<span class="mdzsyn-symbol">path</span>]
+  (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">or</span> (<span class="mdzsyn-coresym">string/has-prefix?</span> <span class="mdzsyn-string">"http://"</span> <span class="mdzsyn-symbol">path</span>)
+          (<span class="mdzsyn-coresym">string/has-prefix?</span> <span class="mdzsyn-string">"https://"</span> <span class="mdzsyn-symbol">path</span>))
+    <span class="mdzsyn-symbol">path</span>))
+
+<span class="mdzsyn-comment"># Add the module loader and path tuple to right places</span>
+(<span class="mdzsyn-coresym">array/push</span> <span class="mdzsyn-coresym">module/paths</span> [<span class="mdzsyn-symbol">check-http-url</span> <span class="mdzsyn-keyword">:janet-http</span>])
+(<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-coresym">module/loaders</span> <span class="mdzsyn-keyword">:janet-http</span> <span class="mdzsyn-symbol">load-url</span>)</code></pre><h2 id="Relative-imports">Relative imports
+</h2>
+<p>You can include files relative to the current file by prefixing the module name
+with <code class="mendoza-code">./</code>. For example, suppose you have a file tree that is structured like
+so:
+</p>
+<pre class="mendoza-codeblock"><code>mymod/
+  init.janet
+  deps/
+    dep1.janet
+    dep2.janet</code></pre><p>With the above structure, <code class="mendoza-code">init.janet</code> can import <code class="mendoza-code">dep1</code> and
+<code class="mendoza-code">dep2</code> with relative imports. This is robust because the entire
+<code class="mendoza-code">mymod/</code> directory can be installed without any chance that <code class="mendoza-code">dep1</code> and
+<code class="mendoza-code">dep2</code> will overwrite other files, or that <code class="mendoza-code">init.janet</code> will
+accidentally import a different file named <code class="mendoza-code">dep1.janet</code> or
+<code class="mendoza-code">dep2.janet</code>. <code class="mendoza-code">mymod</code> can even be a sub-directory in another Janet
+source tree and work as expected.
+</p>
+<p>init.janet
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">./deps/dep1</span> <span class="mdzsyn-keyword">:as</span> <span class="mdzsyn-symbol">dep1</span>)
+(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">./deps/dep2</span> <span class="mdzsyn-keyword">:as</span> <span class="mdzsyn-symbol">dep2</span>)
+
+<span class="mdzsyn-symbol">...</span></code></pre>
+</p>
+<p>Note that relative imports are relative to the current file, not to the working
+directory. For that behavior, see the section on working directory imports.
+</p>
+<h3 id="Pre-loaded-Modules">Pre-loaded Modules
+</h3>
+<p>An easy way to bypass the import system and create custom modules is to manually add modules into
+<code class="mendoza-code">module/cache</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-coresym">module/cache</span> <span class="mdzsyn-string">"mymod"</span> (<span class="mdzsyn-coresym">dofile</span> <span class="mdzsyn-string">"localfile.janet"</span>))
+<span class="mdzsyn-comment"># The module defined by localfile.janet can now be</span>
+<span class="mdzsyn-comment"># imported with (import mymod)</span></code></pre><p>This is not recommended except in a few circumstances where a module needs to be loaded at runtime
+but doesn't exist on disk, such as if a program were compiled into a standalone executable. A
+pattern to allow this in a standalone executable built with <code class="mendoza-code">jpm</code> is as follows:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">mod1</span> (<span class="mdzsyn-coresym">require</span> <span class="mdzsyn-string">"./localfile"</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">main</span> [<span class="mdzsyn-symbol">&amp;</span> <span class="mdzsyn-symbol">args</span>]
+  (<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-coresym">module/cache</span> <span class="mdzsyn-string">"mod1"</span> <span class="mdzsyn-symbol">mod1</span>)
+  <span class="mdzsyn-comment"># now calls to (import mod1) at runtime will succeed.</span>
+  (<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">mod1</span>))</code></pre><h3 id="Working-Directory-Imports">Working Directory Imports
+</h3>
+<p>Starting in 1.14.1, Janet will allow imports relative to the current working directory.
+This is very useful in scripting circumstances where source code must be loaded at runtime.
+This can be done with the function <code class="mendoza-code">dofile</code>, but it can also be done with the default
+import system.
+</p>
+<p>To import a file relative to the working directory, prefix the import path with a forward slash "/".
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">/local</span>)</code></pre><p>This will import from a file <code class="mendoza-code">./local.janet</code>, (or <code class="mendoza-code">./local.so</code>, <code class="mendoza-code">./local.jimage</code>, and so on), and
+prefix the imported symbols with <code class="mendoza-code">local/</code>.
+</p>
+<h2 id="Writing-a-module">Writing a module
+</h2>
+<p>Writing a module in Janet is mostly about exposing only the public
+functions that you want users of your module to be able to use. All
+top level functions defined via <code class="mendoza-code">defn</code>, macros defined via
+<code class="mendoza-code">defmacro</code>, constants defined via <code class="mendoza-code">def</code>, and vars defined
+via <code class="mendoza-code">var</code> will be exported in your module. To mark a function or
+binding as private to your module, you may use <code class="mendoza-code">defn-</code> or
+<code class="mendoza-code">def-</code> at the top level.  You can also add the keyword
+<code class="mendoza-code">:private</code> as metadata for the binding.
+</p>
+<p>Sample module:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Put imports and other requisite code up here</span>
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">api-constant</span>
+  <span class="mdzsyn-string">"Some constant."</span>
+  <span class="mdzsyn-number">1000</span>)
+
+(<span class="mdzsyn-coresym">def-</span> <span class="mdzsyn-symbol">private-constant</span>
+  <span class="mdzsyn-string">"Not exported."</span>
+  <span class="mdzsyn-keyword">:abc</span>)
+
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">*api-var*</span>
+  <span class="mdzsyn-string">"Some API var. Be careful with these, dynamic bindings may be better."</span>
+  <span class="mdzsyn-constant">nil</span>)
+
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">*private-var*</span> <span class="mdzsyn-keyword">:private</span>
+  <span class="mdzsyn-string">"var that is not exported."</span>
+  <span class="mdzsyn-number">123</span>)
+
+(<span class="mdzsyn-coresym">defn-</span> <span class="mdzsyn-symbol">private-fun</span>
+  <span class="mdzsyn-string">"Sum three numbers."</span>
+  [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">z</span>]
+  (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">z</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">api-fun</span>
+  <span class="mdzsyn-string">"Do a thing."</span>
+  [<span class="mdzsyn-symbol">stuff</span>]
+  (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-number">10</span> (<span class="mdzsyn-symbol">private-fun</span> <span class="mdzsyn-symbol">stuff</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>)))</code></pre><p>To import our sample module given that it is stored on disk at
+<code class="mendoza-code">mymod.janet</code>, we could do something like the following (this
+also works in a REPL):
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">mymod</span>)
+
+<span class="mdzsyn-symbol">mymod/api-constant</span> <span class="mdzsyn-comment"># evaluates to 1000</span>
+
+(<span class="mdzsyn-symbol">mymod/api-fun</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># evaluates to 23</span>
+
+<span class="mdzsyn-symbol">mymod/*api-var*</span> <span class="mdzsyn-comment"># evaluates to nil</span>
+(<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">mymod/*api-var*</span> <span class="mdzsyn-number">10</span>)
+<span class="mdzsyn-symbol">mymod/*api-var*</span> <span class="mdzsyn-comment"># evaluates to 10</span>
+
+(<span class="mdzsyn-symbol">mymod/private-fun</span> <span class="mdzsyn-number">10</span>) <span class="mdzsyn-comment"># will not compile</span></code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="fibers/error_handling.html"><span class="prevnext-text">Error Handling</span></a></span>
+          <span class="next"><a href="object_oriented.html"><span class="prevnext-text">Object-Oriented Programming</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 19, 2023 at 12:21:57 (UTC) with Janet 1.29.1-3a4d56a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

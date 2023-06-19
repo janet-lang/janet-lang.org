@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Dynamic Bindings</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Dynamic Bindings" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../index.html">Documentation</a></span><ul><li><span><a href="../syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../specials.html">Special Forms</a></span></li><li><span><a href="../numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../comparison.html">Comparison Operators</a></span></li><li><span><a href="../bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../flow.html">Flow</a></span></li><li><span><a href="../functions.html">Functions</a></span></li><li><span><a href="../strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../loop.html">Looping</a></span></li><li><span><a href="../macros.html">Macros</a></span></li><li class="caret"><span><a href="../data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../data_structures/tables.html">Tables</a></span></li><li><span><a href="../data_structures/structs.html">Structs</a></span></li><li><span><a href="../data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="index.html">Fibers</a></span><ul><li><span class="selected"><a href="dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../modules.html">Modules</a></span></li><li><span><a href="../object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../prototypes.html">Prototypes</a></span></li><li><span><a href="../abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../event_loop.html">The Event Loop</a></span></li><li><span><a href="../threads.html">Multithreading</a></span></li><li><span><a href="../networking.html">Networking</a></span></li><li><span><a href="../documentation.html">Documentation</a></span></li><li><span><a href="../jpm.html">jpm</a></span></li><li><span><a href="../linting.html">Linting</a></span></li><li><span><a href="../ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li class="caret"><span><a href="../../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../../api/jpm/rules.html">rules</a></span></li><li><span><a href="../../api/jpm/cc.html">cc</a></span></li><li><span><a href="../../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../../api/jpm/cli.html">cli</a></span></li><li><span><a href="../../api/jpm/commands.html">commands</a></span></li><li><span><a href="../../api/jpm/config.html">config</a></span></li><li><span><a href="../../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../api/jpm/pm.html">pm</a></span></li><li><span><a href="../../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../../api/spork/index.html">spork</a></span><ul><li><span><a href="../../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../../api/spork/base64.html">base64</a></span></li><li><span><a href="../../api/spork/crc.html">crc</a></span></li><li><span><a href="../../api/spork/cron.html">cron</a></span></li><li><span><a href="../../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../../api/spork/generators.html">generators</a></span></li><li><span><a href="../../api/spork/getline.html">getline</a></span></li><li><span><a href="../../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../../api/spork/http.html">http</a></span></li><li><span><a href="../../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../../api/spork/json.html">json</a></span></li><li><span><a href="../../api/spork/math.html">math</a></span></li><li><span><a href="../../api/spork/misc.html">misc</a></span></li><li><span><a href="../../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../../api/spork/path.html">path</a></span></li><li><span><a href="../../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../../api/spork/regex.html">regex</a></span></li><li><span><a href="../../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../../api/spork/schema.html">schema</a></span></li><li><span><a href="../../api/spork/sh.html">sh</a></span></li><li><span><a href="../../api/spork/msg.html">msg</a></span></li><li><span><a href="../../api/spork/test.html">test</a></span></li><li><span><a href="../../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.29.1-3a4d56a Documentation<br>(Other Versions:
+          
+          <a href="../../../1.28.0/docs/fibers/dynamic_bindings.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/docs/fibers/dynamic_bindings.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/docs/fibers/dynamic_bindings.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/docs/fibers/dynamic_bindings.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/docs/fibers/dynamic_bindings.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/docs/fibers/dynamic_bindings.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/docs/fibers/dynamic_bindings.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/docs/fibers/dynamic_bindings.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/docs/fibers/dynamic_bindings.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/docs/fibers/dynamic_bindings.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/docs/fibers/dynamic_bindings.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/docs/fibers/dynamic_bindings.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/docs/fibers/dynamic_bindings.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/docs/fibers/dynamic_bindings.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/docs/fibers/dynamic_bindings.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/docs/fibers/dynamic_bindings.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/docs/fibers/dynamic_bindings.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/docs/fibers/dynamic_bindings.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/docs/fibers/dynamic_bindings.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/docs/fibers/dynamic_bindings.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/docs/fibers/dynamic_bindings.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/docs/fibers/dynamic_bindings.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/docs/fibers/dynamic_bindings.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/docs/fibers/dynamic_bindings.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/docs/fibers/dynamic_bindings.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/docs/fibers/dynamic_bindings.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Dynamic Bindings</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Fiber Overview</span></a></span>
+
+          <span class="next"><a href="error_handling.html"><span class="prevnext-text">Error Handling</span></a></span>
+        </div>
+        
+
+<p>There are situations where the programmer would like to thread a parameter
+through multiple function calls, without passing that argument to every function
+explicitly.  This can make code more concise, easier to read, and easier to
+extend. Dynamic bindings are a mechanism that provides this in a safe and easy to
+use way.  This is in contrast to lexically-scoped bindings, which are usually
+superior to dynamically-scoped bindings in terms of clarity, composability, and
+performance. However, dynamic scoping can be used to great effect for implicit
+contexts, configuration, and testing. Janet supports dynamic scoping as of
+version 0.5.0 on a per-fiber basis &mdash; each fiber contains an
+environment table that can be queried for values. Using table prototypes, we can
+easily emulate dynamic scoping.
+</p>
+<h2 id="Setting-a-value">Setting a value
+</h2>
+<p>To set a dynamic binding, use the <code class="mendoza-code">setdyn</code> function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Sets a dynamic binding :my-var to 10 in the current fiber.</span>
+(<span class="mdzsyn-coresym">setdyn</span> <span class="mdzsyn-keyword">:my-var</span> <span class="mdzsyn-number">10</span>)</code></pre><h2 id="Getting-a-value">Getting a value
+</h2>
+<p>To get a dynamically-scoped binding, use the <code class="mendoza-code">dyn</code> function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">dyn</span> <span class="mdzsyn-keyword">:my-var</span>) <span class="mdzsyn-comment"># returns nil</span>
+(<span class="mdzsyn-coresym">setdyn</span> <span class="mdzsyn-keyword">:my-var</span> <span class="mdzsyn-number">10</span>)
+(<span class="mdzsyn-coresym">dyn</span> <span class="mdzsyn-keyword">:my-var</span>) <span class="mdzsyn-comment"># returns 10</span></code></pre><h2 id="Creating-a-dynamic-scope">Creating a dynamic scope
+</h2>
+<p>Now that we can get and set dynamic bindings, we need to know how to create
+dynamic scopes themselves. To do this, we can create a new fiber and then use
+<code class="mendoza-code">fiber/setenv</code> to set the dynamic environment of the fiber. To inherit from
+the current environment, we set the prototype of the new environment table to
+the current environment table.
+</p>
+<p>Below, we set the dynamic binding <code class="mendoza-code">:pretty-format</code> to configure the pretty
+print function <code class="mendoza-code">pp</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Body of our new fiber</span>
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">myblock</span>
+ []
+ (<span class="mdzsyn-coresym">pp</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]))
+
+<span class="mdzsyn-comment"># The current env</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">curr-env</span> (<span class="mdzsyn-coresym">fiber/getenv</span> (<span class="mdzsyn-coresym">fiber/current</span>)))
+
+<span class="mdzsyn-comment"># The dynamic bindings we want to use</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-env</span> @{<span class="mdzsyn-keyword">:pretty-format</span> <span class="mdzsyn-string">"Inside myblock: %.20P"</span>})
+
+<span class="mdzsyn-comment"># Set up a new fiber</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">f</span> (<span class="mdzsyn-coresym">fiber/new</span> <span class="mdzsyn-symbol">myblock</span>))
+(<span class="mdzsyn-coresym">fiber/setenv</span> <span class="mdzsyn-symbol">f</span> (<span class="mdzsyn-coresym">table/setproto</span> <span class="mdzsyn-symbol">my-env</span> <span class="mdzsyn-symbol">curr-env</span>))
+
+<span class="mdzsyn-comment"># Run the code</span>
+(<span class="mdzsyn-coresym">pp</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># prints "(1 2 3)"</span>
+(<span class="mdzsyn-coresym">resume</span> <span class="mdzsyn-symbol">f</span>) <span class="mdzsyn-comment"># prints "Inside myblock: (1 2 3)"</span>
+(<span class="mdzsyn-coresym">pp</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># prints "(1 2 3)"</span></code></pre><p>This is verbose so the core library provides a macro, <code class="mendoza-code">with-dyns</code>, that
+makes it much clearer in the common case.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">pp</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># prints "(1 2 3)"</span>
+<span class="mdzsyn-comment"># prints "Inside with-dyns: (1 2 3)"</span>
+(<span class="mdzsyn-coresym">with-dyns</span> [<span class="mdzsyn-keyword">:pretty-format</span> <span class="mdzsyn-string">"Inside with-dyns: %.20P"</span>]
+  (<span class="mdzsyn-coresym">pp</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]))
+(<span class="mdzsyn-coresym">pp</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) <span class="mdzsyn-comment"># prints "(1 2 3)"</span></code></pre><h2 id="When-to-use-dynamic-bindings">When to use dynamic bindings
+</h2>
+<p>Dynamic bindings should be used when you want to pass around an
+implicit, global context, especially when you want to automatically
+reset the context if an error is raised. Since a dynamic binding is
+tied to the current fiber, when a fiber exits the context is
+automatically unset. This is much easier and often more efficient than
+manually trying to detect errors and unset the context. Consider the
+following example code, written once with a global var and once with a
+dynamic binding.
+</p>
+<h3 id="Using-a-global-var">Using a global var
+</h3>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">*my-binding*</span> <span class="mdzsyn-number">10</span>)
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">may-error</span>
+ <span class="mdzsyn-string">"A function that may error."</span>
+ []
+ (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">&gt;</span> (<span class="mdzsyn-coresym">math/random</span>) <span class="mdzsyn-symbol">*my-binding*</span>) (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"uh oh"</span>)))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">do-with-value</span>
+ <span class="mdzsyn-string">"Set *my-binding* to a value and run may-error."</span>
+ [<span class="mdzsyn-symbol">x</span>]
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">oldx</span> <span class="mdzsyn-symbol">*my-binding*</span>)
+ (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">*my-binding*</span> <span class="mdzsyn-symbol">x</span>)
+ (<span class="mdzsyn-symbol">may-error</span>)
+ (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">*my-binding*</span> <span class="mdzsyn-symbol">oldx</span>))</code></pre><p>This example is a bit verbose, but most importantly it fails to reset
+<code class="mendoza-code">*my-binding*</code> if an error is thrown. We could fix this with a <code class="mendoza-code">try</code>,
+but even that may have subtle bugs if the fiber yields but is never resumed.
+However, there is a better solution with dynamic bindings.
+</p>
+<h3 id="Using-a-dynamic-binding">Using a dynamic binding
+</h3>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">may-error</span>
+ <span class="mdzsyn-string">"A function that may error."</span>
+ []
+ (<span class="mdzsyn-coresym">if</span> (<span class="mdzsyn-coresym">&gt;</span> (<span class="mdzsyn-coresym">math/random</span>) (<span class="mdzsyn-coresym">dyn</span> <span class="mdzsyn-keyword">:my-binding</span>)) (<span class="mdzsyn-coresym">error</span> <span class="mdzsyn-string">"uh oh"</span>)))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">do-with-value</span>
+ [<span class="mdzsyn-symbol">x</span>]
+ (<span class="mdzsyn-coresym">with-dyns</span> [<span class="mdzsyn-keyword">:my-binding</span> <span class="mdzsyn-symbol">x</span>]
+   (<span class="mdzsyn-symbol">may-error</span>)))</code></pre><p>This looks much cleaner, thanks to a macro, but is also correct in handling
+errors and any other signal that a fiber may emit.  In general, prefer dynamic
+bindings over global vars. Global vars are mainly useful for scripts or truly
+program-global configuration.
+</p>
+<h2 id="Advanced-use-cases">Advanced use cases
+</h2>
+<p>Dynamic bindings work by a table associated with each fiber, called the fiber
+environment (often "env" for short). This table can be accessed by all
+functions in the fiber, so it serves as place to store implicit context. During
+compilation, this table also contains top-level bindings available for use, and
+is what is returned from a <code class="mendoza-code">(require ...)</code> expression.
+</p>
+<p>With this in mind, there is no requirement that the first argument to
+<code class="mendoza-code">(setdyn name value)</code> and <code class="mendoza-code">(dyn name)</code> be keywords. These functions
+can be used to quickly put values in and get values from the current
+environment. As such, these can be used for getting metadata for a given symbol.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">dyn</span> '<span class="mdzsyn-coresym">pp</span>) <span class="mdzsyn-comment"># -&gt; prints all metadata in the current environment for pp.</span>
+(<span class="mdzsyn-coresym">setdyn</span> '<span class="mdzsyn-coresym">pp</span> <span class="mdzsyn-constant">nil</span>) <span class="mdzsyn-comment"># -&gt; will not work, as 'pp is defined in the current environments prototype table.</span>
+(<span class="mdzsyn-coresym">setdyn</span> '<span class="mdzsyn-coresym">pp</span> @{}) <span class="mdzsyn-comment"># -&gt; will define 'pp as nil.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">10</span>)
+(<span class="mdzsyn-coresym">setdyn</span> '<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-constant">nil</span>) <span class="mdzsyn-comment"># -&gt; will remove the binding to 'a in the current environment.</span></code></pre><p>Macros can modify this table to do things that are otherwise not possible in a
+macro.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defmacro</span> <span class="mdzsyn-symbol">make-defs</span>
+  <span class="mdzsyn-string">"Add many defs at the top level, binding them to random numbers determined at compile time."</span>
+  [<span class="mdzsyn-symbol">x</span>]
+  (<span class="mdzsyn-coresym">each</span> <span class="mdzsyn-symbol">name</span> ['<span class="mdzsyn-symbol">a</span> '<span class="mdzsyn-symbol">b</span> '<span class="mdzsyn-symbol">c</span> '<span class="mdzsyn-symbol">d</span> '<span class="mdzsyn-symbol">e</span> '<span class="mdzsyn-symbol">f</span> '<span class="mdzsyn-symbol">g</span>]
+    (<span class="mdzsyn-coresym">setdyn</span> <span class="mdzsyn-symbol">name</span> @{<span class="mdzsyn-keyword">:value</span> (<span class="mdzsyn-coresym">math/random</span>)}))
+  <span class="mdzsyn-constant">nil</span>)</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Fiber Overview</span></a></span>
+          <span class="next"><a href="error_handling.html"><span class="prevnext-text">Error Handling</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 19, 2023 at 12:21:57 (UTC) with Janet 1.29.1-3a4d56a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

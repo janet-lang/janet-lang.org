@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 28
-#define JANET_VERSION_PATCH 0
+#define JANET_VERSION_MINOR 29
+#define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.28.0"
+#define JANET_VERSION "1.29.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -248,7 +248,7 @@ extern "C" {
 /* Enable or disable the FFI library. Currently, FFI only enabled on
  * x86-64 operating systems. */
 #ifndef JANET_NO_FFI
-#if !defined(__EMSCRIPTEN__) && (defined(__x86_64__) || defined(_M_X64))
+#if !defined(__EMSCRIPTEN__)
 #define JANET_FFI
 #endif
 #endif
@@ -419,7 +419,6 @@ typedef struct JanetOSRWLock JanetOSRWLock;
 #include <setjmp.h>
 #include <stddef.h>
 #include <stdio.h>
-
 
 /* What to do when out of memory */
 #ifndef JANET_OUT_OF_MEMORY
@@ -634,6 +633,7 @@ typedef void *JanetAbstract;
 #define JANET_STREAM_WRITABLE 0x400
 #define JANET_STREAM_ACCEPTABLE 0x800
 #define JANET_STREAM_UDPSERVER 0x1000
+#define JANET_STREAM_TOCLOSE 0x10000
 
 typedef enum {
     JANET_ASYNC_EVENT_INIT,
@@ -1545,6 +1545,7 @@ JANET_API void janet_ev_readchunk(JanetStream *stream, JanetBuffer *buf, int32_t
 JANET_API void janet_ev_recv(JanetStream *stream, JanetBuffer *buf, int32_t nbytes, int flags);
 JANET_API void janet_ev_recvchunk(JanetStream *stream, JanetBuffer *buf, int32_t nbytes, int flags);
 JANET_API void janet_ev_recvfrom(JanetStream *stream, JanetBuffer *buf, int32_t nbytes, int flags);
+JANET_API void janet_ev_connect(JanetStream *stream, int flags);
 #endif
 
 /* Write async to a stream */
@@ -1873,13 +1874,16 @@ JANET_API void janet_stacktrace_ext(JanetFiber *fiber, Janet err, const char *pr
 #define JANET_SANDBOX_SUBPROCESS 2
 #define JANET_SANDBOX_NET_CONNECT 4
 #define JANET_SANDBOX_NET_LISTEN 8
-#define JANET_SANDBOX_FFI 16
+#define JANET_SANDBOX_FFI_DEFINE 16
 #define JANET_SANDBOX_FS_WRITE 32
 #define JANET_SANDBOX_FS_READ 64
 #define JANET_SANDBOX_HRTIME 128
 #define JANET_SANDBOX_ENV 256
 #define JANET_SANDBOX_DYNAMIC_MODULES 512
 #define JANET_SANDBOX_FS_TEMP 1024
+#define JANET_SANDBOX_FFI_USE 2048
+#define JANET_SANDBOX_FFI_JIT 4096
+#define JANET_SANDBOX_FFI (JANET_SANDBOX_FFI_DEFINE | JANET_SANDBOX_FFI_USE | JANET_SANDBOX_FFI_JIT)
 #define JANET_SANDBOX_FS (JANET_SANDBOX_FS_WRITE | JANET_SANDBOX_FS_READ | JANET_SANDBOX_FS_TEMP)
 #define JANET_SANDBOX_NET (JANET_SANDBOX_NET_CONNECT | JANET_SANDBOX_NET_LISTEN)
 #define JANET_SANDBOX_ALL (UINT32_MAX)
@@ -1965,7 +1969,6 @@ JANET_API Janet janet_resolve_core(const char *name);
     Janet CNAME (int32_t argc, Janet *argv)
 #define JANET_DEF_SD(ENV, JNAME, VAL, DOC) \
     janet_def_sm(ENV, JNAME, VAL, DOC, __FILE__, __LINE__)
-
 
 /* Choose defaults for source mapping and docstring based on config defs */
 #if defined(JANET_NO_SOURCEMAPS) && defined(JANET_NO_DOCSTRINGS)

@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Fiber C API</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Fiber C API" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li><li><span><a href="../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="index.html">C API</a></span><ul><li><span><a href="wrapping.html">Wrapping Types</a></span></li><li><span><a href="embedding.html">Embedding</a></span></li><li><span><a href="configuration.html">Configuration</a></span></li><li><span><a href="array.html">Array C API</a></span></li><li><span><a href="buffer.html">Buffer C API</a></span></li><li><span><a href="table.html">Table C API</a></span></li><li><span class="selected"><a href="fiber.html">Fiber C API</a></span></li><li><span><a href="memory-model.html">Memory Model</a></span></li><li><span><a href="writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.29.1-3a4d56a Documentation<br>(Other Versions:
+          
+          <a href="../../1.28.0/capi/fiber.html">1.28.0</a>
+          
+          <a href="../../1.27.0/capi/fiber.html">1.27.0</a>
+          
+          <a href="../../1.26.0/capi/fiber.html">1.26.0</a>
+          
+          <a href="../../1.25.1/capi/fiber.html">1.25.1</a>
+          
+          <a href="../../1.24.0/capi/fiber.html">1.24.0</a>
+          
+          <a href="../../1.23.0/capi/fiber.html">1.23.0</a>
+          
+          <a href="../../1.22.0/capi/fiber.html">1.22.0</a>
+          
+          <a href="../../1.21.0/capi/fiber.html">1.21.0</a>
+          
+          <a href="../../1.20.0/capi/fiber.html">1.20.0</a>
+          
+          <a href="../../1.19.0/capi/fiber.html">1.19.0</a>
+          
+          <a href="../../1.18.1/capi/fiber.html">1.18.1</a>
+          
+          <a href="../../1.17.1/capi/fiber.html">1.17.1</a>
+          
+          <a href="../../1.16.1/capi/fiber.html">1.16.1</a>
+          
+          <a href="../../1.15.0/capi/fiber.html">1.15.0</a>
+          
+          <a href="../../1.13.1/capi/fiber.html">1.13.1</a>
+          
+          <a href="../../1.12.2/capi/fiber.html">1.12.2</a>
+          
+          <a href="../../1.11.1/capi/fiber.html">1.11.1</a>
+          
+          <a href="../../1.10.1/capi/fiber.html">1.10.1</a>
+          
+          <a href="../../1.9.1/capi/fiber.html">1.9.1</a>
+          
+          <a href="../../1.8.1/capi/fiber.html">1.8.1</a>
+          
+          <a href="../../1.7.0/capi/fiber.html">1.7.0</a>
+          
+          <a href="../../1.6.0/capi/fiber.html">1.6.0</a>
+          
+          <a href="../../1.5.1/capi/fiber.html">1.5.1</a>
+          
+          <a href="../../1.5.0/capi/fiber.html">1.5.0</a>
+          
+          <a href="../../1.4.0/capi/fiber.html">1.4.0</a>
+          
+          <a href="../../1.3.1/capi/fiber.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Fiber C API</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="table.html"><span class="prevnext-text">Table C API</span></a></span>
+
+          <span class="next"><a href="memory-model.html"><span class="prevnext-text">Janet's Memory Model</span></a></span>
+        </div>
+        
+
+<h2 id="Definition-1">Definition
+</h2>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-comment">/* Fiber statuses - mostly corresponds to signals. */</span>
+<span class="mdzsyn-keyword">typedef</span> <span class="mdzsyn-type">enum</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_DEAD</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_ERROR</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_DEBUG</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_PENDING</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER0</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER1</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER2</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER3</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER4</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER5</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER6</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER7</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER8</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_USER9</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_NEW</span><span class="mdzsyn-operator">,</span>
+    <span class="mdzsyn-identifier">JANET_STATUS_ALIVE</span>
+<span class="mdzsyn-operator">}</span> <span class="mdzsyn-identifier">JanetFiberStatus</span><span class="mdzsyn-operator">;</span>
+
+<span class="mdzsyn-comment">/* A lightweight green thread in janet. Does not correspond to
+ * operating system threads. */</span>
+<span class="mdzsyn-type">struct</span> <span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-identifier">JanetGCObject</span> <span class="mdzsyn-identifier">gc</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* GC Object stuff */</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">flags</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* More flags */</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">frame</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* Index of the stack frame */</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">stackstart</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* Beginning of next args */</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">stacktop</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* Top of stack. Where values are pushed and popped from. */</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">capacity</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">maxstack</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* Arbitrary defined limit for stack overflow */</span>
+    <span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">env</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* Dynamic bindings table (usually current environment). */</span>
+    <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">data</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">child</span><span class="mdzsyn-operator">;</span> <span class="mdzsyn-comment">/* Keep linked list of fibers for restarting pending fibers */</span>
+<span class="mdzsyn-operator">}</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-keyword">typedef</span> <span class="mdzsyn-type">struct</span> <span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-identifier">JanetFiber</span><span class="mdzsyn-operator">;</span></code></pre><h2 id="Functions-1">Functions
+</h2>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_fiber</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">callee</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">capacity</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_fiber_reset</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">fiber</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">callee</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-identifier">JanetFiberStatus</span> <span class="mdzsyn-identifier">janet_fiber_status</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">fiber</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_current_fiber</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="table.html"><span class="prevnext-text">Table C API</span></a></span>
+          <span class="next"><a href="memory-model.html"><span class="prevnext-text">Janet's Memory Model</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 19, 2023 at 12:21:57 (UTC) with Janet 1.29.1-3a4d56a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

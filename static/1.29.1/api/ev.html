@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Event Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Event Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li><li><span><a href="../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span class="selected"><a href="ev.html">ev</a></span></li><li><span><a href="ffi.html">ffi</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span><a href="int.html">int</a></span></li><li class="caret"><span><a href="jpm/index.html">jpm</a></span><ul><li><span><a href="jpm/rules.html">rules</a></span></li><li><span><a href="jpm/cc.html">cc</a></span></li><li><span><a href="jpm/cgen.html">cgen</a></span></li><li><span><a href="jpm/cli.html">cli</a></span></li><li><span><a href="jpm/commands.html">commands</a></span></li><li><span><a href="jpm/config.html">config</a></span></li><li><span><a href="jpm/make-config.html">make-config</a></span></li><li><span><a href="jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="jpm/pm.html">pm</a></span></li><li><span><a href="jpm/scaffold.html">scaffold</a></span></li><li><span><a href="jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li class="caret"><span><a href="spork/index.html">spork</a></span><ul><li><span><a href="spork/argparse.html">argparse</a></span></li><li><span><a href="spork/base64.html">base64</a></span></li><li><span><a href="spork/crc.html">crc</a></span></li><li><span><a href="spork/cron.html">cron</a></span></li><li><span><a href="spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="spork/fmt.html">fmt</a></span></li><li><span><a href="spork/generators.html">generators</a></span></li><li><span><a href="spork/getline.html">getline</a></span></li><li><span><a href="spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="spork/http.html">http</a></span></li><li><span><a href="spork/httpf.html">httpf</a></span></li><li><span><a href="spork/json.html">json</a></span></li><li><span><a href="spork/math.html">math</a></span></li><li><span><a href="spork/misc.html">misc</a></span></li><li><span><a href="spork/netrepl.html">netrepl</a></span></li><li><span><a href="spork/path.html">path</a></span></li><li><span><a href="spork/rawterm.html">rawterm</a></span></li><li><span><a href="spork/regex.html">regex</a></span></li><li><span><a href="spork/rpc.html">rpc</a></span></li><li><span><a href="spork/schema.html">schema</a></span></li><li><span><a href="spork/sh.html">sh</a></span></li><li><span><a href="spork/msg.html">msg</a></span></li><li><span><a href="spork/test.html">test</a></span></li><li><span><a href="spork/tarray.html">tarray</a></span></li><li><span><a href="spork/zip.html">zip</a></span></li></ul></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.29.1-3a4d56a Documentation<br>(Other Versions:
+          
+          <a href="../../1.28.0/api/ev.html">1.28.0</a>
+          
+          <a href="../../1.27.0/api/ev.html">1.27.0</a>
+          
+          <a href="../../1.26.0/api/ev.html">1.26.0</a>
+          
+          <a href="../../1.25.1/api/ev.html">1.25.1</a>
+          
+          <a href="../../1.24.0/api/ev.html">1.24.0</a>
+          
+          <a href="../../1.23.0/api/ev.html">1.23.0</a>
+          
+          <a href="../../1.22.0/api/ev.html">1.22.0</a>
+          
+          <a href="../../1.21.0/api/ev.html">1.21.0</a>
+          
+          <a href="../../1.20.0/api/ev.html">1.20.0</a>
+          
+          <a href="../../1.19.0/api/ev.html">1.19.0</a>
+          
+          <a href="../../1.18.1/api/ev.html">1.18.1</a>
+          
+          <a href="../../1.17.1/api/ev.html">1.17.1</a>
+          
+          <a href="../../1.16.1/api/ev.html">1.16.1</a>
+          
+          <a href="../../1.15.0/api/ev.html">1.15.0</a>
+          
+          <a href="../../1.13.1/api/ev.html">1.13.1</a>
+          
+          <a href="../../1.12.2/api/ev.html">1.12.2</a>
+          
+          <a href="../../1.11.1/api/ev.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/ev.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/ev.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/ev.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/ev.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/ev.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/ev.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/ev.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/ev.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/ev.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Event Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="debug.html"><span class="prevnext-text">Debug Module</span></a></span>
+
+          <span class="next"><a href="ffi.html"><span class="prevnext-text">FFI Module</span></a></span>
+        </div>
+        
+
+<p>Functions related to evented (asynchronous) IO and a fiber based event loop.
+</p>
+<h2 id="Index-2">Index
+</h2>
+<p><a href="#ev/acquire-lock">ev/acquire-lock</a> <a href="#ev/acquire-rlock">ev/acquire-rlock</a> <a href="#ev/acquire-wlock">ev/acquire-wlock</a> <a href="#ev/all-tasks">ev/all-tasks</a> <a href="#ev/call">ev/call</a> <a href="#ev/cancel">ev/cancel</a> <a href="#ev/capacity">ev/capacity</a> <a href="#ev/chan">ev/chan</a> <a href="#ev/chan-close">ev/chan-close</a> <a href="#ev/chunk">ev/chunk</a> <a href="#ev/close">ev/close</a> <a href="#ev/count">ev/count</a> <a href="#ev/deadline">ev/deadline</a> <a href="#ev/do-thread">ev/do-thread</a> <a href="#ev/full">ev/full</a> <a href="#ev/gather">ev/gather</a> <a href="#ev/give">ev/give</a> <a href="#ev/give-supervisor">ev/give-supervisor</a> <a href="#ev/go">ev/go</a> <a href="#ev/lock">ev/lock</a> <a href="#ev/read">ev/read</a> <a href="#ev/release-lock">ev/release-lock</a> <a href="#ev/release-rlock">ev/release-rlock</a> <a href="#ev/release-wlock">ev/release-wlock</a> <a href="#ev/rselect">ev/rselect</a> <a href="#ev/rwlock">ev/rwlock</a> <a href="#ev/select">ev/select</a> <a href="#ev/sleep">ev/sleep</a> <a href="#ev/spawn">ev/spawn</a> <a href="#ev/spawn-thread">ev/spawn-thread</a> <a href="#ev/take">ev/take</a> <a href="#ev/thread">ev/thread</a> <a href="#ev/thread-chan">ev/thread-chan</a> <a href="#ev/with-deadline">ev/with-deadline</a> <a href="#ev/write">ev/write</a> </p><hr><div class="binding"><span id="ev/acquire-lock" class="binding-sym">ev/acquire-lock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3181">source</a></span> <pre class="binding-text">(ev/acquire-lock lock)
+
+Acquire a lock such that this operating system thread is the only thread with access to this resource. This will block this entire thread until the lock becomes available, and will not yield to other fibers on this system thread.</pre><a href="https://janetdocs.com/ev/acquire-lock">Community Examples</a></div><hr><div class="binding"><span id="ev/acquire-rlock" class="binding-sym">ev/acquire-rlock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3221">source</a></span> <pre class="binding-text">(ev/acquire-rlock rwlock)
+
+Acquire a read lock an a read-write lock.</pre><a href="https://janetdocs.com/ev/acquire-rlock">Community Examples</a></div><hr><div class="binding"><span id="ev/acquire-wlock" class="binding-sym">ev/acquire-wlock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3230">source</a></span> <pre class="binding-text">(ev/acquire-wlock rwlock)
+
+Acquire a write lock on a read-write lock.</pre><a href="https://janetdocs.com/ev/acquire-wlock">Community Examples</a></div><hr><div class="binding"><span id="ev/all-tasks" class="binding-sym">ev/all-tasks</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3257">source</a></span> <pre class="binding-text">(ev/all-tasks)
+
+Get an array of all active fibers that are being used by the scheduler.</pre><a href="https://janetdocs.com/ev/all-tasks">Community Examples</a></div><hr><div class="binding"><span id="ev/call" class="binding-sym">ev/call</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/boot/boot.janet#L3648">source</a></span> <pre class="binding-text">(ev/call f &amp; args)
+
+Call a function asynchronously.
+Returns a fiber that is scheduled to run the function.</pre><a href="https://janetdocs.com/ev/call">Community Examples</a></div><hr><div class="binding"><span id="ev/cancel" class="binding-sym">ev/cancel</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3079">source</a></span> <pre class="binding-text">(ev/cancel fiber err)
+
+Cancel a suspended fiber in the event loop. Differs from cancel in that it returns the canceled fiber immediately.</pre><a href="https://janetdocs.com/ev/cancel">Community Examples</a></div><hr><div class="binding"><span id="ev/capacity" class="binding-sym">ev/capacity</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1091">source</a></span> <pre class="binding-text">(ev/capacity channel)
+
+Get the number of items a channel will store before blocking writers.</pre><a href="https://janetdocs.com/ev/capacity">Community Examples</a></div><hr><div class="binding"><span id="ev/chan" class="binding-sym">ev/chan</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1131">source</a></span> <pre class="binding-text">(ev/chan &amp;opt capacity)
+
+Create a new channel. capacity is the number of values to queue before blocking writers, defaults to 0 if not provided. Returns a new channel.</pre><a href="https://janetdocs.com/ev/chan">Community Examples</a></div><hr><div class="binding"><span id="ev/chan-close" class="binding-sym">ev/chan-close</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1153">source</a></span> <pre class="binding-text">(ev/chan-close chan)
+
+Close a channel. A closed channel will cause all pending reads and writes to return nil. Returns the channel.</pre><a href="https://janetdocs.com/ev/chan-close">Community Examples</a></div><hr><div class="binding"><span id="ev/chunk" class="binding-sym">ev/chunk</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3123">source</a></span> <pre class="binding-text">(ev/chunk stream n &amp;opt buffer timeout)
+
+Same as ev/read, but will not return early if less than n bytes are available. If an end of stream is reached, will also return early with the collected bytes.</pre><a href="https://janetdocs.com/ev/chunk">Community Examples</a></div><hr><div class="binding"><span id="ev/close" class="binding-sym">ev/close</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3089">source</a></span> <pre class="binding-text">(ev/close stream)
+
+Close a stream. This should be the same as calling (:close stream) for all streams.</pre><a href="https://janetdocs.com/ev/close">Community Examples</a></div><hr><div class="binding"><span id="ev/count" class="binding-sym">ev/count</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1102">source</a></span> <pre class="binding-text">(ev/count channel)
+
+Get the number of items currently waiting in a channel.</pre><a href="https://janetdocs.com/ev/count">Community Examples</a></div><hr><div class="binding"><span id="ev/deadline" class="binding-sym">ev/deadline</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3062">source</a></span> <pre class="binding-text">(ev/deadline sec &amp;opt tocancel tocheck)
+
+Set a deadline for a fiber `tocheck`. If `tocheck` is not finished after `sec` seconds, `tocancel` will be canceled as with `ev/cancel`. If `tocancel` and `tocheck` are not given, they default to `(fiber/root)` and `(fiber/current)` respectively. Returns `tocancel`.</pre><a href="https://janetdocs.com/ev/deadline">Community Examples</a></div><hr><div class="binding"><span id="ev/do-thread" class="binding-sym">ev/do-thread</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/boot/boot.janet#L3661">source</a></span> <pre class="binding-text">(ev/do-thread &amp; body)
+
+Run some code in a new thread. Suspends the current fiber until the thread is complete, and
+evaluates to nil.</pre><a href="https://janetdocs.com/ev/do-thread">Community Examples</a></div><hr><div class="binding"><span id="ev/full" class="binding-sym">ev/full</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1080">source</a></span> <pre class="binding-text">(ev/full channel)
+
+Check if a channel is full or not.</pre><a href="https://janetdocs.com/ev/full">Community Examples</a></div><hr><div class="binding"><span id="ev/gather" class="binding-sym">ev/gather</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/boot/boot.janet#L3698">source</a></span> <pre class="binding-text">(ev/gather &amp; bodies)
+
+Run a number of fibers in parallel on the event loop, and join when they complete.
+Returns the gathered results in an array.</pre><a href="https://janetdocs.com/ev/gather">Community Examples</a></div><hr><div class="binding"><span id="ev/give" class="binding-sym">ev/give</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L976">source</a></span> <pre class="binding-text">(ev/give channel value)
+
+Write a value to a channel, suspending the current fiber if the channel is full. Returns the channel if the write succeeded, nil otherwise.</pre><a href="https://janetdocs.com/ev/give">Community Examples</a></div><hr><div class="binding"><span id="ev/give-supervisor" class="binding-sym">ev/give-supervisor</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3026">source</a></span> <pre class="binding-text">(ev/give-supervisor tag &amp; payload)
+
+Send a message to the current supervisor channel if there is one. The message will be a tuple of all of the arguments combined into a single message, where the first element is tag. By convention, tag should be a keyword indicating the type of message. Returns nil.</pre><a href="https://janetdocs.com/ev/give-supervisor">Community Examples</a></div><hr><div class="binding"><span id="ev/go" class="binding-sym">ev/go</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L2817">source</a></span> <pre class="binding-text">(ev/go fiber-or-fun &amp;opt value supervisor)
+
+Put a fiber on the event loop to be resumed later. If a function is used, it is wrapped with `fiber/new` first. Optionally pass a value to resume with, otherwise resumes with nil. Returns the fiber. An optional `core/channel` can be provided as a supervisor. When various events occur in the newly scheduled fiber, an event will be pushed to the supervisor. If not provided, the new fiber will inherit the current supervisor.</pre><a href="https://janetdocs.com/ev/go">Community Examples</a></div><hr><div class="binding"><span id="ev/lock" class="binding-sym">ev/lock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3169">source</a></span> <pre class="binding-text">(ev/lock)
+
+Create a new lock to coordinate threads.</pre><a href="https://janetdocs.com/ev/lock">Community Examples</a></div><hr><div class="binding"><span id="ev/read" class="binding-sym">ev/read</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3103">source</a></span> <pre class="binding-text">(ev/read stream n &amp;opt buffer timeout)
+
+Read up to n bytes into a buffer asynchronously from a stream. `n` can also be the keyword `:all` to read into the buffer until end of stream. Optionally provide a buffer to write into as well as a timeout in seconds after which to cancel the operation and raise an error. Returns the buffer if the read was successful or nil if end-of-stream reached. Will raise an error if there are problems with the IO operation.</pre><a href="https://janetdocs.com/ev/read">Community Examples</a></div><hr><div class="binding"><span id="ev/release-lock" class="binding-sym">ev/release-lock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3190">source</a></span> <pre class="binding-text">(ev/release-lock lock)
+
+Release a lock such that other threads may acquire it.</pre><a href="https://janetdocs.com/ev/release-lock">Community Examples</a></div><hr><div class="binding"><span id="ev/release-rlock" class="binding-sym">ev/release-rlock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3239">source</a></span> <pre class="binding-text">(ev/release-rlock rwlock)
+
+Release a read lock on a read-write lock</pre><a href="https://janetdocs.com/ev/release-rlock">Community Examples</a></div><hr><div class="binding"><span id="ev/release-wlock" class="binding-sym">ev/release-wlock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3248">source</a></span> <pre class="binding-text">(ev/release-wlock rwlock)
+
+Release a write lock on a read-write lock</pre><a href="https://janetdocs.com/ev/release-wlock">Community Examples</a></div><hr><div class="binding"><span id="ev/rselect" class="binding-sym">ev/rselect</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1123">source</a></span> <pre class="binding-text">(ev/rselect &amp; clauses)
+
+Similar to ev/select, but will try clauses in a random order for fairness.</pre><a href="https://janetdocs.com/ev/rselect">Community Examples</a></div><hr><div class="binding"><span id="ev/rwlock" class="binding-sym">ev/rwlock</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3211">source</a></span> <pre class="binding-text">(ev/rwlock)
+
+Create a new read-write lock to coordinate threads.</pre><a href="https://janetdocs.com/ev/rwlock">Community Examples</a></div><hr><div class="binding"><span id="ev/select" class="binding-sym">ev/select</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1022">source</a></span> <pre class="binding-text">(ev/select &amp; clauses)
+
+Block until the first of several channel operations occur. Returns a tuple of the form [:give chan], [:take chan x], or [:close chan], where a :give tuple is the result of a write and a :take tuple is the result of a read. Each clause must be either a channel (for a channel take operation) or a tuple [channel x] (for a channel give operation). Operations are tried in order such that earlier clauses take precedence over later clauses. Both give and take operations can return a [:close chan] tuple, which indicates that the specified channel was closed while waiting, or that the channel was already closed.</pre><a href="https://janetdocs.com/ev/select">Community Examples</a></div><hr><div class="binding"><span id="ev/sleep" class="binding-sym">ev/sleep</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3051">source</a></span> <pre class="binding-text">(ev/sleep sec)
+
+Suspend the current fiber for sec seconds without blocking the event loop.</pre><a href="https://janetdocs.com/ev/sleep">Community Examples</a></div><hr><div class="binding"><span id="ev/spawn" class="binding-sym">ev/spawn</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/boot/boot.janet#L3656">source</a></span> <pre class="binding-text">(ev/spawn &amp; body)
+
+Run some code in a new fiber. This is shorthand for `(ev/go (fn [] ;body))`.</pre><a href="https://janetdocs.com/ev/spawn">Community Examples</a></div><hr><div class="binding"><span id="ev/spawn-thread" class="binding-sym">ev/spawn-thread</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/boot/boot.janet#L3667">source</a></span> <pre class="binding-text">(ev/spawn-thread &amp; body)
+
+Run some code in a new thread. Like `ev/do-thread`, but returns nil immediately.</pre><a href="https://janetdocs.com/ev/spawn-thread">Community Examples</a></div><hr><div class="binding"><span id="ev/take" class="binding-sym">ev/take</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L987">source</a></span> <pre class="binding-text">(ev/take channel)
+
+Read from a channel, suspending the current fiber if no value is available.</pre><a href="https://janetdocs.com/ev/take">Community Examples</a></div><hr><div class="binding"><span id="ev/thread" class="binding-sym">ev/thread</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L2976">source</a></span> <pre class="binding-text">(ev/thread main &amp;opt value flags supervisor)
+
+Run `main` in a new operating system thread, optionally passing `value` to resume with. The parameter `main` can either be a fiber, or a function that accepts 0 or 1 arguments. Unlike `ev/go`, this function will suspend the current fiber until the thread is complete. If you want to run the thread without waiting for a result, pass the `:n` flag to return nil immediately. Otherwise, returns nil. Available flags:
+
+* `:n` - return immediately
+* `:t` - set the task-id of the new thread to value. The task-id is passed in messages to the supervisor channel.
+* `:a` - don't copy abstract registry to new thread (performance optimization)
+* `:c` - don't copy cfunction registry to new thread (performance optimization)</pre><a href="https://janetdocs.com/ev/thread">Community Examples</a></div><hr><div class="binding"><span id="ev/thread-chan" class="binding-sym">ev/thread-chan</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L1142">source</a></span> <pre class="binding-text">(ev/thread-chan &amp;opt limit)
+
+Create a threaded channel. A threaded channel is a channel that can be shared between threads and used to communicate between any number of operating system threads.</pre><a href="https://janetdocs.com/ev/thread-chan">Community Examples</a></div><hr><div class="binding"><span id="ev/with-deadline" class="binding-sym">ev/with-deadline</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/boot/boot.janet#L3672">source</a></span> <pre class="binding-text">(ev/with-deadline deadline &amp; body)
+
+Run a body of code with a deadline, such that if the code does not complete before
+the deadline is up, it will be canceled.</pre><a href="https://janetdocs.com/ev/with-deadline">Community Examples</a></div><hr><div class="binding"><span id="ev/write" class="binding-sym">ev/write</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/3a4d56a/src/core/ev.c#L3139">source</a></span> <pre class="binding-text">(ev/write stream data &amp;opt timeout)
+
+Write data to a stream, suspending the current fiber until the write completes. Takes an optional timeout in seconds, after which will return nil. Returns nil, or raises an error if the write failed.</pre><a href="https://janetdocs.com/ev/write">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="debug.html"><span class="prevnext-text">Debug Module</span></a></span>
+          <span class="next"><a href="ffi.html"><span class="prevnext-text">FFI Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on June 19, 2023 at 12:21:57 (UTC) with Janet 1.29.1-3a4d56a</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
