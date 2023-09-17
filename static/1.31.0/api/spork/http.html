@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>HTTP</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="HTTP" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/jpm.html">jpm</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../index.html">API</a></span><ul><li><span><a href="../array.html">array</a></span></li><li><span><a href="../buffer.html">buffer</a></span></li><li><span><a href="../debug.html">debug</a></span></li><li><span><a href="../ev.html">ev</a></span></li><li><span><a href="../ffi.html">ffi</a></span></li><li><span><a href="../fiber.html">fiber</a></span></li><li><span><a href="../file.html">file</a></span></li><li><span><a href="../int.html">int</a></span></li><li class="caret"><span><a href="../jpm/index.html">jpm</a></span><ul><li><span><a href="../jpm/rules.html">rules</a></span></li><li><span><a href="../jpm/cc.html">cc</a></span></li><li><span><a href="../jpm/cgen.html">cgen</a></span></li><li><span><a href="../jpm/cli.html">cli</a></span></li><li><span><a href="../jpm/commands.html">commands</a></span></li><li><span><a href="../jpm/config.html">config</a></span></li><li><span><a href="../jpm/make-config.html">make-config</a></span></li><li><span><a href="../jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/pm.html">pm</a></span></li><li><span><a href="../jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../math.html">math</a></span></li><li><span><a href="../module.html">module</a></span></li><li><span><a href="../net.html">net</a></span></li><li><span><a href="../os.html">os</a></span></li><li><span><a href="../peg.html">peg</a></span></li><li><span><a href="../parser.html">parser</a></span></li><li class="caret"><span><a href="index.html">spork</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span class="selected"><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li><li><span><a href="../string.html">string</a></span></li><li><span><a href="../table.html">table</a></span></li><li><span><a href="../misc.html">misc</a></span></li><li><span><a href="../tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.31.0-4e5889e Documentation<br>(Other Versions:
+          
+          <a href="../../../1.29.1/api/spork/http.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/api/spork/http.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/api/spork/http.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/api/spork/http.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/api/spork/http.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/api/spork/http.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/api/spork/http.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/api/spork/http.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/api/spork/http.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/api/spork/http.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/api/spork/http.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/api/spork/http.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/api/spork/http.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/api/spork/http.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/api/spork/http.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/api/spork/http.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/api/spork/http.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/api/spork/http.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/api/spork/http.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/api/spork/http.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/api/spork/http.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/api/spork/http.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/api/spork/http.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/api/spork/http.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/api/spork/http.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/api/spork/http.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/api/spork/http.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">HTTP</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="htmlgen.html"><span class="prevnext-text">HTML Generation</span></a></span>
+
+          <span class="next"><a href="httpf.html"><span class="prevnext-text">HTTP Framework</span></a></span>
+        </div>
+        
+
+<h2 id="Index-36">Index
+</h2>
+<p><a href="#http/cookie-grammar">http/cookie-grammar</a> <a href="#http/cookies">http/cookies</a> <a href="#http/logger">http/logger</a> <a href="#http/middleware">http/middleware</a> <a href="#http/query-string-grammar">http/query-string-grammar</a> <a href="#http/read-body">http/read-body</a> <a href="#http/read-request">http/read-request</a> <a href="#http/read-response">http/read-response</a> <a href="#http/request">http/request</a> <a href="#http/request-peg">http/request-peg</a> <a href="#http/response-peg">http/response-peg</a> <a href="#http/router">http/router</a> <a href="#http/send-response">http/send-response</a> <a href="#http/server">http/server</a> <a href="#http/server-handler">http/server-handler</a> <a href="#http/status-messages">http/status-messages</a> <a href="#http/url-grammar">http/url-grammar</a> </p><hr><div class="binding"><span id="http/cookie-grammar" class="binding-sym">http/cookie-grammar</span> <span class="binding-type">core/peg</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L375">source</a></span> <pre class="binding-text">Grammar to parse a cookie header to a series of keys and values.</pre><a href="https://janetdocs.com/http/cookie-grammar">Community Examples</a></div><hr><div class="binding"><span id="http/cookies" class="binding-sym">http/cookies</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L383">source</a></span> <pre class="binding-text">(cookies nextmw)
+
+Parses cookies into the table under :cookies key</pre><a href="https://janetdocs.com/http/cookies">Community Examples</a></div><hr><div class="binding"><span id="http/logger" class="binding-sym">http/logger</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L360">source</a></span> <pre class="binding-text">(logger nextmw)
+
+Creates a logging middleware. The logger middleware prints URL route, return status, and elapsed request time.</pre><a href="https://janetdocs.com/http/logger">Community Examples</a></div><hr><div class="binding"><span id="http/middleware" class="binding-sym">http/middleware</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L338">source</a></span> <pre class="binding-text">(middleware x)
+
+Coerce any type to http middleware</pre><a href="https://janetdocs.com/http/middleware">Community Examples</a></div><hr><div class="binding"><span id="http/query-string-grammar" class="binding-sym">http/query-string-grammar</span> <span class="binding-type">core/peg</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L85">source</a></span> <pre class="binding-text">Grammar that parses a query string (sans url path and ? character) and returns a table.</pre><a href="https://janetdocs.com/http/query-string-grammar">Community Examples</a></div><hr><div class="binding"><span id="http/read-body" class="binding-sym">http/read-body</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L249">source</a></span> <pre class="binding-text">(read-body req)
+
+Given a request, read the HTTP body from the connection. Returns the body as a buffer. If the request has no body, returns nil.</pre><a href="https://janetdocs.com/http/read-body">Community Examples</a></div><hr><div class="binding"><span id="http/read-request" class="binding-sym">http/read-request</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L96">source</a></span> <pre class="binding-text">(read-request conn buf &amp;opt no-query)
+
+Read an HTTP request header from a connection. Returns a table with the following keys: * `:headers` - table mapping header names to header values. Header names are lowercase. * `:connection` - the connection stream for the header. * `:buffer` - the buffer instance that may contain extra bytes. * `:head-size` - the number of bytes used by the header. * `:method` - the HTTP method used. * `:path` - the path of the resource requested. The following keys are also present, but omitted if the user passes a truthy parameter to `no-query`. * `:route` - path of the resource requested without query string. * `:query-string` - segment of HTTP path after first ? character. * `:query` - the query string parsed into a table. Supports a single string value     for every string key, and any query parameters that aren't given a value are mapped to true.  Note that data is read in chunks and any data after the header terminator is  stored in `:buffer.`</pre><a href="https://janetdocs.com/http/read-request">Community Examples</a></div><hr><div class="binding"><span id="http/read-response" class="binding-sym">http/read-response</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L131">source</a></span> <pre class="binding-text">(read-response conn buf)
+
+Read an HTTP response header from a connection. Returns a table with the following keys: * `:headers` - table mapping header names to header values. Header names are lowercase. * `:connection` - the connection stream for the header. * `:buffer` - the buffer instance that may contain extra bytes. * `:head-size` - the number of bytes used by the header. * `:status` - the HTTP status code. * `:message` - the HTTP status message. Note that data is read in chunks and any data after the header terminator is stored in `:buffer.`</pre><a href="https://janetdocs.com/http/read-response">Community Examples</a></div><hr><div class="binding"><span id="http/request" class="binding-sym">http/request</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L463">source</a></span> <pre class="binding-text">(request method url &amp;keys {:headers headers :body body})
+
+Make an HTTP request to a server. Returns a table containing response information. * `:head-size` - number of bytes in the http header * `:headers` - table mapping header names to header values. Header names are lowercase. * `:connection` - the connection stream for the header. * `:buffer` - the buffer instance that may contain extra bytes. * `:status` - HTTP status code as an integer. * `:message` - HTTP status message. * `:body` - Bytes of the response body.</pre><a href="https://janetdocs.com/http/request">Community Examples</a></div><hr><div class="binding"><span id="http/request-peg" class="binding-sym">http/request-peg</span> <span class="binding-type">core/peg</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L32">source</a></span> <pre class="binding-text">PEG for parsing HTTP requests</pre><a href="https://janetdocs.com/http/request-peg">Community Examples</a></div><hr><div class="binding"><span id="http/response-peg" class="binding-sym">http/response-peg</span> <span class="binding-type">core/peg</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L39">source</a></span> <pre class="binding-text">PEG for parsing HTTP responses</pre><a href="https://janetdocs.com/http/response-peg">Community Examples</a></div><hr><div class="binding"><span id="http/router" class="binding-sym">http/router</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L350">source</a></span> <pre class="binding-text">(router routes)
+
+Creates a router middleware. A router will dispatch to different routes based on the URL path.</pre><a href="https://janetdocs.com/http/router">Community Examples</a></div><hr><div class="binding"><span id="http/send-response" class="binding-sym">http/send-response</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L310">source</a></span> <pre class="binding-text">(send-response conn response &amp;opt buf)
+
+Send an HTTP response over a connection. Will automatically use chunked encoding if body is not a byte sequence. `response` should be a table with the following keys: * `:headers` - optional headers to write * `:status` - integer status code to write * `:body` - optional byte sequence or iterable (for chunked body) for returning contents. The iterable can be lazy, i.e. for streaming    data.</pre><a href="https://janetdocs.com/http/send-response">Community Examples</a></div><hr><div class="binding"><span id="http/server" class="binding-sym">http/server</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L434">source</a></span> <pre class="binding-text">(server handler &amp;opt host port)
+
+Makes a simple http server. By default it binds to 0.0.0.0:8000, returns a new server stream. Simply wraps http/server-handler with a net/server.</pre><a href="https://janetdocs.com/http/server">Community Examples</a></div><hr><div class="binding"><span id="http/server-handler" class="binding-sym">http/server-handler</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L400">source</a></span> <pre class="binding-text">(server-handler conn handler)
+
+A simple connection handler for an HTTP server. When a connection is accepted. Call this with a handler function to handle the connect. The handler will be called with one argument, the request table, which will contain the following keys: * `:head-size` - number of bytes in the http header. * `:headers` - table mapping header names to header values. * `:connection` - the connection stream for the header. * `:buffer` - the buffer instance that may contain extra bytes. * `:path` - HTTP path. * `:method` - HTTP method, as a string.</pre><a href="https://janetdocs.com/http/server-handler">Community Examples</a></div><hr><div class="binding"><span id="http/status-messages" class="binding-sym">http/status-messages</span> <span class="binding-type">struct</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L145">source</a></span> <pre class="binding-text">Mapping of HTTP status codes to their status message.</pre><a href="https://janetdocs.com/http/status-messages">Community Examples</a></div><hr><div class="binding"><span id="http/url-grammar" class="binding-sym">http/url-grammar</span> <span class="binding-type">core/peg</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/d02df68bc462e63ea7a7151ac7f21e478d23666e//spork/http.janet#L458">source</a></span> <pre class="binding-text">Grammar to parse a URL into domain, port, and path triplet. Only supports the http:// protocol.</pre><a href="https://janetdocs.com/http/url-grammar">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="htmlgen.html"><span class="prevnext-text">HTML Generation</span></a></span>
+          <span class="next"><a href="httpf.html"><span class="prevnext-text">HTTP Framework</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on September 17, 2023 at 20:43:42 (UTC) with Janet 1.31.0-4e5889e</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

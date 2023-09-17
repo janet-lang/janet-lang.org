@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Embedding</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Embedding" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/jpm.html">jpm</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li><li><span><a href="../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="index.html">C API</a></span><ul><li><span><a href="wrapping.html">Wrapping Types</a></span></li><li><span class="selected"><a href="embedding.html">Embedding</a></span></li><li><span><a href="configuration.html">Configuration</a></span></li><li><span><a href="array.html">Array C API</a></span></li><li><span><a href="buffer.html">Buffer C API</a></span></li><li><span><a href="table.html">Table C API</a></span></li><li><span><a href="fiber.html">Fiber C API</a></span></li><li><span><a href="memory-model.html">Memory Model</a></span></li><li><span><a href="writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.31.0-4e5889e Documentation<br>(Other Versions:
+          
+          <a href="../../1.29.1/capi/embedding.html">1.29.1</a>
+          
+          <a href="../../1.28.0/capi/embedding.html">1.28.0</a>
+          
+          <a href="../../1.27.0/capi/embedding.html">1.27.0</a>
+          
+          <a href="../../1.26.0/capi/embedding.html">1.26.0</a>
+          
+          <a href="../../1.25.1/capi/embedding.html">1.25.1</a>
+          
+          <a href="../../1.24.0/capi/embedding.html">1.24.0</a>
+          
+          <a href="../../1.23.0/capi/embedding.html">1.23.0</a>
+          
+          <a href="../../1.22.0/capi/embedding.html">1.22.0</a>
+          
+          <a href="../../1.21.0/capi/embedding.html">1.21.0</a>
+          
+          <a href="../../1.20.0/capi/embedding.html">1.20.0</a>
+          
+          <a href="../../1.19.0/capi/embedding.html">1.19.0</a>
+          
+          <a href="../../1.18.1/capi/embedding.html">1.18.1</a>
+          
+          <a href="../../1.17.1/capi/embedding.html">1.17.1</a>
+          
+          <a href="../../1.16.1/capi/embedding.html">1.16.1</a>
+          
+          <a href="../../1.15.0/capi/embedding.html">1.15.0</a>
+          
+          <a href="../../1.13.1/capi/embedding.html">1.13.1</a>
+          
+          <a href="../../1.12.2/capi/embedding.html">1.12.2</a>
+          
+          <a href="../../1.11.1/capi/embedding.html">1.11.1</a>
+          
+          <a href="../../1.10.1/capi/embedding.html">1.10.1</a>
+          
+          <a href="../../1.9.1/capi/embedding.html">1.9.1</a>
+          
+          <a href="../../1.8.1/capi/embedding.html">1.8.1</a>
+          
+          <a href="../../1.7.0/capi/embedding.html">1.7.0</a>
+          
+          <a href="../../1.6.0/capi/embedding.html">1.6.0</a>
+          
+          <a href="../../1.5.1/capi/embedding.html">1.5.1</a>
+          
+          <a href="../../1.5.0/capi/embedding.html">1.5.0</a>
+          
+          <a href="../../1.4.0/capi/embedding.html">1.4.0</a>
+          
+          <a href="../../1.3.1/capi/embedding.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Embedding</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="wrapping.html"><span class="prevnext-text">Wrapping Types</span></a></span>
+
+          <span class="next"><a href="configuration.html"><span class="prevnext-text">Configuration</span></a></span>
+        </div>
+        
+
+<p>Janet can be embedded in a host program, usually written in C or C++, in
+several ways. The easiest way is to use the Janet's amalgamated build, which
+is a single giant C source file that can be copied into the host program's source
+tree. This method has many upsides, including simplicity and stability. You can
+also link to <code class="mendoza-code">libjanet.so</code> to include Janet as shared object.
+</p>
+<h2 id="Clients">Clients
+</h2>
+<p>In the context of embedding Janet in a program, we can call
+the larger program a client which usually uses the Janet
+library to run Janet source code. Most Janet clients have a number
+of things in common, especially some boilerplate required to get Janet code running.
+</p>
+<p>The simplest Janet client will need to initialize the VM, load the
+core environment, run some Janet code, and then deinitialize the environent. A simple
+example program that does this is below.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-line">#include &lt;janet.h&gt;</span>
+
+<span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">main</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">char</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">[</span><span class="mdzsyn-operator">]</span><span class="mdzsyn-operator">)</span> <span class="mdzsyn-operator">{</span>
+    <span class="mdzsyn-comment">// Initialize the virtual machine. Do this before any calls to Janet functions.
+</span>    <span class="mdzsyn-identifier">janet_init</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+
+    <span class="mdzsyn-comment">// Get the core janet environment. This contains all of the C functions in the core
+</span>    <span class="mdzsyn-comment">// as well as the code in src/boot/boot.janet.
+</span>    <span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">env</span> <span class="mdzsyn-operator">=</span> <span class="mdzsyn-identifier">janet_core_env</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-constant">NULL</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+
+    <span class="mdzsyn-comment">// One of several ways to begin the Janet vm.
+</span>    <span class="mdzsyn-identifier">janet_dostring</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">env</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-string">"(print `hello, world!`)"</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-string">"main"</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-constant">NULL</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+
+    <span class="mdzsyn-comment">// Use this to free all resources allocated by Janet.
+</span>    <span class="mdzsyn-identifier">janet_deinit</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span>
+    <span class="mdzsyn-keyword">return</span> <span class="mdzsyn-identifier">0</span><span class="mdzsyn-operator">;</span>
+<span class="mdzsyn-operator">}</span></code></pre><h2 id="Basic-Janet-Functions">Basic Janet Functions
+</h2>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">janet_init</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Use this function to initialize global Janet state. This must be called once
+per thread if using Janet in a multithreaded environment, as all Janet global
+state is thread local by default.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JANET_API</span> <span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_deinit</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-type">void</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Call this function to free all memory and resources managed by Janet.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">janet_core_env</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">replacements</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Use this function to get the core environment for the Janet language. Replacements
+is an optional table that can be used to override some of the default bindings
+in the core environment. Usually, set to NULL.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">janet_dobytes</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">env</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">uint8_t</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">bytes</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">len</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">char</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">sourcePath</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">out</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Use this function to compile and run some Janet source code from C. If you plan on running the code
+multiple times, there are more efficient options. However, for code that will only run once, this
+is a useful function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-type">int</span> <span class="mdzsyn-identifier">janet_dostring</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetTable</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">env</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">char</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">str</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-type">char</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">sourcePath</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">out</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Similar to <code class="mendoza-code">janet_dobytes</code>, runs a null-terminated C string of Janet source code.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JanetSignal</span> <span class="mdzsyn-identifier">janet_continue</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">fiber</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">in</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">out</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Resumes a new or suspended fiber. Returns a signal that corresponds to the status
+of the fiber after execution, and places the return/signal value in out. When
+resuming a fiber, the value to resume with should be in the argument in, which
+corresponds to the second argument to the Janet <code class="mendoza-code">resume</code> function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">JanetSignal</span> <span class="mdzsyn-identifier">janet_pcall</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">fun</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">out</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">f</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Invoke a function in a protected manner, catching any panics raised. Returns the resulting status
+code, as well as placing the return value in <code class="mendoza-code">*out</code>. The fiber pointer f is a pointer
+to a fiber pointer will contain the fiber used to run the function fun. If f is NULL, a new
+fiber will be created. Otherwise, Janet will use the fiber pointed to by f to run fun.
+</p>
+<p>If no panics are raised, will return <code class="mendoza-code">JANET_SIGNAL_OK</code>. If an error is raised, will return
+<code class="mendoza-code">JANET_SIGNAL_ERROR</code>. Other signals will be returned as expected.
+</p>
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">janet_call</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFunction</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">fun</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-type">int32_t</span> <span class="mdzsyn-identifier">argc</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-keyword">const</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">argv</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Make a simple, re-entrant call back into the Janet interpreter from C. Try to
+put mostly simple, short running logic here as this suspends the garbage collector
+for the duration of the call. Functions called this way also must either return or error.
+Other signals will be coerced into an error.
+</p>
+
+<pre class="mendoza-codeblock"><code data-language="c"><span class="mdzsyn-type">void</span> <span class="mdzsyn-identifier">janet_stacktrace</span><span class="mdzsyn-operator">(</span><span class="mdzsyn-identifier">JanetFiber</span> <span class="mdzsyn-operator">*</span><span class="mdzsyn-identifier">fiber</span><span class="mdzsyn-operator">,</span> <span class="mdzsyn-identifier">Janet</span> <span class="mdzsyn-identifier">err</span><span class="mdzsyn-operator">)</span><span class="mdzsyn-operator">;</span></code></pre><p>Print a janet stacktrace for the given fiber to stderr, or whatever is bound
+to the <code class="mendoza-code">:err</code> dynamic binding on the current fiber. You also must supply the
+return value or error message raised, as that is not tracked by the fiber itself.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="wrapping.html"><span class="prevnext-text">Wrapping Types</span></a></span>
+          <span class="next"><a href="configuration.html"><span class="prevnext-text">Configuration</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on September 17, 2023 at 20:43:42 (UTC) with Janet 1.31.0-4e5889e</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

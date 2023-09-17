@@ -1,0 +1,289 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Now apply relevant style */
+
+body {
+    font-size: 1rem;
+    font-family: sans-serif;
+    line-height: 1.4;
+    color: #222
+}
+
+.content-wrapper {
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+@media (max-width: 1000px) {
+    .content-wrapper {
+        max-width: 600px;
+    }
+}
+
+ol, ul {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 45px;
+    margin-right: 20px;
+}
+
+p {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 1em;
+}
+
+a {
+    color: #2674d3;
+}
+
+h1, h2, h3, h4 {
+    margin-left: 15px;
+    margin-right: 15px;
+    font-family: 'Dosis','Helvetica', sans-serif;
+    color: #111;
+}
+
+h1 {
+    font-size: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
+h2 {
+    font-size: 2rem;
+    padding-top: 32px;
+    padding-bottom: 24px;
+}
+h3 {
+    color: #333;
+    font-size: 1.6rem;
+    padding-top: 18px;
+    padding-bottom: 16px;
+}
+h4 {
+    color: #888;
+    font-size: 1rem;
+    padding-top: 8px;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 700px) {
+    h1 {
+        font-size: 2.5rem;
+        padding-top: 2.5rem;
+        padding-bottom: 1.5rem;
+    }
+    h2 {
+        font-size: 1.8rem;
+        padding-top: 28px;
+        padding-bottom: 20px;
+    }
+    h3 {
+        font-size: 1.5rem;
+        padding-top: 16px;
+        padding-bottom: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+        padding-top: 24px;
+        padding-bottom: 18px;
+    }
+    h3 {
+        font-size: 1.4rem;
+        padding-top: 14px;
+        padding-bottom: 12px;
+    }
+}
+
+hr {
+    height: 2px;
+    background: linear-gradient(to left, #09a5b8, #076591);
+    border: none;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* Tables */
+
+table {
+    width: calc(100% - 40px);
+    margin: 25px 20px;
+}
+
+table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+}
+
+table tr th {
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    text-align: left;
+    margin: 0;
+    padding: 8px 15px;
+}
+
+table tr td {
+    border: 1px solid #cccccc;
+    text-align: left;
+    margin: 0;
+    padding: 8px 15px;
+}
+
+table tr th :first-child, table tr td :first-child {
+    margin-top: 0;
+}
+
+table tr th :last-child, table tr td :last-child {
+    margin-bottom: 0;
+}
+
+/* Small devices */
+@media (max-width: 600px) {
+    table tr td {
+        padding: 8px 8px;
+    }
+}
+
+/* Janet syntax highlighting */
+
+/* Footer */
+
+footer {
+    margin: 32px auto;
+    margin-top: 100px;
+    text-align: center;
+    color: #888;
+}
+
+.gentag {
+    font-size: 0.8em;
+}
+
+.see-problem {
+    font-size: 0.8em;
+}
+
+/* Carousel */
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.carousel a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4em;
+    margin: 5px 5px;
+    padding: 10px 15px;
+    background-color: #ffffff1a;
+    border-radius: 10px;
+    border: solid 1.5px white;
+}
+
+.carousel a:hover {
+    background-color: #ffffff30;
+}
+
+/* Syntax highlighting */
+
+pre {
+    font-family: 'Inconsolata', monospace;
+    white-space: pre-wrap;
+}
+
+code {
+    font-family: 'Inconsolata', monospace;
+}
+
+.mendoza-code {
+    padding: 0 5px;
+    background: #EEE;
+}
+
+.mendoza-codeblock {
+    color: white;
+    padding: 14px;
+    background: #333;
+    border-radius: 5px;
+    margin: 15px;
+    line-height: 1.2;
+}
+
+/* Based on Sublime Text's Monokai theme */
+
+.mdzsyn-comment {color: #B5B19e;}
+.mdzsyn-operator {color: #ae81ff;}
+.mdzsyn-number {color: #ae81ff;}
+.mdzsyn-keyword {color: #ff97bc;}
+.mdzsyn-string {color: #e6db74;}
+.mdzsyn-identifier {color: #a6e22e;}
+.mdzsyn-symbol {color: #afffff;}
+.mdzsyn-coresym {color: #ffbc6d;}
+
+.cm-s-monokai span.cm-bracket {color: #f8f8f2;}
+.cm-s-monokai span.cm-tag {color: #f92672;}
+.cm-s-monokai span.cm-link {color: #ae81ff;}
+.cm-s-monokai span.cm-error {background: #f92672; color: #f8f8f0;}
+.cm-s-monokai span.cm-property, .cm-s-monokai span.cm-attribute {color: #a6e22e;}
+.cm-s-monokai .CodeMirror-activeline-background {background: #373831 !important;}
+.cm-s-monokai .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}

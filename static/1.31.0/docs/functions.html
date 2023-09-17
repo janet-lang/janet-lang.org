@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Functions</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Functions" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span class="selected"><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.31.0-4e5889e Documentation<br>(Other Versions:
+          
+          <a href="../../1.29.1/docs/functions.html">1.29.1</a>
+          
+          <a href="../../1.28.0/docs/functions.html">1.28.0</a>
+          
+          <a href="../../1.27.0/docs/functions.html">1.27.0</a>
+          
+          <a href="../../1.26.0/docs/functions.html">1.26.0</a>
+          
+          <a href="../../1.25.1/docs/functions.html">1.25.1</a>
+          
+          <a href="../../1.24.0/docs/functions.html">1.24.0</a>
+          
+          <a href="../../1.23.0/docs/functions.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/functions.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/functions.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/functions.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/functions.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/functions.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/functions.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/functions.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/functions.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/functions.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/functions.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/functions.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/functions.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/functions.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/functions.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/functions.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/functions.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/functions.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/functions.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/functions.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/functions.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Functions</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="flow.html"><span class="prevnext-text">Flow</span></a></span>
+
+          <span class="next"><a href="strings.html"><span class="prevnext-text">Strings, Keywords, and Symbols</span></a></span>
+        </div>
+        
+
+<p>Janet is a functional language - that means that one of the basic building
+blocks of your program will be defining functions (the other is using data
+structures). Because Janet is a Lisp-like language, functions are values just
+like numbers or strings - they can be passed around and created as needed.
+</p>
+<p>Functions can be defined with the <code class="mendoza-code">defn</code> macro, like so:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">triangle-area</span>
+ <span class="mdzsyn-string">"Calculates the area of a triangle."</span>
+ [<span class="mdzsyn-symbol">base</span> <span class="mdzsyn-symbol">height</span>]
+ (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"calculating area of a triangle..."</span>)
+ (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-symbol">base</span> <span class="mdzsyn-symbol">height</span> <span class="mdzsyn-number">0.5</span>))</code></pre><p>A function defined with <code class="mendoza-code">defn</code> consists of a name, a number of optional
+flags for <code class="mendoza-code">def</code>, and finally a function body. The example above is named
+triangle-area and takes two parameters named base and height. The body of the
+function will print a message and then evaluate to the area of the triangle.
+</p>
+<p>Once a function like the above one is defined, the programmer can use the
+<code class="mendoza-code">triangle-area</code> function just like any other, say <code class="mendoza-code">print</code> or <code class="mendoza-code">+</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Prints "calculating area of a triangle..." and then "25"</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-symbol">triangle-area</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">10</span>))</code></pre><p>Note that when nesting function calls in other function calls like above (a call
+to <code class="mendoza-code">triangle-area</code> is nested inside a call to <code class="mendoza-code">print</code>), the inner
+function calls are evaluated first. Additionally, arguments to a function call
+are evaluated in order, from first argument to last argument).
+</p>
+<p>Because functions are first-class values like numbers or strings, they can be
+passed as arguments to other functions as well.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-symbol">triangle-area</span>)</code></pre><p>This prints the location in memory of the function <code class="mendoza-code">triangle-area</code>.
+</p>
+<p>Functions don't need to have names. The <code class="mendoza-code">fn</code> keyword can be used to
+introduce function literals without binding them to a symbol.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Evaluates to 40</span>
+((<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>] (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>)) <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">20</span>)
+<span class="mdzsyn-comment"># Also evaluates to 40</span>
+((<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span> <span class="mdzsyn-symbol">&amp;</span>] (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>)) <span class="mdzsyn-number">10</span> <span class="mdzsyn-number">20</span>)
+
+<span class="mdzsyn-comment"># Will throw an error about the wrong arity</span>
+((<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">x</span>] <span class="mdzsyn-symbol">x</span>) <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>)
+<span class="mdzsyn-comment"># Will not throw an error about the wrong arity</span>
+((<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">&amp;</span>] <span class="mdzsyn-symbol">x</span>) <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span>)</code></pre><p>The first expression creates an anonymous function that adds twice the first
+argument to the second, and then calls that function with arguments 10 and 20.
+This will return (10 + 10 + 20) = 40.
+</p>
+<p>There is a common macro <code class="mendoza-code">defn</code> that can be used for creating functions and
+immediately binding them to a name. <code class="mendoza-code">defn</code> works as expected at both the
+top level and inside another form. There is also the corresponding macro
+<code class="mendoza-code">defmacro</code> that does the same kind of wrapping for macros.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">myfun</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>]
+ (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>))
+
+<span class="mdzsyn-comment"># You can think of defn as a shorthand for def and fn together</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">myfun-same</span> (<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>]
+            (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">y</span>)))
+
+(<span class="mdzsyn-symbol">myfun</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>) <span class="mdzsyn-comment"># -&gt; 10</span></code></pre><p>Janet has many macros provided for you (and you can write your own).  Macros are
+just functions that take your source code and transform it into some other
+source code, usually automating some repetitive pattern for you.
+</p>
+<h2 id="Optional-arguments">Optional arguments
+</h2>
+<p>Most Janet functions will raise an error at runtime if not passed exactly the
+right number of arguments.  Sometimes, you want to define a function with
+optional arguments, where the arguments take a default value if not supplied by
+the caller. Janet has support for this via the <code class="mendoza-code">&amp;opt</code> symbol in parameter
+lists, where all parameters after <code class="mendoza-code">&amp;opt</code> are <code class="mendoza-code">nil</code> if not supplied.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">my-opt-function</span>
+ <span class="mdzsyn-string">"A dumb function with optional arguments."</span>
+ [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">c</span> <span class="mdzsyn-symbol">&amp;opt</span> <span class="mdzsyn-symbol">d</span> <span class="mdzsyn-symbol">e</span> <span class="mdzsyn-symbol">f</span>]
+ (<span class="mdzsyn-coresym">default</span> <span class="mdzsyn-symbol">d</span> <span class="mdzsyn-number">10</span>)
+ (<span class="mdzsyn-coresym">default</span> <span class="mdzsyn-symbol">e</span> <span class="mdzsyn-number">11</span>)
+ (<span class="mdzsyn-coresym">default</span> <span class="mdzsyn-symbol">f</span> <span class="mdzsyn-number">12</span>)
+ (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-symbol">c</span> <span class="mdzsyn-symbol">d</span> <span class="mdzsyn-symbol">e</span> <span class="mdzsyn-symbol">f</span>))</code></pre><p>The <code class="mendoza-code">default</code> macro is a useful macro for setting default values for
+parameters. If a parameter is <code class="mendoza-code">nil</code>, <code class="mendoza-code">default</code> will redefine it to a
+default value.
+</p>
+<h2 id="Variadic-functions">Variadic functions
+</h2>
+<p>Janet also provides first-class support for variadic functions. Variadic
+functions can take any number of parameters, and gather them up into a tuple. To
+define a variadic function, use the <code class="mendoza-code">&amp;</code> symbol as the second to last item
+of the parameter list. Parameters defined before the last variadic argument are
+not optional, unless specified as so with the <code class="mendoza-code">&amp;opt</code> symbol.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">my-adder</span>
+ <span class="mdzsyn-string">"Adds numbers in a dubious way."</span>
+ [<span class="mdzsyn-symbol">&amp;</span> <span class="mdzsyn-symbol">xs</span>]
+ (<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">accum</span> <span class="mdzsyn-number">0</span>)
+ (<span class="mdzsyn-coresym">each</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">xs</span>
+  (<span class="mdzsyn-coresym">+=</span> <span class="mdzsyn-symbol">accum</span> (<span class="mdzsyn-coresym">-</span> (<span class="mdzsyn-coresym">*</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-symbol">x</span>) <span class="mdzsyn-symbol">x</span>)))
+ <span class="mdzsyn-symbol">accum</span>)
+
+(<span class="mdzsyn-symbol">my-adder</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-comment"># -&gt; 6</span></code></pre><h2 id="Ignoring-extra-arguments">Ignoring extra arguments
+</h2>
+<p>Sometimes you may want to have a function that can take a number of extra
+arguments but not use them. This happens because a function may be part of an
+interface, but the function itself doesn't need those arguments. You can write a
+function that will simply drop extra parameters by adding <code class="mendoza-code">&amp;</code> as the last
+parameter in the function.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">ignore-extra</span>
+ [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">&amp;</span>]
+ (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">1</span>))
+
+(<span class="mdzsyn-symbol">ignore-extra</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span>) <span class="mdzsyn-comment"># -&gt; 2</span></code></pre><h2 id="Keyword-style-arguments">Keyword-style arguments
+</h2>
+<p>Sometimes, you want a function to have many arguments, and calling such a
+function can get confusing without naming the arguments in the call.  One
+solution to this problem is passing a table or struct with all of the arguments
+you want to use. This is in general a good approach, as now your original
+arguments can be identified by the keys in the struct.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">make-recipe</span>
+  <span class="mdzsyn-string">"Create some kind of cake recipe..."</span>
+  [<span class="mdzsyn-symbol">args</span>]
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">dry</span> [(<span class="mdzsyn-symbol">args</span> <span class="mdzsyn-keyword">:flour</span>) (<span class="mdzsyn-symbol">args</span> <span class="mdzsyn-keyword">:sugar</span>) (<span class="mdzsyn-symbol">args</span> <span class="mdzsyn-keyword">:baking-soda</span>)])
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">wet</span> [(<span class="mdzsyn-symbol">args</span> <span class="mdzsyn-keyword">:water</span>) (<span class="mdzsyn-symbol">args</span> <span class="mdzsyn-keyword">:eggs</span>) (<span class="mdzsyn-symbol">args</span> <span class="mdzsyn-keyword">:vanilla-extract</span>)])
+  {<span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"underspecified-cake"</span> <span class="mdzsyn-keyword">:wet</span> <span class="mdzsyn-symbol">wet</span> <span class="mdzsyn-keyword">:dry</span> <span class="mdzsyn-symbol">dry</span>})
+
+<span class="mdzsyn-comment"># Call with an argument struct</span>
+(<span class="mdzsyn-symbol">make-recipe</span>
+ {<span class="mdzsyn-keyword">:flour</span> <span class="mdzsyn-number">1</span>
+  <span class="mdzsyn-keyword">:sugar</span> <span class="mdzsyn-number">1</span>
+  <span class="mdzsyn-keyword">:baking-soda</span> <span class="mdzsyn-number">0.5</span>
+  <span class="mdzsyn-keyword">:water</span> <span class="mdzsyn-number">2</span>
+  <span class="mdzsyn-keyword">:eggs</span> <span class="mdzsyn-number">2</span>
+  <span class="mdzsyn-keyword">:vanilla-extract</span> <span class="mdzsyn-number">0.5</span>})</code></pre><p>This is often good enough, but there are a couple downsides. The first is that
+our semantic arguments are not documented, the docstring will just have a single
+argument "args" which is not helpful. The docstring should have some indication
+of the keys that we expect in the struct.  We also need to write out an extra
+pair of brackets for the struct - this isn't a huge deal, but it would be nice
+if we didn't need to write this explicitly.
+</p>
+<p>We can solve this first problem by using destructuring in the argument.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">make-recipe-2</span>
+  <span class="mdzsyn-string">"Create some kind of cake recipe with destructuring..."</span>
+ [{<span class="mdzsyn-keyword">:flour</span> <span class="mdzsyn-symbol">flour</span>
+   <span class="mdzsyn-keyword">:sugar</span> <span class="mdzsyn-symbol">sugar</span>
+   <span class="mdzsyn-keyword">:baking-soda</span> <span class="mdzsyn-symbol">soda</span>
+   <span class="mdzsyn-keyword">:water</span> <span class="mdzsyn-symbol">water</span>
+   <span class="mdzsyn-keyword">:eggs</span> <span class="mdzsyn-symbol">eggs</span>
+   <span class="mdzsyn-keyword">:vanilla-extract</span> <span class="mdzsyn-symbol">vanilla</span>}]
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">dry</span> [<span class="mdzsyn-symbol">flour</span> <span class="mdzsyn-symbol">sugar</span> <span class="mdzsyn-symbol">soda</span>])
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">wet</span> [<span class="mdzsyn-symbol">water</span> <span class="mdzsyn-symbol">eggs</span> <span class="mdzsyn-symbol">vanilla</span>])
+ {<span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"underspecified-cake"</span> <span class="mdzsyn-keyword">:wet</span> <span class="mdzsyn-symbol">wet</span> <span class="mdzsyn-keyword">:dry</span> <span class="mdzsyn-symbol">dry</span>})
+
+<span class="mdzsyn-comment"># We can call the function in the same manner as before.</span>
+(<span class="mdzsyn-symbol">make-recipe-2</span>
+ {<span class="mdzsyn-keyword">:flour</span> <span class="mdzsyn-number">1</span>
+  <span class="mdzsyn-keyword">:sugar</span> <span class="mdzsyn-number">1</span>
+  <span class="mdzsyn-keyword">:baking-soda</span> <span class="mdzsyn-number">0.5</span>
+  <span class="mdzsyn-keyword">:water</span> <span class="mdzsyn-number">2</span>
+  <span class="mdzsyn-keyword">:eggs</span> <span class="mdzsyn-number">2</span>
+  <span class="mdzsyn-keyword">:vanilla-extract</span> <span class="mdzsyn-number">0.5</span>})</code></pre><p>The docstring of the improved function will contain a list of arguments that our
+function takes.  To fix the second issue, we can use the &amp;keys symbol in a
+function parameter list to automatically create our big argument struct for use
+on invocation.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">make-recipe-3</span>
+  <span class="mdzsyn-string">"Create some kind of recipe using &amp;keys..."</span>
+  [<span class="mdzsyn-symbol">&amp;keys</span> {<span class="mdzsyn-keyword">:flour</span> <span class="mdzsyn-symbol">flour</span>
+          <span class="mdzsyn-keyword">:sugar</span> <span class="mdzsyn-symbol">sugar</span>
+          <span class="mdzsyn-keyword">:baking-soda</span> <span class="mdzsyn-symbol">soda</span>
+          <span class="mdzsyn-keyword">:water</span> <span class="mdzsyn-symbol">water</span>
+          <span class="mdzsyn-keyword">:eggs</span> <span class="mdzsyn-symbol">eggs</span>
+          <span class="mdzsyn-keyword">:vanilla-extract</span> <span class="mdzsyn-symbol">vanilla</span>}]
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">dry</span> [<span class="mdzsyn-symbol">flour</span> <span class="mdzsyn-symbol">sugar</span> <span class="mdzsyn-symbol">soda</span>])
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">wet</span> [<span class="mdzsyn-symbol">water</span> <span class="mdzsyn-symbol">eggs</span> <span class="mdzsyn-symbol">vanilla</span>])
+  {<span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"underspecified-cake"</span> <span class="mdzsyn-keyword">:wet</span> <span class="mdzsyn-symbol">wet</span> <span class="mdzsyn-keyword">:dry</span> <span class="mdzsyn-symbol">dry</span>})
+
+<span class="mdzsyn-comment"># Calling this function is a bit different now - no struct</span>
+(<span class="mdzsyn-symbol">make-recipe-3</span>
+  <span class="mdzsyn-keyword">:flour</span> <span class="mdzsyn-number">1</span>
+  <span class="mdzsyn-keyword">:sugar</span> <span class="mdzsyn-number">1</span>
+  <span class="mdzsyn-keyword">:baking-soda</span> <span class="mdzsyn-number">0.5</span>
+  <span class="mdzsyn-keyword">:water</span> <span class="mdzsyn-number">2</span>
+  <span class="mdzsyn-keyword">:eggs</span> <span class="mdzsyn-number">2</span>
+  <span class="mdzsyn-keyword">:vanilla-extract</span> <span class="mdzsyn-number">0.5</span>)</code></pre><p>Usage of this last variant looks cleaner than the previous two recipe-making
+functions, but there is a caveat. Having all of the arguments packaged as a
+struct is often useful, as the struct can be passed around and threaded through
+an application efficiently. Functions that require many arguments often pass
+those arguments to subroutines, so in practice this issue is quite common. The
+<code class="mendoza-code">&amp;keys</code> syntax is therefore most useful where terseness and visual clarity
+is more important.
+</p>
+<p>It is not difficult to convert between the two calling styles, if need be. To
+pass a struct to a function that expects <code class="mendoza-code">&amp;keys</code>-style arguments, the
+<code class="mendoza-code">kvs</code> function works well. To convert arguments in the other direction,
+from <code class="mendoza-code">&amp;keys</code>-style to a single struct argument, is trivial - just wrap your
+arguments in curly brackets!
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">args</span>
+  {<span class="mdzsyn-keyword">:flour</span> <span class="mdzsyn-number">1</span>
+   <span class="mdzsyn-keyword">:sugar</span> <span class="mdzsyn-number">1</span>
+   <span class="mdzsyn-keyword">:baking-soda</span> <span class="mdzsyn-number">0.5</span>
+   <span class="mdzsyn-keyword">:water</span> <span class="mdzsyn-number">2</span>
+   <span class="mdzsyn-keyword">:eggs</span> <span class="mdzsyn-number">2</span>
+   <span class="mdzsyn-keyword">:vanilla-extract</span> <span class="mdzsyn-number">0.5</span>})
+
+<span class="mdzsyn-comment"># Turn struct into an array key, value, key, value, ... and splice into a call</span>
+(<span class="mdzsyn-symbol">make-recipe-3</span> ;(<span class="mdzsyn-coresym">kvs</span> <span class="mdzsyn-symbol">args</span>))</code></pre><h2 id="Optional-Flags">Optional Flags
+</h2>
+<p>As a matter of style, some Janet functions allow you to optionally
+pass in multiple flags from a given set, as a single argument. (A
+"set" in the generic sense --- Janet doesn't have a <code class="mendoza-code">set</code> type.)
+</p>
+<p>For example, if your <code class="mendoza-code">foo</code> function takes a string argument, and may
+also be passed zero or more flags from the set <code class="mendoza-code">:a</code>, <code class="mendoza-code">:b</code>,
+and <code class="mendoza-code">:c</code>, you could call <code class="mendoza-code">foo</code> like so:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">foo</span> <span class="mdzsyn-string">"hi"</span>)       <span class="mdzsyn-comment"># No flags passed.</span>
+(<span class="mdzsyn-symbol">foo</span> <span class="mdzsyn-string">"hi"</span> <span class="mdzsyn-keyword">:a</span>)    <span class="mdzsyn-comment"># Just the `:a` flag.</span>
+(<span class="mdzsyn-symbol">foo</span> <span class="mdzsyn-string">"hi"</span> <span class="mdzsyn-keyword">:ab</span>)   <span class="mdzsyn-comment"># The `:a` and `:b` flags.</span>
+(<span class="mdzsyn-symbol">foo</span> <span class="mdzsyn-string">"hi"</span> <span class="mdzsyn-keyword">:ba</span>)   <span class="mdzsyn-comment"># Same.</span>
+(<span class="mdzsyn-symbol">foo</span> <span class="mdzsyn-string">"hi"</span> <span class="mdzsyn-keyword">:cab</span>)  <span class="mdzsyn-comment"># All three flags specified.</span></code></pre><p>The pattern is similar to passing multiple flags to a command in
+the shell:
+</p>
+<pre class="mendoza-codeblock"><code>$ my-command -abc      # is like
+$ my-command -a -b -c</code></pre><p>but with Janet we're using <code class="mendoza-code">:</code> instead of <code class="mendoza-code">-</code>.
+</p>
+<p>An example of using optional flags in your own functions:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment">#!/usr/bin/env janet</span>
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">my-cool-string</span>
+  <span class="mdzsyn-string">``Decorates `some-str` with stars around it.
+
+  `flags` is set of flags; it is a keyword where each
+  character indicates a flag from this set:
+
+    * `:u` --- uppercase the string too.
+    * `:b` --- put braces around it as well.
+
+  Returns the decorated string.
+  ``</span>
+  [<span class="mdzsyn-symbol">some-str</span> <span class="mdzsyn-symbol">&amp;opt</span> <span class="mdzsyn-symbol">flags</span>]
+  (<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">u-flag-set</span> <span class="mdzsyn-constant">false</span>)
+  (<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">b-flag-set</span> <span class="mdzsyn-constant">false</span>)
+  (<span class="mdzsyn-coresym">when</span> <span class="mdzsyn-symbol">flags</span>
+    (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">u-flag-set</span> (<span class="mdzsyn-coresym">string/check-set</span> <span class="mdzsyn-symbol">flags</span> <span class="mdzsyn-keyword">:u</span>))
+    (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">b-flag-set</span> (<span class="mdzsyn-coresym">string/check-set</span> <span class="mdzsyn-symbol">flags</span> <span class="mdzsyn-keyword">:b</span>)))
+  (<span class="mdzsyn-coresym">let</span> [<span class="mdzsyn-symbol">s</span> (<span class="mdzsyn-coresym">string</span> <span class="mdzsyn-string">"*"</span> <span class="mdzsyn-symbol">some-str</span> <span class="mdzsyn-string">"*"</span>)
+        <span class="mdzsyn-symbol">s</span> (<span class="mdzsyn-coresym">if</span> <span class="mdzsyn-symbol">u-flag-set</span> (<span class="mdzsyn-coresym">string/ascii-upper</span> <span class="mdzsyn-symbol">s</span>) <span class="mdzsyn-symbol">s</span>)
+        <span class="mdzsyn-symbol">s</span> (<span class="mdzsyn-coresym">if</span> <span class="mdzsyn-symbol">b-flag-set</span> (<span class="mdzsyn-coresym">string</span> <span class="mdzsyn-string">"{"</span> <span class="mdzsyn-symbol">s</span> <span class="mdzsyn-string">"}"</span>)     <span class="mdzsyn-symbol">s</span>)]
+    <span class="mdzsyn-symbol">s</span>))
+
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-symbol">my-cool-string</span> <span class="mdzsyn-string">"I ♥ Janet"</span>))      <span class="mdzsyn-comment"># *I ♥ Janet*</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-symbol">my-cool-string</span> <span class="mdzsyn-string">"I ♥ Janet"</span> <span class="mdzsyn-keyword">:u</span>))   <span class="mdzsyn-comment"># *I ♥ JANET*</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-symbol">my-cool-string</span> <span class="mdzsyn-string">"I ♥ Janet"</span> <span class="mdzsyn-keyword">:b</span>))   <span class="mdzsyn-comment"># {*I ♥ Janet*}</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-symbol">my-cool-string</span> <span class="mdzsyn-string">"I ♥ Janet"</span> <span class="mdzsyn-keyword">:ub</span>))  <span class="mdzsyn-comment"># {*I ♥ JANET*}</span></code></pre><p>Built-in Janet functions that utilize this style include <code class="mendoza-code">file/open</code>,
+<code class="mendoza-code">fiber/new</code>, and <code class="mendoza-code">os/execute</code>.
+</p>
+<h2 id="Named-arguments">Named arguments
+</h2>
+<p>Starting in version 1.23.0, functions support named arguments. This is a more
+convenient syntax for keyword arguments. Functions with named arguments are
+implicitly variadic and will not reject badly named arguments. All symbols after
+the <code class="mendoza-code">&amp;named</code> symbol in the parameter list need to be passed to the function as arguments
+preceded by a keyword of the same name.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">named-fn</span>
+  [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">&amp;named</span> <span class="mdzsyn-symbol">person1</span> <span class="mdzsyn-symbol">person2</span>]
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"giving "</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-string">" to "</span> <span class="mdzsyn-symbol">person1</span>)
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"giving "</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-string">" to "</span> <span class="mdzsyn-symbol">person2</span>))
+
+(<span class="mdzsyn-symbol">named-fn</span> <span class="mdzsyn-string">"apple"</span> <span class="mdzsyn-keyword">:person1</span> <span class="mdzsyn-string">"bob"</span> <span class="mdzsyn-keyword">:person2</span> <span class="mdzsyn-string">"sally"</span>)</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="flow.html"><span class="prevnext-text">Flow</span></a></span>
+          <span class="next"><a href="strings.html"><span class="prevnext-text">Strings, Keywords, and Symbols</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on September 17, 2023 at 20:43:42 (UTC) with Janet 1.31.0-4e5889e</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

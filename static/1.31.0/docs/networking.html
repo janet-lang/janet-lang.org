@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Networking</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Networking" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="index.html">Documentation</a></span><ul><li><span><a href="syntax.html">Syntax and the Parser</a></span></li><li><span><a href="specials.html">Special Forms</a></span></li><li><span><a href="numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="comparison.html">Comparison Operators</a></span></li><li><span><a href="bindings.html">Bindings (def and var)</a></span></li><li><span><a href="flow.html">Flow</a></span></li><li><span><a href="functions.html">Functions</a></span></li><li><span><a href="strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="loop.html">Looping</a></span></li><li><span><a href="macros.html">Macros</a></span></li><li class="caret"><span><a href="data_structures/index.html">Data Structures</a></span><ul><li><span><a href="data_structures/arrays.html">Arrays</a></span></li><li><span><a href="data_structures/buffers.html">Buffers</a></span></li><li><span><a href="data_structures/tables.html">Tables</a></span></li><li><span><a href="data_structures/structs.html">Structs</a></span></li><li><span><a href="data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="fibers/index.html">Fibers</a></span><ul><li><span><a href="fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="modules.html">Modules</a></span></li><li><span><a href="object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="prototypes.html">Prototypes</a></span></li><li><span><a href="abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="event_loop.html">The Event Loop</a></span></li><li><span><a href="threads.html">Multithreading</a></span></li><li><span class="selected"><a href="networking.html">Networking</a></span></li><li><span><a href="documentation.html">Documentation</a></span></li><li><span><a href="jpm.html">jpm</a></span></li><li><span><a href="linting.html">Linting</a></span></li><li><span><a href="ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li class="caret"><span><a href="../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../api/jpm/rules.html">rules</a></span></li><li><span><a href="../api/jpm/cc.html">cc</a></span></li><li><span><a href="../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../api/jpm/cli.html">cli</a></span></li><li><span><a href="../api/jpm/commands.html">commands</a></span></li><li><span><a href="../api/jpm/config.html">config</a></span></li><li><span><a href="../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../api/jpm/pm.html">pm</a></span></li><li><span><a href="../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../api/spork/index.html">spork</a></span><ul><li><span><a href="../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../api/spork/base64.html">base64</a></span></li><li><span><a href="../api/spork/crc.html">crc</a></span></li><li><span><a href="../api/spork/cron.html">cron</a></span></li><li><span><a href="../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../api/spork/generators.html">generators</a></span></li><li><span><a href="../api/spork/getline.html">getline</a></span></li><li><span><a href="../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../api/spork/http.html">http</a></span></li><li><span><a href="../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../api/spork/json.html">json</a></span></li><li><span><a href="../api/spork/math.html">math</a></span></li><li><span><a href="../api/spork/misc.html">misc</a></span></li><li><span><a href="../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../api/spork/path.html">path</a></span></li><li><span><a href="../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../api/spork/regex.html">regex</a></span></li><li><span><a href="../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../api/spork/schema.html">schema</a></span></li><li><span><a href="../api/spork/sh.html">sh</a></span></li><li><span><a href="../api/spork/msg.html">msg</a></span></li><li><span><a href="../api/spork/test.html">test</a></span></li><li><span><a href="../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.31.0-4e5889e Documentation<br>(Other Versions:
+          
+          <a href="../../1.29.1/docs/networking.html">1.29.1</a>
+          
+          <a href="../../1.28.0/docs/networking.html">1.28.0</a>
+          
+          <a href="../../1.27.0/docs/networking.html">1.27.0</a>
+          
+          <a href="../../1.26.0/docs/networking.html">1.26.0</a>
+          
+          <a href="../../1.25.1/docs/networking.html">1.25.1</a>
+          
+          <a href="../../1.24.0/docs/networking.html">1.24.0</a>
+          
+          <a href="../../1.23.0/docs/networking.html">1.23.0</a>
+          
+          <a href="../../1.22.0/docs/networking.html">1.22.0</a>
+          
+          <a href="../../1.21.0/docs/networking.html">1.21.0</a>
+          
+          <a href="../../1.20.0/docs/networking.html">1.20.0</a>
+          
+          <a href="../../1.19.0/docs/networking.html">1.19.0</a>
+          
+          <a href="../../1.18.1/docs/networking.html">1.18.1</a>
+          
+          <a href="../../1.17.1/docs/networking.html">1.17.1</a>
+          
+          <a href="../../1.16.1/docs/networking.html">1.16.1</a>
+          
+          <a href="../../1.15.0/docs/networking.html">1.15.0</a>
+          
+          <a href="../../1.13.1/docs/networking.html">1.13.1</a>
+          
+          <a href="../../1.12.2/docs/networking.html">1.12.2</a>
+          
+          <a href="../../1.11.1/docs/networking.html">1.11.1</a>
+          
+          <a href="../../1.10.1/docs/networking.html">1.10.1</a>
+          
+          <a href="../../1.9.1/docs/networking.html">1.9.1</a>
+          
+          <a href="../../1.8.1/docs/networking.html">1.8.1</a>
+          
+          <a href="../../1.7.0/docs/networking.html">1.7.0</a>
+          
+          <a href="../../1.6.0/docs/networking.html">1.6.0</a>
+          
+          <a href="../../1.5.1/docs/networking.html">1.5.1</a>
+          
+          <a href="../../1.5.0/docs/networking.html">1.5.0</a>
+          
+          <a href="../../1.4.0/docs/networking.html">1.4.0</a>
+          
+          <a href="../../1.3.1/docs/networking.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Networking</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="threads.html"><span class="prevnext-text">Multithreading</span></a></span>
+
+          <span class="next"><a href="documentation.html"><span class="prevnext-text">Documentation</span></a></span>
+        </div>
+        
+
+<p>The internet is a huge part of our daily lives in the 21st century, and the
+situation is no different for programmers. Janet has basic
+support for connecting to the internet out of the box with the <code class="mendoza-code">net/</code> module.
+</p>
+<p>The <code class="mendoza-code">net/</code> module provides a socket-based networking interface
+that is portable, simple, and general. The net module provides both
+client and server abstractions for TCP sockets (streams), UDP
+(datagrams), IPv4, IPv6, DNS, and unix domain sockets on supported
+platforms.  All operations on sockets are non-blocking, so servers can
+handle multiple clients on a single thread.  For more general
+information on socket programming, see
+<a href="https://beej.us/guide/bgnet/html/">Beej's Guide to Network
+Programming</a>, which gives a thorough overview in C. There are also
+example programs in the example directory of the Janet source code
+which show how to create simple servers and clients.
+</p>
+<p>The <code class="mendoza-code">net/</code> module does not provide any protocol abstractions over sockets - this means
+no TLS and no HTTP out of the box. Such protocols need to be provided in third-party libraries.
+</p>
+<h2 id="Generic-Stream-Type">Generic Stream Type
+</h2>
+<p>Most functions dealing with non-blocking IO in Janet will either accept or create an abstract type
+of <code class="mendoza-code">core/stream</code>. Streams are wrappers around file descriptors on Posix platforms, and HANDLEs
+on Windows. Most streams provide a number of generic methods such as <code class="mendoza-code">:read</code>, 
+<code class="mendoza-code">:write</code>, and <code class="mendoza-code">:chunk</code> for
+reading and writing bytes, much like a file - there are many parallels to the <code class="mendoza-code">file/</code> module,
+but streams do not block and do not support buffering.
+</p>
+<p>In the <code class="mendoza-code">net/</code> module, sockets and servers are both instances of <code class="mendoza-code">core/stream</code>. However, they
+have different capabilities - for example, you can only call <code class="mendoza-code">net/accept</code> on a server, and
+only call <code class="mendoza-code">net/read</code> on a socket.
+</p>
+<h2 id="Clients-and-Servers">Clients and Servers
+</h2>
+<p>In the following sections, we use "client" to mean a program that initiates communication with another
+program across a network, the "server", which can respond to this communication (or ignore it).
+</p>
+<h2 id="TCP-(Stream-sockets)">TCP (Stream sockets)
+</h2>
+<p>Stream sockets provide an ordered, reliable sequence of bytes across a network. However, in order
+to send messages a connection must be established. These are the most common kind of socket and the default
+if a socket type is not specified in most functions.
+</p>
+<h3 id="Client">Client
+</h3>
+<p>A TCP client needs to call <code class="mendoza-code">net/connect</code> to get a socket, and then can
+read from and write to that socket with <code class="mendoza-code">net/read</code> and <code class="mendoza-code">net/write</code>.
+The third argument to <code class="mendoza-code">net/connect</code> should be <code class="mendoza-code">:stream</code>, although it is optional
+as stream sockets are the default - the other option is <code class="mendoza-code">:datagram</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">with</span> [<span class="mdzsyn-symbol">conn</span> (<span class="mdzsyn-coresym">net/connect</span> <span class="mdzsyn-string">"127.0.0.1"</span> <span class="mdzsyn-string">"8000"</span> <span class="mdzsyn-keyword">:stream</span>)]
+  (<span class="mdzsyn-coresym">printf</span> <span class="mdzsyn-string">"Connected to %q!"</span> <span class="mdzsyn-symbol">conn</span>)
+  (<span class="mdzsyn-keyword">:write</span> <span class="mdzsyn-symbol">conn</span> <span class="mdzsyn-string">"Echo..."</span>)
+  (<span class="mdzsyn-coresym">print</span> <span class="mdzsyn-string">"Wrote to connection..."</span>)
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">res</span> (<span class="mdzsyn-keyword">:read</span> <span class="mdzsyn-symbol">conn</span> <span class="mdzsyn-number">1024</span>))
+  (<span class="mdzsyn-coresym">pp</span> <span class="mdzsyn-symbol">res</span>))</code></pre><p>Because streams support a <code class="mendoza-code">:close</code> method, they can be used as the target of a <code class="mendoza-code">with</code> macro
+for scoped resource control.
+</p>
+<h3 id="Server">Server
+</h3>
+<p>The <code class="mendoza-code">net/</code> module provides a few ways to create a TCP server, but
+in all cases a few steps are required.
+</p>
+<ol>
+    <li>Create a server value with <code class="mendoza-code">net/listen</code>.</li>
+    <li>Repeatedly accept connections to the server with <code class="mendoza-code">net/accept</code>.</li>
+    <li>Handle and eventually close each connection.</li>
+</ol><p>There are several functions that bundle different steps together - <code class="mendoza-code">net/accept-loop</code> combines
+steps 2 and 3 into a single call, while <code class="mendoza-code">net/server</code> can combine steps 1, 2 and 3 into one call.
+However, the long form way is still very short and is no less expressive.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Create a server on localhost and listen on port 8000.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-server</span> (<span class="mdzsyn-coresym">net/listen</span> <span class="mdzsyn-string">"127.0.0.1"</span> <span class="mdzsyn-string">"8000"</span>))
+
+<span class="mdzsyn-comment"># Handle exactly 10 connections 1-by-1</span>
+(<span class="mdzsyn-coresym">repeat</span> <span class="mdzsyn-number">10</span>
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">connection</span> (<span class="mdzsyn-coresym">net/accept</span> <span class="mdzsyn-symbol">my-server</span>))
+ (<span class="mdzsyn-coresym">defer</span> (<span class="mdzsyn-keyword">:close</span> <span class="mdzsyn-symbol">connection</span>)
+  (<span class="mdzsyn-coresym">net/write</span> <span class="mdzsyn-symbol">connection</span> <span class="mdzsyn-string">"Hello from server!"</span>)))
+
+<span class="mdzsyn-comment"># Close server</span>
+(<span class="mdzsyn-keyword">:close</span> <span class="mdzsyn-symbol">my-server</span>)</code></pre><p>In many cases, the programmer wants to handle more than 1 connection at a time. The <code class="mendoza-code">ev/</code>
+module can be used to great effect here to handle each new connection in a separate fiber, so
+that the accepting loop can accept the next connection as quickly as possible.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Create a server on localhost and listen on port 8000.</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">my-server</span> (<span class="mdzsyn-coresym">net/listen</span> <span class="mdzsyn-string">"127.0.0.1"</span> <span class="mdzsyn-string">"8000"</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">handler</span> 
+  <span class="mdzsyn-string">"Handle a connection in a separate fiber."</span>
+  [<span class="mdzsyn-symbol">connection</span>]
+  (<span class="mdzsyn-coresym">defer</span> (<span class="mdzsyn-keyword">:close</span> <span class="mdzsyn-symbol">connection</span>)
+    (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">msg</span> (<span class="mdzsyn-coresym">ev/read</span> <span class="mdzsyn-symbol">connection</span> <span class="mdzsyn-number">100</span>))
+    (<span class="mdzsyn-coresym">ev/sleep</span> <span class="mdzsyn-number">10</span>)
+    (<span class="mdzsyn-coresym">net/write</span> <span class="mdzsyn-symbol">connection</span> (<span class="mdzsyn-coresym">string</span> <span class="mdzsyn-string">"Echo: "</span> <span class="mdzsyn-symbol">msg</span>))))
+
+<span class="mdzsyn-comment"># Handle connections as soon as they arrive</span>
+(<span class="mdzsyn-coresym">forever</span>
+ (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">connection</span> (<span class="mdzsyn-coresym">net/accept</span> <span class="mdzsyn-symbol">my-server</span>))
+ (<span class="mdzsyn-coresym">ev/call</span> <span class="mdzsyn-symbol">handler</span> <span class="mdzsyn-symbol">connection</span>))</code></pre><p>There are many possible variations, but all servers will follow this same basic structure.
+</p>
+<h2 id="UDP-(Datagram-sockets)">UDP (Datagram sockets)
+</h2>
+<p>Datagram sockets provide an out-of-order, fast way to send datagrams across a network.
+Datagram sockets also provide the benefit of not needing a connection - one can send
+packets to an address without checking if that address is listening.
+</p>
+<h3 id="Client-0">Client
+</h3>
+<p>A UDP client will generally create a fake connection to a server with <code class="mendoza-code">net/connect</code>, where
+the third argument is <code class="mendoza-code">:datagram</code>. The connection is "fake" because datagrams are connection-less, but
+we can use this connection to encapsulate the remote address of the server. The programmer can then use
+<code class="mendoza-code">net/write</code> and <code class="mendoza-code">net/read</code> to send and receive datagrams from the server (or <code class="mendoza-code">:write</code> and 
+<code class="mendoza-code">:read</code>).
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">conn</span> (<span class="mdzsyn-coresym">net/connect</span> <span class="mdzsyn-string">"127.0.0.1"</span> <span class="mdzsyn-string">"8009"</span> <span class="mdzsyn-keyword">:datagram</span>))
+(<span class="mdzsyn-keyword">:write</span> <span class="mdzsyn-symbol">conn</span> (<span class="mdzsyn-coresym">string/format</span> <span class="mdzsyn-string">"%q"</span> (<span class="mdzsyn-coresym">os/cryptorand</span> <span class="mdzsyn-number">16</span>)))
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">x</span> (<span class="mdzsyn-keyword">:read</span> <span class="mdzsyn-symbol">conn</span> <span class="mdzsyn-number">1024</span>))
+(<span class="mdzsyn-coresym">pp</span> <span class="mdzsyn-symbol">x</span>)</code></pre><h3 id="Server-0">Server
+</h3>
+<p>A Datagram server is a bit simpler than a stream server since there is no need to manage connections.
+Instead, the program listens for packets with <code class="mendoza-code">net/recv-from</code> and sends packets with
+<code class="mendoza-code">net/send-to</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">server</span> (<span class="mdzsyn-coresym">net/listen</span> <span class="mdzsyn-string">"127.0.0.1"</span> <span class="mdzsyn-string">"8009"</span> <span class="mdzsyn-keyword">:datagram</span>))
+(<span class="mdzsyn-coresym">while</span> <span class="mdzsyn-constant">true</span>
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">buf</span> <span class="mdzsyn-string">@""</span>)
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">who</span> (<span class="mdzsyn-keyword">:recv-from</span> <span class="mdzsyn-symbol">server</span> <span class="mdzsyn-number">1024</span> <span class="mdzsyn-symbol">buf</span>))
+  (<span class="mdzsyn-coresym">printf</span> <span class="mdzsyn-string">"got %q from %v, echoing!"</span> <span class="mdzsyn-symbol">buf</span> <span class="mdzsyn-symbol">who</span>)
+  (<span class="mdzsyn-keyword">:send-to</span> <span class="mdzsyn-symbol">server</span> <span class="mdzsyn-symbol">who</span> <span class="mdzsyn-symbol">buf</span>))</code></pre><h2 id="DNS">DNS
+</h2>
+<p>Janet uses the Posix C function <code class="mendoza-code">getaddrinfo</code> to look up IP addresses from domain names.
+This is currently a blocking operation which can be bad in highly concurrent applications.
+However, this also affords us access to various features supported by the operating system like
+easy and cross platform IPv4, IPv6, and unix domain socket support.
+</p>
+<p>Functions that do DNS will usually take host and port arguments, where host is a host address and
+port further specifies the address on the same machine. In IPv4 and IPv6, host should be an IP
+address or domain name, and port should be a 16-bit number.
+</p>
+<h3 id="Unix-domain-sockets">Unix domain sockets
+</h3>
+<p>Supporting platforms allow unix domain sockets by accepting <code class="mendoza-code">:unix</code> as the host, and a file name
+as the port. On linux, abstract unix domain sockets are supported if the port argument begins with "@".
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># Connect to a unix domain socket</span>
+(<span class="mdzsyn-coresym">net/connect</span> <span class="mdzsyn-keyword">:unix</span> <span class="mdzsyn-string">"/tmp/my.socket"</span>)
+
+<span class="mdzsyn-comment"># Connect to an abstract unix domain socket (linux only)</span>
+(<span class="mdzsyn-coresym">net/connect</span> <span class="mdzsyn-keyword">:unix</span> <span class="mdzsyn-string">"@my.socket"</span>)</code></pre><h2 id="Relationship-to-the">Relationship to the <code class="mendoza-code">ev/</code> module.
+</h2>
+<p>All non-blocking operations in the <code class="mendoza-code">net/</code> module avoid blocking by yielding to the event loop.
+As such, functions in the <code class="mendoza-code">ev/</code> module for manipulating fibers, such as <code class="mendoza-code">ev/cancel</code>
+will also work on functions in the <code class="mendoza-code">net/</code> module. Similarly, a function that blocks the
+event loop will prevent any networking code from progressing.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="threads.html"><span class="prevnext-text">Multithreading</span></a></span>
+          <span class="next"><a href="documentation.html"><span class="prevnext-text">Documentation</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2023
+  <div class="gentag">Generated on September 17, 2023 at 20:43:42 (UTC) with Janet 1.31.0-4e5889e</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

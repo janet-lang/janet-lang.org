@@ -1,0 +1,184 @@
+/*
+ * Layout
+ */
+
+.search-bar {
+    height: 40px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.subtitle {
+    text-align: center;
+}
+
+.twocol {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+@media (min-width: 1400px) {
+    .twocol {
+        display: block;
+    }
+    .toc {
+        position: absolute;
+    }
+    .main-content {
+        margin-top: 35px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .main-content {
+        margin-top: 75px;
+    }
+}
+
+@media (max-width: 800px) {
+    .twocol {
+        flex-direction: column;
+    }
+    .toc {
+        background: #f2f2f2;
+        width: calc(100% - 60px);
+    }
+    .prevnext-text a {
+        padding: 5px;
+        background: gray;
+    }
+
+}
+
+/*
+ * Table of Contents
+ */
+
+.toc-hidden {
+    display: none;
+}
+
+.toc {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 72px;
+    padding-bottom: 45px;
+}
+
+.toc a {
+    text-decoration: none;
+}
+
+.toc span {
+    padding: 2px;
+}
+
+.toc span.selected {
+  background: #0765911a;
+}
+  
+.toc span:hover {
+  background: #0765911a;
+}
+
+.toc ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 12px;
+    margin-right: 0px;
+}
+
+.toc ul li {
+    text-decoration: none;
+    color: #076591;
+    font-size: 1rem;
+}
+
+/* 
+ * Documentation item (binding)
+ */
+
+.binding {
+    margin: 10px;
+    font-size: 1rem;
+}
+
+.binding-type {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+}
+
+.binding-sym {
+    font-family: serif;
+    font-weight: 600;
+}
+
+.binding-text {
+    color: #444;
+    margin-top: 14px;
+    font-family: 'Dosis','Helvetica', sans-serif;
+}
+
+.example-title {
+    margin-top: 28px;
+    color: #888;
+    font-family: 'Dosis','Helvetica', sans-serif;
+}
+
+/* Toc Toggle */
+
+#toc-toggle {
+    text-align: center;
+    padding: 6px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+#toc-toggle .bar {
+    margin: 7px;
+    height: 4px;
+    width: 28px;
+    border-radius: 2px;
+    background: #CCC;
+}
+
+#toc-toggle.open .topbar {
+    transform: rotate(-45deg) translate(-5px, -2px);
+}
+
+#toc-toggle.open .botbar {
+    transform: rotate(45deg) translate(-5px, 2px);
+}
+
+/* Prev Next bar */
+
+.prevnext-bar {
+    padding: 40px 15px;
+    margin: 10px 0;
+}
+
+.prev, .next {
+    color: #076591;
+}
+
+.prev {
+    float: left;
+}
+
+.prev .prevnext-text::before {
+    content: "< ";
+}
+
+.next {
+    float: right;
+    margin-left: 30px;
+}
+
+.next .prevnext-text::after {
+    content: " >";
+}
