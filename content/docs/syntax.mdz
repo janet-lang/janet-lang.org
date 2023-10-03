@@ -123,6 +123,14 @@ supported escapes are:
 Strings can also contain literal newline characters that will be ignored.  This
 lets one define a multiline string that does not contain newline characters.
 
+@codeblock[janet]```
+# same as "Thisisastring"
+"This
+is
+a
+string"
+```
+
 ### Long-strings
 
 An alternative way of representing strings in Janet is the long-string, or the
@@ -134,18 +142,15 @@ literal newline characters, unprintable characters, or strings that would
 otherwise require many escape sequences.
 
 @codeblock[janet]```
-"This is a string."
-"This\nis\na\nstring."
-"This
-is
-a
-string."
+# same as "This\nis\na\nstring."
 ``
 This
 is
 a
 string
 ``
+
+# same as "This is\na string."
 `
 This is
 a string.
