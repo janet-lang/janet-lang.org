@@ -93,6 +93,15 @@ languages.
     @tr{@td{@code`(set "abcd")`}
         @td{ Match any character in the argument string. Advances 1 character.
         }}
+
+    @tr{@td{@code`true`}
+        @td{ Always matches. Does not advance any characters. Epsilon in NFA.
+        }}
+
+    @tr{@td{@code`false`}
+        @td{ Never matches. Does not advance any characters. Equivalent to
+        @code`(! true)`.
+        }}
 }
 
 Primitive patterns are not that useful by themselves, but can be passed to
