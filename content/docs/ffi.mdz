@@ -41,8 +41,8 @@ types. On x86-64, long doubles are unsupported.
     @tr{@td{@code`:uint32`} @td{uint32_t}}
     @tr{@td{@code`:int64`} @td{int64_t}}
     @tr{@td{@code`:uint64`} @td{uint64_t}}
-    @tr{@td{@code`:size`} @td{size}}
-    @tr{@td{@code`:ssize`} @td{ssize}}
+    @tr{@td{@code`:size`} @td{size_t}}
+    @tr{@td{@code`:ssize`} @td{ptrdiff_t}}
     @tr{@td{@code`:r32`} @td{float}}
     @tr{@td{@code`:r64`} @td{double}}
     @tr{@td{@code`:s8`} @td{int8_t}}
