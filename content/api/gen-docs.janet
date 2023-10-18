@@ -72,6 +72,28 @@
   (string "https://github.com/janet-lang/janet/blob/" ver "/"
           (if (= "boot.janet" file) "src/boot/boot.janet" file) "#L" line))
 
+(def splitter
+  (peg/compile '{
+    :ws (any (set " \t"))
+    :nl (any (set "\r\n"))
+    :main (* :ws :signature :ws :nl :ws :body)
+    :signature (* (? "(") :ws :mod :sym :ws :args :ws (? ")"))
+    :identifier (some (* (not (set " \r\n/)")) 1))
+    :mod (<- (any (* :identifier "/")))
+    :sym (<- :identifier)
+    :args (<- (any (* (not (set "\n\r)" )) 1)))
+    :body (<- (any 1))
+    }))
+
+(defn- split [key docstring]
+  (def key-parts (peg/match splitter key))
+  (def docstring-parts (peg/match splitter docstring))
+  (def module (get key-parts 0))
+  (def symbol (get key-parts 1))
+  (def args (if docstring-parts (docstring-parts 2) ""))
+  (def usage (if docstring-parts (docstring-parts 3) docstring))
+  [module symbol args usage])
+
 (defn- emit-item
   "Generate documentation for one entry."
   [key env-entry]
@@ -86,20 +108,30 @@
                        (type val))
         docstring (remove-extra-spaces docstring)
         source-linker (dyn :source-linker janet-source-linker)
-        example (check-example key)]
+        example (check-example key)
+        callable (or (= :macro binding-type)
+                     (= :function binding-type)
+                     (= :cfunction binding-type))
+        [module symbol args docstring] (if callable
+                                         (split key docstring)
+                                         [nil key nil docstring])]
     {:tag "div" "class" "binding"
-     :content [{:tag "span" "class" "binding-sym" "id" key :content key} " "
+     :content [
                {:tag "span" "class" "binding-type" :content binding-type} " "
-               ;(if sm [{:tag "span" "class" "binding-type"
-                         :content {:tag "a"
-                                   "href" (source-linker (sm 0) (sm 1))
-                                   :content "source"}}] []) " "
+               {:tag "span" "class" "binding-signature" "id" key
+                :content [(when callable "(") module
+                          {:tag "span" "class" "binding-key" :content symbol} " " args
+                          (when callable ")")]}
                {:tag "pre" "class" "binding-text" :content (or docstring "")}
-               ;(if example [{:tag "div" "class" "example-title" :content "EXAMPLES"}
+               ;(if example [{:tag "div" "class" "example-title" :content "Example:"}
                              {:tag "pre" "class" "mendoza-codeblock"
                               :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])
 
-               {:tag "a" "href" (string "https://janetdocs.com/" (jdoc-escape key)) :content "Community Examples"}]}))
+               {:tag "span" "class" "binding-links" :content [
+                 {:tag "a" "href" (string "https://janetdocs.com/" (jdoc-escape key)) :content "Community Examples"}
+                 " / "
+                 ;(if sm [{:tag "a" "href" (source-linker (sm 0) (sm 1)) :content "source"}] []) ]}
+               ]}))
 
 (defn- all-entries 
   [&opt env]
@@ -137,7 +169,7 @@
          [{:tag "a" "href" (string "#" k) :content k} " "]))
   (def bindings
     (seq [[k entry] :in entries]
-         [{:tag "hr" :no-close true} (emit-item k entry)]))
+         [(emit-item k entry)]))
   [{:tag "p" :content index} bindings])
 
 (defn gen-prefix
