@@ -82,7 +82,9 @@ languages.
         @td{ The literal string. }}
 
     @tr{@td{3 (an integer)}
-        @td{ Matches a number of characters, and advances that many characters.
+        @td{ 
+		If positive, matches a number of characters, and advances that many characters.
+		If 0, counts as an (empty string) match.
         If negative, matches if not that many characters and does not advance.
         For example, -1 will match the end of a string. }}
 
