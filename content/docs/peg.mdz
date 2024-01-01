@@ -198,7 +198,15 @@ compiled to bytecode).
         @td{ Alias for @code`(between 0 1 patt)` }}
 
     @tr{@td{@code`(n patt)` }
-        @td{ Alias for @code`(repeat n patt)` }}}
+        @td{ Alias for @code`(repeat n patt)` }}
+
+    @tr{@td{@code`(sub window-patt patt)` }
+        @td{ Match @code`window-patt`, and if it succeeds match
+             @code`patt` against the bytes that @code`window-patt` matched.
+             @code`patt` cannot match more than @code`window-patt`; it will
+             see end-of-input at the end of the substring matched by
+             @code`window-patt`. If @code`patt` also succeeds, @code`sub` will
+             advance to the end of what @code`window-patt` matched. }}}
 
 PEGs try to match an input text with a pattern in a greedy manner.  This means
 that if a rule fails to match, that rule will fail and not try again. The only
