@@ -4,32 +4,41 @@
  :order 13}
 ---
 
-Janet has support for single-core asynchronous programming via coroutines or
-fibers.  Fibers allow a process to stop and resume execution later, essentially
-enabling multiple returns from a function. This allows many patterns such as
-schedules, generators, iterators, live debugging, and robust error handling.
-Janet's error handling is actually built on top of fibers (when an error is
-thrown, control is returned to the parent fiber).
+Janet has support for single-core asynchronous programming via
+coroutines or fibers.  Fibers allow a process to stop and resume
+execution later, essentially enabling multiple returns from a
+function.  This allows many patterns such as schedules, generators,
+iterators, live debugging, and robust error handling.  Janet's error
+handling is actually built on top of fibers (when an error is thrown,
+control is returned to the parent fiber).
 
-A temporary return from a fiber is called a yield, and can be invoked with the
-@code[yield] function.  To resume a fiber that has been yielded, use the
-@code[resume] function. When @code`resume` is called on a fiber, it will only
-return when that fiber either returns, yields, throws an error, or otherwise
-emits a signal.
+A temporary return from a fiber is called a yield, and can be invoked
+with the @code[yield] function.  To resume a fiber that has been
+yielded, use the @code[resume] function.
 
-Different from traditional coroutines, Janet's fibers implement a signaling
-mechanism, which is used to differentiate different kinds of returns. When a
-fiber yields or throws an error, control is returned to the calling fiber. The
-parent fiber must then check what kind of state the fiber is in to differentiate
-errors from return values from user-defined signals.
+When @code[resume] is called on a fiber, it will only return when that
+fiber either returns, yields, throws an error, or otherwise emits a
+signal.  In all of these cases a value is produced and can be obtained
+via the function @code[fiber/last-value].  This function takes a fiber
+as its sole argument.  If a fiber has never been resumed,
+@code[fiber/last-value] will return `nil`.
 
-To create a fiber, use the @code[fiber/new] function. The fiber
+Different from traditional coroutines, Janet's fibers implement a
+signaling mechanism, which is used to distinguish between different
+kinds of returns.  When a fiber yields or throws an error, control is
+returned to the calling fiber.  The parent fiber must then check what
+kind of state the fiber is in to differentiate errors from return
+values from user-defined signals.  This state is referred to as the
+status of a fiber and can be checked using the @code[fiber/status]
+function.  This function takes a fiber as its sole argument.
+
+To create a fiber, use the @code[fiber/new] function.  The fiber
 constructor takes one or two arguments.  The first argument (required)
-is the function that the fiber will execute. This function must accept
-an arity of zero. The next argument (optional) is a collection of
-flags checking what kinds of signals to trap and return via
-@code[resume]. This is useful so the programmer does not need to
-handle all of the different kinds of signals from a fiber. Any
+is the function that the fiber will execute.  This function must
+accept an arity of zero. The next argument (optional) is a collection
+of flags checking what kinds of signals to trap and return via
+@code[resume].  This is useful so the programmer does not need to
+handle all of the different kinds of signals from a fiber.  Any
 untrapped signals are simply propagated to the previous calling fiber.
 
 @codeblock[janet](```
@@ -41,16 +50,18 @@ untrapped signals are simply propagated to the previous calling fiber.
                    5)))
 
 # Get the status of the fiber (:alive, :dead, :debug, :new, :pending, or :user0-:user9)
-(print (fiber/status f)) # -> :new
+(fiber/status f) # -> :new
+(fiber/last-value f) # -> fiber hasn't been resumed yet, so returns nil
 
-(print (resume f)) # -> prints 1
-(print (resume f)) # -> prints 2
-(print (resume f)) # -> prints 3
-(print (resume f)) # -> prints 4
-(print (fiber/status f)) # -> :pending
-(print (resume f)) # -> prints 5
-(print (fiber/status f)) # -> :dead
-(print (resume f)) # -> throws an error because the fiber is dead
+(resume f) # -> 1
+(fiber/last-value f) # -> 1 (again)
+(resume f) # -> 2
+(resume f) # -> 3
+(resume f) # -> 4
+(fiber/status f) # -> :pending
+(resume f) # -> 5
+(fiber/status f) # -> :dead
+(resume f) # -> throws an error because the fiber is dead
 ```)
 
 ## Using fibers to capture errors
