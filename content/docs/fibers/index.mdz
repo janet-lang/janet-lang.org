@@ -41,6 +41,9 @@ of flags checking what kinds of signals to trap and return via
 handle all of the different kinds of signals from a fiber.  Any
 untrapped signals are simply propagated to the previous calling fiber.
 
+Note that the terms "block", "mask", and "capture" are sometimes used
+to refer to the "trapping" of signals.
+
 @codeblock[janet](```
 (def f (fiber/new (fn []
                    (yield 1)
