@@ -3,30 +3,31 @@
  :order 13}
 ---
 
-As programs grow, they should be broken into smaller pieces for maintainability.
-Janet has the concept of modules to this end. A module is a collection of
-bindings and its associated environment.  By default, modules correspond
-one-to-one with source files in Janet, although you may override this and
-structure modules however you like.
+As programs grow, they should be broken into smaller pieces for
+maintainability.  Janet has the concept of modules to this end. A
+module is a collection of bindings and its associated environment.  By
+default, modules correspond one-to-one with source files in Janet,
+although you may override this and structure modules however you like.
 
 ## Installing a module
 
-Using @code`jpm`, the @code`path` module can be installed like so from the
-command line:
+Using @code`jpm`, the @code`path` module can be installed like so from
+the command line:
 
 @codeblock```
 sudo jpm install https://github.com/janet-lang/path.git
 ```
 
-The use of @code`sudo` is not required in some setups, but is often needed for a
-global install on POSIX systems. You can pass in a git repository URL to the
-@code`install` command, and @code`jpm` will install that package globally on
-your system.
+The use of @code`sudo` is not required in some setups, but is often
+needed for a global install on POSIX systems. You can pass in a git
+repository URL to the @code`install` command, and @code`jpm` will
+install that package globally on your system.
 
-If you are not using @code`jpm`, you can place the file @code`path.janet` from
-the repository in your current directory, and Janet will be able to import it as
-well. However, for more complicated packages or packages containing native C
-extensions, @code`jpm` will usually be much easier.
+If you are not using @code`jpm`, you can place the file
+@code`path.janet` from the repository in your current directory, and
+Janet will be able to import it as well. However, for more complicated
+packages or packages containing native C extensions, @code`jpm` will
+usually be much easier.
 
 ## Importing a module
 
@@ -41,10 +42,10 @@ with the name of the module.
 (path/join (os/cwd) "temp")
 ```
 
-Once @code`path` is imported, all of its symbols are available to the host
-program, but prefixed with @code`path/`. To import the symbols with a custom
-prefix or without any prefix, use the @code`:prefix` argument to the
-@code`import` macro.
+Once @code`path` is imported, all of its symbols are available to the
+host program, but prefixed with @code`path/`. To import the symbols
+with a custom prefix or without any prefix, use the @code`:prefix`
+argument to the @code`import` macro.
 
 @codeblock[janet]```
 (import path :prefix "")
@@ -52,8 +53,8 @@ prefix or without any prefix, use the @code`:prefix` argument to the
 (join (os/cwd) "temp")
 ```
 
-You may also use the @code`:as` argument to specify the prefix in a more natural
-way.
+You may also use the @code`:as` argument to specify the prefix in a
+more natural way.
 
 @codeblock[janet]```
 (import path :as p)
@@ -63,23 +64,24 @@ way.
 
 ## Custom loaders (@code`module/paths` and @code`module/loaders`)
 
-The @code`module/paths` and @code`module/loaders` data structures determine how
-Janet will load a given module name. @code`module/paths` is a list of patterns
-and methods to use to try and find a given module. The entries in
-@code`module/paths` will be checked in order, as it is possible that multiple
-entries could match.  If a module name matches a pattern (which usually means
-that some file exists), then we use the corresponding loader in
-@code`module/loaders` to evaluate that file, source code, URL, or whatever else
-we want to derive from the module name. The resulting value, usually an
-environment table, is then cached so that it can be reused later without
-evaluating a module twice.
+The @code`module/paths` and @code`module/loaders` data structures
+determine how Janet will load a given module name. @code`module/paths`
+is a list of patterns and methods to use to try and find a given
+module. The entries in @code`module/paths` will be checked in order,
+as it is possible that multiple entries could match.  If a module name
+matches a pattern (which usually means that some file exists), then we
+use the corresponding loader in @code`module/loaders` to evaluate that
+file, source code, URL, or whatever else we want to derive from the
+module name. The resulting value, usually an environment table, is
+then cached so that it can be reused later without evaluating a module
+twice.
 
-By modifying @code`module/paths` and @code`module/loaders`, you can create
-custom module schemes, handlers for file extensions, or even your own module
-system. It is recommended to not modify existing entries in @code`module/paths`
-or @code`module/loader`, and simply add to the existing entries. This is rather
-advanced usage, but can be incredibly useful in creating DSLs that feel native
-to Janet.
+By modifying @code`module/paths` and @code`module/loaders`, you can
+create custom module schemes, handlers for file extensions, or even
+your own module system. It is recommended to not modify existing
+entries in @code`module/paths` or @code`module/loader`, and simply add
+to the existing entries. This is rather advanced usage, but can be
+incredibly useful in creating DSLs that feel native to Janet.
 
 ### @code`module/paths`
 
@@ -91,30 +93,34 @@ determines what path corresponds to a module name, and where
 can be one of @code`:native`, @code`:source`, @code`:image`, or any
 key in the @code`module/loaders` table.
 
-@p{@code`predicate` is an optional function or file extension used to further
-    filter whether or not a module name should match.  It's mainly useful when
-    @code`path` is a string and you want to further refine the pattern.}
+@p{@code`predicate` is an optional function or file extension used to
+    further filter whether or not a module name should match.  It's
+    mainly useful when @code`path` is a string and you want to further
+    refine the pattern.}
 
-@p{@code`path` can also be a function that checks if a module name matches. If
-    the module name matches, the function should return a string that will be
-    used as the main identifier for the module. Most of the time, this should be
-    the absolute path to the module, but it can be any unique key that
-    identifies the module such as an absolute URL. It is this key that is used
-    to determine if a module has been loaded already.  This mechanism lets
-    @code`./mymod` and @code`mymod` refer to the same module even though they
-    are different names passed to @code`import`.}
+@p{@code`path` can also be a function that checks if a module name
+    matches. If the module name matches, the function should return a
+    string that will be used as the main identifier for the
+    module. Most of the time, this should be the absolute path to the
+    module, but it can be any unique key that identifies the module
+    such as an absolute URL. It is this key that is used to determine
+    if a module has been loaded already.  This mechanism lets
+    @code`./mymod` and @code`mymod` refer to the same module even
+    though they are different names passed to @code`import`.}
 
 ### @code`module/loaders`
 
-Once a primary module identifier and module type has been chosen, Janet's import
-machinery (defined mostly in @code`require` and @code`module/find`) will use the
-appropriate loader from @code`module/loaders` to get an environment table.  Each
-loader in the table is just a function that takes the primary module identifier
-(usually an absolute path to the module) as well as optionally any other
-arguments passed to @code`require` or @code`import`, and returns the environment
-table.  For example, the @code`:source` type is a thin wrapper around
-@code`dofile`, the @code`:image` type is a wrapper around @code`load-image`, and
-the @code`:native` type is a wrapper around @code`native`.
+Once a primary module identifier and module type has been chosen,
+Janet's import machinery (defined mostly in @code`require` and
+@code`module/find`) will use the appropriate loader from
+@code`module/loaders` to get an environment table.  Each loader in the
+table is just a function that takes the primary module identifier
+(usually an absolute path to the module) as well as optionally any
+other arguments passed to @code`require` or @code`import`, and returns
+the environment table.  For example, the @code`:source` type is a thin
+wrapper around @code`dofile`, the @code`:image` type is a wrapper
+around @code`load-image`, and the @code`:native` type is a wrapper
+around @code`native`.
 
 ### URL loader example
 
@@ -147,9 +153,9 @@ load correctly. A more robust solution would quote the URL.
 
 ## Relative imports
 
-You can include files relative to the current file by prefixing the module name
-with @code`./`. For example, suppose you have a file tree that is structured like
-so:
+You can include files relative to the current file by prefixing the
+module name with @code`./`. For example, suppose you have a file tree
+that is structured like so:
 
 @codeblock```
 mymod/
@@ -161,11 +167,11 @@ mymod/
 
 With the above structure, @code`init.janet` can import @code`dep1` and
 @code`dep2` with relative imports. This is robust because the entire
-@code`mymod/` directory can be installed without any chance that @code`dep1` and
-@code`dep2` will overwrite other files, or that @code`init.janet` will
-accidentally import a different file named @code`dep1.janet` or
-@code`dep2.janet`. @code`mymod` can even be a sub-directory in another Janet
-source tree and work as expected.
+@code`mymod/` directory can be installed without any chance that
+@code`dep1` and @code`dep2` will overwrite other files, or that
+@code`init.janet` will accidentally import a different file named
+@code`dep1.janet` or @code`dep2.janet`. @code`mymod` can even be a
+sub-directory in another Janet source tree and work as expected.
 
 init.janet
 @codeblock[janet]```
@@ -175,13 +181,14 @@ init.janet
 ...
 ```
 
-Note that relative imports are relative to the current file, not to the working
-directory. For that behavior, see the section on working directory imports.
+Note that relative imports are relative to the current file, not to
+the working directory. For that behavior, see the section on working
+directory imports.
 
 ### Pre-loaded Modules
 
-An easy way to bypass the import system and create custom modules is to manually add modules into
-@code`module/cache`.
+An easy way to bypass the import system and create custom modules is
+to manually add modules into @code`module/cache`.
 
 @codeblock[janet]```
 (put module/cache "mymod" (dofile "localfile.janet"))
@@ -189,9 +196,10 @@ An easy way to bypass the import system and create custom modules is to manually
 # imported with (import mymod)
 ```
 
-This is not recommended except in a few circumstances where a module needs to be loaded at runtime
-but doesn't exist on disk, such as if a program were compiled into a standalone executable. A
-pattern to allow this in a standalone executable built with @code`jpm` is as follows:
+This is not recommended except in a few circumstances where a module
+needs to be loaded at runtime but doesn't exist on disk, such as if a
+program were compiled into a standalone executable. A pattern to allow
+this in a standalone executable built with @code`jpm` is as follows:
 
 @codeblock[janet]```
 (def mod1 (require "./localfile"))
@@ -204,19 +212,46 @@ pattern to allow this in a standalone executable built with @code`jpm` is as fol
 
 ### Working Directory Imports
 
-Starting in 1.14.1, Janet will allow imports relative to the current working directory.
-This is very useful in scripting circumstances where source code must be loaded at runtime.
-This can be done with the function @code`dofile`, but it can also be done with the default
+Starting in 1.14.1, Janet will allow imports relative to the current
+working directory.  This is very useful in scripting circumstances
+where source code must be loaded at runtime.  This can be done with
+the function @code`dofile`, but it can also be done with the default
 import system.
 
-To import a file relative to the working directory, prefix the import path with a forward slash "/".
+To import a file relative to the working directory, prefix the import
+path with a forward slash "/".
 
 @codeblock[janet]```
 (import /local)
 ```
 
-This will import from a file @code`./local.janet`, (or @code`./local.so`, @code`./local.jimage`, and so on), and
-prefix the imported symbols with @code`local/`.
+This will import from a file @code`./local.janet`, (or
+@code`./local.so`, @code`./local.jimage`, and so on), and prefix the
+imported symbols with @code`local/`.
+
+### \@-prefixed Imports
+
+Starting in 1.26.0, Janet allows importing modules from custom
+directories more easily using the @code`@`-prefix in a module path.
+
+For example, if there is a dynamic binding @code`:custom-modules` that
+is a file system path to a directory of modules, import from that
+directory with:
+
+@codeblock[janet]```
+(import @custom-modules/mymod)
+```
+
+As a special case, it is possible to import from absolute paths by
+prefixing an absolute path with @code`@`.  For example, to import
+from @code`/tmp/custom-modules/mymod.janet`, express this as:
+
+@codeblock[janet]```
+(import @/tmp/custom-modules/mymod)
+```
+
+Note that although using absolute paths is possible and useful for
+testing, it is not recommended for most production use cases.
 
 ## Writing a module
 
