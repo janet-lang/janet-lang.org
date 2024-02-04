@@ -255,6 +255,21 @@ arguments in curly brackets!
 (make-recipe-3 ;(kvs args))
 ```
 
+Note that what follows @code`&keys` does not have to be a struct and
+can instead be a single symbol.  The symbol can then be used as a name
+within the function body for a struct containing the passed keys and
+values:
+
+@codeblock[janet]```
+(defn feline-counter
+  [&keys animals]
+  (if-let [n-furries (get animals :cat)]
+    (printf "Awww, I see %d cat(s)!" n-furries)
+    (print "Shucks, where are my friends?")))
+
+(feline-counter :ant 1 :bee 2 :cat 3)
+```
+
 ## Optional Flags
 
 As a matter of style, some Janet functions allow you to optionally
