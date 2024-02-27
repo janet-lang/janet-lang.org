@@ -1,0 +1,14 @@
+{:title "Process Management"
+ :template "docpage.html"
+ :order 22}
+---
+
+Janet has support for starting, communicating with, and otherwise
+managing processes primarily via two approaches.  One is a simpler
+synchronous method provided by @code`os/execute`.  Another is a more
+complex way that gives finer-grained control via @code`os/spawn` and
+some other @code`os/` functions.
+
+The @code`os/execute` function will be covered first as it is simpler
+but also because @code`os/spawn` may be easier to understand once one
+has a sense of @code`os/execute`.
