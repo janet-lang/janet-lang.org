@@ -255,6 +255,7 @@ code {
 .mendoza-code {
     padding: 0 5px;
     background: #EEE;
+    white-space: nowrap;
 }
 
 .mendoza-codeblock {
