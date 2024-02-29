@@ -1,6 +1,6 @@
 {:title "Foreign Function Interface"
  :template "docpage.html"
- :order 25}
+ :order 26}
 ---
 
 Starting in version 1.23.0, Janet includes a Foreign Function Interface module on x86-64, non-Windows

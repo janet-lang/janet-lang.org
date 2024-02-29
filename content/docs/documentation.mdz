@@ -1,6 +1,6 @@
 {:title "Documentation"
  :template "docpage.html"
- :order 22}
+ :order 23}
  ---
 
 Documenting code is an important way to communicate to users how and when to use

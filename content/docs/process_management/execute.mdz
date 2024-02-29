@@ -1,0 +1,97 @@
+{:title "Executing a Process"
+ :nav-title "Executing"
+ :template "docpage.html"}
+---
+
+In the simpler approach using @code`os/execute`, once the program is
+started to create a subprocess, the function does not return or error
+until the subprocess has finished executing.  Technically,
+@code`os/execute` \"waits" on the created subprocess.  Further details
+regarding waiting will be covered when discussing @code`os/spawn`.
+The return value for @code`os/execute` is the exit code of the created
+subprocess.
+
+### @code`args`
+
+The only required argument, @code`args`, is a tuple or array of
+strings that represents an invocation of a program along with its
+arguments.
+
+@codeblock[janet]```
+# prints: I drank what?
+# also returns 0, the exit code
+(os/execute ["janet" "-e" `(print "I drank what?")`] :p) # => 0
+```
+
+### @code`flags`
+
+If there is a second argument, @code`flags`, it should be a keyword.
+@code`flags` can affect program launching and subprocess execution
+characteristics.
+
+Note in the example above, @code`flags` is @code`:p`, which allows
+searching the current @code`PATH` for a binary to execute.  If
+@code`flags` does not contain @code`p`, the name of the program must
+be an absolute path.
+
+If @code`flags` contains @code`x`, @code`os/execute` will raise an
+error if the subprocess' exit code is non-zero.
+
+@codeblock[janet]```
+# prints: non-zero exit code
+(try
+  (os/execute ["janet" "-e" `(os/exit 1)`] :px)
+  ([_]
+    (eprint "non-zero exit code")))
+```
+
+### @code`env`
+
+If @code`flags` contains @code`e`, @code`os/execute` should take a
+third argument, @code`env`, a dictionary (i.e. table or struct),
+mapping environment variable names to values.  The subprocess will be
+started using an environment constructed from @code`env`.  If
+@code`flags` does not contain @code`e`, the current environment is
+inherited.
+
+@codeblock[janet]```
+# prints "SITTING"
+# also returns 0
+(os/execute ["janet" "-e" `(pp (os/getenv "POSE"))`]
+            :pe {"POSE" "SITTING"}) # => 0
+```
+
+The @code`env` dictionary can also contain the keys @code`:in`,
+@code`:out`, and @code`:err`, which allow redirecting standard IO in
+the subprocess.  The associated values for these keys should be
+@code`core/file` values and these should be closed explicitly (e.g. by
+calling @code`file/close`) after the subprocess has completed.
+
+Note that the @code`flags` keyword argument only needs to contain
+@code`e` if making use of environment variables.  That is, for use of
+any combination of just @code`:in`, @code`:out`, and @code`:err`, the
+@code`flags` keyword does not need to contain @code`e`.
+
+@codeblock[janet]```
+(def of (file/temp))
+
+(os/execute ["janet" "-e" `(print "tada!")`]
+            :p {:out of}) # => 0
+
+(file/seek of :set 0)
+
+(file/read of :all) # => @"tada!\n"
+
+(file/close of) # => nil
+```
+
+### Caveat
+
+Although it may appear to be possible to successfully use
+@code`core/stream` values with @code`os/execute` in some cases, it may
+not work in certain situations (e.g. with another operating system,
+different programs, varied arguments, phase of the moon, etc.).  It is
+not a reliable choice and is thus not recommended.  The
+@code`os/spawn` function is better suited for use with
+@code`core/stream` values.
+

@@ -1,6 +1,6 @@
 {:title "jpm"
  :template "docpage.html"
- :order 23}
+ :order 24}
 ---
 
 JPM is a build tool that can be installed along with Janet to help build and install

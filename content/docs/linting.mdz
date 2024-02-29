@@ -1,6 +1,6 @@
 {:title "Linting"
  :template "docpage.html"
- :order 24}
+ :order 25}
 ---
 
 The @code`janet` binary comes with a built in linter as of version 1.16.1. This
