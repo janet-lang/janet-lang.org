@@ -3,13 +3,14 @@
  :template "docpage.html"}
 ---
 
-One of the main uses of fibers is to encapsulate and handle errors. Janet offers
-no direct try/catch mechanism like some languages, and instead builds error
-handling on top of fibers. When a function throws an error, Janet creates a
-signal and throws that signal in the current fiber. The signal will be
-propagated up the chain of active fibers until it hits a fiber that is ready to
-handle the error signal.  This fiber will trap the signal and return the error
-from the last call to @code`resume`.
+One of the main uses of fibers is to encapsulate and handle errors.
+Janet offers no direct try/catch mechanism like some languages, and
+instead builds error handling on top of fibers.  When a function
+throws an error, Janet creates a signal and throws that signal in the
+current fiber.  The signal will be propagated up the chain of active
+fibers until it hits a fiber that is ready to handle the error signal.
+This fiber will trap the signal and return the error from the last
+call to @code`resume`.
 
 @codeblock[janet]```
 (defn block
@@ -28,8 +29,8 @@ from the last call to @code`resume`.
 (def res (resume f))
 
 (if (= (fiber/status f) :error)
- (print "caught error: " res)
- (print "value returned: " res))
+  (print "caught error: " res)
+  (print "value returned: " res))
 ```
 
 ## Two error-handling forms built on fibers
@@ -37,7 +38,7 @@ from the last call to @code`resume`.
 ### @code`try`
 
 Janet provides a simple macro @code`try` to make error-handling a bit
-easier in the common case. @code`try` performs the function of a
+easier in the common case.  @code`try` performs the function of a
 traditional try/catch block; it will execute its body and, if any
 error is raised, optionally bind the error and the raising fiber in
 its second clause.
@@ -48,8 +49,16 @@ its second clause.
     (print "inside block...")
     (error "oops")
     (print "will never get here"))
-  ([err] (print "caught error: " err)))
+  ([err fib]
+    # err and (fiber/last-value fib) are the same here
+    (print "caught error: " err)
+    (print "fib's last-value: " (fiber/last-value fib))
+    # returns the status of fib, in this case, :error
+    (fiber/status fib)))
 ```
+
+Note that in the above example, the caught @code`err` and `fib`'s
+last-value are the same, i.e. "oops".
 
 ### @code`protect`
 
