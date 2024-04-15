@@ -248,11 +248,12 @@ the entry point to your executable.
 # This will be printed when you run `jpm build`
 (print "build time!")
 
-(defn main [& args]
-    # You can also get command-line arguments through (dyn :args)
-    (print "args: " ;(interpose ", " args))
-    (mylib1/do-thing)
-    (mylib2/do-thing))
+(defn main
+  [& args]
+  # You can also get command-line arguments through (dyn :args)
+  (print "args: " ;(interpose ", " args))
+  (mylib1/do-thing)
+  (mylib2/do-thing))
 ```
 
 It's important to remember that code at the top level will run when you invoke
@@ -281,6 +282,36 @@ at runtime, though.
 
 For an example Janet executable built with @code`jpm`, see
 @link[https://github.com/bakpakin/littleserver][https://github.com/bakpakin/littleserver].
+
+### Other @code`declare-` callables
+
+Some additional @code`declare-` callables are:
+
+@ul{@li{@code`declare-bin`
+
+        @p{Declare a generic file to be installed as an
+           executable. Specify file path via @code`:main`.}}
+
+    @li{@code`declare-binscript`
+
+        @p{Declare a janet file to be installed as an executable
+           script.  Creates a shim on windows.  If
+           @code`:hardcode-syspath` is true, will insert code into the
+           script such that it will run correctly even when
+           @code`JANET_PATH` is changed.  If @code`:is-janet` is
+           truthy, will also automatically insert a correct shebang
+           line if jpm's configuration is set with
+           @code`:auto-shebang` as truthy.}}
+
+    @li{@code`declare-headers`
+
+        @p{Declare headers for a library installation. Installed
+           headers can be used by other native libraries.  Specify
+           paths via @code`:headers` and prefix via @code`:prefix`.}}
+
+    @li{@code`declare-manpage`
+
+        @p{Mark a manpage for installation.}}}
 
 ## Custom Trees
 
