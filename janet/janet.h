@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 32
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 34
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.32.1"
+#define JANET_VERSION "1.34.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -74,6 +74,9 @@
 /* #define JANET_EV_NO_EPOLL */
 /* #define JANET_EV_NO_KQUEUE */
 /* #define JANET_NO_INTERPRETER_INTERRUPT */
+/* #define JANET_NO_IPV6 */
+/* #define JANET_NO_CRYPTORAND */
+/* #define JANET_USE_STDATOMIC */
 
 /* Custom vm allocator support */
 /* #include <mimalloc.h> */
@@ -713,6 +716,7 @@ typedef int32_t JanetAtomicInt;
 #endif
 JANET_API JanetAtomicInt janet_atomic_inc(JanetAtomicInt volatile *x);
 JANET_API JanetAtomicInt janet_atomic_dec(JanetAtomicInt volatile *x);
+JANET_API JanetAtomicInt janet_atomic_load(JanetAtomicInt volatile *x);
 
 /* We provide three possible implementations of Janets. The preferred
  * nanboxing approach, for 32 or 64 bits, and the standard C version. Code in the rest of the
@@ -2205,7 +2209,9 @@ typedef enum {
     RULE_LINE,         /* [tag] */
     RULE_COLUMN,       /* [tag] */
     RULE_UNREF,        /* [rule, tag] */
-    RULE_CAPTURE_NUM   /* [rule, tag] */
+    RULE_CAPTURE_NUM,  /* [rule, tag] */
+    RULE_SUB,          /* [rule, rule] */
+    RULE_SPLIT         /* [rule, rule] */
 } JanetPegOpcod;
 
 typedef struct {
