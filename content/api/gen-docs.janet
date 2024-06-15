@@ -86,7 +86,8 @@
                        (type val))
         docstring (remove-extra-spaces docstring)
         source-linker (dyn :source-linker janet-source-linker)
-        example (check-example key)]
+        example (check-example key)
+        c-example (not (dyn :no-community-examples))]
     {:tag "div" "class" "binding"
      :content [{:tag "span" "class" "binding-sym" "id" key :content key} " "
                {:tag "span" "class" "binding-type" :content binding-type} " "
@@ -98,8 +99,10 @@
                ;(if example [{:tag "div" "class" "example-title" :content "EXAMPLES"}
                              {:tag "pre" "class" "mendoza-codeblock"
                               :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])
-
-               {:tag "a" "href" (string "https://janetdocs.com/" (jdoc-escape key)) :content "Community Examples"}]}))
+               (if c-example
+                 {:tag "a" "href"
+                  (string "https://janetdocs.com/" (jdoc-escape key))
+                  :content "Community Examples"})]}))
 
 (defn- all-entries 
   [&opt env]
