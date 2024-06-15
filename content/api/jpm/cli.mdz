@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 (import jpm/cli :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
+(setdyn :no-community-examples true)
 
 {:title "Command Line Interface"
  :nav-title "cli"
