@@ -140,21 +140,9 @@ For editor support:
 
 @strong{NEW!} Check out the Janet Zulip Instance at @link[https://janet.zulipchat.com] \(@link[https://janet.zulipchat.com/join/3ahdqkn5cvr6233x6ytzlcvq/]{Invite Link})
 
-Feel free to ask questions and join discussion on the @link[https://gitter.im/janet-language/community]{Janet Gitter Channel}.
-Gitter provides matrix and IRC bridges as well for users who prefer those.
-
-### Other Gitter Rooms
-
-@ul{
-    @li{@link[https://gitter.im/janet-language/help][help]:
-        For getting help with specific problems in the Janet language.}
-    @li{@link[https://gitter.im/janet-language/website][website]:
-        For discussion and help related to this website and documentation.}
-}
-
 ### Forum
 
-We use @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions} as our forum, which is more suited to long-form discussion than Gitter.
+We also support @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions}, but Zulip has rucher functionality.
 
 ### Janet Docs
 
