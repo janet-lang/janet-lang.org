@@ -353,7 +353,7 @@ grammars simpler.
         @td{ Capture a big endian, signed, two's complement integer from 
         @code`num-bytes`. Works for 1 to 8 byte integers. }}
 
-    @tr{@td{@code`(lenprefix n patt ?tag)` }
+    @tr{@td{@code`(lenprefix n patt)` }
         @td{ Matches n repetitions of a pattern, where n is supplied from other
         parsed input and is not a constant. }}
 
