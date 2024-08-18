@@ -166,3 +166,31 @@ JANET_API JanetType janet_type(Janet x);
 ```
 
 Returns the type of Janet value.
+
+## Strings
+
+Janet provides several utilities for dealing with C-style, NULL terminated strings. It can be tempting
+to use the janet_wrap_* functions for passing C-style strings as Janet strings, keywords, and symbols, but this is incorrect and
+will cause segfaults and other problems.
+
+Instead, use @code`janet_cstring` to convert any NULL terminated string to a Janet string. This may allocated memory
+and do an extra copy, but will always result in a string that can be safely used by Janet. There are similar utilities
+for creating symbols and keywords.
+
+Some of these interfaces are defined as macros, but this may change in future versions. From @code`janet.h`, the following 6 functions
+and macros are commonly used for converting string-like types.
+
+@codeblock[c]```
+
+/* Wrapping C-Style strings */
+
+/* Convert const char * ---->>>> JanetString, JanetKeyword, JanetSymbol */
+JANET_API JanetString janet_cstring(const char *cstring);
+JANET_API JanetSymbol janet_csymbol(const char *str);
+#define janet_ckeyword janet_csymbol
+
+/* Convert const char * ---->>>> Janet */
+#define janet_cstringv(cstr) janet_wrap_string(janet_cstring(cstr))
+#define janet_csymbolv(cstr) janet_wrap_symbol(janet_csymbol(cstr))
+#define janet_ckeywordv(cstr) janet_wrap_keyword(janet_ckeyword(cstr))
+```

@@ -1732,7 +1732,6 @@ JANET_API JanetTuple janet_tuple_n(const Janet *values, int32_t n);
 JANET_API uint8_t *janet_string_begin(int32_t length);
 JANET_API JanetString janet_string_end(uint8_t *str);
 JANET_API JanetString janet_string(const uint8_t *buf, int32_t len);
-JANET_API JanetString janet_cstring(const char *cstring);
 JANET_API int janet_string_compare(JanetString lhs, JanetString rhs);
 JANET_API int janet_string_equal(JanetString lhs, JanetString rhs);
 JANET_API int janet_string_equalconst(JanetString lhs, const uint8_t *rhs, int32_t rlen, int32_t rhash);
@@ -1740,7 +1739,6 @@ JANET_API JanetString janet_description(Janet x);
 JANET_API JanetString janet_to_string(Janet x);
 JANET_API void janet_to_string_b(JanetBuffer *buffer, Janet x);
 JANET_API void janet_description_b(JanetBuffer *buffer, Janet x);
-#define janet_cstringv(cstr) janet_wrap_string(janet_cstring(cstr))
 #define janet_stringv(str, len) janet_wrap_string(janet_string((str), (len)))
 JANET_API JanetString janet_formatc(const char *format, ...);
 JANET_API JanetBuffer *janet_formatb(JanetBuffer *bufp, const char *format, ...);
@@ -1748,15 +1746,19 @@ JANET_API void janet_formatbv(JanetBuffer *bufp, const char *format, va_list arg
 
 /* Symbol functions */
 JANET_API JanetSymbol janet_symbol(const uint8_t *str, int32_t len);
-JANET_API JanetSymbol janet_csymbol(const char *str);
 JANET_API JanetSymbol janet_symbol_gen(void);
 #define janet_symbolv(str, len) janet_wrap_symbol(janet_symbol((str), (len)))
-#define janet_csymbolv(cstr) janet_wrap_symbol(janet_csymbol(cstr))
 
 /* Keyword functions */
 #define janet_keyword janet_symbol
-#define janet_ckeyword janet_csymbol
 #define janet_keywordv(str, len) janet_wrap_keyword(janet_keyword((str), (len)))
+
+/* Wrapping C-Style strings */
+JANET_API JanetString janet_cstring(const char *cstring);
+#define janet_cstringv(cstr) janet_wrap_string(janet_cstring(cstr))
+JANET_API JanetSymbol janet_csymbol(const char *str);
+#define janet_csymbolv(cstr) janet_wrap_symbol(janet_csymbol(cstr))
+#define janet_ckeyword janet_csymbol
 #define janet_ckeywordv(cstr) janet_wrap_keyword(janet_ckeyword(cstr))
 
 /* Structs */
