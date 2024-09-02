@@ -1,0 +1,11 @@
+(import ./gen-docs :as gen-docs)
+
+{:title "Bundle Module"
+ :nav-title "bundle"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix[bundle/]
+
