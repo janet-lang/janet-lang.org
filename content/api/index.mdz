@@ -1,7 +1,7 @@
 (import ./gen-docs :as gen-docs)
 
 {:title "Core API"
- :nav-title "API"
+ :nav-title "Core API"
  :order 3
  :template "docpage.html"
  :permalinks ["doc.html"] }
