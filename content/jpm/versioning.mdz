@@ -1,0 +1,25 @@
+{:title "Project.janet"
+ :template "docpage.html"
+ :order 4}
+---
+
+## Versioning and Library Bundling
+
+JPM does not do any semantic version resolution at the moment. Instead, it is recommended to make all changes
+to libraries as backwards-compatible as possible, and release new libraries for breaking changes in almost all
+cases. For creators of executable programs (versus a library author), it is recommended to use a local tree
+and lockfiles to pin versions for consistent builds.
+
+As a matter of style, it is also recommended to group small libraries
+together into "bundles" that are updated, tested, and deployed
+together. Since Janet libraries are often quite small, the cost of
+downloading more functionality that one might need isn't particularly
+high, and JPM can remove unused functions and bindings from generated
+standalone binaries and images, so there is no runtime cost either. By
+avoiding a plethora of tiny libraries, users of libraries do not
+manage as many dependencies, and modules are more likely to work
+together they can be tested together.
+
+While @code`jpm` may superficially resemble @code`npm`, it is the
+author's opinion that it is suited to a different style of
+development.

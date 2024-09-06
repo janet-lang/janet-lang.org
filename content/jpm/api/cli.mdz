@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/config :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/cli :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "Config"
- :nav-title "config"
+{:title "Command Line Interface"
+ :nav-title "cli"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[config/]
+@gen-docs/gen-prefix-current[cli/]

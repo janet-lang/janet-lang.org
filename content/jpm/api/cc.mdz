@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/cgen :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/cc :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "C Source Generation"
- :nav-title "cgen"
+{:title "C Compiler"
+ :nav-title "cc"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[cgen/]
+@gen-docs/gen-prefix-current[cc/]

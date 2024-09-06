@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/rules :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/shutil :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "Build Rules"
- :nav-title "rules"
+{:title "Shell Utilities"
+ :nav-title "shutil"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[rules/]
+@gen-docs/gen-prefix-current[shutil/]

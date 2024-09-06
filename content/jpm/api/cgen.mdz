@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/make-config :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/cgen :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "Configuration Generation"
- :nav-title "make-config"
+{:title "C Source Generation"
+ :nav-title "cgen"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[make-config/]
+@gen-docs/gen-prefix-current[cgen/]

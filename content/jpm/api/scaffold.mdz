@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/shutil :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/scaffold :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "Shell Utilities"
- :nav-title "shutil"
+{:title "Project Scaffolding"
+ :nav-title "scaffold"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[shutil/]
+@gen-docs/gen-prefix-current[scaffold/]

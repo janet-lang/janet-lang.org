@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/cc :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/pm :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "C Compiler"
- :nav-title "cc"
+{:title "Project Management"
+ :nav-title "pm"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[cc/]
+@gen-docs/gen-prefix-current[pm/]

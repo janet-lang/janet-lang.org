@@ -1,11 +1,12 @@
-(import ../gen-docs :as gen-docs)
+(import ../../gen-docs :as gen-docs)
 (import jpm :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
 {:title "JPM"
- :nav-title "jpm"
- :template "docpage.html"}
+ :nav-title "API"
+ :template "docpage.html"
+ :order 5}
 ---
 
 ## Index

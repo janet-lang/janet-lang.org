@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/commands :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/dagbuild :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "Commands"
- :nav-title "commands"
+{:title "DAG Build"
+ :nav-title "dagbuild"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[commands/]
+@gen-docs/gen-prefix-current[dagbuild/]

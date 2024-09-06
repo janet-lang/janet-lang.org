@@ -1,13 +1,13 @@
-(import ../gen-docs :as gen-docs)
-(import jpm/pm :export true)
+(import ../../gen-docs :as gen-docs)
+(import jpm/make-config :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
-{:title "Project Management"
- :nav-title "pm"
+{:title "Configuration Generation"
+ :nav-title "make-config"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix-current[pm/]
+@gen-docs/gen-prefix-current[make-config/]
