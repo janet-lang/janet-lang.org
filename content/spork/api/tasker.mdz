@@ -1,0 +1,14 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/tasker :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "tasker"
+ :template "docpage.html"}
+ ---
+
+A simple task executor library/server.
+
+## Reference
+
+@gen-docs/gen-prefix-current[tasker/]
