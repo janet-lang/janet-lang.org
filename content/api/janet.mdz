@@ -1,10 +1,11 @@
 (import ../gen-docs :as gen-docs)
 
-{:title "Fiber Module"
- :nav-title "fiber"
+{:title "Janet Module"
+ :nav-title "janet"
  :template "docpage.html"}
 ---
 
 ## Index
 
-@gen-docs/gen-prefix[fiber/]
+@gen-docs/gen-prefix[janet/]
+
