@@ -1,5 +1,5 @@
 (import ../../gen-docs :as gen-docs)
-(import jpm :export true)
+(import jpm :prefix "" :export true)
 (setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/jpm" gen-docs/jpm-version))
 (setdyn :no-community-examples true)
 
@@ -11,4 +11,4 @@
 
 ## Index
 
-@gen-docs/gen-prefix-current[jpm/]
+@gen-docs/gen-prefix-current[]
