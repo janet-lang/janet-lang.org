@@ -337,6 +337,14 @@ grammars simpler.
     @tr{@td{@code`(drop patt)` }
         @td{ Ignores (drops) all captures from patt. }}
 
+    @tr{@td{@code`(only-tags patt)` }
+        @td{ Ignores all captures from @code`patt`, while making tagged
+        captures within @code`patt` available for future back-referencing. }}
+
+    @tr{@td{@code`(nth index patt ?tag)` }
+        @td{ Capture one of the captures in @code`patt` at @code`index`.
+        If no such capture exists, then the match fails. }}
+
     @tr{@td{@code`(uint num-bytes ?tag)` }
         @td{ Capture a little endian, unsigned, two's complement integer from 
         @code`num-bytes`. Works for 1 to 8 byte integers. }}
