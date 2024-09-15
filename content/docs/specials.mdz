@@ -97,6 +97,10 @@ Functions also introduce a new lexical scope, meaning the @code`def`s and
 # A function that doesn't strictly check the number of arguments.
 # Extra arguments are ignored.
 (fn [w x y z &] (tuple w w x x y y z z))
+
+# For improved debugging, name with symbol or keyword
+(fn alice [] :smile)
+(fn :bob [] :sit)
 ```
 
 For more information on functions, see the @link[/docs/functions.html][Functions
