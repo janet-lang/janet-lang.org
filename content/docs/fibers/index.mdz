@@ -102,3 +102,20 @@ an error clause is evaluated.
  ([err] (print "oops")))
 # Evaluates to 6 - no error thrown
 ```)
+
+The @code[signal] function can be used to raise a particular signal.
+The function's first argument, @code[what], specifies the signal,
+while the second argument, @code[x], is an arbitrary payload value.
+
+@codeblock[janet](```
+(try
+  (signal :error 1)
+  ([err] (print "got error: " err)))
+# evaluates to nil and prints "got error: 1"
+
+(defer (pp :hey)
+  (signal :user4 :hello)
+  (pp :unreached))
+# only prints :hey
+```)
+
