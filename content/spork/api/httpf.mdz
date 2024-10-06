@@ -1,0 +1,16 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/httpf :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "httpf"
+ :template "docpage.html"}
+ ---
+
+A simple, opinionated HTTP framework for HTML, JDN, and JSON servers.
+Servers can easily be configured from defn bindings with
+appropriate metadata.
+
+## Reference
+
+@gen-docs/gen-prefix-current[httpf/]

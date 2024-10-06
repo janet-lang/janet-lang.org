@@ -1,4 +1,4 @@
-(import ./gen-docs :as gen-docs)
+(import ../gen-docs :as gen-docs)
 
 {:title "Net Module"
  :nav-title "net"
