@@ -301,9 +301,7 @@ code {
 
 @media (prefers-color-scheme: dark) {
     .mendoza-code {
-        padding: 0 5px;
         background: #333;
-        white-space: nowrap;
     }
 }
 
