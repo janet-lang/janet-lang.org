@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2023 Calvin Rose
+* Copyright (c) 2024 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 36
-#define JANET_VERSION_PATCH 0
+#define JANET_VERSION_MINOR 37
+#define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.36.0"
+#define JANET_VERSION "1.37.1"
 
 /* #define JANET_BUILD "local" */
 
@@ -1512,6 +1512,7 @@ JANET_NO_RETURN JANET_API void janet_sleep_await(double sec);
 /* For use inside listeners - adds a timeout to the current fiber, such that
  * it will be resumed after sec seconds if no other event schedules the current fiber. */
 JANET_API void janet_addtimeout(double sec);
+JANET_API void janet_addtimeout_nil(double sec);
 JANET_API void janet_ev_inc_refcount(void);
 JANET_API void janet_ev_dec_refcount(void);
 
@@ -2250,7 +2251,9 @@ typedef enum {
     RULE_UNREF,        /* [rule, tag] */
     RULE_CAPTURE_NUM,  /* [rule, tag] */
     RULE_SUB,          /* [rule, rule] */
-    RULE_SPLIT         /* [rule, rule] */
+    RULE_SPLIT,        /* [rule, rule] */
+    RULE_NTH,          /* [nth, rule, tag] */
+    RULE_ONLY_TAGS,    /* [rule] */
 } JanetPegOpcod;
 
 typedef struct {
