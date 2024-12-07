@@ -3,3 +3,5 @@ site
 janet_modules
 build
 /jpm/
+
+.vscode

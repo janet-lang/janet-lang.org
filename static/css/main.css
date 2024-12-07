@@ -16,31 +16,36 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;
+    display: block;
 }
+
 body {
-	line-height: 1;
+    line-height: 1;
 }
+
 blockquote, q {
-	quotes: none;
+    quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+    content: '';
+    content: none;
 }
+
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 /* Now apply relevant style */
@@ -49,7 +54,14 @@ body {
     font-size: 1rem;
     font-family: sans-serif;
     line-height: 1.4;
-    color: #222
+    color: #222;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+        color: #eee;
+    }
 }
 
 .content-wrapper {
@@ -80,11 +92,23 @@ a {
     color: #2674d3;
 }
 
+@media (prefers-color-scheme: dark) {
+    a {
+        color: #09a5b8;
+    }
+}
+
 h1, h2, h3, h4 {
     margin-left: 15px;
     margin-right: 15px;
-    font-family: 'Dosis','Helvetica', sans-serif;
+    font-family: 'Dosis', 'Helvetica', sans-serif;
     color: #111;
+}
+
+@media (prefers-color-scheme: dark) {
+    h1, h2, h3, h4 {
+        color: #f8f8f2;
+    }
 }
 
 h1 {
@@ -92,22 +116,35 @@ h1 {
     padding-top: 3rem;
     padding-bottom: 2rem;
 }
+
 h2 {
     font-size: 2rem;
     padding-top: 32px;
     padding-bottom: 24px;
 }
+
 h3 {
     color: #333;
     font-size: 1.6rem;
     padding-top: 18px;
     padding-bottom: 16px;
 }
+
 h4 {
     color: #888;
     font-size: 1rem;
     padding-top: 8px;
     padding-bottom: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+    h3 {
+        color: #e3e0e0;
+    }
+
+    h4 {
+        color: #cccccc;
+    }
 }
 
 @media (max-width: 700px) {
@@ -116,11 +153,13 @@ h4 {
         padding-top: 2.5rem;
         padding-bottom: 1.5rem;
     }
+
     h2 {
         font-size: 1.8rem;
         padding-top: 28px;
         padding-bottom: 20px;
     }
+
     h3 {
         font-size: 1.5rem;
         padding-top: 16px;
@@ -134,11 +173,13 @@ h4 {
         padding-top: 2rem;
         padding-bottom: 1rem;
     }
+
     h2 {
         font-size: 1.6rem;
         padding-top: 24px;
         padding-bottom: 18px;
     }
+
     h3 {
         font-size: 1.4rem;
         padding-top: 14px;
@@ -254,8 +295,14 @@ code {
 
 .mendoza-code {
     padding: 0 5px;
-    background: #EEE;
+    background: #eee;
     white-space: nowrap;
+}
+
+@media (prefers-color-scheme: dark) {
+    .mendoza-code {
+        background: #333;
+    }
 }
 
 .mendoza-codeblock {
@@ -269,22 +316,65 @@ code {
 
 /* Based on Sublime Text's Monokai theme */
 
-.mdzsyn-comment {color: #B5B19e;}
-.mdzsyn-operator {color: #ae81ff;}
-.mdzsyn-number {color: #ae81ff;}
-.mdzsyn-keyword {color: #ff97bc;}
-.mdzsyn-string {color: #e6db74;}
-.mdzsyn-identifier {color: #a6e22e;}
-.mdzsyn-symbol {color: #afffff;}
-.mdzsyn-coresym {color: #ffbc6d;}
+.mdzsyn-comment {
+    color: #b5b19e;
+}
 
-.cm-s-monokai span.cm-bracket {color: #f8f8f2;}
-.cm-s-monokai span.cm-tag {color: #f92672;}
-.cm-s-monokai span.cm-link {color: #ae81ff;}
-.cm-s-monokai span.cm-error {background: #f92672; color: #f8f8f0;}
-.cm-s-monokai span.cm-property, .cm-s-monokai span.cm-attribute {color: #a6e22e;}
-.cm-s-monokai .CodeMirror-activeline-background {background: #373831 !important;}
+.mdzsyn-operator {
+    color: #ae81ff;
+}
+
+.mdzsyn-number {
+    color: #ae81ff;
+}
+
+.mdzsyn-keyword {
+    color: #ff97bc;
+}
+
+.mdzsyn-string {
+    color: #e6db74;
+}
+
+.mdzsyn-identifier {
+    color: #a6e22e;
+}
+
+.mdzsyn-symbol {
+    color: #afffff;
+}
+
+.mdzsyn-coresym {
+    color: #ffbc6d;
+}
+
+.cm-s-monokai span.cm-bracket {
+    color: #f8f8f2;
+}
+
+.cm-s-monokai span.cm-tag {
+    color: #f92672;
+}
+
+.cm-s-monokai span.cm-link {
+    color: #ae81ff;
+}
+
+.cm-s-monokai span.cm-error {
+    background: #f92672;
+    color: #f8f8f0;
+}
+
+.cm-s-monokai span.cm-property,
+.cm-s-monokai span.cm-attribute {
+    color: #a6e22e;
+}
+
+.cm-s-monokai .CodeMirror-activeline-background {
+    background: #373831 !important;
+}
+
 .cm-s-monokai .CodeMirror-matchingbracket {
-  text-decoration: underline;
-  color: white !important;
+    text-decoration: underline;
+    color: white !important;
 }

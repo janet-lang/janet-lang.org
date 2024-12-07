@@ -49,7 +49,6 @@
         padding: 5px;
         background: gray;
     }
-
 }
 
 /*
@@ -76,11 +75,11 @@
 }
 
 .toc span.selected {
-  background: #0765911a;
+    background: #0765911a;
 }
-  
+
 .toc span:hover {
-  background: #0765911a;
+    background: #0765911a;
 }
 
 .toc ul {
@@ -111,6 +110,12 @@
     color: #888;
 }
 
+@media (prefers-color-scheme: dark) {
+    .binding-type {
+        color: #ccc;
+    }
+}
+
 .binding-sym {
     font-family: serif;
     font-weight: 600;
@@ -119,13 +124,25 @@
 .binding-text {
     color: #444;
     margin-top: 14px;
-    font-family: 'Dosis','Helvetica', sans-serif;
+    font-family: 'Dosis', 'Helvetica', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    .binding-text {
+        color: unset;
+    }
 }
 
 .example-title {
     margin-top: 28px;
     color: #888;
-    font-family: 'Dosis','Helvetica', sans-serif;
+    font-family: 'Dosis', 'Helvetica', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    .example-title {
+        color: #ccc;
+    }
 }
 
 /* Toc Toggle */
@@ -144,7 +161,7 @@
     height: 4px;
     width: 28px;
     border-radius: 2px;
-    background: #CCC;
+    background: #ccc;
 }
 
 #toc-toggle.open .topbar {
@@ -171,7 +188,7 @@
 }
 
 .prev .prevnext-text::before {
-    content: "< ";
+    content: '< ';
 }
 
 .next {
@@ -180,5 +197,5 @@
 }
 
 .next .prevnext-text::after {
-    content: " >";
+    content: ' >';
 }
