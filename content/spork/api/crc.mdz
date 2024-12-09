@@ -1,0 +1,16 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/crc :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "crc"
+ :template "docpage.html"}
+ ---
+
+Generate CRC (Cyclic Redundancy Check) variants. 
+  Rather than compile separate variants, we have code to generate the needed tables. 
+  Keeps build simple, footprint small but with many variants accessible.
+
+## Reference
+
+@gen-docs/gen-prefix-current[crc/]

@@ -1,0 +1,32 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/msg :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "msg"
+ :author "Calvin Rose"
+ :license "MIT"
+ :template "docpage.html"}
+---
+
+Provide a symmetric way to send and receive seqential messages over a
+networked stream.  Useful for building more complicated application
+level protocols on top of TCP.
+
+## Examples
+
+@codeblock[janet]```
+(import spork/msg)
+
+(def stream (net/connect "http://example.com" "1234"))
+
+(def send (msg/make-send stream))
+(def recv (msg/make-recv stream))
+
+(send "blob1")
+(def blob-respose (recv))
+```
+
+## Reference
+
+@gen-docs/gen-prefix-current[msg/]
