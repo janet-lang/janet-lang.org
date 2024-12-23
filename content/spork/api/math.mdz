@@ -1,0 +1,17 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/math :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "math"
+ :author "Josef Pospíšil"
+ :license "MIT"
+ :template "docpage.html"}
+---
+
+The math module deals with two main areas of mathematics: statistics and linear algebra. 	
+
+## Reference
+
+@gen-docs/gen-prefix-current[math/]
+

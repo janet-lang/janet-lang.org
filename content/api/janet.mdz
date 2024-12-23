@@ -1,0 +1,11 @@
+(import ../gen-docs :as gen-docs)
+
+{:title "Janet Module"
+ :nav-title "janet"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix[janet/]
+

@@ -1,0 +1,14 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/getline :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "getline"
+ :template "docpage.html"}
+ ---
+
+Module for fiber-based sequence combinators rather than array-based combinators, as are in the core library.
+
+## Reference
+
+@gen-docs/gen-prefix-current[getline/]
