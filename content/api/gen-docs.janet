@@ -11,7 +11,7 @@
     (set ret (string/replace "  " " " ret)))
   ret)
 
-(def- replacer (peg/compile ~(% (any (+ (/ '(set "/*%") ,|(string "_" (0 $))) '1)))))
+(def- replacer (peg/compile ~(% (any (+ (/ '(set "%*/:<>?") ,|(string "_" (0 $))) '1)))))
 (defn- sym-to-filename
   "Convert a symbol to a filename. Certain filenames are not allowed on various operating systems."
   [fname]
