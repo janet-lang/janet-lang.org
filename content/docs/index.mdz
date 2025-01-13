@@ -229,4 +229,6 @@ without arguments to print them out.
 
 @codeblock[janet](```(doc)```)
 
+Note: see the @code[all-bindings] function for related functionality.
+
 You can also browse the @link[/doc.html][core library API] on the website.
