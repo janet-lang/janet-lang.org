@@ -43,9 +43,20 @@ documentation tool, but of course is written in and is a dialect of Janet. See
 ## Adding Examples
 
 Simply add a file with the name of the binding you are giving examples for to the examples
-directory, with the `.janet` suffix. If the binding includes the `/` character, replace it with
-an underscore - this works because no bindings in the core use an underscore. For example, the
-binding `array/new` has examples in the `examples/array_new.janet` file.
+directory, with the `.janet` suffix. If the binding includes any of the following characters `%*/:<>?`, replace it with
+an underscore followed by its ascii character code.
+
+|Symbol | Replacement|
+|-------|------------|
+|%      |_37         |
+|*      |_42         |
+|/      |_47         |
+|:      |_58         |
+|<      |_60         |
+|>      |_62         |
+|?      |_63         |
+
+For example, the binding `string/has-prefix?` has examples in the `examples/string_47has-prefix_63.janet` file.
 
 If such a file already exists, you can simply append your example code the existing file.
 
