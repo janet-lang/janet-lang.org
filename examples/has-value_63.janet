@@ -23,7 +23,7 @@
 (has-value? ["a" "b" "c"] 'a) # -> false
 (has-value? ["a" "b" "c"] 97) # -> false
 
-#arrays
+# arrays
 (has-value? @[] 0) # -> false
 (has-value? @["a" "b" "c"] "a") # -> true
 (has-value? @["a" "b" "c"] 'a) # -> false
