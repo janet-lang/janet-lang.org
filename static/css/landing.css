@@ -62,9 +62,9 @@
 
 #replterm {
     border-radius: 2px 2px 0 0;
-    border-top: solid #CCC 1px;
-    border-left: solid #CCC 1px;
-    border-right: solid #CCC 1px;
+    border-top: solid #ccc 1px;
+    border-left: solid #ccc 1px;
+    border-right: solid #ccc 1px;
     font-family: 'Inconsolata', monospace;
     padding: 10px;
     height: 350px;
@@ -74,14 +74,30 @@
     overflow-y: auto;
 }
 
+@media (prefers-color-scheme: dark) {
+    #replterm {
+        border-color: #333;
+        background: #333;
+        color: #ccc;
+    }
+}
+
 #replinbar {
     border-radius: 0 0 2px 2px;
-    border: solid #CCC 1px;
+    border: solid #ccc 1px;
     font-family: 'Inconsolata', monospace;
     margin: 0 10px 10px 10px;
     color: black;
     display: flex;
-    background: #F8F8F8;
+    background: #f8f8f8;
+}
+
+@media (prefers-color-scheme: dark) {
+    #replinbar {
+        border-color: #333;
+        color: unset;
+        background: #1a1a1a;
+    }
 }
 
 #replprompt {
@@ -99,12 +115,18 @@
     margin: 0;
     width: 100%;
     transition: background 0.3s;
-    text-indent 2px;
+    text-indent: 2px;
 }
 
 #replin:focus {
     outline: none;
-    background: #F0F0F0;
+    background: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    #replin:focus {
+        background: unset;
+    }
 }
 
 #replin br {
@@ -118,8 +140,8 @@
 
 /* Github Banner */
 
-.github-corner:hover .octo-arm{
-    animation:octocat-wave 560ms ease-in-out;
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
 }
 
 /* Donate button */
@@ -128,23 +150,23 @@
     margin: 0 15px;
 }
 
-@keyframes octocat-wave{
+@keyframes octocat-wave {
     0%, 100% {
-        transform:rotate(0);
+        transform: rotate(0);
     }
     20%, 60% {
-        transform:rotate(-25deg);
+        transform: rotate(-25deg);
     }
-    40%, 80%{
-        transform:rotate(10deg);
+    40%, 80% {
+        transform: rotate(10deg);
     }
 }
 
-@media (max-width:500px) {
+@media (max-width: 500px) {
     .github-corner:hover .octo-arm {
-        animation:none;
+        animation: none;
     }
     .github-corner .octo-arm {
-        animation:octocat-wave 560ms ease-in-out;
+        animation: octocat-wave 560ms ease-in-out;
     }
 }
