@@ -4,4 +4,5 @@
 
 (distinct "bookkeeper") # -> @[98 111 107 101 112 114]
 
-(sort (map string/from-bytes (distinct "bookkeeper"))) # -> @["b" "e" "k" "o" "p" "r"]
+(sort (map string/from-bytes
+           (distinct "bookkeeper"))) # -> @["b" "e" "k" "o" "p" "r"]
