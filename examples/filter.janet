@@ -2,8 +2,6 @@
 
 (filter |(> (length $) 3) ["hello" "goodbye" "hi"]) # -> @["hello" "goodbye"]
 
-(filter |(< 65 $) "foo01bar") # -> @[102 111 111 98 97 114]
+(filter |(< (chr "A") $) "foo01bar") # -> @[102 111 111 98 97 114]
 
-(string/join
- (map string/from-bytes 
-      (filter |(< "A" (string/from-bytes $)) "foo01bar"))) # -> "foobar"
+(string/from-bytes ;(filter |(< (chr "A") $) "foo01bar")) # -> "foobar"
