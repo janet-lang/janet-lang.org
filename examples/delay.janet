@@ -1,13 +1,11 @@
-(defn setup []
-  (printf "  -> running setup code, first time only."))
-
 (def setup-once
-  (delay
-   (setup)
-   "setup complete"))
+  (let [setup |(print "running setup")]
+    (delay
+     (setup)
+     "setup complete")))
 
-repl:127:> (setup-once)
-  -> running setup code, first time only.
-"setup complete"
-repl:128:> (setup-once)
-"setup complete"
+# first run will print "running setup" followed by "setup complete"
+(printf "first run: %s" (setup-once))
+
+# after that, only prints cached value "setup complete"
+(printf "second run: %s" (setup-once))
