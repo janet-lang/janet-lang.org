@@ -9,4 +9,4 @@ module/private-thing # -> Unknown symbol
 module/public-thing # -> :exposed
 
 # Same as normal def with :private metadata
-(def :private x private-thing :encapsulated)
+(def private-thing :private :encapsulated)
