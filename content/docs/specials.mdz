@@ -155,6 +155,9 @@ macro.
 The condition is considered false only if it evaluates to @code`nil` or
 @code`false` - all other values are considered @code`true`.
 
+If when-true or when-false is evaluated, this is done in the context
+of a newly introduced lexical scope.
+
 @codeblock[janet]```
 (if true 10) # evaluates to 10
 (if false 10) # evaluates to nil
@@ -210,6 +213,8 @@ of the form will be continuously evaluated until the condition is @code`false`
 or @code`nil`. Therefore, it is expected that the body will contain some side
 effects or the loop will go on forever. The @code`while` loop always evaluates
 to @code`nil`.
+
+Note that the @code`while` special form introduces a new lexical scope.
 
 @codeblock[janet]```
 (var i 0)
