@@ -110,12 +110,6 @@
     color: #888;
 }
 
-@media (prefers-color-scheme: dark) {
-    .binding-type {
-        color: #ccc;
-    }
-}
-
 .binding-sym {
     font-family: serif;
     font-weight: 600;
@@ -127,22 +121,10 @@
     font-family: 'Dosis', 'Helvetica', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-    .binding-text {
-        color: unset;
-    }
-}
-
 .example-title {
     margin-top: 28px;
     color: #888;
     font-family: 'Dosis', 'Helvetica', sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-    .example-title {
-        color: #ccc;
-    }
 }
 
 /* Toc Toggle */
@@ -198,4 +180,18 @@
 
 .next .prevnext-text::after {
     content: ' >';
+}
+
+@media (prefers-color-scheme: dark) {
+    .binding-type {
+        color: #ccc;
+    }
+
+    .binding-text {
+        color: unset;
+    }
+
+    .example-title {
+        color: #ccc;
+    }
 }
