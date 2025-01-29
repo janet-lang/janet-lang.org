@@ -75,7 +75,7 @@ A REPL is launched when the @code`janet` binary is invoked with no arguments. Pa
 to display the usage information. Individual scripts can be run with @code`janet myscript.janet`
 
 If you are looking to explore, you can print a list of all available macros, functions, and constants
-by entering the command @code[all-bindings] into the REPL.
+by entering the command @code[(doc)] into the REPL.
 
 @codeblock(```
 $ janet
