@@ -178,12 +178,6 @@ table tr {
     background-color: white;
 }
 
-@media (prefers-color-scheme: dark) {
-    table tr {
-        background: #222;
-    }
-}
-
 table tr th {
     font-weight: bold;
     border: 1px solid #cccccc;
@@ -372,8 +366,11 @@ code {
         color: #09a5b8;
     }
 
+    table tr {
+        background: #222;
+    }
+
     .mendoza-code {
         background: #333;
     }
-
 }
