@@ -169,3 +169,17 @@
 .next .prevnext-text::after {
     content: " >";
 }
+
+@media (prefers-color-scheme: dark) {
+    .binding-type {
+        color: #ccc;
+    }
+
+    .binding-text {
+        color: unset;
+    }
+
+    .example-title {
+        color: #ccc;
+    }
+}

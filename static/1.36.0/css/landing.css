@@ -148,3 +148,21 @@
         animation: octocat-wave 560ms ease-in-out;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    #replterm {
+        border-color: #333;
+        background: #333;
+        color: #ccc;
+    }
+
+    #replinbar {
+        border-color: #333;
+        color: unset;
+        background: #1a1a1a;
+    }
+
+    #replin:focus {
+        background: unset;
+    }
+}
