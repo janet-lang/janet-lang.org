@@ -287,3 +287,34 @@ code {
   text-decoration: underline;
   color: white !important;
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+        color: #eee;
+    }
+
+    h1, h2, h3, h4 {
+        color: #f8f8f2;
+    }
+
+    h3 {
+        color: #e3e0e0;
+    }
+
+    h4 {
+        color: #cccccc;
+    }
+
+    a {
+        color: #09a5b8;
+    }
+
+    table tr {
+        background: #222;
+    }
+
+    .mendoza-code {
+        background: #333;
+    }
+}

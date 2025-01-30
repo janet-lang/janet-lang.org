@@ -74,14 +74,6 @@
     overflow-y: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-    #replterm {
-        border-color: #333;
-        background: #333;
-        color: #ccc;
-    }
-}
-
 #replinbar {
     border-radius: 0 0 2px 2px;
     border: solid #ccc 1px;
@@ -90,14 +82,6 @@
     color: black;
     display: flex;
     background: #f8f8f8;
-}
-
-@media (prefers-color-scheme: dark) {
-    #replinbar {
-        border-color: #333;
-        color: unset;
-        background: #1a1a1a;
-    }
 }
 
 #replprompt {
@@ -121,12 +105,6 @@
 #replin:focus {
     outline: none;
     background: #f0f0f0;
-}
-
-@media (prefers-color-scheme: dark) {
-    #replin:focus {
-        background: unset;
-    }
 }
 
 #replin br {
@@ -168,5 +146,23 @@
     }
     .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    #replterm {
+        border-color: #333;
+        background: #333;
+        color: #ccc;
+    }
+
+    #replinbar {
+        border-color: #333;
+        color: unset;
+        background: #1a1a1a;
+    }
+
+    #replin:focus {
+        background: unset;
     }
 }
