@@ -178,11 +178,10 @@ compiled to bytecode).
     @tr{@td{@code`(! patt)` }
     @td{ Alias for @code`(not patt)` }}
 
-    @tr{@td{@code`(look offset ?patt)` }
-        @td{ If patt is provided, matches only if patt matches at a fixed
-        offset. offset can be any integer. patt will not produce captures and
-        the peg will not advance any characters. If patt is not provided,
-        matching occurs as if the call had been (look 0 offset). }}
+    @tr{@td{@code`(look ?offset patt)` }
+        @td{ Matches only if patt matches at a fixed offset. offset can be
+             any integer and defaults to 0. The peg will not advance any
+             characters. }}
 
     @tr{@td{@code`(> offset ?patt)` }
         @td{ Alias for @code`(look offset ?patt)` }}
