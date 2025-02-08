@@ -104,8 +104,9 @@ gmake test CC=gcc
 
 ### Windows
 
-@ol{@li{Install @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#][Visual Studio]
-        or @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15#][Visual Studio Build Tools]}
+@ol{@li{Install @link[https://visualstudio.microsoft.com/downloads/#visual-studio-community-2022][Visual Studio]
+        or @link[https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022][Visual Studio Build Tools]
+        (you will need the latest MSVC build tools and the Windows SDK components)}
     @li{Run a Visual Studio Command Prompt (@code`cl.exe` and @code`link.exe`
         need to be on the PATH)}
     @li{@code[cd] to the directory with Janet}
