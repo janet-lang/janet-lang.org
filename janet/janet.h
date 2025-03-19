@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2024 Calvin Rose
+* Copyright (c) 2025 Calvin Rose
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to
@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 37
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 38
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.37.1"
+#define JANET_VERSION "1.38.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -1331,6 +1331,7 @@ typedef struct {
     /* new state */
     jmp_buf buf;
     Janet payload;
+    int coerce_error;
 } JanetTryState;
 
 /***** END SECTION TYPES *****/
@@ -2251,6 +2252,7 @@ typedef enum {
     RULE_UNREF,        /* [rule, tag] */
     RULE_CAPTURE_NUM,  /* [rule, tag] */
     RULE_SUB,          /* [rule, rule] */
+    RULE_TIL,          /* [rule, rule] */
     RULE_SPLIT,        /* [rule, rule] */
     RULE_NTH,          /* [nth, rule, tag] */
     RULE_ONLY_TAGS,    /* [rule] */
