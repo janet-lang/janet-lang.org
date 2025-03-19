@@ -106,7 +106,7 @@ gmake test CC=gcc
 
 @ol{@li{Install @link[https://visualstudio.microsoft.com/downloads/#visual-studio-community-2022][Visual Studio]
         or @link[https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022][Visual Studio Build Tools]
-        (you will need the latest MSVC build tools and the Windows SDK components)}
+        \(you will need the latest MSVC build tools and the Windows SDK components)}
     @li{Run a Visual Studio Command Prompt (@code`cl.exe` and @code`link.exe`
         need to be on the PATH)}
     @li{@code[cd] to the directory with Janet}
