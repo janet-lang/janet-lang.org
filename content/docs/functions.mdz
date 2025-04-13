@@ -94,7 +94,7 @@ reader macro (or the equivalent @code`short-fn` macro):
 Within the above sorts of contexts the symbol @code`$` refers to the
 first (or zero-th) argument.  Similarly, @code`$0`, @code`$1`,
 etc. refer to the arguments at index 0, 1, etc. and @code`$&` refers
-to all passed arguments as a tuple.
+to all remaining arguments as a tuple.
 
 There is a common macro @code[defn] that can be used for creating functions and
 immediately binding them to a name. @code[defn] works as expected at both the
