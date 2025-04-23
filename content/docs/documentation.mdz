@@ -99,9 +99,9 @@ Janet's built-in documentation viewer, @code`(doc)`, understands a subset of
 Markdown and will indent docstrings that use this subset in an intelligent way.
 The subset of Markdown includes:
 
-@ul{@li{numbered and unnumbered lists}
-    @li{codeblocks}
-    @li{blockquotes}}
+@ul{@li{top-level paragraphs}
+    @li{single-level ordered and unordered lists}
+    @li{code blocks}}
 
 Other Markdown-formatted text (e.g. code spans) are simply treated as ordinary
 text.
