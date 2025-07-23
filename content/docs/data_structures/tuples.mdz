@@ -75,22 +75,54 @@ by the contents of another array.
 
 ## Bracketed tuples
 
-Under the hood, there are two kinds of tuples: bracketed and non-bracketed. We
-have seen above that bracket tuples are used to create a tuple with @code`[]`
-characters (ie: a tuple literal).  The way a tuple literal is interpreted by
-the compiler is one of the few ways in which bracketed tuples and non-bracketed
-tuples differ:
+Under the hood, there are two kinds of tuples - bracketed and non-bracketed:
 
-@ul{@li{Bracket tuples are interpreted as a tuple constructor rather than a
-        function call by the compiler.}
-    @li{When printed via @code`pp`, bracket tuples are printed with square
-        brackets instead of parentheses.}
-    @li{When passed as an argument to @code`tuple/type`, bracket tuples will
-        return @code`:brackets` instead of @code`:parens`.}}
+@codeblock[janet]```
+(def brackets '[1 2 3]) # same as (tuple 1 2 3)
+(def parens '(1 2 3))   # same as (tuple/brackets 1 2 3)
 
-In all other ways, bracketed tuples behave identically to normal tuples. It is
-not recommended to use bracketed tuples for anything outside of macros and
-tuple constructors (ie: tuple literals).
+# you can check the type with tuple/type:
+(tuple/type brackets)
+# :brackets
+(tuple/type parens)
+# :parens
+
+# pp preserves bracketedness:
+(pp brackets)
+# [1 2 3]
+(pp parens)
+# (1 2 3)
+
+# bracketed and non-bracketed tuples
+# with the same contents are not equal:
+(= '() '[])
+# false
+(= brackets parens)
+# false
+
+# non-bracketed tuples evaluate to function calls:
+(eval parens)
+# error
+(eval (tuple '+ 2 4 6)) # same as (eval '(+ 2 4 6))
+# 12
+
+# bracketed tuples evaluate to non-bracketed ones:
+(eval brackets)
+# (1 2 3)
+(eval (tuple/brackets '+ 2 4 6)) # same as (eval '[+ 2 4 6])
+# (<function +> 2 4 6)
+(eval (eval '[+ 2 4 6]))
+# 12
+
+# tuple literals evaluate to non-bracketed tuples too:
+[4 5 6] # same as (eval '[4 5 6])
+# (4 5 6)
+```
+
+In all other ways, bracketed tuples behave identically to normal tuples.
+
+You should use bracketed tuples only in code that will be evaluated later
+(for example in macros).
 
 ## More functions
 
