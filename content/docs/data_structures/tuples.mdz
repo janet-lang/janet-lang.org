@@ -75,7 +75,8 @@ by the contents of another array.
 
 ## Bracketed tuples
 
-Under the hood, there are two kinds of tuples: bracket (bracketed) and paren (non-bracketed).
+Under the hood, there are two kinds of tuples:
+normal (aka paren or non-bracketed), and bracketed ones.
 
 @codeblock[janet]```
 # bracket tuples
