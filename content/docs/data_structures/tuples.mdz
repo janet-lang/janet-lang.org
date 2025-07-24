@@ -78,8 +78,8 @@ by the contents of another array.
 Under the hood, there are two kinds of tuples - bracketed and non-bracketed:
 
 @codeblock[janet]```
-(def brackets '[1 2 3]) # same as (tuple 1 2 3)
-(def parens '(1 2 3))   # same as (tuple/brackets 1 2 3)
+(def brackets '[1 2 3]) # same as (tuple/brackets 1 2 3)
+(def parens '(1 2 3))   # same as (tuple 1 2 3)
 
 # you can check the type with tuple/type:
 (tuple/type brackets)
