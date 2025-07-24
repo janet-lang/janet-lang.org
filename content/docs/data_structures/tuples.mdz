@@ -75,14 +75,14 @@ by the contents of another array.
 
 ## Bracketed tuples
 
-Under the hood, there are two kinds of tuples: brackets (bracketed) and parens (non-bracketed).
+Under the hood, there are two kinds of tuples: bracket (bracketed) and paren (non-bracketed).
 
 @codeblock[janet]```
-# brackets tuples
+# bracket tuples
 (def b-1 (tuple/brackets 1 2 3))
 (def b-2 '[1 2 3])
 
-# parens tuples
+# paren tuples
 (def p-1 (tuple 1 2 3))
 (def p-2 '(1 2 3))
 
@@ -94,14 +94,14 @@ Under the hood, there are two kinds of tuples: brackets (bracketed) and parens (
 (tuple/type p-2) # -> :parens
 ```
 
-The compiler interprets brackets tuples as a tuple constructor rather than
+The compiler interprets bracket tuples as a tuple constructor rather than
 a function call.
 
 @codeblock[janet]```
 # create a function object that returns a tuple
 (def c-1 (compile (tuple/brackets 1 2 3)))
 
-# create and return a (parens) tuple with elements 1, 2 and 3
+# create and return a (paren) tuple with elements 1, 2 and 3
 (c-2) # -> (1 2 3)
 
 # create a function object with a call to +
@@ -112,7 +112,7 @@ a function call.
 ```
 
 Considering that functions evaluate their arguments and the tuple literal (@code`[]`)
-evaluates to a normal (parens) tuple, the behavior of @code`tuple/type` can be
+evaluates to a normal (paren) tuple, the behavior of @code`tuple/type` can be
 surprising. It's best to use it with quoted values.
 
 @codeblock[janet]```
@@ -125,7 +125,7 @@ surprising. It's best to use it with quoted values.
 (eval-string "'[1 2 3]") # -> [1 2 3]
 ```
 
-When printed via @code`pp`, brackets tuples are printed with square brackets
+When printed via @code`pp`, bracket tuples are printed with square brackets
 instead of parentheses.
 
 @codeblock[janet]```
@@ -140,7 +140,7 @@ instead of parentheses.
 # (1 2 3)
 ```
 
-Brackets and parens tuples with the same contents are not @code`=`,
+Bracket and paren tuples with the same contents are not @code`=`,
 but are @code`deep=`.
 
 @codeblock[janet]```
