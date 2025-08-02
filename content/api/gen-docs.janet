@@ -24,7 +24,8 @@
 (def- url-repl-chars
   {(chr "%") "%25"
    (chr "?") "_q"
-   (chr "=") "%3d"})
+   (chr "=") "%3d"
+   (chr "/") "%2f"})
 
 (defn jdoc-escape
   [str]
@@ -96,7 +97,7 @@
                               :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])
                (if c-example
                  {:tag "a" "href"
-                  (string "https://janetdocs.com/" (jdoc-escape key))
+                  (string "https://janetdocs.org/core-api/" (jdoc-escape key)) # Spork will be "https://janetdocs.org/spork/", JPM .org/jpm/ etc.
                   :content "Community Examples"})]}))
 
 (defn- all-entries 
