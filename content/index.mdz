@@ -29,7 +29,8 @@ such as threading, networking, an event loop, subprocess handling, regex-like li
     @li{Lexical scoping}
     @li{REPL and interactive debugger}
     @li{Parsing Expression Grammars built in to the core library}
-    @li{500+ functions and macros in the core library}
+    @li{600+ functions and macros in the core library}
+    @li{Erlang-style supervision trees that integrate with the event loop}
     @li{Export your projects to standalone executables with a companion build tool, jpm}
     @li{Add to a project with just @code`janet.c` and @code`janet.h`}}
 
