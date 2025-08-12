@@ -142,7 +142,7 @@ cd janet
 meson setup SmallBuild
 cd SmallBuild
 meson configure -Dsingle_threaded=true -Dassembler=false -Ddocstrings=false \
-    -Dreduced_os=true -Dtyped_array=false -Dsourcemaps=false -Dpeg=false \
+    -Dreduced_os=true -Dsourcemaps=false -Dpeg=false \
     -Dint_types=false --optimization=s -Ddebug=false
 ninja
 # ./janet should be about 40% smaller than the default build as of 2019-10-13
