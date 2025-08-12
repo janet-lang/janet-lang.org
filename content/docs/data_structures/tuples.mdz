@@ -75,22 +75,87 @@ by the contents of another array.
 
 ## Bracketed tuples
 
-Under the hood, there are two kinds of tuples: bracketed and non-bracketed. We
-have seen above that bracket tuples are used to create a tuple with @code`[]`
-characters (ie: a tuple literal).  The way a tuple literal is interpreted by
-the compiler is one of the few ways in which bracketed tuples and non-bracketed
-tuples differ:
+Under the hood, there are two kinds of tuples:
+normal (aka paren or non-bracketed), and bracketed ones.
 
-@ul{@li{Bracket tuples are interpreted as a tuple constructor rather than a
-        function call by the compiler.}
-    @li{When printed via @code`pp`, bracket tuples are printed with square
-        brackets instead of parentheses.}
-    @li{When passed as an argument to @code`tuple/type`, bracket tuples will
-        return @code`:brackets` instead of @code`:parens`.}}
+@codeblock[janet]```
+# bracket tuples
+(def b-1 (tuple/brackets 1 2 3))
+(def b-2 '[1 2 3])
 
-In all other ways, bracketed tuples behave identically to normal tuples. It is
-not recommended to use bracketed tuples for anything outside of macros and
-tuple constructors (ie: tuple literals).
+# paren tuples
+(def p-1 (tuple 1 2 3))
+(def p-2 '(1 2 3))
+
+# tuple/type can distinguish between tuples
+(tuple/type b-1) # -> :brackets
+(tuple/type b-2) # -> :brackets
+
+(tuple/type p-1) # -> :parens
+(tuple/type p-2) # -> :parens
+```
+
+The compiler interprets bracket tuples as a tuple constructor rather than
+a function call.
+
+@codeblock[janet]```
+# create a function object that returns a tuple
+(def c-1 (compile (tuple/brackets 1 2 3)))
+
+# create and return a (paren) tuple with elements 1, 2 and 3
+(c-2) # -> (1 2 3)
+
+# create a function object with a call to +
+(def c-2 (compile (tuple '+ 1 2 3)))
+
+# call the function named by + with 1, 2 and 3 as arguments
+(c-2) # -> 6
+```
+
+Considering that functions evaluate their arguments and the tuple literal (@code`[]`)
+evaluates to a normal (paren) tuple, the behavior of @code`tuple/type` can be
+surprising. It's best to use it with quoted values.
+
+@codeblock[janet]```
+(tuple/type [1 2 3])  # -> :parens
+
+(tuple/type '(1 2 3)) # -> :parens
+(tuple/type '[1 2 3]) # -> :brackets
+
+(eval-string "[1 2 3]")  # -> (1 2 3)
+(eval-string "'[1 2 3]") # -> [1 2 3]
+```
+
+When printed via @code`pp`, bracket tuples are printed with square brackets
+instead of parentheses.
+
+@codeblock[janet]```
+(pp (tuple/brackets 1 2 3))
+# [1 2 3]
+
+(pp (tuple 1 2 3))
+# (1 2 3)
+
+# this can be surprising
+(pp [1 2 3])
+# (1 2 3)
+```
+
+Bracket and paren tuples with the same contents are not @code`=`,
+but are @code`deep=`.
+
+@codeblock[janet]```
+(=     '() '[]) # -> false
+(deep= '() '[]) # -> true
+
+(=     '(1 2 3) '[1 2 3]) # -> false
+(deep= '(1 2 3) '[1 2 3]) # -> true
+```
+
+In all other ways, bracketed tuples behave identically to normal tuples.
+
+You should use bracketed tuples only in code that will be evaluated later
+(for example in macros).
 
 ## More functions
 
