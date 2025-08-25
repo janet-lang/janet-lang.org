@@ -1,4 +1,4 @@
-(import ./gen-docs :as gen-docs)
+(import ../gen-docs :as gen-docs)
 
 {:title "Integer Types Module"
  :nav-title "int"

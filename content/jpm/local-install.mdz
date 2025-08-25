@@ -1,0 +1,19 @@
+{:title "Local Install"
+ :template "docpage.html"
+ :order 3}
+---
+
+## Local Installation, aka Custom Trees
+
+For per-project or per-user development (as opposed to system-wide development), you can use
+custom jpm trees rather than a system default by passing the @code`--tree=<somewhere>` argument
+all jpm commands or setting the @code`JANET_TREE` environment variable. This will set the location
+where jpm will install modules, headers, scripts, and other data to. For project local development in
+a tree @code`./jpm_tree`, you can use the @code`--local` or @code`-l` shorthand for this.
+
+@codeblock```
+jpm --tree=/opt/jpm_tree deps
+jpm --tree=/opt/jpm_tree install spork
+jpm -l deps
+jpm -l test
+```

@@ -1,0 +1,32 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/randgen :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "randgen"
+ :author "Calvin Rose"
+ :license "MIT"
+ :template "docpage.html"}
+---
+
+A small utility for random number generation, especially with a focus on
+discrete numbers. The most powerful idea here is the ability to have branches
+that execute in a probabilistic manner - i.e. one branch is taken half the time
+randomly, and another is taken otherwise.
+
+## Example
+
+@codeblock[janet]```
+# Print either a, b, or c
+(import spork/randgen)
+(randgen/rand-path
+  (print "a")
+  (print "b")
+  (print "c"))
+```
+
+## Reference
+
+@gen-docs/gen-prefix-current[randgen/]
+
+
