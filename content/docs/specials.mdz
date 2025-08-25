@@ -97,6 +97,10 @@ Functions also introduce a new lexical scope, meaning the @code`def`s and
 # A function that doesn't strictly check the number of arguments.
 # Extra arguments are ignored.
 (fn [w x y z &] (tuple w w x x y y z z))
+
+# For improved debugging, name with symbol or keyword
+(fn alice [] :smile)
+(fn :bob [] :sit)
 ```
 
 For more information on functions, see the @link[/docs/functions.html][Functions
@@ -150,6 +154,9 @@ macro.
 
 The condition is considered false only if it evaluates to @code`nil` or
 @code`false` - all other values are considered @code`true`.
+
+If when-true or when-false is evaluated, this is done in the context
+of a newly introduced lexical scope.
 
 @codeblock[janet]```
 (if true 10) # evaluates to 10
@@ -206,6 +213,8 @@ of the form will be continuously evaluated until the condition is @code`false`
 or @code`nil`. Therefore, it is expected that the body will contain some side
 effects or the loop will go on forever. The @code`while` loop always evaluates
 to @code`nil`.
+
+Note that the @code`while` special form introduces a new lexical scope.
 
 @codeblock[janet]```
 (var i 0)

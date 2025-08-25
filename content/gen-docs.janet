@@ -1,6 +1,7 @@
 # Generate documentation
 
 (import mendoza/markup-env :as mdz)
+(import ./examples :as ex)
 
 (defn- remove-extra-spaces
   "Many docstrings have extra spaces that don't look
@@ -11,17 +12,11 @@
     (set ret (string/replace "  " " " ret)))
   ret)
 
-(def- replacer (peg/compile ~(% (any (+ (/ '(set "/*%") ,|(string "_" (0 $))) '1)))))
-(defn- sym-to-filename
-  "Convert a symbol to a filename. Certain filenames are not allowed on various operating systems."
-  [fname]
-  (string "examples/" ((peg/match replacer fname) 0) ".janet"))
-
 (defn- check-example
   "Check if a binding has related examples. If so, load them
   and get their content."
   [sym]
-  (def path (sym-to-filename sym))
+  (def path (ex/sym-to-filename sym))
   (when (= :file (os/stat path :mode))
     (def src (slurp path))
     src))
@@ -29,7 +24,8 @@
 (def- url-repl-chars
   {(chr "%") "%25"
    (chr "?") "_q"
-   (chr "=") "%3d"})
+   (chr "=") "%3d"
+   (chr "/") "%2f"})
 
 (defn jdoc-escape
   [str]
@@ -101,7 +97,7 @@
                               :content {:tag "code" :language (require "janet.syntax") :content (string example)}}] [])
                (if c-example
                  {:tag "a" "href"
-                  (string "https://janetdocs.com/" (jdoc-escape key))
+                  (string "https://janetdocs.org/core-api/" (jdoc-escape key)) # Spork will be "https://janetdocs.org/spork/", JPM .org/jpm/ etc.
                   :content "Community Examples"})]}))
 
 (defn- all-entries 

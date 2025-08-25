@@ -64,6 +64,38 @@ The first expression creates an anonymous function that adds twice the first
 argument to the second, and then calls that function with arguments 10 and 20.
 This will return (10 + 10 + 20) = 40.
 
+Another way an anonymous function can be created is via the @code`|`
+reader macro (or the equivalent @code`short-fn` macro):
+
+@codeblock[janet](```
+# These are functionally equivalent
+((fn [x] (+ x x)) 1) # -> 2
+(|(+ $ $) 1) # -> 2
+
+# Multiple arguments may be referenced
+(|(+ $0 $1 $2) 1 2 3) # -> 6
+
+# All arguments can be accessed as a tuple
+(|(map inc $&) -1 0 1 2) # -> @[0 1 2 3]
+
+# | is shorthand for (short-fn ...)
+((short-fn (+ $ $)) 1) # -> 2
+
+# Other constructs can be used after |
+(|[:x $] :y) # -> [:x :y]
+(|{:a $0 :b $1} 1 2) # -> {:a 1 :b 2}
+
+# Will throw an error about the wrong arity
+(|(inc $) 1 2)
+# Will not throw an error about the wrong arity
+(|(get $& 0) 1 2)
+```)
+
+Within the above sorts of contexts the symbol @code`$` refers to the
+first (or zero-th) argument.  Similarly, @code`$0`, @code`$1`,
+etc. refer to the arguments at index 0, 1, etc. and @code`$&` refers
+to all remaining arguments as a tuple.
+
 There is a common macro @code[defn] that can be used for creating functions and
 immediately binding them to a name. @code[defn] works as expected at both the
 top level and inside another form. There is also the corresponding macro

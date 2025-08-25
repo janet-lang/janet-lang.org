@@ -104,8 +104,9 @@ gmake test CC=gcc
 
 ### Windows
 
-@ol{@li{Install @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#][Visual Studio]
-        or @link[https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15#][Visual Studio Build Tools]}
+@ol{@li{Install @link[https://visualstudio.microsoft.com/downloads/#visual-studio-community-2022][Visual Studio]
+        or @link[https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022][Visual Studio Build Tools]
+        \(you will need the latest MSVC build tools and the Windows SDK components)}
     @li{Run a Visual Studio Command Prompt (@code`cl.exe` and @code`link.exe`
         need to be on the PATH)}
     @li{@code[cd] to the directory with Janet}
@@ -141,7 +142,7 @@ cd janet
 meson setup SmallBuild
 cd SmallBuild
 meson configure -Dsingle_threaded=true -Dassembler=false -Ddocstrings=false \
-    -Dreduced_os=true -Dtyped_array=false -Dsourcemaps=false -Dpeg=false \
+    -Dreduced_os=true -Dsourcemaps=false -Dpeg=false \
     -Dint_types=false --optimization=s -Ddebug=false
 ninja
 # ./janet should be about 40% smaller than the default build as of 2019-10-13
@@ -224,9 +225,11 @@ If at any time you want to see short documentation on a binding, use the
 
 @codeblock[janet](```(doc defn) # -> Prints the documentation for "defn"```)
 
-To see a list of all global functions in the REPL, type the command
+To see a list of all global bindings in the REPL, use the @code[doc] macro
+without arguments to print them out.
 
-@codeblock[janet](```(all-bindings)```)
+@codeblock[janet](```(doc)```)
 
-Which will print out every global binding in the Janet REPL. You can also browse
-the @link[/doc.html][core library API] on the website.
+Note: see the @code[all-bindings] function for related functionality.
+
+You can also browse the @link[/doc.html][core library API] on the website.

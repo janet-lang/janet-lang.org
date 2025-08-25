@@ -1,6 +1,6 @@
 # janet-lang.org
 
-[![Gitter](https://badges.gitter.im/janet-language/website.svg)](https://gitter.im/janet-language/website?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Zulip](https://img.shields.io/badge/zulip-join_chat-brightgreen.svg)](https://janet.zulipchat.com)
 
 This is the source code for the website of the [Janet](https://janet-lang.org) programming
 language. It is a static website built with [mendoza](https://github.com/bakpakin/mendoza), a
@@ -42,21 +42,19 @@ documentation tool, but of course is written in and is a dialect of Janet. See
 
 ## Adding Examples
 
-Simply add a file with the name of the binding you are giving examples for to the examples
-directory, with the `.janet` suffix. If the binding includes the `/` character, replace it with
-an underscore - this works because no bindings in the core use an underscore. For example, the
-binding `array/new` has examples in the `examples/array_new.janet` file.
+Simply add a file with the name of the binding you are giving examples
+for to the `examples` directory, with the `.janet` suffix.
 
 To cope with some of Janet's symbols having names with characters that
 are not-so-friendly to certain filesystem and/or operating system
 combinations, an escaping scheme is used.
 
-For a given symbol, use the `content/examples.janet` script to
+For a given symbol, use the `content/api/examples.janet` script to
 generate an appropriate filename.  For example, for `array/new`,
 invoking:
 
 ```
-$ janet content/examples.janet array/new
+$ janet content/api/examples.janet array/new
 ```
 
 should give the output:
@@ -65,12 +63,10 @@ should give the output:
 array_47new.janet
 ```
 
-If such a file already exists, you can simply append your example code
-to the existing file.
+If such a file already exists, you can simply append your example code the existing file.
 
-When building the site, the new examples will be included in the
-generated documentation. Make sure that your example has correct janet
-syntax, as syntax errors will cause the entire site to not build. If
-the example has valid syntax (has a 0 exit code when loaded with
-`janet -k example/my-fn.janet`), there may be a bug in the mendoza
-janet syntax highlighter in which case please open a bug in mendoza.
+When building the site, the new examples will be included in the generated documentation. Make
+sure that your example has correct janet syntax, as syntax errors will cause the entire site
+to not build. If the example has valid syntax (has a 0 exit code when loaded with
+        `janet -k example/my-fn.janet`), there may be a bug in the mendoza janet syntax
+highlighter and you open a bug in mendoza.

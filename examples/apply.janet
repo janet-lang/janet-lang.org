@@ -1,7 +1,7 @@
 (apply + (range 10)) # -> 45
 (apply + []) # -> 0
 (apply + 1 2 3 4 5 6 7 [8 9 10]) # -> 55
-(apply + 1 2 3 4 5 6 7 8 9 10) # -> error: expected array|tuple, got number 
+(apply + 1 2 3 4 5 6 7 8 9 10) # -> error: expected array or tuple, got 10
 
 # Can also be used to call macros like functions.
 # Will return the macro expanded code of the original macro.

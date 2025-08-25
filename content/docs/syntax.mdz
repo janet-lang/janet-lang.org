@@ -216,7 +216,7 @@ struct.
 @codeblock[janet]```
 {}
 {:key1 "value1" :key2 :value2 :key3 3}
-{(1 2 3) (4 5 6)}
+{[1 2 3] [4 5 6]}
 {@[] @[]}
 {1 2 3 4 5 6}
 ```
@@ -229,7 +229,7 @@ indicate that they are mutable.
 @codeblock[janet]```
 @{}
 @{:key1 "value1" :key2 :value2 :key3 3}
-@{(1 2 3) (4 5 6)}
+@{[1 2 3] [4 5 6]}
 @{@[] @[]}
 @{1 2 3 4 5 6}
 ```

@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>MDZ Document Generation</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="MDZ Document Generation" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/jpm.html">jpm</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../index.html">API</a></span><ul><li><span><a href="../array.html">array</a></span></li><li><span><a href="../buffer.html">buffer</a></span></li><li><span><a href="../bundle.html">bundle</a></span></li><li><span><a href="../debug.html">debug</a></span></li><li><span><a href="../ev.html">ev</a></span></li><li><span><a href="../ffi.html">ffi</a></span></li><li><span><a href="../fiber.html">fiber</a></span></li><li><span><a href="../file.html">file</a></span></li><li><span><a href="../int.html">int</a></span></li><li class="caret"><span><a href="../jpm/index.html">jpm</a></span><ul><li><span><a href="../jpm/rules.html">rules</a></span></li><li><span><a href="../jpm/cc.html">cc</a></span></li><li><span><a href="../jpm/cgen.html">cgen</a></span></li><li><span><a href="../jpm/cli.html">cli</a></span></li><li><span><a href="../jpm/commands.html">commands</a></span></li><li><span><a href="../jpm/config.html">config</a></span></li><li><span><a href="../jpm/make-config.html">make-config</a></span></li><li><span><a href="../jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/pm.html">pm</a></span></li><li><span><a href="../jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../math.html">math</a></span></li><li><span><a href="../module.html">module</a></span></li><li><span><a href="../net.html">net</a></span></li><li><span><a href="../os.html">os</a></span></li><li><span><a href="../peg.html">peg</a></span></li><li><span><a href="../parser.html">parser</a></span></li><li class="caret"><span><a href="index.html">spork</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="cjanet.html">cjanet</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span class="selected"><a href="mdz.html">mdz</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li><li><span><a href="../string.html">string</a></span></li><li><span><a href="../table.html">table</a></span></li><li><span><a href="../misc.html">misc</a></span></li><li><span><a href="../tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.38.0-73334f3 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.37.1/api/spork/mdz.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/api/spork/mdz.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/api/spork/mdz.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/api/spork/mdz.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/api/spork/mdz.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/api/spork/mdz.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/api/spork/mdz.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/api/spork/mdz.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/api/spork/mdz.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/api/spork/mdz.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/api/spork/mdz.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/api/spork/mdz.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/api/spork/mdz.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/api/spork/mdz.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/api/spork/mdz.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/api/spork/mdz.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/api/spork/mdz.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/api/spork/mdz.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/api/spork/mdz.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/api/spork/mdz.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/api/spork/mdz.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/api/spork/mdz.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/api/spork/mdz.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/api/spork/mdz.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/api/spork/mdz.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/api/spork/mdz.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/api/spork/mdz.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/api/spork/mdz.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/api/spork/mdz.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/api/spork/mdz.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/api/spork/mdz.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/api/spork/mdz.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">MDZ Document Generation</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="json.html"><span class="prevnext-text">JSON</span></a></span>
+
+          <span class="next"><a href="math.html"><span class="prevnext-text">Math extended</span></a></span>
+        </div>
+        
+
+<h2 id="Index-48">Index
+</h2>
+<p><a href="#mdz/*front-matter*">mdz/*front-matter*</a> <a href="#mdz/*markup-dom*">mdz/*markup-dom*</a> <a href="#mdz/add-loader">mdz/add-loader</a> <a href="#mdz/anchor">mdz/anchor</a> <a href="#mdz/bigger">mdz/bigger</a> <a href="#mdz/blockquote">mdz/blockquote</a> <a href="#mdz/center">mdz/center</a> <a href="#mdz/code">mdz/code</a> <a href="#mdz/codeblock">mdz/codeblock</a> <a href="#mdz/div">mdz/div</a> <a href="#mdz/em">mdz/em</a> <a href="#mdz/hr">mdz/hr</a> <a href="#mdz/html">mdz/html</a> <a href="#mdz/image">mdz/image</a> <a href="#mdz/li">mdz/li</a> <a href="#mdz/link">mdz/link</a> <a href="#mdz/markup">mdz/markup</a> <a href="#mdz/mdz-loader">mdz/mdz-loader</a> <a href="#mdz/ol">mdz/ol</a> <a href="#mdz/p">mdz/p</a> <a href="#mdz/pre">mdz/pre</a> <a href="#mdz/section">mdz/section</a> <a href="#mdz/smaller">mdz/smaller</a> <a href="#mdz/strong">mdz/strong</a> <a href="#mdz/sub">mdz/sub</a> <a href="#mdz/sup">mdz/sup</a> <a href="#mdz/tag">mdz/tag</a> <a href="#mdz/td">mdz/td</a> <a href="#mdz/th">mdz/th</a> <a href="#mdz/tr">mdz/tr</a> <a href="#mdz/u">mdz/u</a> <a href="#mdz/ul">mdz/ul</a> </p><hr><div class="binding"><span id="mdz/*front-matter*" class="binding-sym">mdz/*front-matter*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L7">source</a></span> <pre class="binding-text">Dynamic binding to front matter of markup after parsing, compilation, and evaluation completes.</pre></div><hr><div class="binding"><span id="mdz/*markup-dom*" class="binding-sym">mdz/*markup-dom*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L8">source</a></span> <pre class="binding-text">The htmlgen source that can be used to generate a document with htmlgen/html.</pre></div><hr><div class="binding"><span id="mdz/add-loader" class="binding-sym">mdz/add-loader</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L312">source</a></span> <pre class="binding-text">(add-loader)
+
+Allow importing and requiring markup as a module</pre></div><hr><div class="binding"><span id="mdz/anchor" class="binding-sym">mdz/anchor</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L219">source</a></span> <pre class="binding-text">(anchor name &amp; content)
+
+Create an in-page anchor for a local link.</pre></div><hr><div class="binding"><span id="mdz/bigger" class="binding-sym">mdz/bigger</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L204">source</a></span> <pre class="binding-text">(bigger content)
+
+Make span element with bigger font</pre></div><hr><div class="binding"><span id="mdz/blockquote" class="binding-sym">mdz/blockquote</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L235">source</a></span> <pre class="binding-text">(blockquote content)
+
+Make a block quote element</pre></div><hr><div class="binding"><span id="mdz/center" class="binding-sym">mdz/center</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L245">source</a></span> <pre class="binding-text">(center content)
+
+Center some content</pre></div><hr><div class="binding"><span id="mdz/code" class="binding-sym">mdz/code</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L214">source</a></span> <pre class="binding-text">(code content)
+
+Make code element with class mendoza-code</pre></div><hr><div class="binding"><span id="mdz/codeblock" class="binding-sym">mdz/codeblock</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L255">source</a></span> <pre class="binding-text">(codeblock lang &amp;opt source)
+
+Inline code or codeblock</pre></div><hr><div class="binding"><span id="mdz/div" class="binding-sym">mdz/div</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a div element</pre></div><hr><div class="binding"><span id="mdz/em" class="binding-sym">mdz/em</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a em element</pre></div><hr><div class="binding"><span id="mdz/hr" class="binding-sym">mdz/hr</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L199">source</a></span> <pre class="binding-text">(hr)
+
+Add a horizontal rule</pre></div><hr><div class="binding"><span id="mdz/html" class="binding-sym">mdz/html</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L250">source</a></span> <pre class="binding-text">(html source)
+
+Embed some raw html</pre></div><hr><div class="binding"><span id="mdz/image" class="binding-sym">mdz/image</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L240">source</a></span> <pre class="binding-text">(image src alt)
+
+Make an image element</pre></div><hr><div class="binding"><span id="mdz/li" class="binding-sym">mdz/li</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a li element</pre></div><hr><div class="binding"><span id="mdz/link" class="binding-sym">mdz/link</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L224">source</a></span> <pre class="binding-text">(link url &amp;opt content)
+
+Create an anchor link</pre></div><hr><div class="binding"><span id="mdz/markup" class="binding-sym">mdz/markup</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L270">source</a></span> <pre class="binding-text">(markup source &amp;opt env where)
+
+Parse mendoza markup and evaluate it returning an htmlgen document tree.</pre></div><hr><div class="binding"><span id="mdz/mdz-loader" class="binding-sym">mdz/mdz-loader</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L304">source</a></span> <pre class="binding-text">(mdz-loader path &amp;)
+
+Loader for the mdz format</pre></div><hr><div class="binding"><span id="mdz/ol" class="binding-sym">mdz/ol</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a ol element</pre></div><hr><div class="binding"><span id="mdz/p" class="binding-sym">mdz/p</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a p element</pre></div><hr><div class="binding"><span id="mdz/pre" class="binding-sym">mdz/pre</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a pre element</pre></div><hr><div class="binding"><span id="mdz/section" class="binding-sym">mdz/section</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L229">source</a></span> <pre class="binding-text">(section name content)
+
+Create a section. Usually used to embed different parts of the content document into different parts of the main page.</pre></div><hr><div class="binding"><span id="mdz/smaller" class="binding-sym">mdz/smaller</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L209">source</a></span> <pre class="binding-text">(smaller content)
+
+Make span element with smaller font</pre></div><hr><div class="binding"><span id="mdz/strong" class="binding-sym">mdz/strong</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a strong element</pre></div><hr><div class="binding"><span id="mdz/sub" class="binding-sym">mdz/sub</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a sub element</pre></div><hr><div class="binding"><span id="mdz/sup" class="binding-sym">mdz/sup</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a sup element</pre></div><hr><div class="binding"><span id="mdz/tag" class="binding-sym">mdz/tag</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/mdz.janet#L193">source</a></span> <pre class="binding-text">(tag name content)
+
+Wrap some content in an html tag. If you need attributes or other properties, you may want to use raw HTML via the html function.</pre></div><hr><div class="binding"><span id="mdz/td" class="binding-sym">mdz/td</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a td element</pre></div><hr><div class="binding"><span id="mdz/th" class="binding-sym">mdz/th</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a th element</pre></div><hr><div class="binding"><span id="mdz/tr" class="binding-sym">mdz/tr</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a tr element</pre></div><hr><div class="binding"><span id="mdz/u" class="binding-sym">mdz/u</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a u element</pre></div><hr><div class="binding"><span id="mdz/ul" class="binding-sym">mdz/ul</span> <span class="binding-type">function</span>  <pre class="binding-text">Make a ul element</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="json.html"><span class="prevnext-text">JSON</span></a></span>
+          <span class="next"><a href="math.html"><span class="prevnext-text">Math extended</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2025
+  <div class="gentag">Generated on March 19, 2025 at 02:31:18 (UTC) with Janet 1.38.0-73334f3</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

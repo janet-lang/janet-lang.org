@@ -178,13 +178,13 @@ compiled to bytecode).
     @tr{@td{@code`(! patt)` }
     @td{ Alias for @code`(not patt)` }}
 
-    @tr{@td{@code`(look offset patt)` }
-        @td{ Matches only if patt matches at a fixed offset. offset can be any
-        integer. patt will not produce captures and the peg will not advance any
-        characters. }}
+    @tr{@td{@code`(look ?offset patt)` }
+        @td{ Matches only if patt matches at a fixed offset. offset can be
+             any integer and defaults to 0. The peg will not advance any
+             characters. }}
 
-    @tr{@td{@code`(> offset patt)` }
-        @td{ Alias for @code`(look offset patt)` }}
+    @tr{@td{@code`(> offset ?patt)` }
+        @td{ Alias for @code`(look offset ?patt)` }}
 
     @tr{@td{@code`(to patt)` }
         @td{ Match up to patt (but not including it). If the end of the input
@@ -217,7 +217,17 @@ compiled to bytecode).
              @code`patt` cannot match more than @code`window-patt`; it will
              see end-of-input at the end of the substring matched by
              @code`window-patt`. If @code`patt` also succeeds, @code`sub` will
-             advance to the end of what @code`window-patt` matched. }}}
+             advance to the end of what @code`window-patt` matched. }}
+
+    @tr{@td{@code`(split separator-patt patt)` }
+        @td{ Split the remaining input by @code`separator-patt`, and execute
+             @code`patt` on each substring. @code`patt` will execute with its
+             input constrained to the next instance of @code`separator-patt`,
+             as if narrowed by @code`(sub (to separator-patt) ...)`.
+             @code`split` will continue to match separators and patterns until
+             it reaches the end of the input; if you don't want to match to the
+             end of the input you should first narrow it with
+             @code`(sub ... (split ...))`. }}}
 
 PEGs try to match an input text with a pattern in a greedy manner.  This means
 that if a rule fails to match, that rule will fail and not try again. The only
@@ -336,6 +346,14 @@ grammars simpler.
 
     @tr{@td{@code`(drop patt)` }
         @td{ Ignores (drops) all captures from patt. }}
+
+    @tr{@td{@code`(only-tags patt)` }
+        @td{ Ignores all captures from @code`patt`, while making tagged
+        captures within @code`patt` available for future back-referencing. }}
+
+    @tr{@td{@code`(nth index patt ?tag)` }
+        @td{ Capture one of the captures in @code`patt` at @code`index`.
+        If no such capture exists, then the match fails. }}
 
     @tr{@td{@code`(uint num-bytes ?tag)` }
         @td{ Capture a little endian, unsigned, two's complement integer from 

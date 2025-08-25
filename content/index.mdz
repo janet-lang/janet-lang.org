@@ -29,7 +29,8 @@ such as threading, networking, an event loop, subprocess handling, regex-like li
     @li{Lexical scoping}
     @li{REPL and interactive debugger}
     @li{Parsing Expression Grammars built in to the core library}
-    @li{500+ functions and macros in the core library}
+    @li{600+ functions and macros in the core library}
+    @li{Erlang-style supervision trees that integrate with the event loop}
     @li{Export your projects to standalone executables with a companion build tool, jpm}
     @li{Add to a project with just @code`janet.c` and @code`janet.h`}}
 
@@ -75,7 +76,7 @@ A REPL is launched when the @code`janet` binary is invoked with no arguments. Pa
 to display the usage information. Individual scripts can be run with @code`janet myscript.janet`
 
 If you are looking to explore, you can print a list of all available macros, functions, and constants
-by entering the command @code[all-bindings] into the REPL.
+by entering the command @code[(doc)] into the REPL.
 
 @codeblock(```
 $ janet
@@ -124,17 +125,20 @@ for a more complete list. Packages in the listing can be installed via @code`jpm
     @li{@link[https://github.com/janet-lang/jhydro]{JHydro} - Cryptography for Janet}
     @li{@link[https://github.com/janet-lang/janetui]{JanetUI} - Bindings to @link[https://github.com/andlabs/libui]{libui}}}
 
-For editor support:
+## Editor Support
 
-@ul{@li{@link[https://github.com/Olical/conjure]{Conjure} - Interactive evaluation for Neovim (Clojure, Fennel, Janet)}
-    @li{@link[https://github.com/janet-lang/janet.vim]{janet.vim} - Support for Janet syntax in Vim}
-    @li{@link[https://github.com/janet-lang/vscode-janet]{vscode-janet} - VSCode plugin for Janet}
-    @li{@link[https://github.com/SerialDev/ijanet-mode]{ijanet-mode} - Emacs interactive Janet mode}
-    @li{@link[https://github.com/ALSchwalm/janet-mode]{janet-mode} - Janet major mode for Emacs}
-    @li{@link[https://github.com/velkyel/inf-janet]{inf-janet} - Inferior lisp Janet mode for Emacs}
-    @li{@link[https://atom.io/packages/language-janet]{language-janet} - Atom Editor support for Janet.}
-    @li{@link[https://github.com/archydragon/sublime-janet]{sublime-janet} - Sublime Text 3 & 4 support for Janet.}
-    @li{@link[https://github.com/pepe/janet.kak]{janet.kak} - Kakoune Editor support for Janet.}}
+Janet support exists for a number of editors.  See the links below for
+some editor-specific details.  The Zulip Instance also has an @link[https://janet.zulipchat.com/#narrow/stream/409409-editors-and-tooling]{editors and tooling}
+discussion area.
+
+@ul{@li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/neovim.md]{Neovim}}
+    @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/vim.md]{Vim}}
+    @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/vscode.md]{VSCode}}
+    @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/emacs.md]{Emacs}}
+    @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/sublime-text.md]{Sublime Text}}
+    @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/kakoune.md]{Kakoune}}
+    @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/tic-80.md]{TIC-80}}
+    @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/helix.md]{Helix}}}
 
 ## Community
 
@@ -146,4 +150,4 @@ We also support @link[https://github.com/janet-lang/janet/discussions]{GitHub Di
 
 ### Janet Docs
 
-For help, you can also check out @link[https://janetdocs.com]{Janet Docs} for Janet documentation with user-provided examples. Feel free to contribute your own examples here to help fellow programmers.
+For help, you can also check out @link[https://janetdocs.org]{Janet Docs} for Janet documentation with user-provided examples. Feel free to contribute your own examples here to help fellow programmers.

@@ -62,6 +62,19 @@ more natural way.
 (p/join (os/cwd) "temp")
 ```
 
+By default, the following files will be searched for in order for
+@code`(import foo)`:
+
+* @code`foo.jimage`
+* @code`foo.janet`
+* @code`foo/init.janet`
+* @code`foo.<native-extension>`
+
+where @code`<native-extension>` is the file extension for shared
+objects / libraries for the current platform (e.g. `dll` for Windows,
+`dylib` for macos, and `so` for other unix-likes).  This is a
+"first-match wins" arrangement so at most one file will be imported.
+
 ## Custom loaders (@code`module/paths` and @code`module/loaders`)
 
 The @code`module/paths` and @code`module/loaders` data structures

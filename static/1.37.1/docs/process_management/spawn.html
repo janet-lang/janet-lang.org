@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Spawning a Process</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Spawning a Process" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../index.html">Documentation</a></span><ul><li><span><a href="../syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../specials.html">Special Forms</a></span></li><li><span><a href="../numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../comparison.html">Comparison Operators</a></span></li><li><span><a href="../bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../flow.html">Flow</a></span></li><li><span><a href="../functions.html">Functions</a></span></li><li><span><a href="../strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../loop.html">Looping</a></span></li><li><span><a href="../macros.html">Macros</a></span></li><li class="caret"><span><a href="../data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../data_structures/tables.html">Tables</a></span></li><li><span><a href="../data_structures/structs.html">Structs</a></span></li><li><span><a href="../data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../fibers/index.html">Fibers</a></span><ul><li><span><a href="../fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../modules.html">Modules</a></span></li><li><span><a href="../object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../prototypes.html">Prototypes</a></span></li><li><span><a href="../abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../event_loop.html">The Event Loop</a></span></li><li><span><a href="../threads.html">Multithreading</a></span></li><li><span><a href="../networking.html">Networking</a></span></li><li class="caret"><span><a href="index.html">Process Management</a></span><ul><li><span><a href="execute.html">Executing</a></span></li><li><span class="selected"><a href="spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../documentation.html">Documentation</a></span></li><li><span><a href="../jpm.html">jpm</a></span></li><li><span><a href="../linting.html">Linting</a></span></li><li><span><a href="../ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li class="caret"><span><a href="../../api/jpm/index.html">jpm</a></span><ul><li><span><a href="../../api/jpm/rules.html">rules</a></span></li><li><span><a href="../../api/jpm/cc.html">cc</a></span></li><li><span><a href="../../api/jpm/cgen.html">cgen</a></span></li><li><span><a href="../../api/jpm/cli.html">cli</a></span></li><li><span><a href="../../api/jpm/commands.html">commands</a></span></li><li><span><a href="../../api/jpm/config.html">config</a></span></li><li><span><a href="../../api/jpm/make-config.html">make-config</a></span></li><li><span><a href="../../api/jpm/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../api/jpm/pm.html">pm</a></span></li><li><span><a href="../../api/jpm/scaffold.html">scaffold</a></span></li><li><span><a href="../../api/jpm/shutil.html">shutil</a></span></li></ul></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li class="caret"><span><a href="../../api/spork/index.html">spork</a></span><ul><li><span><a href="../../api/spork/argparse.html">argparse</a></span></li><li><span><a href="../../api/spork/base64.html">base64</a></span></li><li><span><a href="../../api/spork/cc.html">cc</a></span></li><li><span><a href="../../api/spork/cjanet.html">cjanet</a></span></li><li><span><a href="../../api/spork/crc.html">crc</a></span></li><li><span><a href="../../api/spork/channel.html">channel</a></span></li><li><span><a href="../../api/spork/cron.html">cron</a></span></li><li><span><a href="../../api/spork/data.html">data</a></span></li><li><span><a href="../../api/spork/ev-utils.html">ev-utils</a></span></li><li><span><a href="../../api/spork/fmt.html">fmt</a></span></li><li><span><a href="../../api/spork/generators.html">generators</a></span></li><li><span><a href="../../api/spork/getline.html">getline</a></span></li><li><span><a href="../../api/spork/htmlgen.html">htmlgen</a></span></li><li><span><a href="../../api/spork/http.html">http</a></span></li><li><span><a href="../../api/spork/httpf.html">httpf</a></span></li><li><span><a href="../../api/spork/infix.html">infix</a></span></li><li><span><a href="../../api/spork/json.html">json</a></span></li><li><span><a href="../../api/spork/mdz.html">mdz</a></span></li><li><span><a href="../../api/spork/math.html">math</a></span></li><li><span><a href="../../api/spork/misc.html">misc</a></span></li><li><span><a href="../../api/spork/netrepl.html">netrepl</a></span></li><li><span><a href="../../api/spork/pgp.html">pgp</a></span></li><li><span><a href="../../api/spork/build-rules.html">build-rules</a></span></li><li><span><a href="../../api/spork/path.html">path</a></span></li><li><span><a href="../../api/spork/randgen.html">randgen</a></span></li><li><span><a href="../../api/spork/rawterm.html">rawterm</a></span></li><li><span><a href="../../api/spork/regex.html">regex</a></span></li><li><span><a href="../../api/spork/rpc.html">rpc</a></span></li><li><span><a href="../../api/spork/schema.html">schema</a></span></li><li><span><a href="../../api/spork/sh.html">sh</a></span></li><li><span><a href="../../api/spork/msg.html">msg</a></span></li><li><span><a href="../../api/spork/stream.html">stream</a></span></li><li><span><a href="../../api/spork/tasker.html">tasker</a></span></li><li><span><a href="../../api/spork/temple.html">temple</a></span></li><li><span><a href="../../api/spork/test.html">test</a></span></li><li><span><a href="../../api/spork/tarray.html">tarray</a></span></li><li><span><a href="../../api/spork/utf8.html">utf8</a></span></li><li><span><a href="../../api/spork/zip.html">zip</a></span></li></ul></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.37.1-83e8aab Documentation<br>(Other Versions:
+          
+          <a href="../../../1.36.0/docs/process_management/spawn.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/docs/process_management/spawn.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/docs/process_management/spawn.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/docs/process_management/spawn.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/docs/process_management/spawn.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/docs/process_management/spawn.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/docs/process_management/spawn.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/docs/process_management/spawn.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/docs/process_management/spawn.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/docs/process_management/spawn.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/docs/process_management/spawn.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/docs/process_management/spawn.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/docs/process_management/spawn.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/docs/process_management/spawn.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/docs/process_management/spawn.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/docs/process_management/spawn.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/docs/process_management/spawn.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/docs/process_management/spawn.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/docs/process_management/spawn.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/docs/process_management/spawn.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/docs/process_management/spawn.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/docs/process_management/spawn.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/docs/process_management/spawn.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/docs/process_management/spawn.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/docs/process_management/spawn.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/docs/process_management/spawn.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/docs/process_management/spawn.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/docs/process_management/spawn.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/docs/process_management/spawn.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/docs/process_management/spawn.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/docs/process_management/spawn.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Spawning a Process</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="execute.html"><span class="prevnext-text">Executing a Process</span></a></span>
+
+          <span class="next"><a href="../documentation.html"><span class="prevnext-text">Documentation</span></a></span>
+        </div>
+        
+
+<p>Unlike <code class="mendoza-code">os/execute</code>, which returns an exit code (or errors) after
+the started subprocess completes, <code class="mendoza-code">os/spawn</code> returns a
+<code class="mendoza-code">core/process</code> value.  This value represents a subprocess which
+may or may not have completed its execution.  In contrast to
+<code class="mendoza-code">os/execute</code>, which "waits" for the subprocess, <code class="mendoza-code">os/spawn</code>
+does not and it is recommended to explicitly arrange for this
+"waiting" for resource management and other purposes ("waiting" will
+be covered in more detail below).
+</p>
+<p>The arguments for <code class="mendoza-code">os/spawn</code> are the same as those of
+<code class="mendoza-code">os/execute</code>.  Again, the required argument, <code class="mendoza-code">args</code>, is a
+tuple or array representing an invocation of a program with its
+arguments.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># prints: :salutations</span>
+<span class="mdzsyn-comment"># the returned value, proc, is a core/process value</span>
+(<span class="mdzsyn-coresym">let</span> [<span class="mdzsyn-symbol">proc</span> (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"janet"</span> <span class="mdzsyn-string">"-e"</span> <span class="mdzsyn-string">"(pp :salutations)"</span>] <span class="mdzsyn-keyword">:p</span>)]
+  (<span class="mdzsyn-coresym">type</span> <span class="mdzsyn-symbol">proc</span>)) <span class="mdzsyn-comment"># =&gt; :core/process</span></code></pre><h2><code class="mendoza-code">core/process</code> and <code class="mendoza-code">os/proc-wait</code>
+</h2>
+<p>Passing the <code class="mendoza-code">core/process</code> value to the <code class="mendoza-code">os/proc-wait</code>
+function causes Janet to "wait" for the subprocess to complete
+execution.  This is sometimes referred to as "rejoining" the
+subprocess.
+</p>
+<p>The main reason for "waiting" is so that the operating system can
+release resources.  Not "waiting" appropriately can lead to resources
+remaining unreclaimed and this can become a problem for a running
+system because it may run out of usable resources.
+</p>
+<p>Once "waiting" has completed, the exit code for the subprocess can be
+obtained via the <code class="mendoza-code">:return-code</code> key.  Accessing this key before
+"waiting" will result in a <code class="mendoza-code">nil</code> value.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># prints: :relax</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">proc</span> (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"janet"</span> <span class="mdzsyn-string">"-e"</span> <span class="mdzsyn-string">"(pp :relax)"</span>] <span class="mdzsyn-keyword">:p</span>))
+
+(<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:return-code</span>) <span class="mdzsyn-comment"># =&gt; nil</span>
+
+(<span class="mdzsyn-coresym">os/proc-wait</span> <span class="mdzsyn-symbol">proc</span>) <span class="mdzsyn-comment"># =&gt; 0</span>
+
+(<span class="mdzsyn-coresym">get</span> <span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:return-code</span>) <span class="mdzsyn-comment"># =&gt; 0</span></code></pre><p>The <code class="mendoza-code">os/proc-wait</code> function takes a single argument, <code class="mendoza-code">proc</code>,
+which should be a <code class="mendoza-code">core/process</code> value.  The return value is the
+exit code of the subprocess.  If <code class="mendoza-code">os/proc-wait</code> is called more
+than once for the same <code class="mendoza-code">core/process</code> value it will error.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># prints: :sit-up</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">proc</span> (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"janet"</span> <span class="mdzsyn-string">"-e"</span> <span class="mdzsyn-string">"(pp :sit-up)"</span>] <span class="mdzsyn-keyword">:p</span>))
+
+(<span class="mdzsyn-coresym">os/proc-wait</span> <span class="mdzsyn-symbol">proc</span>) <span class="mdzsyn-comment"># =&gt; 0</span>
+
+<span class="mdzsyn-comment"># prints: cannot wait twice on a process</span>
+(<span class="mdzsyn-coresym">try</span>
+  (<span class="mdzsyn-coresym">os/proc-wait</span> <span class="mdzsyn-symbol">proc</span>)
+  ([<span class="mdzsyn-symbol">e</span>]
+    (<span class="mdzsyn-coresym">eprint</span> <span class="mdzsyn-symbol">e</span>))) <span class="mdzsyn-comment"># =&gt; nil</span></code></pre><p>Note that the first call to <code class="mendoza-code">os/proc-wait</code> will cause the current
+fiber to pause execution until the subprocess completes.
+</p>
+<h2><code class="mendoza-code">core/process</code> keys and the <code class="mendoza-code">env</code> argument
+</h2>
+<p>As seen above, once "waiting" for a subprocess has completed, the exit
+code of a subprocess becomes available via the <code class="mendoza-code">:return-code</code>
+key.  Other information about a subprocess can also be accessed via
+the keys of an associated <code class="mendoza-code">core/process</code> value such as
+<code class="mendoza-code">:in</code>, <code class="mendoza-code">:out</code>, and <code class="mendoza-code">:err</code>.  On UNIX-like platforms,
+there is an additional <code class="mendoza-code">:pid</code> key.
+</p>
+<p>The <code class="mendoza-code">:in</code>, <code class="mendoza-code">:out</code>, and <code class="mendoza-code">:err</code> keys for a
+<code class="mendoza-code">core/process</code> value provide access to the standard input, output,
+and error of the associated subprocess provided that corresponding
+choices were made via the <code class="mendoza-code">env</code> dictionary (i.e. table or struct)
+argument to <code class="mendoza-code">os/spawn</code>.  This means that, for example, if there
+is no key-value pair specified via <code class="mendoza-code">:in</code> in the <code class="mendoza-code">env</code>
+dictionary, then the standard input of the subprocess will not be
+programmatically accessible via the associated <code class="mendoza-code">core/process</code>'s
+<code class="mendoza-code">:in</code> key.
+</p>
+<p>The values associated with the <code class="mendoza-code">:in</code>, <code class="mendoza-code">:out</code>, and
+<code class="mendoza-code">:err</code> keys of the <code class="mendoza-code">env</code> argument can be <code class="mendoza-code">core/file</code> or
+<code class="mendoza-code">core/stream</code> values.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">out-file</span> (<span class="mdzsyn-coresym">file/temp</span>))
+
+(<span class="mdzsyn-coresym">type</span> <span class="mdzsyn-symbol">out-file</span>) <span class="mdzsyn-comment"># =&gt; :core/file</span>
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">proc</span>
+  (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"janet"</span> <span class="mdzsyn-string">"-e"</span> <span class="mdzsyn-string">`(print "again") (flush)`</span>]
+            <span class="mdzsyn-keyword">:p</span> {<span class="mdzsyn-keyword">:out</span> <span class="mdzsyn-symbol">out-file</span>}))
+
+<span class="mdzsyn-comment"># only standard output of the subprocess is accessible</span>
+(<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:in</span>) <span class="mdzsyn-comment"># =&gt; nil</span>
+(<span class="mdzsyn-coresym">type</span> (<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:out</span>)) <span class="mdzsyn-comment"># =&gt; :core/stream</span>
+(<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:err</span>) <span class="mdzsyn-comment"># =&gt; nil</span>
+
+(<span class="mdzsyn-coresym">os/proc-wait</span> <span class="mdzsyn-symbol">proc</span>) <span class="mdzsyn-comment"># =&gt; 0</span>
+
+(<span class="mdzsyn-coresym">file/seek</span> <span class="mdzsyn-symbol">out-file</span> <span class="mdzsyn-keyword">:set</span> <span class="mdzsyn-number">0</span>)
+
+<span class="mdzsyn-comment"># prints: again</span>
+(<span class="mdzsyn-coresym">print</span> (<span class="mdzsyn-coresym">file/read</span> <span class="mdzsyn-symbol">out-file</span> <span class="mdzsyn-keyword">:all</span>))
+
+(<span class="mdzsyn-coresym">file/close</span> <span class="mdzsyn-symbol">out-file</span>)</code></pre><p>Note that in the example above, the standard input and error of the
+subprocess were not accessible -- attempts to access them resulted in
+<code class="mendoza-code">nil</code> values -- because corresponding keys for the <code class="mendoza-code">env</code>
+argument were not specified.  In contrast, because a key-value pair
+for <code class="mendoza-code">:out</code> and <code class="mendoza-code">out-file</code> were included in the <code class="mendoza-code">env</code>
+struct, the standard output of the subprocess could be accessed
+programmatically.
+</p>
+<h2><code class="mendoza-code">:pipe</code> and <code class="mendoza-code">ev/gather</code>
+</h2>
+<p>For each of the <code class="mendoza-code">:in</code>, <code class="mendoza-code">:out</code>, and <code class="mendoza-code">:err</code> keys of the
+<code class="mendoza-code">env</code> argument to <code class="mendoza-code">os/spawn</code>, the associated value can be
+the keyword <code class="mendoza-code">:pipe</code>.  This causes <code class="mendoza-code">core/stream</code> values to be
+used that can be read from and written to for appropriate standard IO
+of the subprocess.
+</p>
+<p>In order to avoid deadlocks (aka hanging), it's important for data to
+be transferred between processes in a timely manner.  One example of
+how this can fail is if output redirected to pipes is not read from
+(sufficiently).  In such a situation, pipe buffers might become full
+and this can prevent a process from completing its writing.  That in
+turn can result in the writing process being unable to finish
+executing.  To keep data flowing appropriately, apply the
+<code class="mendoza-code">ev/gather</code> macro.
+</p>
+<p>In the following example, <code class="mendoza-code">ev/write</code> and <code class="mendoza-code">os/proc-wait</code> are
+both run in parallel via <code class="mendoza-code">ev/gather</code>.  The <code class="mendoza-code">ev/gather</code> macro
+runs a number of fibers in parallel (in this case, two) on the event
+loop and returns the gathered results in an array.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">proc</span>
+  (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"janet"</span> <span class="mdzsyn-string">"-e"</span> <span class="mdzsyn-string">"(print (file/read stdin :all))"</span>]
+            <span class="mdzsyn-keyword">:p</span> {<span class="mdzsyn-keyword">:in</span> <span class="mdzsyn-keyword">:pipe</span>}))
+
+(<span class="mdzsyn-coresym">ev/gather</span>
+  (<span class="mdzsyn-coresym">do</span>
+    <span class="mdzsyn-comment"># leads to printing via subprocess: know thyself</span>
+    (<span class="mdzsyn-coresym">ev/write</span> (<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:in</span>) <span class="mdzsyn-string">"know thyself"</span>)
+    (<span class="mdzsyn-coresym">ev/close</span> (<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:in</span>))
+    <span class="mdzsyn-keyword">:done</span>)
+  (<span class="mdzsyn-coresym">os/proc-wait</span> <span class="mdzsyn-symbol">proc</span>)) <span class="mdzsyn-comment"># =&gt; @[:done 0]</span></code></pre><h2><code class="mendoza-code">os/proc-close</code>
+</h2>
+<p>The next example is a slightly modified version of the previous one.
+It involves adding a third fiber (to <code class="mendoza-code">ev/gather</code>) for reading
+standard output from the subprocess via <code class="mendoza-code">ev/read</code>.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">proc</span>
+  (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"janet"</span> <span class="mdzsyn-string">"-e"</span> <span class="mdzsyn-string">"(print (file/read stdin :all))"</span>]
+            <span class="mdzsyn-keyword">:p</span> {<span class="mdzsyn-keyword">:in</span> <span class="mdzsyn-keyword">:pipe</span> <span class="mdzsyn-keyword">:out</span> <span class="mdzsyn-keyword">:pipe</span>}))
+
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">buf</span> <span class="mdzsyn-string">@""</span>)
+
+(<span class="mdzsyn-coresym">ev/gather</span>
+  (<span class="mdzsyn-coresym">do</span>
+    (<span class="mdzsyn-coresym">ev/write</span> (<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:in</span>) <span class="mdzsyn-string">"know thyself"</span>)
+    (<span class="mdzsyn-coresym">ev/close</span> (<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:in</span>))
+    <span class="mdzsyn-keyword">:write-done</span>)
+  <span class="mdzsyn-comment"># hi! i'm new here :)</span>
+  (<span class="mdzsyn-coresym">do</span>
+    (<span class="mdzsyn-coresym">ev/read</span> (<span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-keyword">:out</span>) <span class="mdzsyn-keyword">:all</span> <span class="mdzsyn-symbol">buf</span>)
+    <span class="mdzsyn-keyword">:read-done</span>)
+  (<span class="mdzsyn-coresym">os/proc-wait</span> <span class="mdzsyn-symbol">proc</span>)) <span class="mdzsyn-comment"># =&gt; @[:write-done :read-done 0]</span>
+
+(<span class="mdzsyn-coresym">os/proc-close</span> <span class="mdzsyn-symbol">proc</span>) <span class="mdzsyn-comment"># =&gt; nil</span>
+
+<span class="mdzsyn-symbol">buf</span> <span class="mdzsyn-comment"># =&gt; @"know thyself\n"</span></code></pre><p>Beware that if pipe streams are not closed soon enough, the process
+that created them (e.g. the <code class="mendoza-code">janet</code> executable) may run out of
+file descriptors or handles due to process limits enforced by an
+operating system.
+</p>
+<p>Note the use of the function <code class="mendoza-code">os/proc-close</code> in the code above.
+This function takes a <code class="mendoza-code">core/process</code> value and closes all of the
+unclosed pipes that were created for it via <code class="mendoza-code">os/spawn</code>.  In the
+example above, <code class="mendoza-code">(proc :in)</code> had already been closed explicitly,
+but <code class="mendoza-code">(proc :out)</code> had not and is thus closed by
+<code class="mendoza-code">os/proc-close</code>.
+</p>
+<p>The <code class="mendoza-code">os/proc-close</code> function will also attempt to wait on the
+subprocess associated with the passed <code class="mendoza-code">core/process</code> value if it
+has not been waited on already.  The function's return value is
+<code class="mendoza-code">nil</code> if waiting was not attempted and otherwise it is the exit
+code of the subprocess corresponding to the <code class="mendoza-code">core/process</code> value.
+</p>
+<h2 id="Effects-of">Effects of <code class="mendoza-code">:x</code>
+</h2>
+<p>If the <code class="mendoza-code">flag</code> keyword argument contains <code class="mendoza-code">x</code> for an
+invocation of <code class="mendoza-code">os/spawn</code> and the exit code of the subprocess is
+non-zero, calling a function such as <code class="mendoza-code">os/proc-wait</code>,
+<code class="mendoza-code">os/proc-close</code>, and <code class="mendoza-code">os/proc-kill</code> (if invoked to wait)
+with the subprocess' <code class="mendoza-code">core/process</code> value results in an error.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">proc</span>
+  (<span class="mdzsyn-coresym">os/spawn</span> [<span class="mdzsyn-string">"janet"</span> <span class="mdzsyn-string">"-e"</span> <span class="mdzsyn-string">"(os/exit 1)"</span>] <span class="mdzsyn-keyword">:px</span>))
+
+(<span class="mdzsyn-coresym">defn</span> <span class="mdzsyn-symbol">invoke-an-error-raiser</span>
+  [<span class="mdzsyn-symbol">proc</span>]
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">zero-one-or-two</span>
+    (<span class="mdzsyn-coresym">-&gt;</span> (<span class="mdzsyn-coresym">os/cryptorand</span> <span class="mdzsyn-number">8</span>)
+        <span class="mdzsyn-coresym">math/rng</span>
+        (<span class="mdzsyn-coresym">math/rng-int</span> <span class="mdzsyn-number">3</span>)))
+  <span class="mdzsyn-comment"># any of the following should raise an error</span>
+  (<span class="mdzsyn-coresym">case</span> <span class="mdzsyn-symbol">zero-one-or-two</span>
+    <span class="mdzsyn-number">0</span> (<span class="mdzsyn-coresym">os/proc-wait</span> <span class="mdzsyn-symbol">proc</span>)
+    <span class="mdzsyn-number">1</span> (<span class="mdzsyn-coresym">os/proc-close</span> <span class="mdzsyn-symbol">proc</span>)
+    <span class="mdzsyn-number">2</span> (<span class="mdzsyn-coresym">os/proc-kill</span> <span class="mdzsyn-symbol">proc</span> <span class="mdzsyn-constant">true</span>)))
+
+<span class="mdzsyn-comment"># prints: error</span>
+(<span class="mdzsyn-coresym">try</span>
+  (<span class="mdzsyn-symbol">invoke-an-error-raiser</span> <span class="mdzsyn-symbol">proc</span>)
+  ([<span class="mdzsyn-symbol">_</span>]
+    (<span class="mdzsyn-coresym">eprint</span> <span class="mdzsyn-string">"error"</span>)))</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="execute.html"><span class="prevnext-text">Executing a Process</span></a></span>
+          <span class="next"><a href="../documentation.html"><span class="prevnext-text">Documentation</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2024
+  <div class="gentag">Generated on December 6, 2024 at 02:23:46 (UTC) with Janet 1.37.1-83e8aab</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

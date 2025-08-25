@@ -2,7 +2,8 @@
   [x]
   (print (+ x 1)))
 
-(simple 10) # -> 11
+# prints 11
+(simple 10) # -> nil
 
 (defn long-body
   [y]
@@ -22,7 +23,7 @@
   [x y z & more]
   [x y z more])
 
-(with-tags 1 2) # raises arity error
+(with-tags 1 2) # compile error: <function with-tags> expects at least 3 arguments, got 2
 (with-tags 1 2 3) # -> (1 2 3 ())
 (with-tags 1 2 3 4) # -> (1 2 3 (4))
 (with-tags 1 2 3 4 5) # -> (1 2 3 (4 5))
