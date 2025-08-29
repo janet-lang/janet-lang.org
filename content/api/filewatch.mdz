@@ -1,0 +1,10 @@
+(import ../gen-docs :as gen-docs)
+
+{:title "Filewatch Module"
+ :nav-title "filewatch"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix[filewatch/]

@@ -1,0 +1,52 @@
+{:title "The Janet Project Manager (jpm)"
+ :nav-title "JPM"
+ :template "docpage.html"
+ :order 5}
+---
+
+JPM is a build tool that can be installed along with Janet to help build and install
+libraries for Janet. The main uses are installing dependencies, compiling C/C++ to native libraries, and
+other project management tasks. The source code for JPM
+can be found at @link[https://github.com/janet-lang/jpm.git][https://github.com/janet-lang/jpm.git].
+With janet already installed, JPM is also self bootstrapping.
+
+@codeblock```
+git clone --depth=1 https://github.com/janet-lang/jpm.git
+cd jpm
+sudo janet bootstrap.janet
+```
+
+The bootstrap script can also be configured to install jpm to
+different directories by setting the @code`DESTDIR` environment
+variable. Ideally, jpm should be installed to the same tree as Janet,
+although this is not strictly required. See the README in jpm's
+repository for more information.
+
+## Updating JPM
+
+Once installed and configured, JPM can update itself from the git repository at any time.
+
+@codeblock```
+sudo jpm install jpm
+```
+
+@p{@code`jpm`'s main functions are installing dependencies and building native
+    Janet modules, but it is meant to be used for much of the life-cycle for
+    Janet projects. Since Janet code doesn't usually need to be compiled, you
+    don't always need @code`jpm`, especially for scripts, but @code`jpm` comes
+    with some functionality that is difficult to duplicate, like compiling Janet
+    source code and all imported modules into a statically linked executable for
+    distribution.
+}
+
+## Glossary
+
+A self-contained unit of Janet source code as recognized by @code`jpm`
+is called a project. A project is a directory containing a
+@code`project.janet` file, which contains build recipes. Often, a
+project will correspond to a single git repository, and contain a
+single library. However, a project's @code`project.janet` file can
+contain build recipes for as many libraries, native extensions, and
+executables as it wants. Each of these recipes builds an
+artifact. Artifacts are the output files that will either be
+distributed or installed on the end-user or developer's machine.

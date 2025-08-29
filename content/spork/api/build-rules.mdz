@@ -1,0 +1,16 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/build-rules :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "build-rules"
+ :template "docpage.html"}
+---
+
+Run commands that produce files in an incremental manner.
+Use to implement a build system.
+
+## Reference
+
+@gen-docs/gen-prefix-current[build-rules/]
+

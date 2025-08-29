@@ -1,0 +1,37 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/base64 :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "base64"
+ :author "Josef Pospíšil"
+ :license "MIT"
+ :template "docpage.html"}
+---
+
+This module contains Base64 utilities.
+
+## Examples
+
+### base64/encode
+
+Converts a string of any format (UTF-8, binary, ..) to base64 encoding.
+
+@codeblock[janet]```
+(misc/base64/encode "this is a test")
+# => "dGhpcyBpcyBhIHRlc3Q="
+```
+
+### base64/decode
+
+Converts a base64 encoded string to its binary representation of any format 
+(UTF-8, binary, ...).
+
+@codeblock[janet]```
+(misc/base64/decode "dGhpcyBpcyBhIHRlc3Q=")
+# => "this is a test"
+```
+
+## Reference
+
+@gen-docs/gen-prefix-current[base64/]

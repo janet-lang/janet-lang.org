@@ -63,13 +63,10 @@ should give the output:
 array_47new.janet
 ```
 
-If such a file already exists, you can simply append your example code
-to the existing file.
+If such a file already exists, you can simply append your example code the existing file.
 
-When building the site, the new examples will be included in the
-generated documentation. Make sure that your example has correct janet
-syntax, as syntax errors will cause the entire site to not build. If
-the example has valid syntax (has a 0 exit code when loaded with
-`janet -k example/my-fn.janet`), there may be a bug in the mendoza
-janet syntax highlighter in which case please open a bug in mendoza.
-
+When building the site, the new examples will be included in the generated documentation. Make
+sure that your example has correct janet syntax, as syntax errors will cause the entire site
+to not build. If the example has valid syntax (has a 0 exit code when loaded with
+        `janet -k example/my-fn.janet`), there may be a bug in the mendoza janet syntax
+highlighter and you open a bug in mendoza.

@@ -1,0 +1,13 @@
+(import ../../gen-docs :as gen-docs)
+(import spork :prefix "" :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "Spork API"
+ :nav-title "API"
+ :template "docpage.html"}
+---
+
+## Index
+
+@gen-docs/gen-prefix-current[]

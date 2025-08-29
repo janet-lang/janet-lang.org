@@ -1,0 +1,34 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/fmt :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "fmt"
+ :author "Calvin Rose"
+ :license "MIT"
+ :template "docpage.html"}
+---
+
+Provides a way to format Janet code strings and files.
+
+## Examples
+
+### Strings
+
+@codeblock[janet]```
+(import spork/fmt)
+
+(fmt/format "(def     a\n 3 )")  => @"(def a\n  3)\n"
+```
+
+### Files
+
+@codeblock[janet]```
+(import spork/fmt)
+
+(fmt/format-file "main.janet")
+```
+
+## Reference
+
+@gen-docs/gen-prefix-current[fmt/]

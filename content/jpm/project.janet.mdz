@@ -1,0 +1,170 @@
+{:title "Project.janet"
+ :template "docpage.html"
+ :order 2}
+---
+
+## The @code`project.janet` file
+
+To create your own software in Janet, it is a good idea to understand what the
+@code`project.janet` file is and how it defines rules for building, testing, and
+installing software. The code in @code`project.janet` is normal Janet source
+code that is run in a special environment.
+
+A @code`project.janet` file is loaded by @code`jpm` and evaluated to create
+various recipes, or rules. For example, @code`declare-project` creates several
+rules, including @code`"install"`, @code`"build"`, @code`"clean"`, and
+@code`"test"`. These are a few of the rules that @code`jpm` expects
+@code`project.janet` to create when executed.
+
+### Declaring a project
+
+Use the @code`declare-project` as the first @code`declare-` macro towards the
+beginning of your @code`project.janet` file. You can also pass in any metadata
+about your project that you want, and add dependencies on other Janet projects
+here.
+
+@codeblock[janet]```
+(declare-project
+  :name "mylib" # required
+  :description "a library that does things" # some example metadata.
+
+  # Optional urls to git repositories that contain required artifacts.
+  :dependencies ["https://github.com/janet-lang/json.git"])
+```
+
+### Creating a module
+
+A 100% Janet library is the easiest kind of software to distribute in Janet.
+Since it does not need to be built and since installing it means simply moving
+the files to a system directory, we only need to specify the files that comprise
+the library in @code`project.janet`.
+
+@codeblock[janet]```
+(declare-source
+  # :source is an array or tuple that can contain
+  # source files and directories that will be installed.
+  # Often will just be a single file or single directory.
+  :source ["mylib.janet"])
+```
+
+For information on writing modules, see @link[/docs/modules.html]{the modules docpage}.
+
+### Creating a native module
+
+Once you have written your C code that defines your native module (see the
+@link[/capi/embedding.html]{embedding} page on how to do this), you must declare
+it in @code`project.janet` in order for @code`jpm` to build the native modules
+for you.
+
+@codeblock[janet]```
+(declare-native
+ :name "mynative"
+ :source ["mynative.c" "mysupport.c"]
+ :embedded ["extra-functions.janet"])
+```
+
+This makes @code`jpm` create a native module called @code`mynative` when
+@code`jpm build` is run, the arguments for which should be pretty
+straightforward. The @code`:embedded` argument is Janet source code that will be
+embedded as an array of bytes directly into the C source code. It is not
+recommended to use the @code`:embedded` argument, as one can simply create
+multiple artifacts, one for a pure C native module and one for Janet source
+code.
+
+### Creating an executable
+
+The declaration for an executable file is pretty simple.
+
+@codeblock[janet]```
+(declare-executable
+ :name "myexec"
+ :entry "main.janet"
+ :install true)
+```
+
+@p{@code`jpm` is smart enough to figure out from the one entry file what
+    libraries and other code your executable depends on, and bundles them into
+    the final application for you. The final executable will be located at
+    @code`build/myexec`, or @code`build\myexec.exe` on Windows.}
+
+If the optional key-value pair @code`:install true` is specified in the
+@code`declare-executable` form, by default, the appropriate @code`jpm install`
+command will install the resulting executable to the @code`JANET_BINPATH`
+\(but see the jpm man page for further details).
+
+Also note that the entry of an executable file should look different than a
+normal Janet script.  It should define a @code`main` function that can receive a
+variable number of parameters, the command-line arguments. It will be called as
+the entry point to your executable.
+
+@codeblock[janet]```
+(import mylib1)
+(import mylib2)
+
+# This will be printed when you run `jpm build`
+(print "build time!")
+
+(defn main
+  [& args]
+  # You can also get command-line arguments through (dyn :args)
+  (print "args: " ;(interpose ", " args))
+  (mylib1/do-thing)
+  (mylib2/do-thing))
+```
+
+It's important to remember that code at the top level will run when you invoke
+@code`jpm build`, not at executable runtime. This is because in order to create
+the executable, we marshal the @code`main` function of the app and write it to
+an image. In order to create the main function, we need to actually compile and
+run everything that it references, in the above case @code`mylib1` and
+@code`mylib2`.
+
+This has a number of benefits, but the largest is that we only include bytecode
+for the functions that our application uses. If we only use one function from a
+library of 1000 functions, our final executable will not include the bytecode
+for the other 999 functions (unless our one function references some of those
+other functions, of course). This feature, called tree-shaking, only works
+for Janet code. Native modules will be linked to the final executable statically
+in full if they are used at all. A native module is considered "used" if is
+imported at any time during @code`jpm build`. This may change, but it is
+currently the most reliable way to check if a native modules needs to be linked
+into the final executable.
+
+There are some limitations to this approach. Any dynamically required modules
+will not always be linked into the final executable. If @code`require` or
+@code`import` is not called during @code`jpm build`, then the code will not be
+linked into the executable. The module can still be required if it is available
+at runtime, though.
+
+For an example Janet executable built with @code`jpm`, see
+@link[https://github.com/bakpakin/littleserver][https://github.com/bakpakin/littleserver].
+
+### Other @code`declare-` callables
+
+Some additional @code`declare-` callables are:
+
+@ul{@li{@code`declare-bin`
+
+        @p{Declare a generic file to be installed as an
+           executable. Specify file path via @code`:main`.}}
+
+    @li{@code`declare-binscript`
+
+        @p{Declare a janet file to be installed as an executable
+           script.  Creates a shim on windows.  If
+           @code`:hardcode-syspath` is true, will insert code into the
+           script such that it will run correctly even when
+           @code`JANET_PATH` is changed.  If @code`:is-janet` is
+           truthy, will also automatically insert a correct shebang
+           line if jpm's configuration is set with
+           @code`:auto-shebang` as truthy.}}
+
+    @li{@code`declare-headers`
+
+        @p{Declare headers for a library installation. Installed
+           headers can be used by other native libraries.  Specify
+           paths via @code`:headers` and prefix via @code`:prefix`.}}
+
+    @li{@code`declare-manpage`
+
+        @p{Mark a manpage for installation.}}}
