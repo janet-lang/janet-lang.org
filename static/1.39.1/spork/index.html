@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Spork</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Spork" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li><li><span><a href="../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">Core API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/bundle.html">bundle</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/filewatch.html">filewatch</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/janet.html">janet</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../jpm/index.html">JPM</a></span><ul><li><span><a href="../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../jpm/api/index.html">API</a></span><ul><li><span><a href="../jpm/api/rules.html">rules</a></span></li><li><span><a href="../jpm/api/cc.html">cc</a></span></li><li><span><a href="../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../jpm/api/cli.html">cli</a></span></li><li><span><a href="../jpm/api/commands.html">commands</a></span></li><li><span><a href="../jpm/api/config.html">config</a></span></li><li><span><a href="../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/api/pm.html">pm</a></span></li><li><span><a href="../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span class="selected"><a href="index.html">Spork</a></span><ul><li class="caret"><span><a href="api/index.html">API</a></span><ul><li><span><a href="api/argparse.html">argparse</a></span></li><li><span><a href="api/base64.html">base64</a></span></li><li><span><a href="api/build-rules.html">build-rules</a></span></li><li><span><a href="api/cc.html">cc</a></span></li><li><span><a href="api/channel.html">channel</a></span></li><li><span><a href="api/cjanet.html">cjanet</a></span></li><li><span><a href="api/cmath.html">cmath</a></span></li><li><span><a href="api/crc.html">crc</a></span></li><li><span><a href="api/cron.html">cron</a></span></li><li><span><a href="api/data.html">data</a></span></li><li><span><a href="api/ev-utils.html">ev-utils</a></span></li><li><span><a href="api/fmt.html">fmt</a></span></li><li><span><a href="api/generators.html">generators</a></span></li><li><span><a href="api/getline.html">getline</a></span></li><li><span><a href="api/htmlgen.html">htmlgen</a></span></li><li><span><a href="api/http.html">http</a></span></li><li><span><a href="api/httpf.html">httpf</a></span></li><li><span><a href="api/infix.html">infix</a></span></li><li><span><a href="api/json.html">json</a></span></li><li><span><a href="api/math.html">math</a></span></li><li><span><a href="api/mdz.html">mdz</a></span></li><li><span><a href="api/misc.html">misc</a></span></li><li><span><a href="api/msg.html">msg</a></span></li><li><span><a href="api/netrepl.html">netrepl</a></span></li><li><span><a href="api/path.html">path</a></span></li><li><span><a href="api/pgp.html">pgp</a></span></li><li><span><a href="api/randgen.html">randgen</a></span></li><li><span><a href="api/rawterm.html">rawterm</a></span></li><li><span><a href="api/regex.html">regex</a></span></li><li><span><a href="api/rpc.html">rpc</a></span></li><li><span><a href="api/schema.html">schema</a></span></li><li><span><a href="api/services.html">services</a></span></li><li><span><a href="api/sh.html">sh</a></span></li><li><span><a href="api/stream.html">stream</a></span></li><li><span><a href="api/tarray.html">tarray</a></span></li><li><span><a href="api/tasker.html">tasker</a></span></li><li><span><a href="api/temple.html">temple</a></span></li><li><span><a href="api/test.html">test</a></span></li><li><span><a href="api/utf8.html">utf8</a></span></li><li><span><a href="api/zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.39.1-e9c6678 Documentation<br>(Other Versions:
+          
+          <a href="../../1.38.0/spork/index.html">1.38.0</a>
+          
+          <a href="../../1.37.1/spork/index.html">1.37.1</a>
+          
+          <a href="../../1.36.0/spork/index.html">1.36.0</a>
+          
+          <a href="../../1.35.0/spork/index.html">1.35.0</a>
+          
+          <a href="../../1.34.0/spork/index.html">1.34.0</a>
+          
+          <a href="../../1.31.0/spork/index.html">1.31.0</a>
+          
+          <a href="../../1.29.1/spork/index.html">1.29.1</a>
+          
+          <a href="../../1.28.0/spork/index.html">1.28.0</a>
+          
+          <a href="../../1.27.0/spork/index.html">1.27.0</a>
+          
+          <a href="../../1.26.0/spork/index.html">1.26.0</a>
+          
+          <a href="../../1.25.1/spork/index.html">1.25.1</a>
+          
+          <a href="../../1.24.0/spork/index.html">1.24.0</a>
+          
+          <a href="../../1.23.0/spork/index.html">1.23.0</a>
+          
+          <a href="../../1.22.0/spork/index.html">1.22.0</a>
+          
+          <a href="../../1.21.0/spork/index.html">1.21.0</a>
+          
+          <a href="../../1.20.0/spork/index.html">1.20.0</a>
+          
+          <a href="../../1.19.0/spork/index.html">1.19.0</a>
+          
+          <a href="../../1.18.1/spork/index.html">1.18.1</a>
+          
+          <a href="../../1.17.1/spork/index.html">1.17.1</a>
+          
+          <a href="../../1.16.1/spork/index.html">1.16.1</a>
+          
+          <a href="../../1.15.0/spork/index.html">1.15.0</a>
+          
+          <a href="../../1.13.1/spork/index.html">1.13.1</a>
+          
+          <a href="../../1.12.2/spork/index.html">1.12.2</a>
+          
+          <a href="../../1.11.1/spork/index.html">1.11.1</a>
+          
+          <a href="../../1.10.1/spork/index.html">1.10.1</a>
+          
+          <a href="../../1.9.1/spork/index.html">1.9.1</a>
+          
+          <a href="../../1.8.1/spork/index.html">1.8.1</a>
+          
+          <a href="../../1.7.0/spork/index.html">1.7.0</a>
+          
+          <a href="../../1.6.0/spork/index.html">1.6.0</a>
+          
+          <a href="../../1.5.1/spork/index.html">1.5.1</a>
+          
+          <a href="../../1.5.0/spork/index.html">1.5.0</a>
+          
+          <a href="../../1.4.0/spork/index.html">1.4.0</a>
+          
+          <a href="../../1.3.1/spork/index.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Spork</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../jpm/api/shutil.html"><span class="prevnext-text">Shell Utilities</span></a></span>
+
+          <span class="next"><a href="api/index.html"><span class="prevnext-text">Spork API</span></a></span>
+        </div>
+        
+
+<p>Spork is a utility library for Janet. It contains a number of small
+modules that should be useful for general programming in Janet but do
+not "make the cut" for inclusion in the standard library. You can
+think of spork as a sort of extended standard library for Janet.
+</p>
+
+<h2 id="Source-code">Source code
+</h2>
+<p><a href="https://github.com/janet-lang/spork">https://github.com/janet-lang/spork</a></p><h2 id="Install">Install
+</h2>
+<pre class="mendoza-codeblock"><code>$ [sudo] jpm install spork</code></pre><h2 id="Usage-1">Usage
+</h2>
+<p>Every binding in the spork library will be imported if you <code class="mendoza-code">(import spork)</code> in either a Janet source file or at a Janet REPL:
+</p>
+<pre class="mendoza-codeblock"><code>Janet 1.35.2-fda0a081 linux/x64/gcc - '(doc)' for help
+repl:1:&gt; (import spork)
+@{_ @{:value &lt;cycle 0&gt;} spork/argparse/argparse @{:private true} spork/base64/decode @{:private true} spork/base64/encode @{:private true} spork/crc/make-variant @{:private true} spork/crc/named-variant @{:private true} spork/cron/check @{:private true} spork/cron/next-timestamp @{:private true} spork/cron/parse-cron @{:private true} ...}
+repl:2:&gt;</code></pre><p>However, it's usually more practical to only import the specific module you want using <code class="mendoza-code">(import spork/[module])</code>, replacing <code class="mendoza-code">[module]</code> as appropriate. For example:
+</p>
+<pre class="mendoza-codeblock"><code>Janet 1.35.2-fda0a081 linux/x64/gcc - '(doc)' for help
+repl:1:&gt; (import spork/netrepl)
+@{_ @{:value &lt;cycle 0&gt;} netrepl/client @{:private true} netrepl/default-host @{:private true} netrepl/default-port @{:private true} netrepl/server @{:private true} netrepl/server-single @{:private true}}
+repl:2:&gt;</code></pre>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="../jpm/api/shutil.html"><span class="prevnext-text">Shell Utilities</span></a></span>
+          <span class="next"><a href="api/index.html"><span class="prevnext-text">Spork API</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2025
+  <div class="gentag">Generated on August 30, 2025 at 17:18:20 (UTC) with Janet 1.39.1-e9c6678</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

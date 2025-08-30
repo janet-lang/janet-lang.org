@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Filewatch Module</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Filewatch Module" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li><li><span><a href="../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="index.html">Core API</a></span><ul><li><span><a href="array.html">array</a></span></li><li><span><a href="buffer.html">buffer</a></span></li><li><span><a href="bundle.html">bundle</a></span></li><li><span><a href="debug.html">debug</a></span></li><li><span><a href="ev.html">ev</a></span></li><li><span><a href="ffi.html">ffi</a></span></li><li><span><a href="fiber.html">fiber</a></span></li><li><span><a href="file.html">file</a></span></li><li><span class="selected"><a href="filewatch.html">filewatch</a></span></li><li><span><a href="int.html">int</a></span></li><li><span><a href="janet.html">janet</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="module.html">module</a></span></li><li><span><a href="net.html">net</a></span></li><li><span><a href="os.html">os</a></span></li><li><span><a href="peg.html">peg</a></span></li><li><span><a href="parser.html">parser</a></span></li><li><span><a href="string.html">string</a></span></li><li><span><a href="table.html">table</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../jpm/index.html">JPM</a></span><ul><li><span><a href="../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../jpm/api/index.html">API</a></span><ul><li><span><a href="../jpm/api/rules.html">rules</a></span></li><li><span><a href="../jpm/api/cc.html">cc</a></span></li><li><span><a href="../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../jpm/api/cli.html">cli</a></span></li><li><span><a href="../jpm/api/commands.html">commands</a></span></li><li><span><a href="../jpm/api/config.html">config</a></span></li><li><span><a href="../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/api/pm.html">pm</a></span></li><li><span><a href="../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../spork/index.html">Spork</a></span><ul><li class="caret"><span><a href="../spork/api/index.html">API</a></span><ul><li><span><a href="../spork/api/argparse.html">argparse</a></span></li><li><span><a href="../spork/api/base64.html">base64</a></span></li><li><span><a href="../spork/api/build-rules.html">build-rules</a></span></li><li><span><a href="../spork/api/cc.html">cc</a></span></li><li><span><a href="../spork/api/channel.html">channel</a></span></li><li><span><a href="../spork/api/cjanet.html">cjanet</a></span></li><li><span><a href="../spork/api/cmath.html">cmath</a></span></li><li><span><a href="../spork/api/crc.html">crc</a></span></li><li><span><a href="../spork/api/cron.html">cron</a></span></li><li><span><a href="../spork/api/data.html">data</a></span></li><li><span><a href="../spork/api/ev-utils.html">ev-utils</a></span></li><li><span><a href="../spork/api/fmt.html">fmt</a></span></li><li><span><a href="../spork/api/generators.html">generators</a></span></li><li><span><a href="../spork/api/getline.html">getline</a></span></li><li><span><a href="../spork/api/htmlgen.html">htmlgen</a></span></li><li><span><a href="../spork/api/http.html">http</a></span></li><li><span><a href="../spork/api/httpf.html">httpf</a></span></li><li><span><a href="../spork/api/infix.html">infix</a></span></li><li><span><a href="../spork/api/json.html">json</a></span></li><li><span><a href="../spork/api/math.html">math</a></span></li><li><span><a href="../spork/api/mdz.html">mdz</a></span></li><li><span><a href="../spork/api/misc.html">misc</a></span></li><li><span><a href="../spork/api/msg.html">msg</a></span></li><li><span><a href="../spork/api/netrepl.html">netrepl</a></span></li><li><span><a href="../spork/api/path.html">path</a></span></li><li><span><a href="../spork/api/pgp.html">pgp</a></span></li><li><span><a href="../spork/api/randgen.html">randgen</a></span></li><li><span><a href="../spork/api/rawterm.html">rawterm</a></span></li><li><span><a href="../spork/api/regex.html">regex</a></span></li><li><span><a href="../spork/api/rpc.html">rpc</a></span></li><li><span><a href="../spork/api/schema.html">schema</a></span></li><li><span><a href="../spork/api/services.html">services</a></span></li><li><span><a href="../spork/api/sh.html">sh</a></span></li><li><span><a href="../spork/api/stream.html">stream</a></span></li><li><span><a href="../spork/api/tarray.html">tarray</a></span></li><li><span><a href="../spork/api/tasker.html">tasker</a></span></li><li><span><a href="../spork/api/temple.html">temple</a></span></li><li><span><a href="../spork/api/test.html">test</a></span></li><li><span><a href="../spork/api/utf8.html">utf8</a></span></li><li><span><a href="../spork/api/zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.39.1-e9c6678 Documentation<br>(Other Versions:
+          
+          <a href="../../1.38.0/api/filewatch.html">1.38.0</a>
+          
+          <a href="../../1.37.1/api/filewatch.html">1.37.1</a>
+          
+          <a href="../../1.36.0/api/filewatch.html">1.36.0</a>
+          
+          <a href="../../1.35.0/api/filewatch.html">1.35.0</a>
+          
+          <a href="../../1.34.0/api/filewatch.html">1.34.0</a>
+          
+          <a href="../../1.31.0/api/filewatch.html">1.31.0</a>
+          
+          <a href="../../1.29.1/api/filewatch.html">1.29.1</a>
+          
+          <a href="../../1.28.0/api/filewatch.html">1.28.0</a>
+          
+          <a href="../../1.27.0/api/filewatch.html">1.27.0</a>
+          
+          <a href="../../1.26.0/api/filewatch.html">1.26.0</a>
+          
+          <a href="../../1.25.1/api/filewatch.html">1.25.1</a>
+          
+          <a href="../../1.24.0/api/filewatch.html">1.24.0</a>
+          
+          <a href="../../1.23.0/api/filewatch.html">1.23.0</a>
+          
+          <a href="../../1.22.0/api/filewatch.html">1.22.0</a>
+          
+          <a href="../../1.21.0/api/filewatch.html">1.21.0</a>
+          
+          <a href="../../1.20.0/api/filewatch.html">1.20.0</a>
+          
+          <a href="../../1.19.0/api/filewatch.html">1.19.0</a>
+          
+          <a href="../../1.18.1/api/filewatch.html">1.18.1</a>
+          
+          <a href="../../1.17.1/api/filewatch.html">1.17.1</a>
+          
+          <a href="../../1.16.1/api/filewatch.html">1.16.1</a>
+          
+          <a href="../../1.15.0/api/filewatch.html">1.15.0</a>
+          
+          <a href="../../1.13.1/api/filewatch.html">1.13.1</a>
+          
+          <a href="../../1.12.2/api/filewatch.html">1.12.2</a>
+          
+          <a href="../../1.11.1/api/filewatch.html">1.11.1</a>
+          
+          <a href="../../1.10.1/api/filewatch.html">1.10.1</a>
+          
+          <a href="../../1.9.1/api/filewatch.html">1.9.1</a>
+          
+          <a href="../../1.8.1/api/filewatch.html">1.8.1</a>
+          
+          <a href="../../1.7.0/api/filewatch.html">1.7.0</a>
+          
+          <a href="../../1.6.0/api/filewatch.html">1.6.0</a>
+          
+          <a href="../../1.5.1/api/filewatch.html">1.5.1</a>
+          
+          <a href="../../1.5.0/api/filewatch.html">1.5.0</a>
+          
+          <a href="../../1.4.0/api/filewatch.html">1.4.0</a>
+          
+          <a href="../../1.3.1/api/filewatch.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Filewatch Module</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="file.html"><span class="prevnext-text">File Module</span></a></span>
+
+          <span class="next"><a href="int.html"><span class="prevnext-text">Integer Types Module</span></a></span>
+        </div>
+        
+
+<h2 id="Index-7">Index
+</h2>
+<p><a href="#filewatch/add">filewatch/add</a> <a href="#filewatch/listen">filewatch/listen</a> <a href="#filewatch/new">filewatch/new</a> <a href="#filewatch/remove">filewatch/remove</a> <a href="#filewatch/unlisten">filewatch/unlisten</a> </p><hr><div class="binding"><span id="filewatch/add" class="binding-sym">filewatch/add</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/e9c6678/src/core/filewatch.c#L637">source</a></span> <pre class="binding-text">(filewatch/add watcher path &amp;opt flags)
+
+Add a path to the watcher. Available flags depend on the current OS, and are as follows:
+
+Windows/MINGW (flags correspond to `FILE_NOTIFY_CHANGE_*` flags in win32 documentation):
+
+* `:all` - trigger an event for all of the below triggers.
+
+* `:attributes` - `FILE_NOTIFY_CHANGE_ATTRIBUTES`
+
+* `:creation` - `FILE_NOTIFY_CHANGE_CREATION`
+
+* `:dir-name` - `FILE_NOTIFY_CHANGE_DIR_NAME`
+
+* `:last-access` - `FILE_NOTIFY_CHANGE_LAST_ACCESS`
+
+* `:last-write` - `FILE_NOTIFY_CHANGE_LAST_WRITE`
+
+* `:security` - `FILE_NOTIFY_CHANGE_SECURITY`
+
+* `:size` - `FILE_NOTIFY_CHANGE_SIZE`
+
+* `:recursive` - watch subdirectories recursively
+
+Linux (flags correspond to `IN_*` flags from &lt;sys/inotify.h&gt;):
+
+* `:access` - `IN_ACCESS`
+
+* `:all` - `IN_ALL_EVENTS`
+
+* `:attrib` - `IN_ATTRIB`
+
+* `:close-nowrite` - `IN_CLOSE_NOWRITE`
+
+* `:close-write` - `IN_CLOSE_WRITE`
+
+* `:create` - `IN_CREATE`
+
+* `:delete` - `IN_DELETE`
+
+* `:delete-self` - `IN_DELETE_SELF`
+
+* `:ignored` - `IN_IGNORED`
+
+* `:modify` - `IN_MODIFY`
+
+* `:move-self` - `IN_MOVE_SELF`
+
+* `:moved-from` - `IN_MOVED_FROM`
+
+* `:moved-to` - `IN_MOVED_TO`
+
+* `:open` - `IN_OPEN`
+
+* `:q-overflow` - `IN_Q_OVERFLOW`
+
+* `:unmount` - `IN_UNMOUNT`
+
+
+On Windows, events will have the following possible types:
+
+* `:unknown`
+
+* `:added`
+
+* `:removed`
+
+* `:modified`
+
+* `:renamed-old`
+
+* `:renamed-new`
+
+On Linux, events will a `:type` corresponding to the possible flags, excluding `:all`.
+</pre><a href="https://janetdocs.org/core-api/filewatch%2fadd">Community Examples</a></div><hr><div class="binding"><span id="filewatch/listen" class="binding-sym">filewatch/listen</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/e9c6678/src/core/filewatch.c#L658">source</a></span> <pre class="binding-text">(filewatch/listen watcher)
+
+Listen for changes in the watcher.</pre><a href="https://janetdocs.org/core-api/filewatch%2flisten">Community Examples</a></div><hr><div class="binding"><span id="filewatch/new" class="binding-sym">filewatch/new</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/e9c6678/src/core/filewatch.c#L589">source</a></span> <pre class="binding-text">(filewatch/new channel &amp;opt default-flags)
+
+Create a new filewatcher that will give events to a channel channel. See `filewatch/add` for available flags.
+
+When an event is triggered by the filewatcher, a struct containing information will be given to channel as with `ev/give`. The contents of the channel depend on the OS, but will contain some common keys:
+
+* `:type` -- the type of the event that was raised.
+
+* `:file-name` -- the base file name of the file that triggered the event.
+
+* `:dir-name` -- the directory name of the file that triggered the event.
+
+Events also will contain keys specific to the host OS.
+
+Windows has no extra properties on events.
+
+Linux has the following extra properties on events:
+
+* `:wd` -- the integer key returned by `filewatch/add` for the path that triggered this.
+
+* `:wd-path` -- the string path for watched directory of file. For files, will be the same as `:file-name`, and for directories, will be the same as `:dir-name`.
+
+* `:cookie` -- a randomized integer used to associate related events, such as :moved-from and :moved-to events.
+
+</pre><a href="https://janetdocs.org/core-api/filewatch%2fnew">Community Examples</a></div><hr><div class="binding"><span id="filewatch/remove" class="binding-sym">filewatch/remove</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/e9c6678/src/core/filewatch.c#L648">source</a></span> <pre class="binding-text">(filewatch/remove watcher path)
+
+Remove a path from the watcher.</pre><a href="https://janetdocs.org/core-api/filewatch%2fremove">Community Examples</a></div><hr><div class="binding"><span id="filewatch/unlisten" class="binding-sym">filewatch/unlisten</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/e9c6678/src/core/filewatch.c#L667">source</a></span> <pre class="binding-text">(filewatch/unlisten watcher)
+
+Stop listening for changes on a given watcher.</pre><a href="https://janetdocs.org/core-api/filewatch%2funlisten">Community Examples</a></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="file.html"><span class="prevnext-text">File Module</span></a></span>
+          <span class="next"><a href="int.html"><span class="prevnext-text">Integer Types Module</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2025
+  <div class="gentag">Generated on August 30, 2025 at 17:18:20 (UTC) with Janet 1.39.1-e9c6678</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

@@ -26,15 +26,16 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 38
-#define JANET_VERSION_PATCH 0
+#define JANET_VERSION_MINOR 39
+#define JANET_VERSION_PATCH 1
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.38.0"
+#define JANET_VERSION "1.39.1"
 
 /* #define JANET_BUILD "local" */
 
 /* These settings all affect linking, so use cautiously. */
 /* #define JANET_SINGLE_THREADED */
+/* #define JANET_THREAD_LOCAL _Thread_local */
 /* #define JANET_NO_DYNAMIC_MODULES */
 /* #define JANET_NO_NANBOX */
 /* #define JANET_API __attribute__((visibility ("default"))) */
@@ -137,9 +138,19 @@ extern "C" {
 #define JANET_LINUX 1
 #endif
 
+/* Check for Android */
+#ifdef __ANDROID__
+#define JANET_ANDROID 1
+#endif
+
 /* Check for Cygwin */
 #if defined(__CYGWIN__)
 #define JANET_CYGWIN 1
+#endif
+
+/* Check for Illumos */
+#if defined(__illumos__)
+#define JANET_ILLUMOS 1
 #endif
 
 /* Check Unix */
@@ -227,7 +238,7 @@ extern "C" {
 #endif
 
 /* Check sun */
-#ifdef __sun
+#if defined(__sun) && !defined(JANET_ILLUMOS)
 #define JANET_NO_UTC_MKTIME
 #endif
 
@@ -235,14 +246,12 @@ extern "C" {
 /* Also enable the thread library only if not single-threaded */
 #ifdef JANET_SINGLE_THREADED
 #define JANET_THREAD_LOCAL
-#undef JANET_THREADS
-#elif defined(__GNUC__)
+#elif !(defined(JANET_THREAD_LOCAL)) && defined(__GNUC__)
 #define JANET_THREAD_LOCAL __thread
-#elif defined(_MSC_BUILD)
+#elif !(defined(JANET_THREAD_LOCAL)) && defined(_MSC_BUILD)
 #define JANET_THREAD_LOCAL __declspec(thread)
-#else
+#elif !(defined(JANET_THREAD_LOCAL))
 #define JANET_THREAD_LOCAL
-#undef JANET_THREADS
 #endif
 
 /* Enable or disable dynamic module loading. Enabled by default. */
@@ -661,6 +670,7 @@ typedef void *JanetAbstract;
 #define JANET_STREAM_WRITABLE 0x400
 #define JANET_STREAM_ACCEPTABLE 0x800
 #define JANET_STREAM_UDPSERVER 0x1000
+#define JANET_STREAM_NOT_CLOSEABLE 0x2000
 #define JANET_STREAM_TOCLOSE 0x10000
 
 typedef enum {
@@ -733,6 +743,7 @@ typedef int32_t JanetAtomicInt;
 JANET_API JanetAtomicInt janet_atomic_inc(JanetAtomicInt volatile *x);
 JANET_API JanetAtomicInt janet_atomic_dec(JanetAtomicInt volatile *x);
 JANET_API JanetAtomicInt janet_atomic_load(JanetAtomicInt volatile *x);
+JANET_API JanetAtomicInt janet_atomic_load_relaxed(JanetAtomicInt volatile *x);
 
 /* We provide three possible implementations of Janets. The preferred
  * nanboxing approach, for 32 or 64 bits, and the standard C version. Code in the rest of the
@@ -1525,10 +1536,10 @@ JANET_API int32_t janet_abstract_incref(void *abst);
 JANET_API int32_t janet_abstract_decref(void *abst);
 
 /* Expose channel utilities */
-JanetChannel *janet_channel_make(uint32_t limit);
-JanetChannel *janet_channel_make_threaded(uint32_t limit);
-JanetChannel *janet_getchannel(const Janet *argv, int32_t n);
-JanetChannel *janet_optchannel(const Janet *argv, int32_t argc, int32_t n, JanetChannel *dflt);
+JANET_API JanetChannel *janet_channel_make(uint32_t limit);
+JANET_API JanetChannel *janet_channel_make_threaded(uint32_t limit);
+JANET_API JanetChannel *janet_getchannel(const Janet *argv, int32_t n);
+JANET_API JanetChannel *janet_optchannel(const Janet *argv, int32_t argc, int32_t n, JanetChannel *dflt);
 JANET_API int janet_channel_give(JanetChannel *channel, Janet x);
 JANET_API int janet_channel_take(JanetChannel *channel, Janet *out);
 

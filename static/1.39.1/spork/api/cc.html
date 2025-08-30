@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>cc</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="cc" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">Core API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/filewatch.html">filewatch</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/janet.html">janet</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../../jpm/index.html">JPM</a></span><ul><li><span><a href="../../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../../jpm/api/index.html">API</a></span><ul><li><span><a href="../../jpm/api/rules.html">rules</a></span></li><li><span><a href="../../jpm/api/cc.html">cc</a></span></li><li><span><a href="../../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../../jpm/api/cli.html">cli</a></span></li><li><span><a href="../../jpm/api/commands.html">commands</a></span></li><li><span><a href="../../jpm/api/config.html">config</a></span></li><li><span><a href="../../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../jpm/api/pm.html">pm</a></span></li><li><span><a href="../../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../index.html">Spork</a></span><ul><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span class="selected"><a href="cc.html">cc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span><a href="cjanet.html">cjanet</a></span></li><li><span><a href="cmath.html">cmath</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="mdz.html">mdz</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="services.html">services</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.39.1-e9c6678 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.38.0/spork/api/cc.html">1.38.0</a>
+          
+          <a href="../../../1.37.1/spork/api/cc.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/spork/api/cc.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/spork/api/cc.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/spork/api/cc.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/spork/api/cc.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/spork/api/cc.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/spork/api/cc.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/spork/api/cc.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/spork/api/cc.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/spork/api/cc.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/spork/api/cc.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/spork/api/cc.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/spork/api/cc.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/spork/api/cc.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/spork/api/cc.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/spork/api/cc.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/spork/api/cc.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/spork/api/cc.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/spork/api/cc.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/spork/api/cc.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/spork/api/cc.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/spork/api/cc.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/spork/api/cc.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/spork/api/cc.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/spork/api/cc.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/spork/api/cc.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/spork/api/cc.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/spork/api/cc.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/spork/api/cc.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/spork/api/cc.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/spork/api/cc.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/spork/api/cc.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">cc</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="build-rules.html"><span class="prevnext-text">build-rules</span></a></span>
+
+          <span class="next"><a href="channel.html"><span class="prevnext-text">channel</span></a></span>
+        </div>
+        
+
+<p>Improved version of the C Compiler abstraction from JPM that should be more correct, composable, and
+have less configuration.
+</p>
+<p>Wrapper around the system C compiler for compiling Janet native modules and executables.
+Opinionated and optimized for use with Janet, and does not actually run
+commands unless specified with (dyn *visit*). Also included is package config integration.
+Headers, static libraries, and dynamic libraries can all be used from `(dyn *syspath*)`.
+</p>
+<h2 id="Example-usage">Example usage
+</h2>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">use</span> <span class="mdzsyn-symbol">spork/cc</span>)
+
+(<span class="mdzsyn-symbol">search-static-libraries</span> <span class="mdzsyn-string">"m"</span> <span class="mdzsyn-string">"rt"</span> <span class="mdzsyn-string">"dl"</span>)
+(<span class="mdzsyn-symbol">search-dynamic-libraries</span> <span class="mdzsyn-string">"janet"</span>)
+(<span class="mdzsyn-symbol">pkg-config</span> <span class="mdzsyn-string">"sdl2"</span> <span class="mdzsyn-string">"vulkan"</span>)
+(<span class="mdzsyn-coresym">with-dyns</span> [<span class="mdzsyn-symbol">*defines*</span> {<span class="mdzsyn-string">"GAME_BUILD"</span> <span class="mdzsyn-string">"devel-0.0"</span>}
+            <span class="mdzsyn-symbol">*visit*</span> <span class="mdzsyn-symbol">visit-execute-if-stale</span>]
+  (<span class="mdzsyn-symbol">compile-and-link-executable</span> <span class="mdzsyn-string">"game"</span> <span class="mdzsyn-string">"main.c"</span> <span class="mdzsyn-string">"sound.c"</span> <span class="mdzsyn-string">"graphics.c"</span>))</code></pre><h2 id="Reference-2">Reference
+</h2>
+<p><a href="#cc/*ar*">cc/*ar*</a> <a href="#cc/*build-dir*">cc/*build-dir*</a> <a href="#cc/*build-type*">cc/*build-type*</a> <a href="#cc/*c++*">cc/*c++*</a> <a href="#cc/*c++-std*">cc/*c++-std*</a> <a href="#cc/*c++flags*">cc/*c++flags*</a> <a href="#cc/*c-std*">cc/*c-std*</a> <a href="#cc/*cc*">cc/*cc*</a> <a href="#cc/*cflags*">cc/*cflags*</a> <a href="#cc/*defines*">cc/*defines*</a> <a href="#cc/*dynamic-libs*">cc/*dynamic-libs*</a> <a href="#cc/*lflags*">cc/*lflags*</a> <a href="#cc/*libs*">cc/*libs*</a> <a href="#cc/*msvc-libs*">cc/*msvc-libs*</a> <a href="#cc/*msvc-vcvars*">cc/*msvc-vcvars*</a> <a href="#cc/*pkg-config-flags*">cc/*pkg-config-flags*</a> <a href="#cc/*smart-libs*">cc/*smart-libs*</a> <a href="#cc/*static-libs*">cc/*static-libs*</a> <a href="#cc/*target-os*">cc/*target-os*</a> <a href="#cc/*use-rdynamic*">cc/*use-rdynamic*</a> <a href="#cc/*use-rpath*">cc/*use-rpath*</a> <a href="#cc/*visit*">cc/*visit*</a> <a href="#cc/check-library-exists">cc/check-library-exists</a> <a href="#cc/compile-and-link-executable">cc/compile-and-link-executable</a> <a href="#cc/compile-and-link-shared">cc/compile-and-link-shared</a> <a href="#cc/compile-and-make-archive">cc/compile-and-make-archive</a> <a href="#cc/compile-c">cc/compile-c</a> <a href="#cc/compile-c++">cc/compile-c++</a> <a href="#cc/link-executable-c">cc/link-executable-c</a> <a href="#cc/link-executable-c++">cc/link-executable-c++</a> <a href="#cc/link-shared-c">cc/link-shared-c</a> <a href="#cc/link-shared-c++">cc/link-shared-c++</a> <a href="#cc/load-settings">cc/load-settings</a> <a href="#cc/make-archive">cc/make-archive</a> <a href="#cc/msvc-compile-and-link-executable">cc/msvc-compile-and-link-executable</a> <a href="#cc/msvc-compile-and-link-shared">cc/msvc-compile-and-link-shared</a> <a href="#cc/msvc-compile-and-make-archive">cc/msvc-compile-and-make-archive</a> <a href="#cc/msvc-compile-c">cc/msvc-compile-c</a> <a href="#cc/msvc-compile-c++">cc/msvc-compile-c++</a> <a href="#cc/msvc-find">cc/msvc-find</a> <a href="#cc/msvc-janet-import-lib">cc/msvc-janet-import-lib</a> <a href="#cc/msvc-link-executable">cc/msvc-link-executable</a> <a href="#cc/msvc-link-shared">cc/msvc-link-shared</a> <a href="#cc/msvc-make-archive">cc/msvc-make-archive</a> <a href="#cc/msvc-setup?">cc/msvc-setup?</a> <a href="#cc/pkg-config">cc/pkg-config</a> <a href="#cc/save-settings">cc/save-settings</a> <a href="#cc/search-dynamic-libraries">cc/search-dynamic-libraries</a> <a href="#cc/search-libraries">cc/search-libraries</a> <a href="#cc/search-static-libraries">cc/search-static-libraries</a> <a href="#cc/visit-clean">cc/visit-clean</a> <a href="#cc/visit-do-nothing">cc/visit-do-nothing</a> <a href="#cc/visit-execute">cc/visit-execute</a> <a href="#cc/visit-execute-if-stale">cc/visit-execute-if-stale</a> <a href="#cc/visit-execute-quiet">cc/visit-execute-quiet</a> <a href="#cc/visit-generate-makefile">cc/visit-generate-makefile</a> </p><hr><div class="binding"><span id="cc/*ar*" class="binding-sym">cc/*ar*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L27">source</a></span> <pre class="binding-text">Archiver, defaults to `ar`.</pre></div><hr><div class="binding"><span id="cc/*build-dir*" class="binding-sym">cc/*build-dir*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L28">source</a></span> <pre class="binding-text">If generating intermediate files, store them in this directory</pre></div><hr><div class="binding"><span id="cc/*build-type*" class="binding-sym">cc/*build-type*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L29">source</a></span> <pre class="binding-text">Presets for compiler optimizations, can be :release, :develop, and :debug, defaults to :develop.</pre></div><hr><div class="binding"><span id="cc/*c++*" class="binding-sym">cc/*c++*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L30">source</a></span> <pre class="binding-text">C++ compiler, defaults to `c++`.</pre></div><hr><div class="binding"><span id="cc/*c++-std*" class="binding-sym">cc/*c++-std*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L53">source</a></span> <pre class="binding-text">C++ standard to use as a 2 digit number, defaults to 11 on GCC-like compilers, 14 on msvc.</pre></div><hr><div class="binding"><span id="cc/*c++flags*" class="binding-sym">cc/*c++flags*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L31">source</a></span> <pre class="binding-text">Extra C++ compiler flags to use during compilation</pre></div><hr><div class="binding"><span id="cc/*c-std*" class="binding-sym">cc/*c-std*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L52">source</a></span> <pre class="binding-text">C standard to use as a 2 digit number, defaults to 99 on GCC-like compilers, 11 on msvc.</pre></div><hr><div class="binding"><span id="cc/*cc*" class="binding-sym">cc/*cc*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L32">source</a></span> <pre class="binding-text">C compiler, defaults to `cc`.</pre></div><hr><div class="binding"><span id="cc/*cflags*" class="binding-sym">cc/*cflags*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L33">source</a></span> <pre class="binding-text">Extra C compiler flags to use during compilation</pre></div><hr><div class="binding"><span id="cc/*defines*" class="binding-sym">cc/*defines*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L34">source</a></span> <pre class="binding-text">Map of extra defines to use when compiling</pre></div><hr><div class="binding"><span id="cc/*dynamic-libs*" class="binding-sym">cc/*dynamic-libs*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L36">source</a></span> <pre class="binding-text">List of dynamic libraries to use when compiling</pre></div><hr><div class="binding"><span id="cc/*lflags*" class="binding-sym">cc/*lflags*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L39">source</a></span> <pre class="binding-text">Extra linker flags</pre></div><hr><div class="binding"><span id="cc/*libs*" class="binding-sym">cc/*libs*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L35">source</a></span> <pre class="binding-text">List of libraries to use when compiling - can be static or dynamic depending on system.</pre></div><hr><div class="binding"><span id="cc/*msvc-libs*" class="binding-sym">cc/*msvc-libs*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L37">source</a></span> <pre class="binding-text">List of .lib libraries to use when compiling with msvc</pre></div><hr><div class="binding"><span id="cc/*msvc-vcvars*" class="binding-sym">cc/*msvc-vcvars*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L38">source</a></span> <pre class="binding-text">Path to vcvarsall.bat to use initialize MSVC environment. If unset, `msvc-find` will try to guess using typical install locations.</pre></div><hr><div class="binding"><span id="cc/*pkg-config-flags*" class="binding-sym">cc/*pkg-config-flags*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L48">source</a></span> <pre class="binding-text">Extra flags to pass to pkg-config</pre></div><hr><div class="binding"><span id="cc/*smart-libs*" class="binding-sym">cc/*smart-libs*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L49">source</a></span> <pre class="binding-text">Try to resolve circular or out-of-order dependencies between libraries by using --start-group and --end-group.
+Some linkers support this by default, but not at all. Defaults to true on linux and macos.</pre></div><hr><div class="binding"><span id="cc/*static-libs*" class="binding-sym">cc/*static-libs*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L40">source</a></span> <pre class="binding-text">List of static libraries to use when compiling</pre></div><hr><div class="binding"><span id="cc/*target-os*" class="binding-sym">cc/*target-os*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L41">source</a></span> <pre class="binding-text">Operating system to assume is being used for target compiler toolchain</pre></div><hr><div class="binding"><span id="cc/*use-rdynamic*" class="binding-sym">cc/*use-rdynamic*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L44">source</a></span> <pre class="binding-text">Optional setting to enable using `-rdynamic` or `-Wl,-export_dynamic` when linking executables.
+This is the preferred way on POSIX systems to let an executable load native modules dynamically at runtime.
+Defaults to true</pre></div><hr><div class="binding"><span id="cc/*use-rpath*" class="binding-sym">cc/*use-rpath*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L43">source</a></span> <pre class="binding-text">Optional setting to enable using `(dyn *syspath*)` as the runtime path to load for Shared Objects. Defaults to true</pre></div><hr><div class="binding"><span id="cc/*visit*" class="binding-sym">cc/*visit*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L42">source</a></span> <pre class="binding-text">Optional callback to process each CLI command and its inputs and outputs</pre></div><hr><div class="binding"><span id="cc/check-library-exists" class="binding-sym">cc/check-library-exists</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L545">source</a></span> <pre class="binding-text">(check-library-exists libname &amp;opt binding test-source-code)
+
+Check if a library exists on the current POSIX system. Will run a test compilation and return true if the compilation succeeds. Libname is passed directly to the compiler/linker, such as `-lm` on GNU/Linux.</pre></div><hr><div class="binding"><span id="cc/compile-and-link-executable" class="binding-sym">cc/compile-and-link-executable</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L283">source</a></span> <pre class="binding-text">(compile-and-link-executable to &amp; sources)
+
+Compile and link an executable C/C++ program. Return an array of commands.</pre></div><hr><div class="binding"><span id="cc/compile-and-link-shared" class="binding-sym">cc/compile-and-link-shared</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L272">source</a></span> <pre class="binding-text">(compile-and-link-shared to &amp; sources)
+
+Compile and link a shared C/C++ library. Return an array of commands.</pre></div><hr><div class="binding"><span id="cc/compile-and-make-archive" class="binding-sym">cc/compile-and-make-archive</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L294">source</a></span> <pre class="binding-text">(compile-and-make-archive to &amp; sources)
+
+Compile and create a static archive. Return an array of commands.</pre></div><hr><div class="binding"><span id="cc/compile-c" class="binding-sym">cc/compile-c</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L195">source</a></span> <pre class="binding-text">(compile-c from to)
+
+Compile a C program to an object file. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/compile-c++" class="binding-sym">cc/compile-c++</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L201">source</a></span> <pre class="binding-text">(compile-c++ from to)
+
+Compile a C++ program to an object file. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/link-executable-c" class="binding-sym">cc/link-executable-c</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L219">source</a></span> <pre class="binding-text">(link-executable-c objects to)
+
+Link a C program to make an executable. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/link-executable-c++" class="binding-sym">cc/link-executable-c++</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L225">source</a></span> <pre class="binding-text">(link-executable-c++ objects to)
+
+Link a C++ program to make an executable. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/link-shared-c" class="binding-sym">cc/link-shared-c</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L207">source</a></span> <pre class="binding-text">(link-shared-c objects to)
+
+Link a C program to make a shared library. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/link-shared-c++" class="binding-sym">cc/link-shared-c++</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L213">source</a></span> <pre class="binding-text">(link-shared-c++ objects to)
+
+Link a C++ program to make a shared library. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/load-settings" class="binding-sym">cc/load-settings</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L648">source</a></span> <pre class="binding-text">(load-settings settings)
+
+Load settings from a snapshot of settings saved with `save-settings`.</pre></div><hr><div class="binding"><span id="cc/make-archive" class="binding-sym">cc/make-archive</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L231">source</a></span> <pre class="binding-text">(make-archive objects to)
+
+Make an archive file. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/msvc-compile-and-link-executable" class="binding-sym">cc/msvc-compile-and-link-executable</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L472">source</a></span> <pre class="binding-text">(msvc-compile-and-link-executable to &amp; sources)
+
+Compile and link an executable C/C++ program. Return an array of commands.</pre></div><hr><div class="binding"><span id="cc/msvc-compile-and-link-shared" class="binding-sym">cc/msvc-compile-and-link-shared</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L463">source</a></span> <pre class="binding-text">(msvc-compile-and-link-shared to &amp; sources)
+
+Compile and link a shared C/C++ library. Return an array of commands.</pre></div><hr><div class="binding"><span id="cc/msvc-compile-and-make-archive" class="binding-sym">cc/msvc-compile-and-make-archive</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L481">source</a></span> <pre class="binding-text">(msvc-compile-and-make-archive to &amp; sources)
+
+Compile and create a static archive. Return an array of commands.</pre></div><hr><div class="binding"><span id="cc/msvc-compile-c" class="binding-sym">cc/msvc-compile-c</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L407">source</a></span> <pre class="binding-text">(msvc-compile-c from to)
+
+Compile a C program with MSVC. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/msvc-compile-c++" class="binding-sym">cc/msvc-compile-c++</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L414">source</a></span> <pre class="binding-text">(msvc-compile-c++ from to)
+
+Compile a C++ program with MSVC. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/msvc-find" class="binding-sym">cc/msvc-find</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L332">source</a></span> <pre class="binding-text">(msvc-find)
+
+Find vcvarsall.bat and run it to setup the current environment for building. Uses `(dyn *msvc-vcvars*)` to find the location of the setup script, otherwise defaults to checking typical install locations for Visual Studio. Supports VS 2017, 2019, and 2022, any edition. Will set environment variables such that invocations of cl.exe, link.exe, etc. will work as expected.</pre></div><hr><div class="binding"><span id="cc/msvc-janet-import-lib" class="binding-sym">cc/msvc-janet-import-lib</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L95">source</a></span> <pre class="binding-text">(msvc-janet-import-lib)
+
+Get path to the installed Janet import lib. This import lib is needed when create dlls for natives.</pre></div><hr><div class="binding"><span id="cc/msvc-link-executable" class="binding-sym">cc/msvc-link-executable</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L427">source</a></span> <pre class="binding-text">(msvc-link-executable objects to)
+
+Link a C/C++ program with MSVC to make an executable. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/msvc-link-shared" class="binding-sym">cc/msvc-link-shared</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L421">source</a></span> <pre class="binding-text">(msvc-link-shared objects to)
+
+Link a C/C++ program with MSVC to make a shared library. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/msvc-make-archive" class="binding-sym">cc/msvc-make-archive</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L433">source</a></span> <pre class="binding-text">(msvc-make-archive objects to)
+
+Make an archive file with MSVC. Return the command arguments.</pre></div><hr><div class="binding"><span id="cc/msvc-setup?" class="binding-sym">cc/msvc-setup?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L317">source</a></span> <pre class="binding-text">(msvc-setup?)
+
+Check if MSVC environment is already setup.</pre></div><hr><div class="binding"><span id="cc/pkg-config" class="binding-sym">cc/pkg-config</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L618">source</a></span> <pre class="binding-text">(pkg-config &amp; pkg-config-libraries)
+
+Setup defines, cflags, and library flags from pkg-config.</pre></div><hr><div class="binding"><span id="cc/save-settings" class="binding-sym">cc/save-settings</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L641">source</a></span> <pre class="binding-text">(save-settings)
+
+Get a snapshot of the current settings for various compiler flags, libraries, defines, etc. that can be loaded later.</pre></div><hr><div class="binding"><span id="cc/search-dynamic-libraries" class="binding-sym">cc/search-dynamic-libraries</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L597">source</a></span> <pre class="binding-text">(search-dynamic-libraries &amp; libs)
+
+Search for dynamic libraries on the current POSIX system and configure `(dyn *dynamic-libraries*)`. This is done by checking for the existence of libraries with `check-library-exists`. Returns an array of libraries that were not found.</pre></div><hr><div class="binding"><span id="cc/search-libraries" class="binding-sym">cc/search-libraries</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L583">source</a></span> <pre class="binding-text">(search-libraries &amp; libs)
+
+Search for libraries on the current POSIX system and configure `(dyn *libs*)`. This is done by checking for the existence of libraries with `check-library-exists`. Returns an array of libraries that were not found.</pre></div><hr><div class="binding"><span id="cc/search-static-libraries" class="binding-sym">cc/search-static-libraries</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L590">source</a></span> <pre class="binding-text">(search-static-libraries &amp; libs)
+
+Search for static libraries on the current POSIX system and configure `(dyn *static-libs*)`. This is done by checking for the existence of libraries with `check-library-exists`. Returns an array of libraries that were not found.</pre></div><hr><div class="binding"><span id="cc/visit-clean" class="binding-sym">cc/visit-clean</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L496">source</a></span> <pre class="binding-text">(visit-clean cmd inputs outputs message)
+
+A visiting function that will remove all outputs.</pre></div><hr><div class="binding"><span id="cc/visit-do-nothing" class="binding-sym">cc/visit-do-nothing</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L492">source</a></span> <pre class="binding-text">(visit-do-nothing &amp;)
+
+A visiting function that has no side effects and therefor does nothing.</pre></div><hr><div class="binding"><span id="cc/visit-execute" class="binding-sym">cc/visit-execute</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L511">source</a></span> <pre class="binding-text">(visit-execute cmd inputs outputs message)
+
+A function that can be provided as `(dyn *visit*)` that will execute commands.</pre></div><hr><div class="binding"><span id="cc/visit-execute-if-stale" class="binding-sym">cc/visit-execute-if-stale</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L523">source</a></span> <pre class="binding-text">(visit-execute-if-stale cmd inputs outputs message)
+
+A function that can be provided as `(dyn *visit*)` that will execute a command if inputs are newer than outputs, providing a simple, single-threaded, incremental build tool. This is not optimal for parallel builds, but is simple and works well for small projects.</pre></div><hr><div class="binding"><span id="cc/visit-execute-quiet" class="binding-sym">cc/visit-execute-quiet</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L535">source</a></span> <pre class="binding-text">(visit-execute-quiet cmd inputs outputs message)
+
+A function that can be provided as `(dyn *visit*)` that will execute commands quietly.</pre></div><hr><div class="binding"><span id="cc/visit-generate-makefile" class="binding-sym">cc/visit-generate-makefile</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/7fd743ac09e857fe0ebd333bd7a56cd0df3876c3//spork/cc.janet#L503">source</a></span> <pre class="binding-text">(visit-generate-makefile cmd inputs outputs message)
+
+A function that can be provided as `(dyn *visit*)` that will generate Makefile targets.</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="build-rules.html"><span class="prevnext-text">build-rules</span></a></span>
+          <span class="next"><a href="channel.html"><span class="prevnext-text">channel</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2025
+  <div class="gentag">Generated on August 30, 2025 at 17:18:20 (UTC) with Janet 1.39.1-e9c6678</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
