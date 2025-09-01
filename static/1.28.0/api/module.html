@@ -120,7 +120,7 @@ Add paths to `module/paths` for a given loader such that
 the generated paths behave like other module types, including
 relative imports and syspath imports. `ext` is the file extension
 to associate with this module type, including the dot. `loader` is the
-keyword name of a loader in `module/loaders`. Returns the modified `module/paths`.</pre><a href="https://janetdocs.com/module/add-paths">Community Examples</a></div><hr><div class="binding"><span id="module/cache" class="binding-sym">module/cache</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2667">source</a></span> <pre class="binding-text">A table, mapping loaded module identifiers to their environments.</pre><a href="https://janetdocs.com/module/cache">Community Examples</a></div><hr><div class="binding"><span id="module/expand-path" class="binding-sym">module/expand-path</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/core/corelib.c#L123">source</a></span> <pre class="binding-text">(module/expand-path path template)
+keyword name of a loader in `module/loaders`. Returns the modified `module/paths`.</pre><a href="https://janetdocs.org/module/add-paths">Community Examples</a></div><hr><div class="binding"><span id="module/cache" class="binding-sym">module/cache</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2667">source</a></span> <pre class="binding-text">A table, mapping loaded module identifiers to their environments.</pre><a href="https://janetdocs.org/module/cache">Community Examples</a></div><hr><div class="binding"><span id="module/expand-path" class="binding-sym">module/expand-path</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/core/corelib.c#L123">source</a></span> <pre class="binding-text">(module/expand-path path template)
 
 Expands a path template as found in `module/paths` for `module/find`. This takes in a path (the argument to require) and a template string, to expand the path to a path that can be used for importing files. The replacements are as follows:
 
@@ -138,15 +138,15 @@ Expands a path template as found in `module/paths` for `module/find`. This takes
 
 * :native: -- the extension used to load natives, .so or .dll
 
-* :sys: -- the system path, or (dyn :syspath)</pre><a href="https://janetdocs.com/module/expand-path">Community Examples</a></div><hr><div class="binding"><span id="module/find" class="binding-sym">module/find</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2733">source</a></span> <pre class="binding-text">(module/find path)
+* :sys: -- the system path, or (dyn :syspath)</pre><a href="https://janetdocs.org/module/expand-path">Community Examples</a></div><hr><div class="binding"><span id="module/find" class="binding-sym">module/find</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2733">source</a></span> <pre class="binding-text">(module/find path)
 
 Try to match a module or path name from the patterns in `module/paths`.
 Returns a tuple (fullpath kind) where the kind is one of :source, :native,
 or :image if the module is found, otherwise a tuple with nil followed by
-an error message.</pre><a href="https://janetdocs.com/module/find">Community Examples</a></div><hr><div class="binding"><span id="module/loaders" class="binding-sym">module/loaders</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2902">source</a></span> <pre class="binding-text">A table of loading method names to loading functions.
+an error message.</pre><a href="https://janetdocs.org/module/find">Community Examples</a></div><hr><div class="binding"><span id="module/loaders" class="binding-sym">module/loaders</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2902">source</a></span> <pre class="binding-text">A table of loading method names to loading functions.
 This table lets `require` and `import` load many different kinds
-of files as modules.</pre><a href="https://janetdocs.com/module/loaders">Community Examples</a></div><hr><div class="binding"><span id="module/loading" class="binding-sym">module/loading</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2762">source</a></span> <pre class="binding-text">A table, mapping currently loading modules to true. Used to prevent
-circular dependencies.</pre><a href="https://janetdocs.com/module/loading">Community Examples</a></div><hr><div class="binding"><span id="module/paths" class="binding-sym">module/paths</span> <span class="binding-type">array</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2671">source</a></span> <pre class="binding-text">The list of paths to look for modules, templated for `module/expand-path`.
+of files as modules.</pre><a href="https://janetdocs.org/module/loaders">Community Examples</a></div><hr><div class="binding"><span id="module/loading" class="binding-sym">module/loading</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2762">source</a></span> <pre class="binding-text">A table, mapping currently loading modules to true. Used to prevent
+circular dependencies.</pre><a href="https://janetdocs.org/module/loading">Community Examples</a></div><hr><div class="binding"><span id="module/paths" class="binding-sym">module/paths</span> <span class="binding-type">array</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2671">source</a></span> <pre class="binding-text">The list of paths to look for modules, templated for `module/expand-path`.
 Each element is a two-element tuple, containing the path
 template and a keyword :source, :native, or :image indicating how
 `require` should load files found at these paths.
@@ -155,11 +155,11 @@ A tuple can also
 contain a third element, specifying a filter that prevents `module/find`
 from searching that path template if the filter doesn't match the input
 path. The filter can be a string or a predicate function, and
-is often a file extension, including the period.</pre><a href="https://janetdocs.com/module/paths">Community Examples</a></div><hr><div class="binding"><span id="module/value" class="binding-sym">module/value</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2767">source</a></span> <pre class="binding-text">(module/value module sym &amp;opt private)
+is often a file extension, including the period.</pre><a href="https://janetdocs.org/module/paths">Community Examples</a></div><hr><div class="binding"><span id="module/value" class="binding-sym">module/value</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/janet/blob/358f5a0/src/boot/boot.janet#L2767">source</a></span> <pre class="binding-text">(module/value module sym &amp;opt private)
 
 Given a module table, get the value bound to a symbol `sym`. If `private` is
 truthy, will also resolve private module symbols. If no binding is found, will return
-nil.</pre><a href="https://janetdocs.com/module/value">Community Examples</a></div>
+nil.</pre><a href="https://janetdocs.org/module/value">Community Examples</a></div>
         <div class="prevnext-bar">
           <span class="prev"><a href="math.html"><span class="prevnext-text">Math Module</span></a></span>
           <span class="next"><a href="net.html"><span class="prevnext-text">Net Module</span></a></span>

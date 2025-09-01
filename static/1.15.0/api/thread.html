@@ -89,11 +89,11 @@
 </h2>
 <p><a href="#thread/close">thread/close</a> <a href="#thread/current">thread/current</a> <a href="#thread/exit">thread/exit</a> <a href="#thread/new">thread/new</a> <a href="#thread/receive">thread/receive</a> <a href="#thread/send">thread/send</a> </p><hr><div class="binding"><span id="thread/close" class="binding-sym">thread/close</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/close thread)
 
-Close a thread, unblocking it and ending communication with it. Note that closing a thread is idempotent and does not cancel the thread's operation. Returns nil.</pre><a href="https://janetdocs.com/thread/close">Community Examples</a></div><hr><div class="binding"><span id="thread/current" class="binding-sym">thread/current</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/current)
+Close a thread, unblocking it and ending communication with it. Note that closing a thread is idempotent and does not cancel the thread's operation. Returns nil.</pre><a href="https://janetdocs.org/thread/close">Community Examples</a></div><hr><div class="binding"><span id="thread/current" class="binding-sym">thread/current</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/current)
 
-Get the current running thread.</pre><a href="https://janetdocs.com/thread/current">Community Examples</a></div><hr><div class="binding"><span id="thread/exit" class="binding-sym">thread/exit</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/exit &amp;opt code)
+Get the current running thread.</pre><a href="https://janetdocs.org/thread/current">Community Examples</a></div><hr><div class="binding"><span id="thread/exit" class="binding-sym">thread/exit</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/exit &amp;opt code)
 
-Exit from the current thread. If no more threads are running, ends the process, but otherwise does not end the current process.</pre><a href="https://janetdocs.com/thread/exit">Community Examples</a></div><hr><div class="binding"><span id="thread/new" class="binding-sym">thread/new</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/new func &amp;opt capacity flags)
+Exit from the current thread. If no more threads are running, ends the process, but otherwise does not end the current process.</pre><a href="https://janetdocs.org/thread/exit">Community Examples</a></div><hr><div class="binding"><span id="thread/new" class="binding-sym">thread/new</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/new func &amp;opt capacity flags)
 
 Start a new thread that will start immediately. If capacity is provided, that is how many messages can be stored in the thread's mailbox before blocking senders. The capacity must be between 1 and 65535 inclusive, and defaults to 10. Can optionally provide flags to the new thread - supported flags are:
 
@@ -103,11 +103,11 @@ Start a new thread that will start immediately. If capacity is provided, that is
 
 * :c - Send over cfunction information to the new thread.
 
-Returns a handle to the new thread.</pre><a href="https://janetdocs.com/thread/new">Community Examples</a></div><hr><div class="binding"><span id="thread/receive" class="binding-sym">thread/receive</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/receive &amp;opt timeout)
+Returns a handle to the new thread.</pre><a href="https://janetdocs.org/thread/new">Community Examples</a></div><hr><div class="binding"><span id="thread/receive" class="binding-sym">thread/receive</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/receive &amp;opt timeout)
 
-Get a message sent to this thread. If timeout (in seconds) is provided, an error will be thrown after the timeout has elapsed but no messages are received. The default timeout is 1 second, and math/inf cam be passed to turn off the timeout.</pre><a href="https://janetdocs.com/thread/receive">Community Examples</a></div><hr><div class="binding"><span id="thread/send" class="binding-sym">thread/send</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/send thread msgi &amp;opt timeout)
+Get a message sent to this thread. If timeout (in seconds) is provided, an error will be thrown after the timeout has elapsed but no messages are received. The default timeout is 1 second, and math/inf cam be passed to turn off the timeout.</pre><a href="https://janetdocs.org/thread/receive">Community Examples</a></div><hr><div class="binding"><span id="thread/send" class="binding-sym">thread/send</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(thread/send thread msgi &amp;opt timeout)
 
-Send a message to the thread. By default, the timeout is 1 second, but an optional timeout in seconds can be provided. Use math/inf for no timeout. Will throw an error if there is a problem sending the message.</pre><a href="https://janetdocs.com/thread/send">Community Examples</a></div>
+Send a message to the thread. By default, the timeout is 1 second, but an optional timeout in seconds can be provided. Use math/inf for no timeout. Will throw an error if there is a problem sending the message.</pre><a href="https://janetdocs.org/thread/send">Community Examples</a></div>
         <div class="prevnext-bar">
           <span class="prev"><a href="table.html"><span class="prevnext-text">Table Module</span></a></span>
           <span class="next"><a href="misc.html"><span class="prevnext-text">Top Level Bindings</span></a></span>

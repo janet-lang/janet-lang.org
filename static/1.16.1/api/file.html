@@ -91,9 +91,9 @@
 </h2>
 <p><a href="#file/close">file/close</a> <a href="#file/flush">file/flush</a> <a href="#file/open">file/open</a> <a href="#file/popen">file/popen</a> <a href="#file/read">file/read</a> <a href="#file/seek">file/seek</a> <a href="#file/temp">file/temp</a> <a href="#file/write">file/write</a> </p><hr><div class="binding"><span id="file/close" class="binding-sym">file/close</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/close f)
 
-Close a file and release all related resources. When you are done reading a file, close it to prevent a resource leak and let other processes read the file. If the file is the result of a file/popen call, close waits for and returns the process exit status.</pre><a href="https://janetdocs.com/file/close">Community Examples</a></div><hr><div class="binding"><span id="file/flush" class="binding-sym">file/flush</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/flush f)
+Close a file and release all related resources. When you are done reading a file, close it to prevent a resource leak and let other processes read the file. If the file is the result of a file/popen call, close waits for and returns the process exit status.</pre><a href="https://janetdocs.org/file/close">Community Examples</a></div><hr><div class="binding"><span id="file/flush" class="binding-sym">file/flush</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/flush f)
 
-Flush any buffered bytes to the file system. In most files, writes are buffered for efficiency reasons. Returns the file handle.</pre><a href="https://janetdocs.com/file/flush">Community Examples</a></div><hr><div class="binding"><span id="file/open" class="binding-sym">file/open</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/open path &amp;opt mode)
+Flush any buffered bytes to the file system. In most files, writes are buffered for efficiency reasons. Returns the file handle.</pre><a href="https://janetdocs.org/file/flush">Community Examples</a></div><hr><div class="binding"><span id="file/open" class="binding-sym">file/open</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/open path &amp;opt mode)
 
 Open a file. `path` is an absolute or relative path, and `mode` is a set of flags indicating the mode to open the file in. `mode` is a keyword where each character represents a flag. If the file cannot be opened, returns nil, otherwise returns the new file handle. Mode flags:
 
@@ -109,9 +109,9 @@ Following one of the initial flags, 0 or more of the following flags can be appe
 
 * + - append to the file instead of overwriting it
 
-* n - error if the file cannot be opened instead of returning nil</pre><a href="https://janetdocs.com/file/open">Community Examples</a></div><hr><div class="binding"><span id="file/popen" class="binding-sym">file/popen</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/popen command &amp;opt mode) (DEPRECATED for os/spawn)
+* n - error if the file cannot be opened instead of returning nil</pre><a href="https://janetdocs.org/file/open">Community Examples</a></div><hr><div class="binding"><span id="file/popen" class="binding-sym">file/popen</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/popen command &amp;opt mode) (DEPRECATED for os/spawn)
 
-Open a file that is backed by a process. The file must be opened in either the :r (read) or the :w (write) mode. In :r mode, the stdout of the process can be read from the file. In :w mode, the stdin of the process can be written to. Returns the new file.</pre><a href="https://janetdocs.com/file/popen">Community Examples</a></div><hr><div class="binding"><span id="file/read" class="binding-sym">file/read</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/read f what &amp;opt buf)
+Open a file that is backed by a process. The file must be opened in either the :r (read) or the :w (write) mode. In :r mode, the stdout of the process can be read from the file. In :w mode, the stdin of the process can be written to. Returns the new file.</pre><a href="https://janetdocs.org/file/popen">Community Examples</a></div><hr><div class="binding"><span id="file/read" class="binding-sym">file/read</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/read f what &amp;opt buf)
 
 Read a number of bytes from a file `f` into a buffer. A buffer `buf` can be provided as an optional third argument, otherwise a new buffer is created. `what` can either be an integer or a keyword. Returns the buffer with file contents. Values for `what`:
 
@@ -119,7 +119,7 @@ Read a number of bytes from a file `f` into a buffer. A buffer `buf` can be prov
 
 * :line - read up to and including the next newline character
 
-* n (integer) - read up to n bytes from the file</pre><a href="https://janetdocs.com/file/read">Community Examples</a></div><hr><div class="binding"><span id="file/seek" class="binding-sym">file/seek</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/seek f &amp;opt whence n)
+* n (integer) - read up to n bytes from the file</pre><a href="https://janetdocs.org/file/read">Community Examples</a></div><hr><div class="binding"><span id="file/seek" class="binding-sym">file/seek</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/seek f &amp;opt whence n)
 
 Jump to a relative location in the file `f`. `whence` must be one of:
 
@@ -129,11 +129,11 @@ Jump to a relative location in the file `f`. `whence` must be one of:
 
 * :end - jump relative to the end of the file
 
-By default, `whence` is :cur. Optionally a value `n` may be passed for the relative number of bytes to seek in the file. `n` may be a real number to handle large files of more than 4GB. Returns the file handle.</pre><a href="https://janetdocs.com/file/seek">Community Examples</a></div><hr><div class="binding"><span id="file/temp" class="binding-sym">file/temp</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/temp)
+By default, `whence` is :cur. Optionally a value `n` may be passed for the relative number of bytes to seek in the file. `n` may be a real number to handle large files of more than 4GB. Returns the file handle.</pre><a href="https://janetdocs.org/file/seek">Community Examples</a></div><hr><div class="binding"><span id="file/temp" class="binding-sym">file/temp</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/temp)
 
-Open an anonymous temporary file that is removed on close. Raises an error on failure.</pre><a href="https://janetdocs.com/file/temp">Community Examples</a></div><hr><div class="binding"><span id="file/write" class="binding-sym">file/write</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/write f bytes)
+Open an anonymous temporary file that is removed on close. Raises an error on failure.</pre><a href="https://janetdocs.org/file/temp">Community Examples</a></div><hr><div class="binding"><span id="file/write" class="binding-sym">file/write</span> <span class="binding-type">cfunction</span>  <pre class="binding-text">(file/write f bytes)
 
-Writes to a file. 'bytes' must be string, buffer, or symbol. Returns the file.</pre><a href="https://janetdocs.com/file/write">Community Examples</a></div>
+Writes to a file. 'bytes' must be string, buffer, or symbol. Returns the file.</pre><a href="https://janetdocs.org/file/write">Community Examples</a></div>
         <div class="prevnext-bar">
           <span class="prev"><a href="fiber.html"><span class="prevnext-text">Fiber Module</span></a></span>
           <span class="next"><a href="int.html"><span class="prevnext-text">Integer Types Module</span></a></span>
