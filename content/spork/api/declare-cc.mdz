@@ -1,0 +1,15 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/declare-cc :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "declare-cc"
+ :template "docpage.html"}
+ ---
+
+The declare-cc module provides a DSL to the @code`cc` module for compiling C and C++ projects that 
+eliminates boilerplate, provides incremental builds, and re-implements support for building @code`project.janet` projects outside of JPM.
+
+## Reference
+
+@gen-docs/gen-prefix-current[declare-cc/]
