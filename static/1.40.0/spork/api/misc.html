@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>misc</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="misc" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">Core API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/filewatch.html">filewatch</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/janet.html">janet</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../../jpm/index.html">JPM</a></span><ul><li><span><a href="../../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../../jpm/api/index.html">API</a></span><ul><li><span><a href="../../jpm/api/rules.html">rules</a></span></li><li><span><a href="../../jpm/api/cc.html">cc</a></span></li><li><span><a href="../../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../../jpm/api/cli.html">cli</a></span></li><li><span><a href="../../jpm/api/commands.html">commands</a></span></li><li><span><a href="../../jpm/api/config.html">config</a></span></li><li><span><a href="../../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../jpm/api/pm.html">pm</a></span></li><li><span><a href="../../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../index.html">Spork</a></span><ul><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span><a href="cjanet.html">cjanet</a></span></li><li><span><a href="cmath.html">cmath</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="mdz.html">mdz</a></span></li><li><span class="selected"><a href="misc.html">misc</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="services.html">services</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.40.0-7e0c692 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.39.1/spork/api/misc.html">1.39.1</a>
+          
+          <a href="../../../1.38.0/spork/api/misc.html">1.38.0</a>
+          
+          <a href="../../../1.37.1/spork/api/misc.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/spork/api/misc.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/spork/api/misc.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/spork/api/misc.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/spork/api/misc.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/spork/api/misc.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/spork/api/misc.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/spork/api/misc.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/spork/api/misc.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/spork/api/misc.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/spork/api/misc.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/spork/api/misc.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/spork/api/misc.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/spork/api/misc.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/spork/api/misc.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/spork/api/misc.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/spork/api/misc.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/spork/api/misc.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/spork/api/misc.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/spork/api/misc.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/spork/api/misc.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/spork/api/misc.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/spork/api/misc.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/spork/api/misc.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/spork/api/misc.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/spork/api/misc.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/spork/api/misc.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/spork/api/misc.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/spork/api/misc.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/spork/api/misc.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/spork/api/misc.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/spork/api/misc.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">misc</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="mdz.html"><span class="prevnext-text">mdz</span></a></span>
+
+          <span class="next"><a href="msg.html"><span class="prevnext-text">msg</span></a></span>
+        </div>
+        
+
+<p>Miscellaneous utilities for Janet.
+</p>
+<h2 id="Dedent">Dedent
+</h2>
+<p>Remove indentation after concatenating the arguments.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/dedent</span> <span class="mdzsyn-string">``
+      ho
+        hoho
+          hohoho
+``</span>)</code></pre><h2 id="set*">set*
+</h2>
+<p>Allow parallel mutation of multiple mutable variables.  (All right
+hand sides are computed before setting the left hand sides.)
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet"><span class="mdzsyn-comment"># you can use it with vars</span>
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">2</span>)
+(<span class="mdzsyn-coresym">var</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-number">3</span>)
+(<span class="mdzsyn-symbol">misc/set*</span> [<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span>] [<span class="mdzsyn-symbol">b</span> (<span class="mdzsyn-coresym">+</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span>)])
+[<span class="mdzsyn-symbol">a</span> <span class="mdzsyn-symbol">b</span>] <span class="mdzsyn-symbol">=&gt;</span> [<span class="mdzsyn-number">3</span> <span class="mdzsyn-number">5</span>]
+
+<span class="mdzsyn-comment"># or you can use it with arrays, for example:</span>
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">x</span> @[<span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>])
+(<span class="mdzsyn-symbol">misc/set*</span> [[<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">0</span>] [<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">1</span>]] [(<span class="mdzsyn-coresym">in</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">+</span> (<span class="mdzsyn-coresym">in</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">0</span>) (<span class="mdzsyn-coresym">in</span> <span class="mdzsyn-symbol">x</span> <span class="mdzsyn-number">1</span>))])
+<span class="mdzsyn-symbol">x</span> <span class="mdzsyn-symbol">=&gt;</span> @[<span class="mdzsyn-number">3</span> <span class="mdzsyn-number">5</span>]</code></pre><h2 id="print-table">print-table
+</h2>
+<p>Given a list of tables containing column keys with corresponding row
+values, print its content to stdout in a human-readable tabular
+layout. For example:
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/print-table</span> [
+  {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-string">"abc"</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-string">"123"</span>}
+  {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-string">"hello"</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-string">"world"</span>}
+  {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-string">"banana"</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-string">"orange"</span>}
+  {<span class="mdzsyn-keyword">:x</span> <span class="mdzsyn-string">"cat"</span> <span class="mdzsyn-keyword">:y</span> <span class="mdzsyn-string">"dog"</span>}])
+  </code></pre><p>produces:
+</p>
+<pre class="mendoza-codeblock"><code>x       y       
+════════════════
+     abc     123
+   hello   world
+  banana  orange
+     cat     dog</code></pre><h2 id="map-keys">map-keys
+</h2>
+<p>Returns new table with function applied to table's keys recursively.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/map-keys</span> <span class="mdzsyn-coresym">string</span> {<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>}) 
+<span class="mdzsyn-comment"># =&gt; @{"1" 2 "3" 4}</span></code></pre><h2 id="map-vals">map-vals
+</h2>
+<p>Returns new table with function applied to table's values.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/map-vals</span> <span class="mdzsyn-coresym">string</span> {<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span>}) 
+<span class="mdzsyn-comment"># =&gt; @{1 "2" 3 "4"}</span></code></pre><h2 id="select-keys">select-keys
+</h2>
+<p>Returns new table with selected keys from dictionary.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/select-keys</span> {<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span> <span class="mdzsyn-number">6</span>} [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">5</span>]) 
+<span class="mdzsyn-comment"># =&gt; @{1 2 5 6}</span></code></pre><h2 id="cond->">cond-&gt;
+</h2>
+<p>Threading conditional macro. It takes value to mutate, and clauses pairs with a
+condition and a operation to which the value is put as the first argument. All
+conditions are tried and for truthy conditions the operation is performed.
+</p>
+<p>Returns the value mutated if any condition is truthy.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/cond-&gt;</span> @{<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>}
+             (<span class="mdzsyn-coresym">pos?</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:c</span>)
+             (<span class="mdzsyn-coresym">pos?</span> <span class="mdzsyn-number">0</span>) (<span class="mdzsyn-coresym">put</span> <span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:d</span>))
+<span class="mdzsyn-comment"># =&gt; @{:a :c}</span></code></pre><h2 id="cond->>">cond-&gt;&gt;
+</h2>
+<p>Threading conditional macro. It takes value to mutate, and clauses pairs of a
+condition and a operation to which the value, is put as the last argument. All
+conditions are tried and for truthy the operation is performed.
+</p>
+<p>Returns mutated value if any condition is truthy.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/cond-&gt;&gt;</span> @{<span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span>}
+              (<span class="mdzsyn-coresym">pos?</span> <span class="mdzsyn-number">1</span>) (<span class="mdzsyn-coresym">merge</span> {<span class="mdzsyn-keyword">:d</span> <span class="mdzsyn-keyword">:e</span>})
+              (<span class="mdzsyn-coresym">pos?</span> <span class="mdzsyn-number">0</span>) (<span class="mdzsyn-coresym">merge</span> {<span class="mdzsyn-keyword">:e</span> <span class="mdzsyn-keyword">:f</span>}))
+<span class="mdzsyn-comment"># =&gt; @{:a :b :d :e}</span></code></pre><h2 id="make">make
+</h2>
+<p>Convenience macro for creating new table from even number of kvs pairs in a variadic 
+pairs arguments and setting its prototype to prototype.
+</p>
+<p>Factory function for creating new objects from prototypes.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">Proto</span> @{<span class="mdzsyn-keyword">:greet</span> (<span class="mdzsyn-coresym">fn</span> [<span class="mdzsyn-symbol">self</span>] (<span class="mdzsyn-coresym">string</span> <span class="mdzsyn-string">"Hello "</span> (<span class="mdzsyn-symbol">self</span> <span class="mdzsyn-keyword">:name</span>)))})
+(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">t</span> (<span class="mdzsyn-symbol">misc/make</span> <span class="mdzsyn-symbol">Proto</span> <span class="mdzsyn-keyword">:name</span> <span class="mdzsyn-string">"pepe"</span>))
+(<span class="mdzsyn-keyword">:greet</span> <span class="mdzsyn-symbol">t</span>)
+<span class="mdzsyn-comment"># =&gt; "Hello pepe"</span></code></pre><h2 id="do-var">do-var
+</h2>
+<p>Convenience macro for defining varible with value before body and returning
+it after evaluating body, that presumably modifies variable.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/do-var</span> <span class="mdzsyn-symbol">res</span> <span class="mdzsyn-number">0</span> (<span class="mdzsyn-coresym">set</span> <span class="mdzsyn-symbol">res</span> <span class="mdzsyn-number">100</span>) (<span class="mdzsyn-coresym">++</span> <span class="mdzsyn-symbol">res</span>))
+<span class="mdzsyn-comment"># =&gt; 101</span></code></pre><h2 id="do-def">do-def
+</h2>
+<p>Convenience macro for defining constant with value before body and returning it
+after evaluating body, that presumably modifies the const refered content. For
+example buffer, table or array.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/do-def</span> <span class="mdzsyn-symbol">res</span> <span class="mdzsyn-string">@""</span> (<span class="mdzsyn-coresym">buffer/push</span> <span class="mdzsyn-symbol">res</span> <span class="mdzsyn-string">"a"</span>)) 
+<span class="mdzsyn-comment"># =&gt; @"a"</span></code></pre><h2 id="capout">capout
+</h2>
+<p>Captures the standart output of the variadic body and returns it as a buffer.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/capout</span> 
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">p</span> <span class="mdzsyn-string">"HOHOHO"</span>)
+  (<span class="mdzsyn-coresym">prin</span> <span class="mdzsyn-symbol">p</span>))
+<span class="mdzsyn-comment"># =&gt; @"HOHOHO"</span></code></pre><h2 id="caperr">caperr
+</h2>
+<p>Captures the standart error output of the variadic body and returns it as
+a buffer.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/caperr</span>
+  (<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">p</span> <span class="mdzsyn-string">"HOHOHO"</span>)
+  (<span class="mdzsyn-coresym">eprin</span> <span class="mdzsyn-symbol">p</span>))
+<span class="mdzsyn-comment"># =&gt; @"HOHOHO"</span></code></pre><h2 id="vars">vars
+</h2>
+<p>Defines many variables as in let bindings, but without creating new scope.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">do</span> (<span class="mdzsyn-symbol">misc/vars</span> <span class="mdzsyn-symbol">a</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-symbol">b</span> <span class="mdzsyn-number">1</span>) <span class="mdzsyn-symbol">a</span>) 
+<span class="mdzsyn-comment"># =&gt; 2</span></code></pre><h2 id="always">always
+</h2>
+<p>Return a function that discards any arguments and always returns its argument.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">def</span> <span class="mdzsyn-symbol">always-true</span> (<span class="mdzsyn-symbol">misc/always</span> <span class="mdzsyn-constant">true</span>))
+(<span class="mdzsyn-symbol">always-true</span>)
+<span class="mdzsyn-comment"># =&gt; true</span>
+(<span class="mdzsyn-symbol">always-true</span>)
+<span class="mdzsyn-comment"># =&gt; true</span>
+(<span class="mdzsyn-symbol">always-true</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>)
+<span class="mdzsyn-comment"># =&gt; true</span></code></pre><h2 id="second">second
+</h2>
+<p>Get the second element from an indexed data structure.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/second</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) 
+<span class="mdzsyn-comment"># =&gt; 2</span></code></pre><h2 id="third">third
+</h2>
+<p>Get the third element from an indexed data structure.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/third</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span>]) 
+<span class="mdzsyn-comment"># =&gt; 3</span></code></pre><h2 id="penultimate">penultimate
+</h2>
+<p>Get the second-to-last element from an indexed data structure.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/penultimate</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span>]) 
+<span class="mdzsyn-comment"># =&gt; 4</span></code></pre><h2 id="antepenultimate">antepenultimate
+</h2>
+<p>Get the third-to-last element from an indexed data structure.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/antepenultimate</span> [<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">4</span> <span class="mdzsyn-number">5</span>]) 
+<span class="mdzsyn-comment"># =&gt; 3</span></code></pre><h2 id="int/">int/
+</h2>
+<p>Perform an integer division.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/int/</span> <span class="mdzsyn-number">11</span> <span class="mdzsyn-number">3</span>) <span class="mdzsyn-number">3</span></code></pre><h2 id="gett">gett
+</h2>
+<p>Recursive macro get. Similar to get-in, but keys are variadic argument.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/gett</span> {<span class="mdzsyn-keyword">:a</span> {<span class="mdzsyn-keyword">:b</span> {<span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-keyword">:c</span>}}} <span class="mdzsyn-keyword">:a</span> <span class="mdzsyn-keyword">:b</span> <span class="mdzsyn-keyword">:c</span>) 
+<span class="mdzsyn-comment"># =&gt; :c</span></code></pre><h2 id="until">until
+Repeat the body while the condition is false.
+</h2>
+<p>Equivalent to `(while (not cnd) ;body)`.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/do-var</span> <span class="mdzsyn-symbol">res</span> <span class="mdzsyn-number">0</span> (<span class="mdzsyn-symbol">misc/until</span> (<span class="mdzsyn-coresym">&gt;</span> <span class="mdzsyn-symbol">res</span> <span class="mdzsyn-number">3</span>) (<span class="mdzsyn-coresym">++</span> <span class="mdzsyn-symbol">res</span>)))
+<span class="mdzsyn-comment"># =&gt; 4</span></code></pre><h2 id="table-filter">table-filter
+</h2>
+<p>Filter a key-value structure info a table. Semantics are the same as for
+built-in filter, except that predicate takes two arguments (key and value.)
+</p>
+<p>Does not consider prototypes.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/table-filter</span> <span class="mdzsyn-symbol">|</span>(<span class="mdzsyn-coresym">even?</span> <span class="mdzsyn-symbol">$1</span>) @{<span class="mdzsyn-keyword">:zero</span> <span class="mdzsyn-number">0</span> <span class="mdzsyn-keyword">:one</span> <span class="mdzsyn-number">1</span> <span class="mdzsyn-keyword">:two</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-keyword">:three</span> <span class="mdzsyn-number">3</span>})
+<span class="mdzsyn-comment"># =&gt; @{:zero 0 :two 2}</span></code></pre><h2 id="buffer/reverse">buffer/reverse
+</h2>
+<p>Reverse a buffer in-place.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/buffer/reverse</span> <span class="mdzsyn-string">@"abcd"</span>) 
+<span class="mdzsyn-comment"># =&gt; @"dcba"</span></code></pre><h2 id="string->int">string-&gt;int
+</h2>
+<p>Parses an integer in the given base. Defaults to decimal (base 10). Differs
+from scan-number in that this does not recognize floating point notation.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/string-&gt;int</span> <span class="mdzsyn-string">"101"</span> <span class="mdzsyn-number">2</span>) 
+<span class="mdzsyn-comment"># =&gt; 2r101</span></code></pre><h2 id="int->string">int-&gt;string
+</h2>
+<p>Stringify an integer in a particular base. Defaults to decimal (base 10).
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/int-&gt;string</span> <span class="mdzsyn-number">2r11011011</span> <span class="mdzsyn-number">2</span>) 
+<span class="mdzsyn-comment"># =&gt; "11011011"</span></code></pre><h2 id="insert-sorted">insert-sorted
+</h2>
+<p>Insert elements in array such that it remains sorted by the comparator. If
+array is not sorted beforehand, the results are undefined. Returns array.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/insert-sorted</span> @[<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">5</span>] <span class="mdzsyn-coresym">&lt;</span> <span class="mdzsyn-number">4</span>)
+<span class="mdzsyn-comment"># =&gt; @[1 2 3 4 5]</span></code></pre><h2 id="insert-sorted-by">insert-sorted-by
+</h2>
+<p>Insert elements in array such that it remains sorted by the value returned
+when function is called with the element, comparing the values with &lt;. If the
+array is not sorted beforehand, the results are undefined. Returns the array.
+</p>
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-symbol">misc/insert-sorted-by</span> @[<span class="mdzsyn-number">1</span> <span class="mdzsyn-number">2</span> <span class="mdzsyn-number">3</span> <span class="mdzsyn-number">5</span>] <span class="mdzsyn-coresym">identity</span> <span class="mdzsyn-number">4</span>)
+<span class="mdzsyn-comment"># =&gt; @[1 2 3 4 5]</span></code></pre><h2 id="Reference-20">Reference
+</h2>
+<p><a href="#misc/always">misc/always</a> <a href="#misc/antepenultimate">misc/antepenultimate</a> <a href="#misc/binary-search">misc/binary-search</a> <a href="#misc/binary-search-by">misc/binary-search-by</a> <a href="#misc/caperr">misc/caperr</a> <a href="#misc/capout">misc/capout</a> <a href="#misc/cond->">misc/cond-&gt;</a> <a href="#misc/cond->>">misc/cond-&gt;&gt;</a> <a href="#misc/dedent">misc/dedent</a> <a href="#misc/defs">misc/defs</a> <a href="#misc/dfs">misc/dfs</a> <a href="#misc/do-def">misc/do-def</a> <a href="#misc/do-var">misc/do-var</a> <a href="#misc/format-table">misc/format-table</a> <a href="#misc/gett">misc/gett</a> <a href="#misc/insert-sorted">misc/insert-sorted</a> <a href="#misc/insert-sorted-by">misc/insert-sorted-by</a> <a href="#misc/int->string">misc/int-&gt;string</a> <a href="#misc/int/">misc/int/</a> <a href="#misc/log">misc/log</a> <a href="#misc/make">misc/make</a> <a href="#misc/make-id">misc/make-id</a> <a href="#misc/map-keys">misc/map-keys</a> <a href="#misc/map-keys-flat">misc/map-keys-flat</a> <a href="#misc/map-vals">misc/map-vals</a> <a href="#misc/merge-sorted">misc/merge-sorted</a> <a href="#misc/merge-sorted-by">misc/merge-sorted-by</a> <a href="#misc/penultimate">misc/penultimate</a> <a href="#misc/print-table">misc/print-table</a> <a href="#misc/randomize-array">misc/randomize-array</a> <a href="#misc/second">misc/second</a> <a href="#misc/select-keys">misc/select-keys</a> <a href="#misc/set*">misc/set*</a> <a href="#misc/string->int">misc/string-&gt;int</a> <a href="#misc/table-filter">misc/table-filter</a> <a href="#misc/third">misc/third</a> <a href="#misc/trim-prefix">misc/trim-prefix</a> <a href="#misc/trim-suffix">misc/trim-suffix</a> <a href="#misc/until">misc/until</a> <a href="#misc/vars">misc/vars</a> </p><hr><div class="binding"><span id="misc/always" class="binding-sym">misc/always</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L369">source</a></span> <pre class="binding-text">(always x)
+
+Return a function that discards any arguments and always returns `x`.</pre></div><hr><div class="binding"><span id="misc/antepenultimate" class="binding-sym">misc/antepenultimate</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L389">source</a></span> <pre class="binding-text">(antepenultimate xs)
+
+Get the third-to-last element from an indexed data structure.</pre></div><hr><div class="binding"><span id="misc/binary-search" class="binding-sym">misc/binary-search</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L473">source</a></span> <pre class="binding-text">(binary-search x arr &amp;opt &lt;?)
+
+Returns the index of `x` in a sorted array or tuple or the index of
+the next item if `x` is not present. This is the correct insert index
+for `x` within `arr`. If a `&lt;?` comparator is given, the search uses
+that to compare elements, otherwise uses `&lt;`.</pre></div><hr><div class="binding"><span id="misc/binary-search-by" class="binding-sym">misc/binary-search-by</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L491">source</a></span> <pre class="binding-text">(binary-search-by x arr f)
+
+Returns the index of `x` in an array or tuple which has been sorted
+by a mapping function `f`, or the index of the next item if `x` is not
+present. This is the correct insert index for `x` within `arr`.</pre></div><hr><div class="binding"><span id="misc/caperr" class="binding-sym">misc/caperr</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L349">source</a></span> <pre class="binding-text">(caperr &amp; body)
+
+Captures the standard error output of the variadic `body` and returns it
+as a buffer.</pre></div><hr><div class="binding"><span id="misc/capout" class="binding-sym">misc/capout</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L341">source</a></span> <pre class="binding-text">(capout &amp; body)
+
+Captures the standard output of the variadic `body` and returns it as
+a buffer.</pre></div><hr><div class="binding"><span id="misc/cond->" class="binding-sym">misc/cond-&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L265">source</a></span> <pre class="binding-text">(cond-&gt; val &amp; clauses)
+
+Threading conditional macro. It takes `val` to mutate,
+and `clauses` pairs with condition and operation to which `val`,
+is passed as first argument. All conditions are tried and
+for truthy conditions the operation is executed.
+Returns the value mutated if any condition is truthy.</pre></div><hr><div class="binding"><span id="misc/cond->>" class="binding-sym">misc/cond-&gt;&gt;</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L288">source</a></span> <pre class="binding-text">(cond-&gt;&gt; val &amp; clauses)
+
+Threading conditional macro. It takes `val` to mutate,
+and `clauses` pairs of condition and operation to which `val`,
+is passed as last argument. All conditions are tried and
+for truthy conditions the operation is executed.
+Returns mutated value if any condition is truthy.</pre></div><hr><div class="binding"><span id="misc/dedent" class="binding-sym">misc/dedent</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L9">source</a></span> <pre class="binding-text">(dedent &amp; xs)
+
+Remove indentation after concatenating the arguments. Works by removing
+leading whitespace, and then removing that same pattern of whitespace after
+new lines.</pre></div><hr><div class="binding"><span id="misc/defs" class="binding-sym">misc/defs</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L363">source</a></span> <pre class="binding-text">(defs &amp; bindings)
+
+Defines many constants as in let `bindings`, but without creating a new scope.</pre></div><hr><div class="binding"><span id="misc/dfs" class="binding-sym">misc/dfs</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L164">source</a></span> <pre class="binding-text">(dfs data visit-leaf &amp;opt node-before node-after get-children seen)
+
+Do a depth first, pre-order traversal over a data structure.
+Also allow for callbacks before and after visiting the children
+of a node. Also allow for a custom `get-children` function to
+change traversal as needed. Will detect cycles if an empty table
+is passed as the `seen` parameter, which is used to cache values
+that have been visited.</pre></div><hr><div class="binding"><span id="misc/do-def" class="binding-sym">misc/do-def</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L326">source</a></span> <pre class="binding-text">(do-def c d &amp; body)
+
+Convenience macro for defining constant named `c` with value `d` before `body`
+and returning it after evaluating `body`, that presumably modifies
+the content referred to by `c`. For example, a buffer, table or array.</pre></div><hr><div class="binding"><span id="misc/do-var" class="binding-sym">misc/do-var</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L318">source</a></span> <pre class="binding-text">(do-var v d &amp; body)
+
+Convenience macro for defining variable named `v` with value `d` before `body`
+and returning it after evaluating `body`, that presumably modifies `v`.</pre></div><hr><div class="binding"><span id="misc/format-table" class="binding-sym">misc/format-table</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L53">source</a></span> <pre class="binding-text">(format-table buf-into data &amp;opt columns header-mapping column-mapping)
+
+Same as print-table but pushes table into a buffer.</pre></div><hr><div class="binding"><span id="misc/gett" class="binding-sym">misc/gett</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L399">source</a></span> <pre class="binding-text">(gett ds &amp; keyz)
+
+Recursive macro (get). Similar to get-in, but `keyz` is variadic.</pre></div><hr><div class="binding"><span id="misc/insert-sorted" class="binding-sym">misc/insert-sorted</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L508">source</a></span> <pre class="binding-text">(insert-sorted arr &lt;? &amp; xs)
+
+Insert elements in `arr` such that it remains sorted by the comparator. If
+`arr` is not sorted beforehand, the results are undefined. Returns `arr`.</pre></div><hr><div class="binding"><span id="misc/insert-sorted-by" class="binding-sym">misc/insert-sorted-by</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L518">source</a></span> <pre class="binding-text">(insert-sorted-by arr f &amp; xs)
+
+Insert elements in `arr` such that it remains sorted by the value returned
+when `f` is called with the element, comparing the values with `&lt;`. If `arr` is
+not sorted beforehand, the results are undefined. Returns `arr`.</pre></div><hr><div class="binding"><span id="misc/int->string" class="binding-sym">misc/int-&gt;string</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L448">source</a></span> <pre class="binding-text">(int-&gt;string int &amp;opt base)
+
+Stringify an integer in a particular base. Defaults to decimal (base 10).</pre></div><hr><div class="binding"><span id="misc/int/" class="binding-sym">misc/int/</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L394">source</a></span> <pre class="binding-text">(int/ &amp; xs)
+
+Perform integer division.</pre></div><hr><div class="binding"><span id="misc/log" class="binding-sym">misc/log</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L216">source</a></span> <pre class="binding-text">(log level &amp; args)
+
+Print to a dynamic binding stream if that stream is set, otherwise do
+nothing. Evaluate to nil.
+For example, `(log :err "value error: %V" my-value)` will print
+to `(dyn :err)` only if `(dyn :err)` has been set.</pre></div><hr><div class="binding"><span id="misc/make" class="binding-sym">misc/make</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L309">source</a></span> <pre class="binding-text">(make prototype &amp; pairs)
+
+Convenience macro for creating new table from even number of kvs pairs in variadic `pairs`
+arguments and setting its prototype to `prototype`.
+Factory function for creating new objects from prototypes.</pre></div><hr><div class="binding"><span id="misc/make-id" class="binding-sym">misc/make-id</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L553">source</a></span> <pre class="binding-text">(make-id &amp;opt prefix)
+
+Create a random, printable keyword id with 10 bytes of entropy
+with an optional prefix.</pre></div><hr><div class="binding"><span id="misc/map-keys" class="binding-sym">misc/map-keys</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L228">source</a></span> <pre class="binding-text">(map-keys f data)
+
+Returns new table with function `f` applied to `data`'s
+keys recursively.</pre></div><hr><div class="binding"><span id="misc/map-keys-flat" class="binding-sym">misc/map-keys-flat</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L241">source</a></span> <pre class="binding-text">(map-keys-flat f data)
+
+Returns new table with function `f` applied to `data`'s
+keys without recursing.</pre></div><hr><div class="binding"><span id="misc/map-vals" class="binding-sym">misc/map-vals</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L250">source</a></span> <pre class="binding-text">(map-vals f data)
+
+Returns new table with function `f` applied to `data`'s values.</pre></div><hr><div class="binding"><span id="misc/merge-sorted" class="binding-sym">misc/merge-sorted</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L529">source</a></span> <pre class="binding-text">(merge-sorted a b &amp;opt &lt;?)
+
+Merges two sorted arrays so that the result remains sorted, using an optional comparator.
+If no comparator is given, `&lt;` is used.</pre></div><hr><div class="binding"><span id="misc/merge-sorted-by" class="binding-sym">misc/merge-sorted-by</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L546">source</a></span> <pre class="binding-text">(merge-sorted-by a b f)
+
+Merges two sorted arrays so that result remains sorted when `f` is called on each element,
+comparing the values with `&lt;`.</pre></div><hr><div class="binding"><span id="misc/penultimate" class="binding-sym">misc/penultimate</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L384">source</a></span> <pre class="binding-text">(penultimate xs)
+
+Get the second-to-last element from an indexed data structure.</pre></div><hr><div class="binding"><span id="misc/print-table" class="binding-sym">misc/print-table</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L139">source</a></span> <pre class="binding-text">(print-table data &amp;opt columns header-mapping column-mapping)
+
+Iterate through the rows of a data structure and print a table in a human
+readable way, with padding and heading information. Can optionally provide
+a function used to print a row, as well as optionally select column keys
+for each row. Lastly, a `header-mapping` dictionary can be provided that
+changes the printed header names by mapping column keys to the desired
+header name. If no mapping is found, then the column key will be used as
+the header name. Returns nil.</pre></div><hr><div class="binding"><span id="misc/randomize-array" class="binding-sym">misc/randomize-array</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L186">source</a></span> <pre class="binding-text">(randomize-array arr &amp;opt rng)
+
+Randomizes array using the fisher-yates shuffle, takes an optional random
+number generator.</pre></div><hr><div class="binding"><span id="misc/second" class="binding-sym">misc/second</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L374">source</a></span> <pre class="binding-text">(second xs)
+
+Get the second element from an indexed data structure.</pre></div><hr><div class="binding"><span id="misc/select-keys" class="binding-sym">misc/select-keys</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L257">source</a></span> <pre class="binding-text">(select-keys data keyz)
+
+Returns new table with selected `keyz` from dictionary `data`.</pre></div><hr><div class="binding"><span id="misc/set*" class="binding-sym">misc/set*</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L33">source</a></span> <pre class="binding-text">(set* tgts exprs)
+
+Parallel `set` function. Takes a list of targets and
+expressions, evaluates all the expressions, and then
+assigns them to the targets. Each target can be a variable
+or a 2-tuple, just like in the normal `set` special form.</pre></div><hr><div class="binding"><span id="misc/string->int" class="binding-sym">misc/string-&gt;int</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L426">source</a></span> <pre class="binding-text">(string-&gt;int str &amp;opt base)
+
+Parse an integer in the given base. Defaults to decimal (base 10). Differs
+from scan-number in that this does not recognize floating point notation.</pre></div><hr><div class="binding"><span id="misc/table-filter" class="binding-sym">misc/table-filter</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L412">source</a></span> <pre class="binding-text">(table-filter pred dict)
+
+Filter a key-value structure into a table. Semantics are the same as for
+built-in `filter`, except that `pred` takes two arguments (key and value).
+Does not consider prototypes.</pre></div><hr><div class="binding"><span id="misc/third" class="binding-sym">misc/third</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L379">source</a></span> <pre class="binding-text">(third xs)
+
+Get the third element from an indexed data structure.</pre></div><hr><div class="binding"><span id="misc/trim-prefix" class="binding-sym">misc/trim-prefix</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L202">source</a></span> <pre class="binding-text">(trim-prefix prefix str)
+
+Trim the specified prefix of a string if it has one</pre></div><hr><div class="binding"><span id="misc/trim-suffix" class="binding-sym">misc/trim-suffix</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L209">source</a></span> <pre class="binding-text">(trim-suffix suffix str)
+
+Trim the specified suffix of a string if it has one</pre></div><hr><div class="binding"><span id="misc/until" class="binding-sym">misc/until</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L404">source</a></span> <pre class="binding-text">(until cnd &amp; body)
+
+Repeat `body` while the `cnd` is false.
+Equivalent to (while (not cnd) ;body).</pre></div><hr><div class="binding"><span id="misc/vars" class="binding-sym">misc/vars</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/misc.janet#L357">source</a></span> <pre class="binding-text">(vars &amp; bindings)
+
+Defines many variables as in let `bindings`, but without creating a new scope.</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="mdz.html"><span class="prevnext-text">mdz</span></a></span>
+          <span class="next"><a href="msg.html"><span class="prevnext-text">msg</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2025
+  <div class="gentag">Generated on November 15, 2025 at 15:44:19 (UTC) with Janet 1.40.0-7e0c692</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

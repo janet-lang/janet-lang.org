@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>cjanet</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="cjanet" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var toggler = document.getElementById('toc-toggle');
+        var wrapper = document.querySelector('.toc');
+        wrapper.classList.toggle('toc-hidden');
+        toggler.classList.toggle('open');
+        if (window.localStorage) {
+          window.localStorage.setItem('show-toc', toggler.classList.contains('open'));
+        }
+      }
+      function addTocToggle() {
+        var el = document.getElementById('toc-toggle');
+        if (!window.localStorage || window.localStorage.getItem('show-toc') === 'true') {
+          toggleToc()
+        }
+        el.addEventListener('click', toggleToc);
+      }
+      window.addEventListener('DOMContentLoaded', addTocToggle);
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">Core API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/filewatch.html">filewatch</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/janet.html">janet</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../../jpm/index.html">JPM</a></span><ul><li><span><a href="../../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../../jpm/api/index.html">API</a></span><ul><li><span><a href="../../jpm/api/rules.html">rules</a></span></li><li><span><a href="../../jpm/api/cc.html">cc</a></span></li><li><span><a href="../../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../../jpm/api/cli.html">cli</a></span></li><li><span><a href="../../jpm/api/commands.html">commands</a></span></li><li><span><a href="../../jpm/api/config.html">config</a></span></li><li><span><a href="../../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../jpm/api/pm.html">pm</a></span></li><li><span><a href="../../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../index.html">Spork</a></span><ul><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span class="selected"><a href="cjanet.html">cjanet</a></span></li><li><span><a href="cmath.html">cmath</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="mdz.html">mdz</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="services.html">services</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.40.0-7e0c692 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.39.1/spork/api/cjanet.html">1.39.1</a>
+          
+          <a href="../../../1.38.0/spork/api/cjanet.html">1.38.0</a>
+          
+          <a href="../../../1.37.1/spork/api/cjanet.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/spork/api/cjanet.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/spork/api/cjanet.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/spork/api/cjanet.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/spork/api/cjanet.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/spork/api/cjanet.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/spork/api/cjanet.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/spork/api/cjanet.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/spork/api/cjanet.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/spork/api/cjanet.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/spork/api/cjanet.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/spork/api/cjanet.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/spork/api/cjanet.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/spork/api/cjanet.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/spork/api/cjanet.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/spork/api/cjanet.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/spork/api/cjanet.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/spork/api/cjanet.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/spork/api/cjanet.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/spork/api/cjanet.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/spork/api/cjanet.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/spork/api/cjanet.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/spork/api/cjanet.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/spork/api/cjanet.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/spork/api/cjanet.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/spork/api/cjanet.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/spork/api/cjanet.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/spork/api/cjanet.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/spork/api/cjanet.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/spork/api/cjanet.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/spork/api/cjanet.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/spork/api/cjanet.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">cjanet</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="channel.html"><span class="prevnext-text">channel</span></a></span>
+
+          <span class="next"><a href="cmath.html"><span class="prevnext-text">cmath</span></a></span>
+        </div>
+        
+
+<p>A DSL that compiles to C. 
+  Improved version of jpm/cgen that is more amenable to Janet integration, macros, and meta-programming.
+</p>
+<p>The semantics of the language are basically the
+same as C so a higher level language (or type system) should be built on top of this. 
+  This IR emits a very useful subset of valid C 99.
+</p>
+<h2 id="Reference-4">Reference
+</h2>
+<p><a href="#cjanet/*cdef-list*">cjanet/*cdef-list*</a> <a href="#cjanet/*cfun-list*">cjanet/*cfun-list*</a> <a href="#cjanet/*indent*">cjanet/*indent*</a> <a href="#cjanet/@">cjanet/@</a> <a href="#cjanet/block">cjanet/block</a> <a href="#cjanet/cdef">cjanet/cdef</a> <a href="#cjanet/cfunction">cjanet/cfunction</a> <a href="#cjanet/declare">cjanet/declare</a> <a href="#cjanet/emit-block-end">cjanet/emit-block-end</a> <a href="#cjanet/emit-block-start">cjanet/emit-block-start</a> <a href="#cjanet/emit-blocks">cjanet/emit-blocks</a> <a href="#cjanet/emit-cdef">cjanet/emit-cdef</a> <a href="#cjanet/emit-cfunction">cjanet/emit-cfunction</a> <a href="#cjanet/emit-comment">cjanet/emit-comment</a> <a href="#cjanet/emit-declare">cjanet/emit-declare</a> <a href="#cjanet/emit-function">cjanet/emit-function</a> <a href="#cjanet/emit-include">cjanet/emit-include</a> <a href="#cjanet/emit-indent">cjanet/emit-indent</a> <a href="#cjanet/emit-module-entry">cjanet/emit-module-entry</a> <a href="#cjanet/emit-preprocess">cjanet/emit-preprocess</a> <a href="#cjanet/emit-typedef">cjanet/emit-typedef</a> <a href="#cjanet/function">cjanet/function</a> <a href="#cjanet/include">cjanet/include</a> <a href="#cjanet/mangle">cjanet/mangle</a> <a href="#cjanet/module-entry">cjanet/module-entry</a> <a href="#cjanet/preprocess">cjanet/preprocess</a> <a href="#cjanet/type-split">cjanet/type-split</a> <a href="#cjanet/typedef">cjanet/typedef</a> </p><hr><div class="binding"><span id="cjanet/*cdef-list*" class="binding-sym">cjanet/*cdef-list*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L551">source</a></span> <pre class="binding-text">Array of C Constants defined in the current scope</pre></div><hr><div class="binding"><span id="cjanet/*cfun-list*" class="binding-sym">cjanet/*cfun-list*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L550">source</a></span> <pre class="binding-text">Array of C Functions defined in the current scope</pre></div><hr><div class="binding"><span id="cjanet/*indent*" class="binding-sym">cjanet/*indent*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L79">source</a></span> <pre class="binding-text">current indent buffer</pre></div><hr><div class="binding"><span id="cjanet/@" class="binding-sym">cjanet/@</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L540">source</a></span> <pre class="binding-text">(@ &amp; args)
+
+</pre></div><hr><div class="binding"><span id="cjanet/block" class="binding-sym">cjanet/block</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L543">source</a></span> <pre class="binding-text">(block &amp; args)
+
+</pre></div><hr><div class="binding"><span id="cjanet/cdef" class="binding-sym">cjanet/cdef</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L792">source</a></span> <pre class="binding-text">(cdef name &amp; more)
+
+Define constant which will be registered in the module.
+It takes care of the docstring.</pre></div><hr><div class="binding"><span id="cjanet/cfunction" class="binding-sym">cjanet/cfunction</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L768">source</a></span> <pre class="binding-text">(cfunction name &amp; more)
+
+Define a C Function in cjanet. This also takes care
+of recording docstrings and such. Arity checking will be
+generated for you (by insertion of a call to janet_arity
+or janet_fixarity).</pre></div><hr><div class="binding"><span id="cjanet/declare" class="binding-sym">cjanet/declare</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L541">source</a></span> <pre class="binding-text">(declare &amp; args)
+
+</pre></div><hr><div class="binding"><span id="cjanet/emit-block-end" class="binding-sym">cjanet/emit-block-end</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L85">source</a></span> <pre class="binding-text">(emit-block-end &amp;opt nl)
+
+</pre></div><hr><div class="binding"><span id="cjanet/emit-block-start" class="binding-sym">cjanet/emit-block-start</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L84">source</a></span> <pre class="binding-text">(emit-block-start)
+
+</pre></div><hr><div class="binding"><span id="cjanet/emit-blocks" class="binding-sym">cjanet/emit-blocks</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L349">source</a></span> <pre class="binding-text">(emit-blocks statements)
+
+Emit a number of statements in a bracketed block</pre></div><hr><div class="binding"><span id="cjanet/emit-cdef" class="binding-sym">cjanet/emit-cdef</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L778">source</a></span> <pre class="binding-text">(emit-cdef name &amp; more)
+
+Define constant which will be registered in the module.
+It takes care of the docstring.</pre></div><hr><div class="binding"><span id="cjanet/emit-cfunction" class="binding-sym">cjanet/emit-cfunction</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L702">source</a></span> <pre class="binding-text">(emit-cfunction name &amp; more)
+
+Functional form of `cfunction` - takes the same arguments, but parameters must be manually quoted.</pre></div><hr><div class="binding"><span id="cjanet/emit-comment" class="binding-sym">cjanet/emit-comment</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L73">source</a></span> <pre class="binding-text">(emit-comment msg)
+
+Emit a multi-line comment string for C</pre></div><hr><div class="binding"><span id="cjanet/emit-declare" class="binding-sym">cjanet/emit-declare</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L509">source</a></span> <pre class="binding-text">(emit-declare binding &amp; form)
+
+Emit a declaration of a variable or constant.</pre></div><hr><div class="binding"><span id="cjanet/emit-function" class="binding-sym">cjanet/emit-function</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L491">source</a></span> <pre class="binding-text">(emit-function name &amp; form)
+
+Emit a C function definition.</pre></div><hr><div class="binding"><span id="cjanet/emit-include" class="binding-sym">cjanet/emit-include</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L525">source</a></span> <pre class="binding-text">(emit-include path)
+
+</pre></div><hr><div class="binding"><span id="cjanet/emit-indent" class="binding-sym">cjanet/emit-indent</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L83">source</a></span> <pre class="binding-text">(emit-indent)
+
+</pre></div><hr><div class="binding"><span id="cjanet/emit-module-entry" class="binding-sym">cjanet/emit-module-entry</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L800">source</a></span> <pre class="binding-text">(emit-module-entry name)
+
+Call this at the end of a cjanet module to add a module entry function.</pre></div><hr><div class="binding"><span id="cjanet/emit-preprocess" class="binding-sym">cjanet/emit-preprocess</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L483">source</a></span> <pre class="binding-text">(emit-preprocess &amp; args)
+
+Emit a line of source code for the pre-processor.
+For example `(emit-preprocess "include" "&lt;stdio.h&gt;")`.</pre></div><hr><div class="binding"><span id="cjanet/emit-typedef" class="binding-sym">cjanet/emit-typedef</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L519">source</a></span> <pre class="binding-text">(emit-typedef name definition)
+
+Emit a type declaration (C typedef).</pre></div><hr><div class="binding"><span id="cjanet/function" class="binding-sym">cjanet/function</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L538">source</a></span> <pre class="binding-text">(function &amp; args)
+
+</pre></div><hr><div class="binding"><span id="cjanet/include" class="binding-sym">cjanet/include</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L544">source</a></span> <pre class="binding-text">(include path)
+
+</pre></div><hr><div class="binding"><span id="cjanet/mangle" class="binding-sym">cjanet/mangle</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L30">source</a></span> <pre class="binding-text">(mangle token)
+
+Convert any sequence of bytes to a valid C identifier in a way that is unlikely to collide. `print-ir` will not mangle symbols for you.</pre></div><hr><div class="binding"><span id="cjanet/module-entry" class="binding-sym">cjanet/module-entry</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L811">source</a></span> <pre class="binding-text">(module-entry name)
+
+Call this at the end of a cjanet module to add a module entry function.</pre></div><hr><div class="binding"><span id="cjanet/preprocess" class="binding-sym">cjanet/preprocess</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L539">source</a></span> <pre class="binding-text">(preprocess &amp; args)
+
+</pre></div><hr><div class="binding"><span id="cjanet/type-split" class="binding-sym">cjanet/type-split</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L39">source</a></span> <pre class="binding-text">(type-split x &amp;opt dflt-type)
+
+Extract name and type from a variable. Allow typing variables as both (name type) or name:type as a shorthand. If no type is found, default to dflt-type. dflt-type itself defaults to 'auto</pre></div><hr><div class="binding"><span id="cjanet/typedef" class="binding-sym">cjanet/typedef</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/e939a040f7183a518d9b396d017e1773e228a4c3//spork/cjanet.janet#L542">source</a></span> <pre class="binding-text">(typedef &amp; args)
+
+</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="channel.html"><span class="prevnext-text">channel</span></a></span>
+          <span class="next"><a href="cmath.html"><span class="prevnext-text">cmath</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2025
+  <div class="gentag">Generated on November 15, 2025 at 15:44:19 (UTC) with Janet 1.40.0-7e0c692</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
