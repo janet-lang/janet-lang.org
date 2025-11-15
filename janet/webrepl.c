@@ -23,6 +23,12 @@
 #include <janet.h>
 #include <emscripten.h>
 
+/* Fake chroot */
+void chroot(const char *dirname) {
+    (void) dirname;
+    janet_panic("not supported");
+}
+
 static const char startup[] =
 "(print (string `Janet ` janet/version `-` janet/build ` ` (os/which) `/` (os/arch) ` - '(doc)' for help`))\n"
 "(fiber/new (fn webrepl []\n"

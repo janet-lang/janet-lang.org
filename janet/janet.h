@@ -26,10 +26,10 @@
 #define JANETCONF_H
 
 #define JANET_VERSION_MAJOR 1
-#define JANET_VERSION_MINOR 39
-#define JANET_VERSION_PATCH 1
+#define JANET_VERSION_MINOR 40
+#define JANET_VERSION_PATCH 0
 #define JANET_VERSION_EXTRA ""
-#define JANET_VERSION "1.39.1"
+#define JANET_VERSION "1.40.0"
 
 /* #define JANET_BUILD "local" */
 
@@ -218,6 +218,7 @@ extern "C" {
     || defined(__s390x__) /* S390 64-bit */ \
     || defined(__s390__)  /* S390 32-bit */ \
     || defined(__ARMEB__) /* ARM big endian */ \
+    || defined(__AARCH64EB__) /* ARM64 big endian */ \
     || ((defined(__CC_ARM) || defined(__ARMCC__)) /* ARM RealView compiler */ \
         && defined(__BIG_ENDIAN))
 #define JANET_BIG_ENDIAN 1
@@ -1259,6 +1260,7 @@ struct JanetAbstractType {
     Janet(*call)(void *p, int32_t argc, Janet *argv);
     size_t (*length)(void *p, size_t len);
     JanetByteView(*bytes)(void *p, size_t len);
+    int (*gcperthread)(void *data, size_t len);
 };
 
 /* Some macros to let us add extra types to JanetAbstract types without
@@ -1278,7 +1280,8 @@ struct JanetAbstractType {
 #define JANET_ATEND_NEXT        NULL,JANET_ATEND_CALL
 #define JANET_ATEND_CALL        NULL,JANET_ATEND_LENGTH
 #define JANET_ATEND_LENGTH      NULL,JANET_ATEND_BYTES
-#define JANET_ATEND_BYTES
+#define JANET_ATEND_BYTES       NULL,JANET_ATEND_GCPERTHREAD
+#define JANET_ATEND_GCPERTHREAD
 
 struct JanetReg {
     const char *name;
@@ -1687,6 +1690,9 @@ JANET_API JanetTable *janet_core_env(JanetTable *replacements);
 JANET_API JanetTable *janet_core_lookup_table(JanetTable *replacements);
 
 /* Execute strings */
+#define JANET_DO_ERROR_RUNTIME 0x01
+#define JANET_DO_ERROR_COMPILE 0x02
+#define JANET_DO_ERROR_PARSE 0x04
 JANET_API int janet_dobytes(JanetTable *env, const uint8_t *bytes, int32_t len, const char *sourcePath, Janet *out);
 JANET_API int janet_dostring(JanetTable *env, const char *str, const char *sourcePath, Janet *out);
 
@@ -1965,6 +1971,7 @@ JANET_API void janet_stacktrace_ext(JanetFiber *fiber, Janet err, const char *pr
 #define JANET_SANDBOX_FFI_USE 2048
 #define JANET_SANDBOX_FFI_JIT 4096
 #define JANET_SANDBOX_SIGNAL 8192
+#define JANET_SANDBOX_CHROOT 16384
 #define JANET_SANDBOX_FFI (JANET_SANDBOX_FFI_DEFINE | JANET_SANDBOX_FFI_USE | JANET_SANDBOX_FFI_JIT)
 #define JANET_SANDBOX_FS (JANET_SANDBOX_FS_WRITE | JANET_SANDBOX_FS_READ | JANET_SANDBOX_FS_TEMP)
 #define JANET_SANDBOX_NET (JANET_SANDBOX_NET_CONNECT | JANET_SANDBOX_NET_LISTEN)
