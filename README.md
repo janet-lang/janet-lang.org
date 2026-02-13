@@ -40,6 +40,12 @@ language is similar to [Scribble](https://docs.racket-lang.org/scribble/), the R
 documentation tool, but of course is written in and is a dialect of Janet. See
 [mendoza](https://github.com/bakpakin/mendoza) for more information.
 
+Note that although [`spork`'s documentation is served via
+janet-lang.org](https://janet-lang.org/spork/index.html), the
+corresponding source files live in the
+[spork](https://github.com/janet-lang/spork) repository so in some
+cases it may be better to file issues and PRs there.
+
 ## Adding Examples
 
 Simply add a file with the name of the binding you are giving examples
