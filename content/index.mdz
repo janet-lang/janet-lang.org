@@ -153,13 +153,17 @@ discussion area.
     @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/tic-80.md]{TIC-80}}
     @li{@link[https://github.com/sogaiu/janet-editor-and-tooling-info/blob/master/doc/helix.md]{Helix}}}
 
-## Community
+## Zulip
 
-@strong{NEW!} Check out the Janet Zulip Instance at @link[https://janet.zulipchat.com] \(@link[https://janet.zulipchat.com/join/3ahdqkn5cvr6233x6ytzlcvq/]{Invite Link})
+View or join the Janet Zulip Instance at @link[https://janet.zulipchat.com] \(@link[https://janet.zulipchat.com/join/3ahdqkn5cvr6233x6ytzlcvq/]{Invite Link})
 
 ### Forum
 
 We also support @link[https://github.com/janet-lang/janet/discussions]{GitHub Discussions}, but Zulip has richer functionality.
+
+### Janet Guide
+
+The @link[https://janet.guide/]{Janet Guide} is a beginner-friendly on-ramp to the language that provides a more opinionated tutorial than the official documentation.
 
 ### Janet Docs
 
