@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Integer Types Module"
+ :order 0
  :nav-title "int"
  :template "docpage.html"}
 ---

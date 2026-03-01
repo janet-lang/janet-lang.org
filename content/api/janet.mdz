@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Janet Module"
+ :order 0
  :nav-title "janet"
  :template "docpage.html"}
 ---

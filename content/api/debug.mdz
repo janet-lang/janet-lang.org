@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Debug Module"
+ :order 0
  :nav-title "debug"
  :template "docpage.html"}
 ---

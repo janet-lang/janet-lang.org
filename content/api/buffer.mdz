@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Buffer Module"
+ :order 0
  :nav-title "buffer"
  :template "docpage.html"}
 ---

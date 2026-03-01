@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Tuple Module"
+ :order 0
  :nav-title "tuple"
  :template "docpage.html"}
 ---

@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "PEG Module"
+ :order 0
  :nav-title "peg"
  :template "docpage.html"}
 ---

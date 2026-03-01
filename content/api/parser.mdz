@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Parser Module"
+ :order 0
  :nav-title "parser"
  :template "docpage.html"}
 ---

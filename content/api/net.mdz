@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Net Module"
+ :order 0
  :nav-title "net"
  :template "docpage.html"}
 ---

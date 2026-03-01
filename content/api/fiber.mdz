@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Fiber Module"
+ :order 0
  :nav-title "fiber"
  :template "docpage.html"}
 ---
