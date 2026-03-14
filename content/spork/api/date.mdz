@@ -1,0 +1,14 @@
+(import ../../gen-docs :as gen-docs)
+(import spork/date :export true)
+(setdyn :source-linker (partial gen-docs/github-source-linker "janet-lang/spork" gen-docs/spork-version))
+(setdyn :no-community-examples true)
+
+{:title "date"
+ :template "docpage.html"}
+ ---
+
+Utility wrappers around `os/time` and `os/date` for working with dates, particularly formatting them as strings (with `date/to-string`) and reading dates from strings (with `date/from-string`).
+
+## Reference
+
+@gen-docs/gen-prefix-current[date/]
