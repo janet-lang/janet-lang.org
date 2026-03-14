@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "FFI Module"
+ :order 0
  :nav-title "ffi"
  :template "docpage.html"}
 ---

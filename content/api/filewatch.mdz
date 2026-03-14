@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Filewatch Module"
+ :order 0
  :nav-title "filewatch"
  :template "docpage.html"}
 ---

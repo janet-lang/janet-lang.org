@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Event Module"
+ :order 0
  :nav-title "ev"
  :template "docpage.html"}
 ---

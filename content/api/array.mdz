@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Array Module"
+ :order 0
  :nav-title "array"
  :template "docpage.html"}
 ---

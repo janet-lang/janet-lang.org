@@ -1,6 +1,7 @@
 (import ../gen-docs :as gen-docs)
 
 {:title "Table Module"
+ :order 0
  :nav-title "table"
  :template "docpage.html"}
 ---
