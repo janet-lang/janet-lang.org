@@ -1,0 +1,98 @@
+{:title "Tuple C API"
+ :template "docpage.html"
+ :order 5}
+---
+
+The Janet tuple data structure is exposed via the @code`JanetTupleHead` struct.
+Usually, you can interact with tuples without interacting with
+@code`JanetTupleHead` directly. However, interacting with a janet tuple head can be
+helpful when embedding in non-C languages.
+Just like arrays, it is recommended to use the provided API functions.
+
+## Definition
+
+@codeblock[c]```
+/* Prefix for a tuple */
+struct JanetTupleHead {
+    JanetGCObject gc;
+    int32_t length;
+    int32_t hash;
+    int32_t sm_line;
+    int32_t sm_column;
+    const Janet data[];
+};
+typedef struct JanetTupleHead JanetTupleHead;
+```
+
+## Creating a Tuple
+
+You can create a tuple using @code`janet_tuple_begin` and @code`janet_tuple_end`:
+
+@codeblock[c]```
+Janet *dimensions = janet_tuple_begin(2);
+dimensions[0] = janet_wrap_integer(400);
+dimensions[1] = janet_wrap_integer(600);
+Janet tuple = janet_wrap_tuple(janet_tuple_end(dimensions));
+```
+
+## Accessing Tuple Values
+
+From C, you can access tuple values from a tuple passed to a C function using array indexing:
+
+@codeblock[c]```
+static Janet cfun_color_tuple(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+
+    if (janet_checktype(argv[0], JANET_TUPLE)) {
+        JanetTuple color_tup = janet_gettuple(argv, 0);
+        if (janet_tuple_length(color_tup) == 4) {
+            int r = janet_unwrap_integer(color_tup[0]);
+            int g = janet_unwrap_integer(color_tup[1]);
+            int b = janet_unwrap_integer(color_tup[2]);
+            int a = janet_unwrap_integer(color_tup[3]);
+        }
+    }
+    // ...
+}
+```
+
+## Functions
+
+@codeblock[c]```
+JANET_API Janet *janet_tuple_begin(int32_t length);
+```
+
+Create a new empty tuple of the given size. This will return memory
+which should subsequently be filled with your values. The memory will
+not be collected until @code`janet_tuple_end` is called.
+
+@codeblock[c]```
+JANET_API JanetTuple janet_tuple_end(Janet *tuple);
+```
+
+Finish building the tuple. Be sure to call this before using the tuple
+as it includes calculating the tuple hash used for equality checking.
+
+@codeblock[c]```
+JANET_API JanetTuple janet_tuple_n(const Janet *values, int32_t n);
+```
+
+Build a tuple with @code`n` values. Unlike @code`janet_tuple_begin`, this builds a tuple by copying an existing list of values that you provide.
+
+@codeblock[c]```
+#define janet_tuple_length(t) (janet_tuple_head(t)->length)
+```
+
+Returns the length of a tuple.
+
+@codeblock[c]```
+#define janet_tuple_head(t) ((JanetTupleHead *)((char *)t - offsetof(JanetTupleHead, data)))
+```
+
+Return the @code`JanetTupleHead*` from a @code`Janet*` pointing to the first @code`Janet` in the tuple.
+
+@codeblock[c]```
+#define janet_tuple_from_head(gcobject) ((JanetTuple)((char *)gcobject + offsetof(JanetTupleHead, data)))
+```
+
+Return the @code`Janet*` pointing to the first @code`Janet` element in the tuple from a @code`JanetTupleHead*`.

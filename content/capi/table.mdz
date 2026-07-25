@@ -1,6 +1,6 @@
 {:title "Table C API"
  :template "docpage.html"
- :order 6}
+ :order 7}
 ---
 
 ## Definition
