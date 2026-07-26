@@ -55,12 +55,12 @@ To cope with some of Janet's symbols having names with characters that
 are not-so-friendly to certain filesystem and/or operating system
 combinations, an escaping scheme is used.
 
-For a given symbol, use the `content/api/examples.janet` script to
+For a given symbol, use the `content/examples.janet` script to
 generate an appropriate filename.  For example, for `array/new`,
 invoking:
 
 ```
-$ janet content/api/examples.janet array/new
+$ janet content/examples.janet array/new
 ```
 
 should give the output:
