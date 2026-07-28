@@ -2,8 +2,9 @@
 
 [![Zulip](https://img.shields.io/badge/zulip-join_chat-brightgreen.svg)](https://janet.zulipchat.com)
 
-This is the source code for the website of the [Janet](https://janet-lang.org) programming
-language. It is a static website built with [mendoza](https://github.com/bakpakin/mendoza), a
+This is the source code for the website of the
+[Janet](https://janet-lang.org) programming language. It is a static
+website built with [mendoza](https://github.com/bakpakin/mendoza), a
 static site generator.
 
 ## Prereqs
@@ -23,8 +24,8 @@ To build, simply use `make` or `make build`.
 
 ## Watch for changes
 
-This requires first installing `inotify-tools`, which can be installed easily on most Linux distros.
-To watch for changes, use `make watch`.
+This requires first installing `inotify-tools`, which can be installed
+easily on most Linux distros.  To watch for changes, use `make watch`.
 
 ## Serve on localhost:8000
 
@@ -34,11 +35,13 @@ make run
 
 ## Authoring Content
 
-All pages in the content directory with `.mdz` extension will be parsed by mendoza
-and converted to an html file of the same name but with the `.html` extension. The markup
-language is similar to [Scribble](https://docs.racket-lang.org/scribble/), the Racket
-documentation tool, but of course is written in and is a dialect of Janet. See
-[mendoza](https://github.com/bakpakin/mendoza) for more information.
+All pages in the content directory with `.mdz` extension will be
+parsed by mendoza and converted to an html file of the same name but
+with the `.html` extension. The markup language is similar to that
+supported by [Scribble](https://docs.racket-lang.org/scribble/), the
+Racket documentation tool, but of course is written in and is a
+dialect of Janet. See [mendoza](https://github.com/bakpakin/mendoza)
+for more information.
 
 Note that although [`spork`'s documentation is served via
 janet-lang.org](https://janet-lang.org/spork/index.html), the
@@ -51,8 +54,8 @@ cases it may be better to file issues and PRs there.
 Simply add a file with the name of the binding you are giving examples
 for to the `examples` directory, with the `.janet` suffix.
 
-To cope with some of Janet's symbols having names with characters that
-are not-so-friendly to certain filesystem and/or operating system
+Since Janet binding names can contain characters that are
+not-so-friendly to certain filesystem and/or operating system
 combinations, an escaping scheme is used.
 
 For a given symbol, use the `content/examples.janet` script to
@@ -69,10 +72,12 @@ should give the output:
 array_47new.janet
 ```
 
-If such a file already exists, you can simply append your example code the existing file.
+If such a file already exists, you can simply add your example code to
+the existing file.
 
-When building the site, the new examples will be included in the generated documentation. Make
-sure that your example has correct janet syntax, as syntax errors will cause the entire site
-to not build. If the example has valid syntax (has a 0 exit code when loaded with
-        `janet -k example/my-fn.janet`), there may be a bug in the mendoza janet syntax
-highlighter and you open a bug in mendoza.
+When building the site, the new examples will be included in the
+generated documentation. Make sure that your example has correct janet
+syntax, as syntax errors will cause the entire site to not build. If
+the example has valid syntax (has a 0 exit code when loaded with
+`janet -k example/my-fn.janet`), there may be a bug in the mendoza
+janet syntax highlighter and you open a bug in mendoza.
