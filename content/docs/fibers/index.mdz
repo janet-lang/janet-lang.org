@@ -18,17 +18,18 @@ yielded, use the @code[resume] function.
 
 When @code[resume] is called on a fiber, it will only return when that
 fiber either returns, yields, throws an error, or otherwise emits a
-signal.  In all of these cases a value is produced and can be obtained
-via the function @code[fiber/last-value].  This function takes a fiber
-as its sole argument.  If a fiber has never been resumed,
-@code[fiber/last-value] will return `nil`.
+signal.  In all of these cases a value is produced and this is called
+the fiber's last value (as in "most recent").  The fiber's last
+value can be obtained via the function, @code[fiber/last-value].  This
+function takes a fiber as its sole argument.  If a fiber has never
+been resumed, @code[fiber/last-value] will return `nil`.
 
 Different from traditional coroutines, Janet's fibers implement a
 signaling mechanism, which is used to distinguish between different
 kinds of returns.  When a fiber yields or throws an error, control is
 returned to the calling fiber.  The parent fiber must then check what
-kind of state the fiber is in to differentiate errors from return
-values from user-defined signals.  This state is referred to as the
+kind of state the fiber is in to differentiate among errors, return
+values, and user-defined signals.  This state is referred to as the
 status of a fiber and can be checked using the @code[fiber/status]
 function.  This function takes a fiber as its sole argument.
 
@@ -46,13 +47,14 @@ to refer to the "trapping" of signals.
 
 @codeblock[janet](```
 (def f (fiber/new (fn []
-                   (yield 1)
-                   (yield 2)
-                   (yield 3)
-                   (yield 4)
-                   5)))
+                    (yield 1)
+                    (yield 2)
+                    (yield 3)
+                    (yield 4)
+                    5)))
 
-# Get the status of the fiber (:alive, :dead, :debug, :new, :pending, or :user0-:user9)
+# Get the status of the fiber (:dead, :new, :pending, etc. see the
+#                              fiber/status docstring for further details)
 (fiber/status f) # -> :new
 (fiber/last-value f) # -> fiber hasn't been resumed yet, so returns nil
 
@@ -74,33 +76,34 @@ Besides being used as coroutines, fibers can be used to implement error handling
 
 @codeblock[janet](```
 (defn my-function-that-errors []
- (print "start function")
- (error "oops!")
- (print "never gets here"))
+  (print "start function")
+  (error "oops!")
+  (print "never gets here"))
 
 # Use the :e flag to only trap errors.
 (def f (fiber/new my-function-that-errors :e))
 (def result (resume f))
 (if (= (fiber/status f) :error)
- (print "result contains the error")
- (print "result contains the good result"))
+  (print "result contains the error")
+  (print "result contains the good result"))
 ```)
 
-Since the above code is rather verbose, Janet provides a @code[try] macro which
-is similar to try/catch in other languages.  It wraps the body in a new fiber,
-@code[resume]s the fiber, and then checks the result. If the fiber has errored,
-an error clause is evaluated.
+Since code like the above is rather verbose, Janet provides a
+@code[try] macro which is similar to try/catch in other languages.  It
+wraps the body in a new fiber, @code[resume]s the fiber, and then
+checks the result. If the fiber has errored, an error clause is
+evaluated.
 
 @codeblock[janet](```
 (try
- (error 1)
- ([err] (print "got error: " err)))
+  (error 1)
+  ([err] (print "got error: " err)))
 # evaluates to nil and prints "got error: 1"
 
 (try
- (+ 1 2 3)
- ([err] (print "oops")))
-# Evaluates to 6 - no error thrown
+  (+ 1 2 3)
+  ([err] (print "oops")))
+# evaluates to 6 - no error thrown
 ```)
 
 The @code[signal] function can be used to raise a particular signal.
@@ -121,5 +124,6 @@ while the second argument, @code[x], is an arbitrary payload value.
 
 ## Lazy evaluation
 
-Janet's core functions are eagerly evaluated. @link[/spork/api/generators.html]{spork/generators} module contains lazily
-evaluated generator functions.
+Janet's core functions are eagerly evaluated.  For lazily evaluated
+generator functions see the
+@link[/spork/api/generators.html]{spork/generators} module.
