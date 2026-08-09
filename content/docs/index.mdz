@@ -26,10 +26,9 @@ work for a 64-bit build, and from the Developer Command Prompt should work for
 
 #### Arch Linux
 
-You can install either the latest git version or the latest stable version for
-Arch Linux from the Arch user repositories with
-@link[https://aur.archlinux.org/packages/janet-lang-git/][janet-lang-git] or
-@link[https://aur.archlinux.org/packages/janet-lang][janet-lang].
+You can install the latest stable version for Arch Linux
+from the official Arch Linux repositories by installing
+@link[https://archlinux.org/packages/extra/x86_64/janet/][janet].
 
 #### Other Linux
 
