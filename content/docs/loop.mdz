@@ -3,13 +3,14 @@
  :order 9}
 ---
 
-A very common and essential operation in all programming is looping. Most
-languages support looping of some kind, either with explicit loops or recursion.
-Janet supports both recursion and a primitive @code[while] loop. While recursion
-is useful in many cases, sometimes it is more convenient to use an explicit loop
-to iterate over a collection like an array.
+A very common and essential operation in all programming is
+looping. Most languages support looping of some kind, either with
+explicit loops or recursion. Janet supports both recursion and a
+primitive @code[while] loop. While recursion is useful in many cases,
+sometimes it is more convenient to use an explicit loop to iterate
+over a type like an array.
 
-## Example 1: Iterating a range
+## Example 1: Iterating over a range
 
 Suppose you want to calculate the sum of the first 10 natural numbers 0 through
 9. There are many ways to carry out this explicit calculation.  A succinct way
@@ -29,8 +30,8 @@ similar to how one might sum natural numbers in a language such as C.
 (var total 0)
 (var i 0)
 (while (< i 10)
-    (+= total i)
-    (++ i))
+  (+= total i)
+  (++ i))
 (print total) # prints 45
 ```
 
@@ -81,11 +82,11 @@ the Common Lisp @code`loop` macro, but smaller in scope and with a
 much simpler syntax. As with the @code`for` macro, the @code`loop`
 macro expands to similar code as our original @code`while` expression.
 
-## Example 2: Iterating over an indexed data structure
+## Example 2: Iterating over bytes and indexed types
 
-Another common usage for iteration in any language is iterating over the items
-in a data structure, like items in an array, characters in a string, or
-key-value pairs in a table.
+Some common usages for iteration in programming languages include
+iterating over characters in a string, items in an array, or values in
+a table.
 
 Say we have an array of names that we want to print out. We will again start
 with a simple @code`while` loop which we will refine into more idiomatic
@@ -95,27 +96,28 @@ First, we will define our array of names:
 
 @codeblock[janet]```
 (def names
- @["Jean-Paul Sartre"
-   "Bob Dylan"
-   "Augusta Ada King"
-   "Frida Kahlo"
-   "Harriet Tubman"])
+  @["Jean-Paul Sartre"
+    "Bob Dylan"
+    "Augusta Ada King"
+    "Frida Kahlo"
+    "Harriet Tubman"])
 ```
 
-With our array of names, we can use a @code`while` loop to iterate through the
-indices of names, get the values, and then print them.
+With our array of names, we can use a @code`while` loop to iterate
+through the indices of @code`names`, get the values, and then print
+them.
 
 @codeblock[janet]```
 (var i 0)
 (def len (length names))
 (while (< i len)
-    (print (get names i))
-    (++ i))
+  (print (get names i))
+  (++ i))
 ```
 
-This is rather verbose. Janet provides the @code[each] macro for iterating
-through the items in a tuple or array, or the bytes in a buffer, symbol, or
-string.
+This is rather verbose. Janet provides the @code[each] macro for
+iterating through the items in a tuple or array, or the bytes in a
+buffer, keyword, symbol, or string.
 
 @codeblock[janet]```
 (each name names (print name))
@@ -135,11 +137,11 @@ in the array.
 (map print names)
 ```
 
-The @code`each` macro is actually more flexible than the normal loop, as it is
-able to iterate over data structures that are not like arrays. For example,
-@code`each` will iterate over the values in a table.
+The @code`each` macro is actually more flexible than the normal loop,
+as it is able to iterate over types that are not like arrays. For
+example, @code`each` will iterate over the values in a table.
 
-## Example 3: Iterating a dictionary
+## Example 3: Iterating over a dictionary
 
 In the previous example, we iterated over the values in an array. Another common
 use of looping in a Janet program is iterating over the keys or values in a
@@ -160,11 +162,12 @@ that letter. We will print out the words to our simple children's book.
     "E" "Elephant"})
 ```
 
-As before, we can evaluate this loop using only a @code`while` loop and the
-@code[next] function. The @code `next` function is the primary way to iterate in
-Janet, and is overloaded to support all iterable types. Given a data structure
-and a key, it returns the next key in the data structure. If there are no more
-keys left, it returns @code`nil`.
+As before, we can evaluate this loop using only a @code`while` loop
+and the @code[next] function. The @code `next` function is the primary
+way to iterate in Janet, and is overloaded to support suitable
+types. Given an instance of an appropriate type and a key, it returns
+the next key in the instance. If there are no more keys left, it
+returns @code`nil`.
 
 @codeblock[janet]```
 (var key (next alphabook nil))
@@ -181,21 +184,21 @@ However, we can do better than this with the @code`loop` macro using the
   (print letter " is for " word))
 ```
 
-Using the @code[:keys] verb and shorthand notation for indexing a data
-structure:
+Using the @code[:keys] verb and shorthand notation for iterating over
+the keys in a type:
 
 @codeblock[janet]```
 (loop [letter :keys alphabook]
   (print letter " is for " (alphabook letter)))
 ```
 
-As an alternative to the @code`loop` macro here, we can also use the macros
-@code`eachk` and @code`eachp`, which behave like @code`each` but @code`loop`
-over the keys of a data structure and the key-value pairs in a data structure
-respectively.
+As an alternative to the @code`loop` macro here, we can also use the
+macros @code`eachk` and @code`eachp`, which behave like @code`each`
+but @code`loop` over the keys of a type and the key-value pairs in a
+type, respectively.
 
-Data structures like tables and structs can be called like functions that look
-up their arguments. This allows for writing shorter code than what is possible
+Tables and structs can be called like functions that look up their
+arguments. This allows for writing shorter code than what is possible
 with @code[(get alphabook letter)].
 
 We can also use the core library functions @code[keys] and @code[pairs] to get
@@ -209,10 +212,10 @@ arrays of the keys and pairs respectively of the alphabook.
   (print letter " is for " (alphabook letter)))
 ```
 
-Notice that iteration through the table is in no particular order. Iterating the
-keys of a table or struct guarantees no order. If you want to iterate in a
-specific order, use a different data structure or the @code[(sort indexed)]
-function.
+Notice that iteration through the table is in no particular
+order. Iterating over the keys of a table or struct guarantees no
+order. If you want to iterate in a specific order, use a different
+type or the apply @code[sort] function.
 
 Note that the above examples can also be expressed as:
 
