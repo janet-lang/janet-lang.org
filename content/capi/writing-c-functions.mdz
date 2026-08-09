@@ -1,6 +1,6 @@
 {:title "Writing C Functions"
  :template "docpage.html"
- :order 9}
+ :order 10}
 ---
 
 The most common task in creating native extensions for Janet is writing functions

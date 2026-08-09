@@ -1,7 +1,7 @@
 {:title "Janet's Memory Model"
  :nav-title "Memory Model"
  :template "docpage.html"
- :order 8}
+ :order 9}
 ---
 
 In order to write a functional and correct C extension to Janet, it

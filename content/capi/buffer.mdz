@@ -1,6 +1,6 @@
 {:title "Buffer C API"
  :template "docpage.html"
- :order 5}
+ :order 6}
 ---
 
 ## Definition
