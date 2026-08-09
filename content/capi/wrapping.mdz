@@ -66,6 +66,47 @@ double janet_unwrap_number(Janet x);
 int32_t janet_unwrap_integer(Janet x);
 ```
 
+### Viewing Collection Type Contents
+
+Janet provides some useful methods for accessing data from types with
+similar interfaces. Strings, symbols, keywords and buffers can all be
+treated as byte sequences, much like tuples and arrays as indexed types,
+and tables and structs as dictionaries. If you would like your program
+to accept indexed, byte or dictionary data, you can use these APIs to
+handle them smoothly.
+
+@codeblock[c]```
+int janet_indexed_view(Janet seq, const Janet **data, int32_t *len)
+```
+
+@code`janet_indexed_view` sets your provided @code`data` and
+@code`len` pointers to the contents of the array and the length of the
+array. It returns @code`1` if the view can be constructed and @code`0`
+if the type is invalid. This can construct a view for
+@code`JANET_TUPLE` and @code`JANET_ARRAY` types.
+
+@codeblock[c]```
+int janet_bytes_view(Janet str, const uint8_t **data, int32_t *len)
+```
+
+@code`janet_bytes_view` sets your provided @code`data` and @code`len`
+pointers to the contents of unsigned 8-bit array of bytes and
+@code`len` to the number of bytes. It returns @code`1` if the view can
+be constructed and @code`0` if the type is invalid. This can construct
+a view for @code`JANET_STRING`, @code`JANET_SYMBOL`,
+@code`JANET_KEYWORD`,  @code`JANET_BUFFER` types. It will also accept
+@code`JANET_ABSTRACT` if the abstract types @code`bytes` field is not
+NULL.
+
+@codeblock[c]```
+int janet_dictionary_view(Janet tab, const JanetKV **data, int32_t *len, int32_t *cap)
+```
+
+@code`janet_bytes_view` sets your provided @code`data` and @code`len`
+pointers to each key value pair in the dictionary and the number of
+key value pairs provided. It returns @code`1` if the view can be
+constructed and @code`0` if the type is invalid.
+
 ## Janet Types
 
 Before unwrapping a Janet value, one should check the value is of the
