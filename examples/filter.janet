@@ -1,7 +1,9 @@
-(filter pos? [1 2 3 0 -4 5 6]) # -> @[1 2 3 5 6]
+(filter |(< (chr "A") $) "foo01bar") # -> @[102 111 111 98 97 114]
+(string/from-bytes ;(filter |(< (chr "A") $) "foo01bar")) # -> "foobar"
 
+(filter pos? [1 2 3 0 -4 5 6]) # -> @[1 2 3 5 6]
 (filter |(> (length $) 3) ["hello" "goodbye" "hi"]) # -> @["hello" "goodbye"]
 
-(filter |(< (chr "A") $) "foo01bar") # -> @[102 111 111 98 97 114]
+(sort (filter int? {:a 1 :b 2.3 :c 3})) # -> @[1 3]
 
-(string/from-bytes ;(filter |(< (chr "A") $) "foo01bar")) # -> "foobar"
+(filter even? (coro (yield 1) (yield 2) (yield 8))) # -> @[2 8]
