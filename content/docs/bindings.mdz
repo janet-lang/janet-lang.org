@@ -24,14 +24,16 @@ cannot be @code[set]. To use @code[set] to update a var, create it with @code[va
 (print myvar)
 ```)
 
-In the global scope, you can use the @code[:private] option on a def or var to
-prevent it from being exported to code that imports your current module. You can
-also add documentation to a function by passing a string to the @code`def` or
-@code`var` command.
+In the global scope, you can add the @code[:private] option to @code`def` or @code`var` to
+prevent the binding from being exported to code that imports your current module. 
+@code`def-` and @code`var-` implicitly use @code[:private].
+You can also add documentation to a function by passing a string to the @code`def` or
+@code`var` command:
 
 @codeblock[janet](```
 (def mydef :private "This will have private scope. My doc here." 123)
 (var myvar "docstring here" 321)
+(def- ydef "This string also has private scope.")
 ```)
 
 ### Scopes
