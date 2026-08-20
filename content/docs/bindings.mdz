@@ -13,11 +13,8 @@ undefined symbols will raise an error.
 (def d (- c 100))
 ```)
 
-Bindings created with @code`def` have lexical scoping. Additionally, bindings
-created with @code`def` are immutable; they cannot be changed after definition.
-For mutable bindings, like variables in other programming languages, use the
-@code[var] keyword. The assignment special form @code[set] can then be used to
-update a var.
+@code`def` and @code`var` create bindings with lexical scoping, but @code`def`'s 
+cannot be @code[set]. To use @code[set] to update a var, create it with @code[var]:
 
 @codeblock[janet](```
 (def a 100)
