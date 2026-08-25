@@ -18,4 +18,3 @@
 (next fib) # -> 0
 (next fib) # -> 0
 (next fib) # -> nil
-

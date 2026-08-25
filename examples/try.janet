@@ -20,4 +20,3 @@
   ([_ fib]
     (type fib)))
 # -> :fiber
-
