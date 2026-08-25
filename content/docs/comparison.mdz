@@ -103,7 +103,7 @@ multiple calls to @code`compare`).  The algorithm for the @code `compare`
 function is as follows:
 
 @ul{@li{if @code`a` implements @code[:compare] and @code[(:compare a b)] is not nil, then return @code[(:compare a b)]}
-  @li{if @code`b` implements @code[:compare] and @code[(:compare b a)] is not nil, then return @code[(- (:compare a b))]}
+  @li{if @code`b` implements @code[:compare] and @code[(:compare b a)] is not nil, then return @code[(- (:compare b a))]}
   @li{else return @code[(cond (< a b) -1 (= a b) 0 1)]}}
 
 Since compare defers to the primitive operators as a last resort, the
