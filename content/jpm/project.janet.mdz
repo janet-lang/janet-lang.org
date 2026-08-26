@@ -79,6 +79,7 @@ The declaration for an executable file is pretty simple.
 (declare-executable
  :name "myexec"
  :entry "main.janet"
+ :deps ["other.janet"]
  :install true)
 ```
 
@@ -86,6 +87,9 @@ The declaration for an executable file is pretty simple.
     libraries and other code your executable depends on, and bundles them into
     the final application for you. The final executable will be located at
     @code`build/myexec`, or @code`build\myexec.exe` on Windows.}
+
+The optional list of @code`:deps` specifies which files the executable depends
+on. Changes to these files will trigger a rebuild.
 
 If the optional key-value pair @code`:install true` is specified in the
 @code`declare-executable` form, by default, the appropriate @code`jpm install`
