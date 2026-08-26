@@ -16,4 +16,3 @@
 
 # structs and some other things work too
 (|{:a 1}) # -> {:a 1}
-

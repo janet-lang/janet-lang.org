@@ -7,4 +7,3 @@
 (slice [:a :b :c :d :e] 2 -10) # -> error: end index -10 out of range [-6,5]
 (slice "abcdefg" 0 2) # -> "ab"
 (slice @"abcdefg" 0 2) # -> "ab"
-

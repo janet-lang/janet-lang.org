@@ -25,4 +25,3 @@
 (get fib 0) # -> :b
 (resume fib) # -> nil
 (get fib 0) # -> nil
-

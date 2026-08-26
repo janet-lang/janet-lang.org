@@ -12,4 +12,3 @@
 
 # delimiter should be non-empty
 (string/split "" "word") # -> error: expected non-empty pattern
-

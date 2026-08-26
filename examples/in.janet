@@ -34,4 +34,3 @@
 (in fib 0) # -> :b
 (resume fib) # -> nil
 (in fib 0) # -> nil
-
