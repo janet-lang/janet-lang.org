@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>gfx2d</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="gfx2d" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var el = document.getElementById('toc-toggle');
+        document.querySelector('.toc').classList.toggle('toc-hidden');
+        el.classList.toggle('open');
+        if (window.innerWidth > 800 && window.localStorage) {
+          localStorage.setItem('show-toc', el.classList.contains('open'));
+        }
+      }
+      window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('toc-toggle').addEventListener('click', toggleToc);        
+        if (window.innerWidth <= 800 || (window.localStorage && localStorage.getItem('show-toc') === 'false')) {
+          toggleToc();
+        }
+      });
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">Core API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/filewatch.html">filewatch</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/janet.html">janet</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/tuple.html">Tuple C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../../jpm/index.html">JPM</a></span><ul><li><span><a href="../../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../../jpm/api/index.html">API</a></span><ul><li><span><a href="../../jpm/api/rules.html">rules</a></span></li><li><span><a href="../../jpm/api/cc.html">cc</a></span></li><li><span><a href="../../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../../jpm/api/cli.html">cli</a></span></li><li><span><a href="../../jpm/api/commands.html">commands</a></span></li><li><span><a href="../../jpm/api/config.html">config</a></span></li><li><span><a href="../../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../jpm/api/pm.html">pm</a></span></li><li><span><a href="../../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../index.html">Spork</a></span><ul><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span><a href="charts.html">charts</a></span></li><li><span><a href="cjanet.html">cjanet</a></span></li><li><span><a href="cmath.html">cmath</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span><a href="date.html">date</a></span></li><li><span><a href="declare-cc.html">declare-cc</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span class="selected"><a href="gfx2d.html">gfx2d</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="mdz.html">mdz</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="pm.html">pm</a></span></li><li><span><a href="pm-config.html">pm-config</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="services.html">services</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="sh-dsl.html">sh-dsl</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.42.0-dev-7fd75f3 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.41.2/spork/api/gfx2d.html">1.41.2</a>
+          
+          <a href="../../../1.41.1/spork/api/gfx2d.html">1.41.1</a>
+          
+          <a href="../../../1.40.1/spork/api/gfx2d.html">1.40.1</a>
+          
+          <a href="../../../1.40.0/spork/api/gfx2d.html">1.40.0</a>
+          
+          <a href="../../../1.39.1/spork/api/gfx2d.html">1.39.1</a>
+          
+          <a href="../../../1.38.0/spork/api/gfx2d.html">1.38.0</a>
+          
+          <a href="../../../1.37.1/spork/api/gfx2d.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/spork/api/gfx2d.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/spork/api/gfx2d.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/spork/api/gfx2d.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/spork/api/gfx2d.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/spork/api/gfx2d.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/spork/api/gfx2d.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/spork/api/gfx2d.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/spork/api/gfx2d.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/spork/api/gfx2d.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/spork/api/gfx2d.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/spork/api/gfx2d.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/spork/api/gfx2d.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/spork/api/gfx2d.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/spork/api/gfx2d.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/spork/api/gfx2d.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/spork/api/gfx2d.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/spork/api/gfx2d.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/spork/api/gfx2d.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/spork/api/gfx2d.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/spork/api/gfx2d.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/spork/api/gfx2d.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/spork/api/gfx2d.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/spork/api/gfx2d.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/spork/api/gfx2d.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/spork/api/gfx2d.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/spork/api/gfx2d.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/spork/api/gfx2d.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/spork/api/gfx2d.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/spork/api/gfx2d.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/spork/api/gfx2d.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/spork/api/gfx2d.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">gfx2d</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="getline.html"><span class="prevnext-text">getline</span></a></span>
+
+          <span class="next"><a href="htmlgen.html"><span class="prevnext-text">htmlgen</span></a></span>
+        </div>
+        
+
+<p>NOTE: Beta-quality - apis may change.
+</p>
+<p>Various simple CPU-based 2d graphics tools suitable for demos, visulizations, and charting. The module generates C code which then is further compiled. It can also be used to generate "shaders" by evaluating this file with `(dyn :shader-compile)` set, which disables a number of functions and allows passing in a pixel shader stub.
+</p>
+<p>Leans on the underlying C compiler for optimization - recommended to be used with `JANET_BUILD_TYPE=native janet-pm install` to take advantage of the best available vectorization.
+</p>
+<p>This module doesn't presume any color-space, with the exception of when saving images to formats like PNG, which guarantees the sRGB color space. Most operations do not do blending - those that do also specify the color space in the blending modes. Unless otherwise specified, blending is done in a "linear" color space.
+</p>
+<p>Includes:
+* Saving and loading to and from several common image file formats.
+* Image blitting
+* Blend modes
+* Cropping imges
+* Read/Set individual pixels
+* Built in simple text rendering
+* Image resizing
+* Stroke and Fill paths
+* Bezier curves
+* Pixel shader abstraction with spork/cjanet
+</p>
+<h2 id="Reference-16">Reference
+</h2>
+<p><a href="#gfx2d/apply-gamma">gfx2d/apply-gamma</a> <a href="#gfx2d/as-rgb">gfx2d/as-rgb</a> <a href="#gfx2d/as-srgb">gfx2d/as-srgb</a> <a href="#gfx2d/bezier-path">gfx2d/bezier-path</a> <a href="#gfx2d/black">gfx2d/black</a> <a href="#gfx2d/blank">gfx2d/blank</a> <a href="#gfx2d/blue">gfx2d/blue</a> <a href="#gfx2d/circle">gfx2d/circle</a> <a href="#gfx2d/clear">gfx2d/clear</a> <a href="#gfx2d/copy">gfx2d/copy</a> <a href="#gfx2d/crop">gfx2d/crop</a> <a href="#gfx2d/cyan">gfx2d/cyan</a> <a href="#gfx2d/diff">gfx2d/diff</a> <a href="#gfx2d/draw-simple-text">gfx2d/draw-simple-text</a> <a href="#gfx2d/draw-text">gfx2d/draw-text</a> <a href="#gfx2d/fill-path">gfx2d/fill-path</a> <a href="#gfx2d/fill-rect">gfx2d/fill-rect</a> <a href="#gfx2d/green">gfx2d/green</a> <a href="#gfx2d/image-from-pointer">gfx2d/image-from-pointer</a> <a href="#gfx2d/load">gfx2d/load</a> <a href="#gfx2d/load-font">gfx2d/load-font</a> <a href="#gfx2d/magenta">gfx2d/magenta</a> <a href="#gfx2d/measure-simple-text">gfx2d/measure-simple-text</a> <a href="#gfx2d/measure-text">gfx2d/measure-text</a> <a href="#gfx2d/pixel">gfx2d/pixel</a> <a href="#gfx2d/plot">gfx2d/plot</a> <a href="#gfx2d/plot-path">gfx2d/plot-path</a> <a href="#gfx2d/plot-ring">gfx2d/plot-ring</a> <a href="#gfx2d/premultiply-alpha">gfx2d/premultiply-alpha</a> <a href="#gfx2d/red">gfx2d/red</a> <a href="#gfx2d/resize">gfx2d/resize</a> <a href="#gfx2d/resize-into">gfx2d/resize-into</a> <a href="#gfx2d/rgb">gfx2d/rgb</a> <a href="#gfx2d/ring">gfx2d/ring</a> <a href="#gfx2d/save">gfx2d/save</a> <a href="#gfx2d/save-bmp">gfx2d/save-bmp</a> <a href="#gfx2d/save-jpg">gfx2d/save-jpg</a> <a href="#gfx2d/save-png">gfx2d/save-png</a> <a href="#gfx2d/save-tga">gfx2d/save-tga</a> <a href="#gfx2d/set-pixel">gfx2d/set-pixel</a> <a href="#gfx2d/srgb">gfx2d/srgb</a> <a href="#gfx2d/stamp">gfx2d/stamp</a> <a href="#gfx2d/stamp-blend">gfx2d/stamp-blend</a> <a href="#gfx2d/stroke-path">gfx2d/stroke-path</a> <a href="#gfx2d/unpack">gfx2d/unpack</a> <a href="#gfx2d/viewport">gfx2d/viewport</a> <a href="#gfx2d/white">gfx2d/white</a> <a href="#gfx2d/yellow">gfx2d/yellow</a> </p><hr><div class="binding"><span id="gfx2d/apply-gamma" class="binding-sym">gfx2d/apply-gamma</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L977">source</a></span> <pre class="binding-text">(apply-gamma img:*Image gamma:double)
+
+Apply a gamma curve to the the color channels of an image (not including the alpha channel).
+For example, to convert linear colors to sRGB, apply a gamma of 2.2.
+Note that channels only have 8 bits of precision, so steep gammas will lose information.</pre></div><hr><div class="binding"><span id="gfx2d/as-rgb" class="binding-sym">gfx2d/as-rgb</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L765">source</a></span> <pre class="binding-text">(as-rgb color:uint32_t)
+
+Extract a 4 vector from a color</pre></div><hr><div class="binding"><span id="gfx2d/as-srgb" class="binding-sym">gfx2d/as-srgb</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L786">source</a></span> <pre class="binding-text">(as-srgb color:uint32_t)
+
+Extract a 4 vector from a color. Interprets 8 bit color components for RGB as having a gamma of 2.2.</pre></div><hr><div class="binding"><span id="gfx2d/bezier-path" class="binding-sym">gfx2d/bezier-path</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L2746">source</a></span> <pre class="binding-text">(bezier-path points:indexed &amp;opt step:double=0.005)
+
+Generate piece-wise, linear path from bezier control points</pre></div><hr><div class="binding"><span id="gfx2d/black" class="binding-sym">gfx2d/black</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for black</pre></div><hr><div class="binding"><span id="gfx2d/blank" class="binding-sym">gfx2d/blank</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L344">source</a></span> <pre class="binding-text">(blank width:int height:int &amp;opt channel:int=4)
+
+Create a new blank image</pre></div><hr><div class="binding"><span id="gfx2d/blue" class="binding-sym">gfx2d/blue</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for blue</pre></div><hr><div class="binding"><span id="gfx2d/circle" class="binding-sym">gfx2d/circle</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1866">source</a></span> <pre class="binding-text">(circle img:*Image x:double y:double r:double color:uint32_t)
+
+Draw a circle</pre></div><hr><div class="binding"><span id="gfx2d/clear" class="binding-sym">gfx2d/clear</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for clear</pre></div><hr><div class="binding"><span id="gfx2d/copy" class="binding-sym">gfx2d/copy</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1162">source</a></span> <pre class="binding-text">(copy img:*Image)
+
+Create a duplicate image</pre></div><hr><div class="binding"><span id="gfx2d/crop" class="binding-sym">gfx2d/crop</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1140">source</a></span> <pre class="binding-text">(crop img:*Image x1:int y1:int new-width:int new-height:int)
+
+Create a smaller sub-image from a larger image</pre></div><hr><div class="binding"><span id="gfx2d/cyan" class="binding-sym">gfx2d/cyan</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for cyan</pre></div><hr><div class="binding"><span id="gfx2d/diff" class="binding-sym">gfx2d/diff</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1233">source</a></span> <pre class="binding-text">(diff a:*Image b:*Image)
+
+Take the difference of two images</pre></div><hr><div class="binding"><span id="gfx2d/draw-simple-text" class="binding-sym">gfx2d/draw-simple-text</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L2644">source</a></span> <pre class="binding-text">(draw-simple-text img:*Image x:double y:double text:cstring color:uint32_t &amp;opt (font-name keyword (janet-ckeyword "default")) xscale:int=1 yscale:int=1 orientation:int=0)
+
+Draw text with a default, bitmap on an image. Font should be one of :default, :tall, or :olive.</pre></div><hr><div class="binding"><span id="gfx2d/draw-text" class="binding-sym">gfx2d/draw-text</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L4052">source</a></span> <pre class="binding-text">(draw-text image:*Image font:*Font x:double y:double text:cstring color:uint32_t &amp;opt scale:float=1.0 orientation:int=0)
+
+Render text to an image</pre></div><hr><div class="binding"><span id="gfx2d/fill-path" class="binding-sym">gfx2d/fill-path</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L3307">source</a></span> <pre class="binding-text">(fill-path img:*Image points:indexed color:uint32_t)
+
+Fill a path</pre></div><hr><div class="binding"><span id="gfx2d/fill-rect" class="binding-sym">gfx2d/fill-rect</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L3393">source</a></span> <pre class="binding-text">(fill-rect img:*Image x:double y:double width:double height:double color:uint32_t)
+
+Fill a rectangle</pre></div><hr><div class="binding"><span id="gfx2d/green" class="binding-sym">gfx2d/green</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for green</pre></div><hr><div class="binding"><span id="gfx2d/image-from-pointer" class="binding-sym">gfx2d/image-from-pointer</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L311">source</a></span> <pre class="binding-text">(image-from-pointer memory:*void width:int height:int &amp;opt channel:int=4 stride:int=0)
+
+Create a new image from a pointer to foreign memory.
+It is up to the user to correctly size, allocate, and free the backing memory.</pre></div><hr><div class="binding"><span id="gfx2d/load" class="binding-sym">gfx2d/load</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L417">source</a></span> <pre class="binding-text">(load path:cstring)
+
+Load an image from disk into a buffer</pre></div><hr><div class="binding"><span id="gfx2d/load-font" class="binding-sym">gfx2d/load-font</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L3863">source</a></span> <pre class="binding-text">(load-font path:cstring &amp;opt font-scale:float=12.0)
+
+Load a font from disk and create compressed font. A range of code points must be loaded ahead of time.</pre></div><hr><div class="binding"><span id="gfx2d/magenta" class="binding-sym">gfx2d/magenta</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for magenta</pre></div><hr><div class="binding"><span id="gfx2d/measure-simple-text" class="binding-sym">gfx2d/measure-simple-text</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L2694">source</a></span> <pre class="binding-text">(measure-simple-text text:cstring &amp;opt (font-name keyword (janet-ckeyword "default")) xscale:int=1 yscale:int=1 orientation:int=0)
+
+Return the height and width of text as a tuple. Font should be one of :default, :tall, or :olive.</pre></div><hr><div class="binding"><span id="gfx2d/measure-text" class="binding-sym">gfx2d/measure-text</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L3884">source</a></span> <pre class="binding-text">(measure-text font:*Font text:cstring &amp;opt scale:float=1.0 orientation:int=0)
+
+Measure how large a piece of text would be when rasterized. Returns a 2-tuple of [width height]</pre></div><hr><div class="binding"><span id="gfx2d/pixel" class="binding-sym">gfx2d/pixel</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L623">source</a></span> <pre class="binding-text">(pixel img:*Image x:int y:int)
+
+Read a pixel. Slow, be careful to use this in a loop.</pre></div><hr><div class="binding"><span id="gfx2d/plot" class="binding-sym">gfx2d/plot</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L2833">source</a></span> <pre class="binding-text">(plot img:*Image x1:double y1:double x2:double y2:double color:uint32_t &amp;opt stipple-cycle:int=0 stipple-on:int=0)
+
+Draw a 1 pixel line from (x1, y1) to (x2, y2)</pre></div><hr><div class="binding"><span id="gfx2d/plot-path" class="binding-sym">gfx2d/plot-path</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L2866">source</a></span> <pre class="binding-text">(plot-path img:*Image points:indexed color:uint32_t &amp;opt stipple-cycle:int=0 stipple-on:int=0 join-end:bool=0)
+
+Plot 1 pixel lines over a path</pre></div><hr><div class="binding"><span id="gfx2d/plot-ring" class="binding-sym">gfx2d/plot-ring</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L2911">source</a></span> <pre class="binding-text">(plot-ring img:*Image x:int y:int r:int color:uint32_t)
+
+Plot a 1 pixel thick ring around (x, y) with radius r.</pre></div><hr><div class="binding"><span id="gfx2d/premultiply-alpha" class="binding-sym">gfx2d/premultiply-alpha</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L895">source</a></span> <pre class="binding-text">(premultiply-alpha img:*Image)
+
+Modify an image my multiplying red, green, and blue pixel channels by the alpha channel.
+By default, images are loaded with non-premultiplied alpha and not assumed to have any particular color-space.</pre></div><hr><div class="binding"><span id="gfx2d/red" class="binding-sym">gfx2d/red</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for red</pre></div><hr><div class="binding"><span id="gfx2d/resize" class="binding-sym">gfx2d/resize</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1764">source</a></span> <pre class="binding-text">(resize in:*Image new-width:int new-height:int &amp;opt linear:bool=0)
+
+Resize an image, resampling as needed</pre></div><hr><div class="binding"><span id="gfx2d/resize-into" class="binding-sym">gfx2d/resize-into</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1746">source</a></span> <pre class="binding-text">(resize-into out:*Image in:*Image &amp;opt linear:bool=0)
+
+Resize an image into another image, resampling as needed</pre></div><hr><div class="binding"><span id="gfx2d/rgb" class="binding-sym">gfx2d/rgb</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L723">source</a></span> <pre class="binding-text">(rgb r:double g:double b:double &amp;opt a:double=1.0)
+
+Make an RGB color constant from components. Each component is a number from 0 to 1.</pre></div><hr><div class="binding"><span id="gfx2d/ring" class="binding-sym">gfx2d/ring</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1964">source</a></span> <pre class="binding-text">(ring img:*Image x:double y:double r-inner:double r-outer:double color:uint32_t)
+
+Draw a ring</pre></div><hr><div class="binding"><span id="gfx2d/save" class="binding-sym">gfx2d/save</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L544">source</a></span> <pre class="binding-text">(save path:cstring img:*Image &amp;opt quality:int=100)
+
+Save an image to a file, auto-detecting the format. Supports PNG, BMP, TGA, and JPEG.</pre></div><hr><div class="binding"><span id="gfx2d/save-bmp" class="binding-sym">gfx2d/save-bmp</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L438">source</a></span> <pre class="binding-text">(save-bmp path:cstring img:*Image)
+
+Save an image to a file as a bmp</pre></div><hr><div class="binding"><span id="gfx2d/save-jpg" class="binding-sym">gfx2d/save-jpg</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L504">source</a></span> <pre class="binding-text">(save-jpg path:cstring img:*Image quality:int)
+
+Save an image to a file as a jpg</pre></div><hr><div class="binding"><span id="gfx2d/save-png" class="binding-sym">gfx2d/save-png</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L482">source</a></span> <pre class="binding-text">(save-png path:cstring img:*Image)
+
+Save an image to a file as a png</pre></div><hr><div class="binding"><span id="gfx2d/save-tga" class="binding-sym">gfx2d/save-tga</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L460">source</a></span> <pre class="binding-text">(save-tga path:cstring img:*Image)
+
+Save an image to a file as a tga</pre></div><hr><div class="binding"><span id="gfx2d/set-pixel" class="binding-sym">gfx2d/set-pixel</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L641">source</a></span> <pre class="binding-text">(set-pixel img:*Image x:int y:int color:uint32)
+
+Set a pixel. Slow, be careful to use this in a loop.</pre></div><hr><div class="binding"><span id="gfx2d/srgb" class="binding-sym">gfx2d/srgb</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L741">source</a></span> <pre class="binding-text">(srgb r:double g:double b:double &amp;opt a:double=1.0)
+
+Make an sRGB color constant from components. Each component is a number from 0 to 1. A gamma of 2.2 is applied to each RGB component.</pre></div><hr><div class="binding"><span id="gfx2d/stamp" class="binding-sym">gfx2d/stamp</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1100">source</a></span> <pre class="binding-text">(stamp dest:*Image src:*Image &amp;opt dx:int=0 dy:int=0)
+
+Copy one image onto another</pre></div><hr><div class="binding"><span id="gfx2d/stamp-blend" class="binding-sym">gfx2d/stamp-blend</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1718">source</a></span> <pre class="binding-text">(stamp-blend dest:*Image src:*Image blend-mode:Janet &amp;opt dx:int=0 dy:int=0)
+
+Copy on image onto another with blending</pre></div><hr><div class="binding"><span id="gfx2d/stroke-path" class="binding-sym">gfx2d/stroke-path</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L3489">source</a></span> <pre class="binding-text">(stroke-path img:*Image points:indexed color:uint32_t &amp;opt thickness:double=1 join-end:bool=0 stipple-cycle:int=0 stipple-on:int=0)
+
+Stroke a line along a path</pre></div><hr><div class="binding"><span id="gfx2d/unpack" class="binding-sym">gfx2d/unpack</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L1125">source</a></span> <pre class="binding-text">(unpack img:*Image)
+
+Extract the :width (integer), :height (integer), :channels (integer 1-4),
+stride (integer), and underlying :data (buffer) from an image and return a struct.</pre></div><hr><div class="binding"><span id="gfx2d/viewport" class="binding-sym">gfx2d/viewport</span> <span class="binding-type">cfunction</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b/build/spork___gfx2d-codegen.c#L386">source</a></span> <pre class="binding-text">(viewport img:*Image x:int y:int width:int height:int &amp;opt allow-trimming:bool=0)
+
+Create a new image that shares backing memory with another image. This allow parallel drawing in different threads.</pre></div><hr><div class="binding"><span id="gfx2d/white" class="binding-sym">gfx2d/white</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for white</pre></div><hr><div class="binding"><span id="gfx2d/yellow" class="binding-sym">gfx2d/yellow</span> <span class="binding-type">number</span>  <pre class="binding-text">color constant for yellow</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="getline.html"><span class="prevnext-text">getline</span></a></span>
+          <span class="next"><a href="htmlgen.html"><span class="prevnext-text">htmlgen</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2026
+  <div class="gentag">Generated on August 31, 2026 at 23:38:24 (UTC) with Janet 1.42.0-dev-7fd75f3</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

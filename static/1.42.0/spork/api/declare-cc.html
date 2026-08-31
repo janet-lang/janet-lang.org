@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>declare-cc</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="declare-cc" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var el = document.getElementById('toc-toggle');
+        document.querySelector('.toc').classList.toggle('toc-hidden');
+        el.classList.toggle('open');
+        if (window.innerWidth > 800 && window.localStorage) {
+          localStorage.setItem('show-toc', el.classList.contains('open'));
+        }
+      }
+      window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('toc-toggle').addEventListener('click', toggleToc);        
+        if (window.innerWidth <= 800 || (window.localStorage && localStorage.getItem('show-toc') === 'false')) {
+          toggleToc();
+        }
+      });
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">Core API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/filewatch.html">filewatch</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/janet.html">janet</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/tuple.html">Tuple C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../../jpm/index.html">JPM</a></span><ul><li><span><a href="../../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../../jpm/api/index.html">API</a></span><ul><li><span><a href="../../jpm/api/rules.html">rules</a></span></li><li><span><a href="../../jpm/api/cc.html">cc</a></span></li><li><span><a href="../../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../../jpm/api/cli.html">cli</a></span></li><li><span><a href="../../jpm/api/commands.html">commands</a></span></li><li><span><a href="../../jpm/api/config.html">config</a></span></li><li><span><a href="../../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../jpm/api/pm.html">pm</a></span></li><li><span><a href="../../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../index.html">Spork</a></span><ul><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span><a href="charts.html">charts</a></span></li><li><span><a href="cjanet.html">cjanet</a></span></li><li><span><a href="cmath.html">cmath</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span><a href="date.html">date</a></span></li><li><span class="selected"><a href="declare-cc.html">declare-cc</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="gfx2d.html">gfx2d</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="mdz.html">mdz</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="pm.html">pm</a></span></li><li><span><a href="pm-config.html">pm-config</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="services.html">services</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="sh-dsl.html">sh-dsl</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.42.0-dev-7fd75f3 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.41.2/spork/api/declare-cc.html">1.41.2</a>
+          
+          <a href="../../../1.41.1/spork/api/declare-cc.html">1.41.1</a>
+          
+          <a href="../../../1.40.1/spork/api/declare-cc.html">1.40.1</a>
+          
+          <a href="../../../1.40.0/spork/api/declare-cc.html">1.40.0</a>
+          
+          <a href="../../../1.39.1/spork/api/declare-cc.html">1.39.1</a>
+          
+          <a href="../../../1.38.0/spork/api/declare-cc.html">1.38.0</a>
+          
+          <a href="../../../1.37.1/spork/api/declare-cc.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/spork/api/declare-cc.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/spork/api/declare-cc.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/spork/api/declare-cc.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/spork/api/declare-cc.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/spork/api/declare-cc.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/spork/api/declare-cc.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/spork/api/declare-cc.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/spork/api/declare-cc.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/spork/api/declare-cc.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/spork/api/declare-cc.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/spork/api/declare-cc.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/spork/api/declare-cc.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/spork/api/declare-cc.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/spork/api/declare-cc.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/spork/api/declare-cc.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/spork/api/declare-cc.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/spork/api/declare-cc.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/spork/api/declare-cc.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/spork/api/declare-cc.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/spork/api/declare-cc.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/spork/api/declare-cc.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/spork/api/declare-cc.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/spork/api/declare-cc.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/spork/api/declare-cc.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/spork/api/declare-cc.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/spork/api/declare-cc.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/spork/api/declare-cc.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/spork/api/declare-cc.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/spork/api/declare-cc.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/spork/api/declare-cc.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/spork/api/declare-cc.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">declare-cc</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="date.html"><span class="prevnext-text">date</span></a></span>
+
+          <span class="next"><a href="ev-utils.html"><span class="prevnext-text">ev-utils</span></a></span>
+        </div>
+        
+
+<p>The declare-cc module provides a DSL to the <code class="mendoza-code">cc</code> module for compiling C and C++ projects that 
+eliminates boilerplate, provides incremental builds, and re-implements support for building <code class="mendoza-code">project.janet</code> projects outside of JPM.
+</p>
+<h2 id="Reference-11">Reference
+</h2>
+<p><a href="#declare-cc/*build-root*">declare-cc/*build-root*</a> <a href="#declare-cc/*install-manifest*">declare-cc/*install-manifest*</a> <a href="#declare-cc/*toolchain*">declare-cc/*toolchain*</a> <a href="#declare-cc/create-buffer-c">declare-cc/create-buffer-c</a> <a href="#declare-cc/declare-archive">declare-cc/declare-archive</a> <a href="#declare-cc/declare-bin">declare-cc/declare-bin</a> <a href="#declare-cc/declare-binscript">declare-cc/declare-binscript</a> <a href="#declare-cc/declare-documentation">declare-cc/declare-documentation</a> <a href="#declare-cc/declare-executable">declare-cc/declare-executable</a> <a href="#declare-cc/declare-headers">declare-cc/declare-headers</a> <a href="#declare-cc/declare-manpage">declare-cc/declare-manpage</a> <a href="#declare-cc/declare-native">declare-cc/declare-native</a> <a href="#declare-cc/declare-project">declare-cc/declare-project</a> <a href="#declare-cc/declare-source">declare-cc/declare-source</a> <a href="#declare-cc/install-file-rule">declare-cc/install-file-rule</a> <a href="#declare-cc/jpm-shim-env">declare-cc/jpm-shim-env</a> <a href="#declare-cc/modpath-to-meta">declare-cc/modpath-to-meta</a> <a href="#declare-cc/modpath-to-static">declare-cc/modpath-to-static</a> <a href="#declare-cc/phony">declare-cc/phony</a> <a href="#declare-cc/post-deps">declare-cc/post-deps</a> <a href="#declare-cc/quickbin">declare-cc/quickbin</a> <a href="#declare-cc/rule">declare-cc/rule</a> <a href="#declare-cc/run-tests">declare-cc/run-tests</a> <a href="#declare-cc/sh-phony">declare-cc/sh-phony</a> <a href="#declare-cc/sh-rule">declare-cc/sh-rule</a> <a href="#declare-cc/sh-task">declare-cc/sh-task</a> <a href="#declare-cc/task">declare-cc/task</a> </p><hr><div class="binding"><span id="declare-cc/*build-root*" class="binding-sym">declare-cc/*build-root*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L19">source</a></span> <pre class="binding-text">Root build directory that will contain all built artifacts</pre></div><hr><div class="binding"><span id="declare-cc/*install-manifest*" class="binding-sym">declare-cc/*install-manifest*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L17">source</a></span> <pre class="binding-text">Bound to the bundle manifest during a bundle/install.</pre></div><hr><div class="binding"><span id="declare-cc/*toolchain*" class="binding-sym">declare-cc/*toolchain*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L18">source</a></span> <pre class="binding-text">Force a given toolchain. If unset, will auto-detect.</pre></div><hr><div class="binding"><span id="declare-cc/create-buffer-c" class="binding-sym">declare-cc/create-buffer-c</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L181">source</a></span> <pre class="binding-text">(create-buffer-c bytes dest name)
+
+Inline raw byte file as a c file. The header file will contain two exported symbols, `(string name "_emded")`, a
+ pointer of an array of unsigned char, and `(string name "_embed_size")`, a size_t of the number bytes.</pre></div><hr><div class="binding"><span id="declare-cc/declare-archive" class="binding-sym">declare-cc/declare-archive</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L431">source</a></span> <pre class="binding-text">(declare-archive &amp;named entry name deps)
+
+Build a janet archive. This is a file that bundles together many janet scripts into a janet image. This file can the be moved to any machine with a janet vm and the required dependencies and run there.</pre></div><hr><div class="binding"><span id="declare-cc/declare-bin" class="binding-sym">declare-cc/declare-bin</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L422">source</a></span> <pre class="binding-text">(declare-bin &amp;named main name)
+
+Declare a generic file to be installed as an executable.</pre></div><hr><div class="binding"><span id="declare-cc/declare-binscript" class="binding-sym">declare-cc/declare-binscript</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L388">source</a></span> <pre class="binding-text">(declare-binscript &amp;named main name hardcode-syspath is-janet)
+
+Declare a janet file to be installed as an executable script. Creates
+a shim on windows. If hardcode is true, will insert code into the script
+such that it will run correctly even when JANET_PATH is changed. if auto-shebang
+is truthy, will also automatically insert a correct shebang line.</pre></div><hr><div class="binding"><span id="declare-cc/declare-documentation" class="binding-sym">declare-cc/declare-documentation</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L455">source</a></span> <pre class="binding-text">(declare-documentation &amp;named source prefix)
+
+Mark a file as general documentation to be installed. Documentation will be installed to $SYSYPATH/man/`prefix`/`(basename source)`</pre></div><hr><div class="binding"><span id="declare-cc/declare-executable" class="binding-sym">declare-cc/declare-executable</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L716">source</a></span> <pre class="binding-text">(declare-executable &amp;named name entry install headers no-compile no-core defines pkg-config-flags target-os deps static pkg-config-libs smart-libs c-std c++-std msvc-libs ldflags cflags c++flags lflags libs static-libs dynamic-libs use-rpath use-rdynamic)
+
+Declare a janet file to be the entry of a standalone executable program. The entry file is evaluated and a main function is looked for in the entry file. This function is marshalled into bytecode which is then embedded in a final executable for distribution.</pre></div><hr><div class="binding"><span id="declare-cc/declare-headers" class="binding-sym">declare-cc/declare-headers</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L375">source</a></span> <pre class="binding-text">(declare-headers &amp;named headers prefix)
+
+Declare headers for a library installation. Installed headers can be used by other native libraries.</pre></div><hr><div class="binding"><span id="declare-cc/declare-manpage" class="binding-sym">declare-cc/declare-manpage</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L449">source</a></span> <pre class="binding-text">(declare-manpage page)
+
+Mark a manpage for installation. Manpages will be installed to $SYSPATH/man/man1/`(basename page)`</pre></div><hr><div class="binding"><span id="declare-cc/declare-native" class="binding-sym">declare-cc/declare-native</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L462">source</a></span> <pre class="binding-text">(declare-native &amp;named name source embedded lflags libs cflags c++flags defines nostatic static-libs deps headers use-rpath use-rdynamic pkg-config-flags dynamic-libs msvc-libs ldflags pkg-config-libs smart-libs c-std c++-std target-os)
+
+Declare a native module. This is a shared library that can be loaded dynamically by a janet runtime. This also builds a static libary that can be used to bundle janet code and native into a single executable.</pre></div><hr><div class="binding"><span id="declare-cc/declare-project" class="binding-sym">declare-cc/declare-project</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L254">source</a></span> <pre class="binding-text">(declare-project &amp;named name description url version repo tag dependencies author license)
+
+Define your project metadata. This should
+be the first declaration in a project.janet file.
+Sets up the JPM-style build rule system as well as
+creates a number of default bundle hooks including:
+- build
+- clean
+- check
+- install
+- list-rules
+- rule-tree</pre></div><hr><div class="binding"><span id="declare-cc/declare-source" class="binding-sym">declare-cc/declare-source</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L359">source</a></span> <pre class="binding-text">(declare-source &amp;named source prefix)
+
+Create Janet modules. This does not actually build the module(s), but registers them for packaging and installation. :source should be an array of files and directores to copy into JANET_MODPATH or JANET_PATH. :prefix can optionally be given to modify the destination path to be (string JANET_PATH prefix source).</pre></div><hr><div class="binding"><span id="declare-cc/install-file-rule" class="binding-sym">declare-cc/install-file-rule</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L150">source</a></span> <pre class="binding-text">(install-file-rule src dest &amp;opt chmod-mode thunk is-exe)
+
+Add install and uninstall rule for moving file from src into destdir.</pre></div><hr><div class="binding"><span id="declare-cc/jpm-shim-env" class="binding-sym">declare-cc/jpm-shim-env</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L949">source</a></span> <pre class="binding-text">(jpm-shim-env &amp;opt e)
+
+Create an environment table that can evaluate project.janet files</pre></div><hr><div class="binding"><span id="declare-cc/modpath-to-meta" class="binding-sym">declare-cc/modpath-to-meta</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L602">source</a></span> <pre class="binding-text">(modpath-to-meta toolchain path)
+
+Get the meta file path (.meta.janet) corresponding to a native module path (.so).</pre></div><hr><div class="binding"><span id="declare-cc/modpath-to-static" class="binding-sym">declare-cc/modpath-to-static</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L608">source</a></span> <pre class="binding-text">(modpath-to-static toolchain path)
+
+Get the static library (.a) path corresponding to a native module path (.so).</pre></div><hr><div class="binding"><span id="declare-cc/phony" class="binding-sym">declare-cc/phony</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L130">source</a></span> <pre class="binding-text">(phony target deps &amp; body)
+
+Alias for `task`.</pre></div><hr><div class="binding"><span id="declare-cc/post-deps" class="binding-sym">declare-cc/post-deps</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L936">source</a></span> <pre class="binding-text">(post-deps &amp; body)
+
+Run code at the top level if jpm dependencies are installed. Build code that imports dependencies should be wrapped with this macro, as project.janet needs to be able to run successfully even without dependencies installed.</pre></div><hr><div class="binding"><span id="declare-cc/quickbin" class="binding-sym">declare-cc/quickbin</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L916">source</a></span> <pre class="binding-text">(quickbin entry output)
+
+Create an executable file from a script with a main function.</pre></div><hr><div class="binding"><span id="declare-cc/rule" class="binding-sym">declare-cc/rule</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L119">source</a></span> <pre class="binding-text">(rule target deps &amp; body)
+
+Add a rule to the rule graph.</pre></div><hr><div class="binding"><span id="declare-cc/run-tests" class="binding-sym">declare-cc/run-tests</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L201">source</a></span> <pre class="binding-text">(run-tests &amp;opt root-directory)
+
+Run tests on a project in the current directory. The tests will be run in the environment dictated by (dyn :modpath).</pre></div><hr><div class="binding"><span id="declare-cc/sh-phony" class="binding-sym">declare-cc/sh-phony</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L145">source</a></span> <pre class="binding-text">(sh-phony target deps &amp; body)
+
+Alias for `sh-task`.</pre></div><hr><div class="binding"><span id="declare-cc/sh-rule" class="binding-sym">declare-cc/sh-rule</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L135">source</a></span> <pre class="binding-text">(sh-rule target deps &amp; body)
+
+Add a rule that invokes a shell command, and fails if the command returns non-zero.</pre></div><hr><div class="binding"><span id="declare-cc/sh-task" class="binding-sym">declare-cc/sh-task</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L140">source</a></span> <pre class="binding-text">(sh-task target deps &amp; body)
+
+Add a task that invokes a shell command, and fails if the command returns non-zero.</pre></div><hr><div class="binding"><span id="declare-cc/task" class="binding-sym">declare-cc/task</span> <span class="binding-type">macro</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/declare-cc.janet#L124">source</a></span> <pre class="binding-text">(task target deps &amp; body)
+
+Add a task rule to the rule graph. A task rule will always run if invoked (it is always considered out of date).</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="date.html"><span class="prevnext-text">date</span></a></span>
+          <span class="next"><a href="ev-utils.html"><span class="prevnext-text">ev-utils</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2026
+  <div class="gentag">Generated on August 31, 2026 at 23:38:24 (UTC) with Janet 1.42.0-dev-7fd75f3</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>date</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="date" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var el = document.getElementById('toc-toggle');
+        document.querySelector('.toc').classList.toggle('toc-hidden');
+        el.classList.toggle('open');
+        if (window.innerWidth > 800 && window.localStorage) {
+          localStorage.setItem('show-toc', el.classList.contains('open'));
+        }
+      }
+      window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('toc-toggle').addEventListener('click', toggleToc);        
+        if (window.innerWidth <= 800 || (window.localStorage && localStorage.getItem('show-toc') === 'false')) {
+          toggleToc();
+        }
+      });
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">Core API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/filewatch.html">filewatch</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/janet.html">janet</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/tuple.html">Tuple C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../../jpm/index.html">JPM</a></span><ul><li><span><a href="../../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../../jpm/api/index.html">API</a></span><ul><li><span><a href="../../jpm/api/rules.html">rules</a></span></li><li><span><a href="../../jpm/api/cc.html">cc</a></span></li><li><span><a href="../../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../../jpm/api/cli.html">cli</a></span></li><li><span><a href="../../jpm/api/commands.html">commands</a></span></li><li><span><a href="../../jpm/api/config.html">config</a></span></li><li><span><a href="../../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../jpm/api/pm.html">pm</a></span></li><li><span><a href="../../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../index.html">Spork</a></span><ul><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span><a href="charts.html">charts</a></span></li><li><span><a href="cjanet.html">cjanet</a></span></li><li><span><a href="cmath.html">cmath</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span class="selected"><a href="date.html">date</a></span></li><li><span><a href="declare-cc.html">declare-cc</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="gfx2d.html">gfx2d</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="mdz.html">mdz</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="pm.html">pm</a></span></li><li><span><a href="pm-config.html">pm-config</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="services.html">services</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="sh-dsl.html">sh-dsl</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.42.0-dev-7fd75f3 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.41.2/spork/api/date.html">1.41.2</a>
+          
+          <a href="../../../1.41.1/spork/api/date.html">1.41.1</a>
+          
+          <a href="../../../1.40.1/spork/api/date.html">1.40.1</a>
+          
+          <a href="../../../1.40.0/spork/api/date.html">1.40.0</a>
+          
+          <a href="../../../1.39.1/spork/api/date.html">1.39.1</a>
+          
+          <a href="../../../1.38.0/spork/api/date.html">1.38.0</a>
+          
+          <a href="../../../1.37.1/spork/api/date.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/spork/api/date.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/spork/api/date.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/spork/api/date.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/spork/api/date.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/spork/api/date.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/spork/api/date.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/spork/api/date.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/spork/api/date.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/spork/api/date.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/spork/api/date.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/spork/api/date.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/spork/api/date.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/spork/api/date.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/spork/api/date.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/spork/api/date.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/spork/api/date.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/spork/api/date.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/spork/api/date.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/spork/api/date.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/spork/api/date.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/spork/api/date.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/spork/api/date.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/spork/api/date.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/spork/api/date.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/spork/api/date.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/spork/api/date.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/spork/api/date.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/spork/api/date.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/spork/api/date.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/spork/api/date.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/spork/api/date.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">date</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="data.html"><span class="prevnext-text">data</span></a></span>
+
+          <span class="next"><a href="declare-cc.html"><span class="prevnext-text">declare-cc</span></a></span>
+        </div>
+        
+
+<p>Utility wrappers around `os/time` and `os/date` for working with dates, particularly formatting them as strings (with `date/to-string`) and reading dates from strings (with `date/from-string`).
+</p>
+<h2 id="Reference-10">Reference
+</h2>
+<p><a href="#date/add">date/add</a> <a href="#date/assert-date">date/assert-date</a> <a href="#date/between?">date/between?</a> <a href="#date/compare-dates">date/compare-dates</a> <a href="#date/date?">date/date?</a> <a href="#date/diff">date/diff</a> <a href="#date/from-string">date/from-string</a> <a href="#date/gt">date/gt</a> <a href="#date/leap-year?">date/leap-year?</a> <a href="#date/local-now">date/local-now</a> <a href="#date/lt">date/lt</a> <a href="#date/sub">date/sub</a> <a href="#date/to-string">date/to-string</a> <a href="#date/utc-now">date/utc-now</a> </p><hr><div class="binding"><span id="date/add" class="binding-sym">date/add</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L367">source</a></span> <pre class="binding-text">(add date &amp;named years months days hours minutes seconds)
+
+Add time to a well-formed `date` (`date`). Returns a new struct 
+that will pass the `date?` validation function.</pre></div><hr><div class="binding"><span id="date/assert-date" class="binding-sym">date/assert-date</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L49">source</a></span> <pre class="binding-text">(`assert-date` `date`)
+
+Raises an error if `date` is not a well-formed date. Otherwise,
+returns `date` unmodified.
+
+A `date` is a struct that contains at least the following keys: 
+
+- `:dst`
+- `:year`
+- `:year-day`
+- `:month`
+- `:month-day`
+- `:week-day`
+- `:hours`
+- `:minutes`
+- `:seconds`
+
+The `(os/date)` function returns well-formed `date`s of this type.</pre></div><hr><div class="binding"><span id="date/between?" class="binding-sym">date/between?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L398">source</a></span> <pre class="binding-text">(between? date start end)
+
+Given three well-formed `date`s (`date`, `start`, and `end`), 
+will return `true` if `date` occurs between `start` and `end`.</pre></div><hr><div class="binding"><span id="date/compare-dates" class="binding-sym">date/compare-dates</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L88">source</a></span> <pre class="binding-text">(compare-dates d1 d2)
+
+Compares `date` values (`d1` and `d2`).
+
+Returns -1 if `d1` is strictly less than `d2`, 1 if `d2` is 
+strictly less than `d1`, and 0 if they are exactly the same. </pre></div><hr><div class="binding"><span id="date/date?" class="binding-sym">date/date?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L27">source</a></span> <pre class="binding-text">(`date?` `date`)
+
+Returns a boolean indicating whether `date` is a well-formed date.
+
+A `date` is a struct that contains at least the following keys: 
+
+- `:dst`
+- `:year`
+- `:year-day`
+- `:month`
+- `:month-day`
+- `:week-day`
+- `:hours`
+- `:minutes`
+- `:seconds`
+
+The `(os/date)` function returns well-formed `date`s of this type.</pre></div><hr><div class="binding"><span id="date/diff" class="binding-sym">date/diff</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L385">source</a></span> <pre class="binding-text">(diff later-date earlier-date)
+
+Subtract two well-formed `date`s (`later-date` and `earlier-date`),
+returning a time in seconds. 
+
+Not commutative, i.e., order matters. If `earlier-date` precedes 
+`later-date`, the resulting duration will be negative.</pre></div><hr><div class="binding"><span id="date/from-string" class="binding-sym">date/from-string</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L155">source</a></span> <pre class="binding-text">(from-string date-str format-str)
+
+Construct a well-formed `date` from a string (`date-str`), using 
+a second string to indicate the format to be read (`format-str`). 
+Returns a new struct that will pass the `date?` validation function. 
+
+`format-str` is case sensitive and can understand any of:
+
+- `y` = Year (either 2 or 4 characters)
+- `M` = Month (between 1 and 4 characters)
+- `d` = Day of month (1 or 2 characters)
+- `H` = Hour, 24-hour format (1 or 2 characters)
+- `h` = Hour, 12-hour format (1 or 2 characters)
+- `m` = Minute (must be 2 characters)
+- `s` = Second (must be 2 characters)
+- `AM` or `PM` = AM/PM (either upper- or lower-case, use with `h`)
+
+Any other characters (e.g. `:`, ` `, `,`, `-` or `/`) will be treated 
+as separators and ignored.</pre></div><hr><div class="binding"><span id="date/gt" class="binding-sym">date/gt</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L112">source</a></span> <pre class="binding-text">(gt &amp; dates)
+
+Check if `dates` is in descending order. Returns a boolean.
+ 
+Equivalent to `(&gt; ;(map os/mktime dates))`.</pre></div><hr><div class="binding"><span id="date/leap-year?" class="binding-sym">date/leap-year?</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L312">source</a></span> <pre class="binding-text">(leap-year? year)
+
+Given a numeric `year`, returns a boolean indicating whether 
+that year is a leap year according to the Gregorian rules.</pre></div><hr><div class="binding"><span id="date/local-now" class="binding-sym">date/local-now</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L80">source</a></span> <pre class="binding-text">(local-now)
+
+Returns a well-formed date representing the current datetime in the 
+local time zone. Equivalent to `(os/date nil true)`.</pre></div><hr><div class="binding"><span id="date/lt" class="binding-sym">date/lt</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L102">source</a></span> <pre class="binding-text">(lt &amp; dates)
+
+Check if `dates` is in ascending order. Returns a boolean.
+ 
+Equivalent to `(&lt; ;(map os/mktime dates))`.</pre></div><hr><div class="binding"><span id="date/sub" class="binding-sym">date/sub</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L376">source</a></span> <pre class="binding-text">(sub date &amp;named years months days hours minutes seconds)
+
+Subtract time from a well-formed `date` (`date`). Returns a new struct 
+that will pass the `date?` validation function.</pre></div><hr><div class="binding"><span id="date/to-string" class="binding-sym">date/to-string</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L262">source</a></span> <pre class="binding-text">(to-string date format-str)
+
+Convert a well-formed date (`date`) to a string, using a string 
+(`format-str`) to indicate the expected output format. Returns a 
+string representing the formatted date.
+
+`format-str` is case sensitive and can understand any of:
+
+- `y` = Year (either 2 or 4 characters)
+- `M` = Month (between 1 and 4 characters)
+- `d` = Day of month (1 or 2 characters)
+- `H` = Hour, 24-hour format (1 or 2 characters)
+- `h` = Hour, 12-hour format (1 or 2 characters)
+- `m` = Minute (must be 2 characters)
+- `s` = Second (must be 2 characters)
+- `AM` or `PM` = AM/PM (either upper- or lower-case, use with `h`)
+
+Any other characters (e.g. `:`, ` `, `,`, `-` or `/`) will be 
+treated as separators and preserved identically.</pre></div><hr><div class="binding"><span id="date/utc-now" class="binding-sym">date/utc-now</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/date.janet#L72">source</a></span> <pre class="binding-text">(utc-now)
+
+Returns a well-formed `date` representing the current datetime in UTC. 
+Equivalent to `(os/date)`.</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="data.html"><span class="prevnext-text">data</span></a></span>
+          <span class="next"><a href="declare-cc.html"><span class="prevnext-text">declare-cc</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2026
+  <div class="gentag">Generated on August 31, 2026 at 23:38:24 (UTC) with Janet 1.42.0-dev-7fd75f3</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>

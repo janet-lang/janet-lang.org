@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>charts</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="charts" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var el = document.getElementById('toc-toggle');
+        document.querySelector('.toc').classList.toggle('toc-hidden');
+        el.classList.toggle('open');
+        if (window.innerWidth > 800 && window.localStorage) {
+          localStorage.setItem('show-toc', el.classList.contains('open'));
+        }
+      }
+      window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('toc-toggle').addEventListener('click', toggleToc);        
+        if (window.innerWidth <= 800 || (window.localStorage && localStorage.getItem('show-toc') === 'false')) {
+          toggleToc();
+        }
+      });
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../../index.html">Home</a></span></li><li class="caret"><span><a href="../../docs/index.html">Documentation</a></span><ul><li><span><a href="../../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../../docs/specials.html">Special Forms</a></span></li><li><span><a href="../../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../../docs/flow.html">Flow</a></span></li><li><span><a href="../../docs/functions.html">Functions</a></span></li><li><span><a href="../../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../../docs/loop.html">Looping</a></span></li><li><span><a href="../../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../../docs/modules.html">Modules</a></span></li><li><span><a href="../../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../../docs/threads.html">Multithreading</a></span></li><li><span><a href="../../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../../docs/documentation.html">Documentation</a></span></li><li><span><a href="../../docs/linting.html">Linting</a></span></li><li><span><a href="../../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../../api/index.html">Core API</a></span><ul><li><span><a href="../../api/array.html">array</a></span></li><li><span><a href="../../api/buffer.html">buffer</a></span></li><li><span><a href="../../api/bundle.html">bundle</a></span></li><li><span><a href="../../api/debug.html">debug</a></span></li><li><span><a href="../../api/ev.html">ev</a></span></li><li><span><a href="../../api/ffi.html">ffi</a></span></li><li><span><a href="../../api/fiber.html">fiber</a></span></li><li><span><a href="../../api/file.html">file</a></span></li><li><span><a href="../../api/filewatch.html">filewatch</a></span></li><li><span><a href="../../api/int.html">int</a></span></li><li><span><a href="../../api/janet.html">janet</a></span></li><li><span><a href="../../api/math.html">math</a></span></li><li><span><a href="../../api/module.html">module</a></span></li><li><span><a href="../../api/net.html">net</a></span></li><li><span><a href="../../api/os.html">os</a></span></li><li><span><a href="../../api/peg.html">peg</a></span></li><li><span><a href="../../api/parser.html">parser</a></span></li><li><span><a href="../../api/string.html">string</a></span></li><li><span><a href="../../api/table.html">table</a></span></li><li><span><a href="../../api/tuple.html">tuple</a></span></li><li><span><a href="../../api/misc.html">misc</a></span></li></ul></li><li class="caret"><span><a href="../../capi/index.html">C API</a></span><ul><li><span><a href="../../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../../capi/embedding.html">Embedding</a></span></li><li><span><a href="../../capi/configuration.html">Configuration</a></span></li><li><span><a href="../../capi/array.html">Array C API</a></span></li><li><span><a href="../../capi/tuple.html">Tuple C API</a></span></li><li><span><a href="../../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../../capi/table.html">Table C API</a></span></li><li><span><a href="../../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../../jpm/index.html">JPM</a></span><ul><li><span><a href="../../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../../jpm/api/index.html">API</a></span><ul><li><span><a href="../../jpm/api/rules.html">rules</a></span></li><li><span><a href="../../jpm/api/cc.html">cc</a></span></li><li><span><a href="../../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../../jpm/api/cli.html">cli</a></span></li><li><span><a href="../../jpm/api/commands.html">commands</a></span></li><li><span><a href="../../jpm/api/config.html">config</a></span></li><li><span><a href="../../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../../jpm/api/pm.html">pm</a></span></li><li><span><a href="../../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="../index.html">Spork</a></span><ul><li class="caret"><span><a href="index.html">API</a></span><ul><li><span><a href="argparse.html">argparse</a></span></li><li><span><a href="base64.html">base64</a></span></li><li><span><a href="build-rules.html">build-rules</a></span></li><li><span><a href="cc.html">cc</a></span></li><li><span><a href="channel.html">channel</a></span></li><li><span class="selected"><a href="charts.html">charts</a></span></li><li><span><a href="cjanet.html">cjanet</a></span></li><li><span><a href="cmath.html">cmath</a></span></li><li><span><a href="crc.html">crc</a></span></li><li><span><a href="cron.html">cron</a></span></li><li><span><a href="data.html">data</a></span></li><li><span><a href="date.html">date</a></span></li><li><span><a href="declare-cc.html">declare-cc</a></span></li><li><span><a href="ev-utils.html">ev-utils</a></span></li><li><span><a href="fmt.html">fmt</a></span></li><li><span><a href="generators.html">generators</a></span></li><li><span><a href="getline.html">getline</a></span></li><li><span><a href="gfx2d.html">gfx2d</a></span></li><li><span><a href="htmlgen.html">htmlgen</a></span></li><li><span><a href="http.html">http</a></span></li><li><span><a href="httpf.html">httpf</a></span></li><li><span><a href="infix.html">infix</a></span></li><li><span><a href="json.html">json</a></span></li><li><span><a href="math.html">math</a></span></li><li><span><a href="mdz.html">mdz</a></span></li><li><span><a href="misc.html">misc</a></span></li><li><span><a href="msg.html">msg</a></span></li><li><span><a href="netrepl.html">netrepl</a></span></li><li><span><a href="path.html">path</a></span></li><li><span><a href="pgp.html">pgp</a></span></li><li><span><a href="pm.html">pm</a></span></li><li><span><a href="pm-config.html">pm-config</a></span></li><li><span><a href="randgen.html">randgen</a></span></li><li><span><a href="rawterm.html">rawterm</a></span></li><li><span><a href="regex.html">regex</a></span></li><li><span><a href="rpc.html">rpc</a></span></li><li><span><a href="schema.html">schema</a></span></li><li><span><a href="services.html">services</a></span></li><li><span><a href="sh.html">sh</a></span></li><li><span><a href="sh-dsl.html">sh-dsl</a></span></li><li><span><a href="stream.html">stream</a></span></li><li><span><a href="tarray.html">tarray</a></span></li><li><span><a href="tasker.html">tasker</a></span></li><li><span><a href="temple.html">temple</a></span></li><li><span><a href="test.html">test</a></span></li><li><span><a href="utf8.html">utf8</a></span></li><li><span><a href="zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.42.0-dev-7fd75f3 Documentation<br>(Other Versions:
+          
+          <a href="../../../1.41.2/spork/api/charts.html">1.41.2</a>
+          
+          <a href="../../../1.41.1/spork/api/charts.html">1.41.1</a>
+          
+          <a href="../../../1.40.1/spork/api/charts.html">1.40.1</a>
+          
+          <a href="../../../1.40.0/spork/api/charts.html">1.40.0</a>
+          
+          <a href="../../../1.39.1/spork/api/charts.html">1.39.1</a>
+          
+          <a href="../../../1.38.0/spork/api/charts.html">1.38.0</a>
+          
+          <a href="../../../1.37.1/spork/api/charts.html">1.37.1</a>
+          
+          <a href="../../../1.36.0/spork/api/charts.html">1.36.0</a>
+          
+          <a href="../../../1.35.0/spork/api/charts.html">1.35.0</a>
+          
+          <a href="../../../1.34.0/spork/api/charts.html">1.34.0</a>
+          
+          <a href="../../../1.31.0/spork/api/charts.html">1.31.0</a>
+          
+          <a href="../../../1.29.1/spork/api/charts.html">1.29.1</a>
+          
+          <a href="../../../1.28.0/spork/api/charts.html">1.28.0</a>
+          
+          <a href="../../../1.27.0/spork/api/charts.html">1.27.0</a>
+          
+          <a href="../../../1.26.0/spork/api/charts.html">1.26.0</a>
+          
+          <a href="../../../1.25.1/spork/api/charts.html">1.25.1</a>
+          
+          <a href="../../../1.24.0/spork/api/charts.html">1.24.0</a>
+          
+          <a href="../../../1.23.0/spork/api/charts.html">1.23.0</a>
+          
+          <a href="../../../1.22.0/spork/api/charts.html">1.22.0</a>
+          
+          <a href="../../../1.21.0/spork/api/charts.html">1.21.0</a>
+          
+          <a href="../../../1.20.0/spork/api/charts.html">1.20.0</a>
+          
+          <a href="../../../1.19.0/spork/api/charts.html">1.19.0</a>
+          
+          <a href="../../../1.18.1/spork/api/charts.html">1.18.1</a>
+          
+          <a href="../../../1.17.1/spork/api/charts.html">1.17.1</a>
+          
+          <a href="../../../1.16.1/spork/api/charts.html">1.16.1</a>
+          
+          <a href="../../../1.15.0/spork/api/charts.html">1.15.0</a>
+          
+          <a href="../../../1.13.1/spork/api/charts.html">1.13.1</a>
+          
+          <a href="../../../1.12.2/spork/api/charts.html">1.12.2</a>
+          
+          <a href="../../../1.11.1/spork/api/charts.html">1.11.1</a>
+          
+          <a href="../../../1.10.1/spork/api/charts.html">1.10.1</a>
+          
+          <a href="../../../1.9.1/spork/api/charts.html">1.9.1</a>
+          
+          <a href="../../../1.8.1/spork/api/charts.html">1.8.1</a>
+          
+          <a href="../../../1.7.0/spork/api/charts.html">1.7.0</a>
+          
+          <a href="../../../1.6.0/spork/api/charts.html">1.6.0</a>
+          
+          <a href="../../../1.5.1/spork/api/charts.html">1.5.1</a>
+          
+          <a href="../../../1.5.0/spork/api/charts.html">1.5.0</a>
+          
+          <a href="../../../1.4.0/spork/api/charts.html">1.4.0</a>
+          
+          <a href="../../../1.3.1/spork/api/charts.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">charts</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="channel.html"><span class="prevnext-text">channel</span></a></span>
+
+          <span class="next"><a href="cjanet.html"><span class="prevnext-text">cjanet</span></a></span>
+        </div>
+        
+
+<p>High quality data visualization and charting
+</p>
+<h2 id="Reference-4">Reference
+</h2>
+<p><a href="#charts/*background-color*">charts/*background-color*</a> <a href="#charts/*color-seed*">charts/*color-seed*</a> <a href="#charts/*font*">charts/*font*</a> <a href="#charts/*grid-color*">charts/*grid-color*</a> <a href="#charts/*padding*">charts/*padding*</a> <a href="#charts/*stroke-color*">charts/*stroke-color*</a> <a href="#charts/*text-color*">charts/*text-color*</a> <a href="#charts/color-lerp">charts/color-lerp</a> <a href="#charts/color-maps">charts/color-maps</a> <a href="#charts/dark-mode">charts/dark-mode</a> <a href="#charts/draw-axes">charts/draw-axes</a> <a href="#charts/draw-heat-legend">charts/draw-heat-legend</a> <a href="#charts/draw-legend">charts/draw-legend</a> <a href="#charts/heat-map-chart">charts/heat-map-chart</a> <a href="#charts/invert-color-map">charts/invert-color-map</a> <a href="#charts/light-mode">charts/light-mode</a> <a href="#charts/line-chart">charts/line-chart</a> <a href="#charts/make-color-map">charts/make-color-map</a> <a href="#charts/plot-heat-map">charts/plot-heat-map</a> <a href="#charts/plot-line-graph">charts/plot-line-graph</a> <a href="#charts/plot-packing-chart">charts/plot-packing-chart</a> <a href="#charts/to-color-map">charts/to-color-map</a> </p><hr><div class="binding"><span id="charts/*background-color*" class="binding-sym">charts/*background-color*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L56">source</a></span> <pre class="binding-text">Default background color for chart rendering</pre></div><hr><div class="binding"><span id="charts/*color-seed*" class="binding-sym">charts/*color-seed*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L59">source</a></span> <pre class="binding-text">Random seed to use when picking pseudo-random colors for charts</pre></div><hr><div class="binding"><span id="charts/*font*" class="binding-sym">charts/*font*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L53">source</a></span> <pre class="binding-text">Default font for chart rendering</pre></div><hr><div class="binding"><span id="charts/*grid-color*" class="binding-sym">charts/*grid-color*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L57">source</a></span> <pre class="binding-text">Default color for grid lines</pre></div><hr><div class="binding"><span id="charts/*padding*" class="binding-sym">charts/*padding*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L58">source</a></span> <pre class="binding-text">Default padding for charts</pre></div><hr><div class="binding"><span id="charts/*stroke-color*" class="binding-sym">charts/*stroke-color*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L55">source</a></span> <pre class="binding-text">Default color for drawn lines such as frame borders</pre></div><hr><div class="binding"><span id="charts/*text-color*" class="binding-sym">charts/*text-color*</span> <span class="binding-type">keyword</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L54">source</a></span> <pre class="binding-text">Default font color for title and axis labels</pre></div><hr><div class="binding"><span id="charts/color-lerp" class="binding-sym">charts/color-lerp</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L274">source</a></span> <pre class="binding-text">(color-lerp a b t)
+
+</pre></div><hr><div class="binding"><span id="charts/color-maps" class="binding-sym">charts/color-maps</span> <span class="binding-type">table</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L328">source</a></span> <pre class="binding-text">A table containing various default color maps that can be used for rendering heat map data.
+Each value is a function mapping real numbers in the range [0, 1] to colors represented as 32 bit integers.</pre></div><hr><div class="binding"><span id="charts/dark-mode" class="binding-sym">charts/dark-mode</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L242">source</a></span> <pre class="binding-text">(dark-mode)
+
+Set dynamic color defaults to dark mode</pre></div><hr><div class="binding"><span id="charts/draw-axes" class="binding-sym">charts/draw-axes</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L540">source</a></span> <pre class="binding-text">(draw-axes &amp;named canvas width height padding inner-padding inner-padding-x inner-padding-y font x-min x-max y-min y-max min-x-spacing min-y-spacing grid format-x format-y x-label y-label tick-length x-suffix x-prefix y-suffix y-prefix x-ticks y-ticks x-grid-ticks y-grid-ticks grid-between-x grid-between-y x-minor-ticks y-minor-ticks x-labels-vertical transpose)
+
+Draw the axis for the chart. Also return a function that can be used
+to convert a coordinate in the metric space to the screen space. Most parameters
+are optional with sane defaults, but canvas, x-min, x-max, y-min, y-max are all required.
+
+* :canvas - gfx2d/image to draw the axes on
+* :width - (if no canvas provided) - make a new canvas with the given width in pixels
+* :height - (if no canvas provided) - make a new canvas with the given height in pixels
+* :x-label - optional label for the x axis
+* :y-label - optional label for the y axis
+* :padding - the number of pixels to leave around all drawn content
+* :inner-padding - how many pixels to add between the axes frame and the internal graphing area. Defaults to 8.
+* :inner-padding-x - inner-padding for the x-axis only.
+* :inner-padding-y - inner-padding for the y-axis only.
+* :font - the font to use for axis text
+* :{x,y}-{min,max} - The bounds for coordinate system to draw
+* :grid - Style for drawing grid-lines. Can be nil (none), :none, :solid, or :stipple
+* :format-x - unary function (fn [x] ...) that returns a string to label x axis tick marks with
+* :format-y - unary function (fn [y] ...) that returns a string to label y axis tick marks with
+* :x-prefix - if format-x not provided, allows easily adding a string prefix to x axis tick mark labels
+* :y-prefix - if format-y not provided, allows easily adding a string prefix to y axis tick mark labels
+* :x-suffix - if format-x not provided, allows easily adding a string suffix to x axis tick mark labels
+* :y-suffix - if format-y not provided, allows easily adding a string suffix to y axis tick mark labels
+* :x-ticks - An array of x coordinates used marking the x axis rather than making a guess. These will be labeled.
+* :y-ticks - An array of y coordinates used marking the x axis rather than making a guess. These will be labeled.
+* :x-grid-ticks - An array of x coordinates that are used for drawing a grid. Can be combined with x-ticks for separate labels and grid-line locations.
+* :y-grid-ticks - An array of y coordinates that are used for drawing a grid. Can be combined with y-ticks for separate labels and grid-line locations.
+* :x-minor-ticks - How many minor tick marks, if any, to place between major tick marks on the x axis
+* :y-minor-ticks - How many minor tick marks, if any, to place between major tick marks on the y axis
+* :x-labels-vertical - Turn x labels vertical so more can fit on the axis
+* :min-x-spacing - When guessing x ticks, allow setting a lower limit to the metric spacing between ticks
+* :min-y-spacing - When guessing y ticks, allow setting a lower limit to the metric spacing between ticks
+* :tick-length - how many pixels long to make major tick marks (minor tick marks are 1/2 major tick marks)
+* :transpose - Consider the x axis to be the vertical axis instead of the horizontal axis
+* :grid-between-x - Put grid-lines between X-axis labels on the x-axis instead of on them.
+* :grid-between-y - Put grid-lines between X-axis labels on the y-axis instead of on them.
+
+Returns a 4-tuple [view:gfx2d/image to-pixel-space:fn to-metric-space:fn outer-canvas:gfx2d/image]
+
+* `view` is an image that can be used to draw inside the chart, clipped so you don't overwrite that axes.
+* `(to-pixel-space metric-x metric-y)` converts metric space coordinates to pixel space for plotting on `view`.
+* `(to-metric-space pixel-x pixel-y)` converts pixel coordinates to the metric space.
+* `outer-canvas` is the input canvas or newly create enclosing image for the entire figure.</pre></div><hr><div class="binding"><span id="charts/draw-heat-legend" class="binding-sym">charts/draw-heat-legend</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L464">source</a></span> <pre class="binding-text">(draw-heat-legend canvas &amp;named swatch-width swatch-height background-color font padding color-map frame line-color text-color layout labels)
+
+Draw a legend that describes a heat-map color range.
+
+`canvas` can be either nil to skip drawing or a gfx2d/image.
+
+* :swatch-width - width of the color gradient in pixels
+* :swatch-height - height of the color gradient in pixels
+* :background-color - the color of the background of the legend
+* :font - the font to use for legend text
+* :padding - the number of pixels to leave around all drawn content
+* :color-map - a table/struct that maps labels to colors
+* :line-color - color to draw frame border
+* :text-color - color of text
+* :labels - a list of labels to draw in the legend
+* :frame - whether or not to draw a frame around the legend
+
+Return [w h] of the area that was or would be drawn if the legend were to be drawn.</pre></div><hr><div class="binding"><span id="charts/draw-legend" class="binding-sym">charts/draw-legend</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L382">source</a></span> <pre class="binding-text">(draw-legend canvas &amp;named background-color font padding color-map labels view-width frame color-seed legend-map line-color text-color)
+
+Draw a legend given a set of labels and colors
+
+`canvas` can be either nil to skip drawing or a gfx2d/image.
+
+* :background-color - the color of the background of the legend. Use :none to skip drawing a background.
+* :font - the font to use for legend text
+* :padding - the number of pixels to leave around all drawn content
+* :color-map - a table/struct that maps labels to colors
+* :legend-map - a table/struct that maps labels to text to draw
+* :line-color - color to draw frame border
+* :text-color - color of text
+* :labels - a list of labels to draw in the legend
+* :view-width - width of the enclosing view in pixels to help hint how to size the legend.
+* :frame - whether or not to draw a frame around the legend
+
+Return [w h] of the area that was or would be drawn if the legend were to be drawn.</pre></div><hr><div class="binding"><span id="charts/heat-map-chart" class="binding-sym">charts/heat-map-chart</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L1384">source</a></span> <pre class="binding-text">(heat-map-chart &amp;named canvas width height data data-scale xs ys color-fn cell-text-fn num-columns num-rows font title-font cell-font color-map background-color text-color cell-text-color x-min x-max y-min y-max format-x format-y padding title box-gap legend legend-frame legend-labels x-label y-label x-suffix x-prefix y-suffix y-prefix x-ticks y-ticks x-minor-ticks y-minor-ticks tick-length x-labels-vertical legend-width legend-height save-as)
+
+Generate a heat map.
+
+Basic Parameters
+* :canvas - A gfx2d/image to draw on
+* :width - (if no canvas provided) - make a new canvas with the given width in pixels
+* :height - (if no canvas provided) - make a new canvas with the given height in pixels
+* :color-map - a color map keyword or function used to map numbers in the range [0, 1] to a color.
+* :save-as - optional path to save the chart
+
+Function Callback Input
+* :num-columns - Number of columns to draw.
+* :num-rows - Number of rows to draw.
+* :color-fn - Function `(color-fn x y)` that returns a gfx2d color used to color each cell in the heat-map. If color-fn evaluates to a falsey value, that cell will be left blank.
+* :cell-text-fn - Function `(cell-text-fn x y)` that returns an optional string to render for each cell. If the function evaluates to nil, no text will be drawn for that cell.
+
+Data Frame Input
+* :data - a data-frame table that contains a grid of cell
+* :data-scale - map numeric data to a [0.0, 1.0] range with a scale factor or function. Is the constant 1.0 by default.
+* :xs - a list of x columns - these are keys in `data`
+* :ys - (optional) keys into each column - by default this is just (range num-rows-in-data).
+
+Axes Styling
+* :x-ticks - manually set the tick marks on the X axis instead of auto-detecting them
+* :y-ticks - manually set the tick marks on the Y axis instead of auto-detecting them
+* :x-label - optional label for the x axis
+* :y-label - optional label for the y axis
+* :x-suffix - add a string suffix to each tick label on the x-axis
+* :y-suffix - add a string suffix to each tick label on the x-axis
+* :x-prefix - add a string prefix to each tick label on the y-axis
+* :y-prefix - add a string prefix to each tick label on the y-axis
+* :x-minor-ticks - how many, if any, small ticks to add between each large tick mark on the x axis
+* :y-minor-ticks - how many, if any, small ticks to add between each large tick mark on the y axis
+* :x-labels-vertical - Turn x labels vertical so more can fit on the axis
+* :tick-length - how long to make major tick marks
+
+Chart Styling
+* :box-gap - Number of pixels between boxes on the heat map. Default is 0.
+* :cell-font - font used to draw optional text in cells
+* :cell-text-color - color of text, defaults to black or white, depending on cell color
+* :font - font used to draw axes
+* :title-font - font used to draw title. Defaults to font.
+* :text-color - color of axes and title text
+* :padding - Number of pixels to separate various elements of the chart
+* :background-color - chart background color. Use :none to skip drawing a background.
+* :legend - one of :top, :bottom, :left, :right, :top-left, :top-right, :bottom-left, :bottom-right, or :none
+* :legend-labels - an array of evenly-spaced markers to put on the color map legend.
+* :legend-width - width of color map gradient in the legend in pixels
+* :legend-height - height of the color map gradient in the legend in pixels
+
+Returns a new canvas.</pre></div><hr><div class="binding"><span id="charts/invert-color-map" class="binding-sym">charts/invert-color-map</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L298">source</a></span> <pre class="binding-text">(invert-color-map mapping)
+
+Create an inverted color-map from an existing color map.</pre></div><hr><div class="binding"><span id="charts/light-mode" class="binding-sym">charts/light-mode</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L253">source</a></span> <pre class="binding-text">(light-mode)
+
+Set dynamic color defaults to light mode</pre></div><hr><div class="binding"><span id="charts/line-chart" class="binding-sym">charts/line-chart</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L1095">source</a></span> <pre class="binding-text">(line-chart &amp;named canvas width height data font background-color text-color color-map point-radius x-min x-max y-min y-max padding inner-padding inner-padding-x inner-padding-y title circle-points scatter grid legend legend-labels super-sample stroke-thickness format-x format-y save-as legend-map legend-padding tick-length line-style line-style-per-column bar-padding x-label y-label x-suffix x-prefix y-suffix y-prefix x-column y-column x-ticks y-ticks x-minor-ticks y-minor-ticks x-grid-ticks y-grid-ticks x-labels-vertical grid-between-x grid-between-y annotate transpose)
+
+Render a line chart. Returns a gfx2d/image which can be further manipulated with the spork/gfx2d module.
+
+Basic Parameters
+* :canvas - a gfx2d/image to draw on
+* :width - (if no canvas provided) - make a new canvas with the given width in pixels
+* :height - (if no canvas provided) - make a new canvas with the given height in pixels
+* :data - a data frame to use for data
+* :title - an optional title to add to the rendered image
+* :font - font used to draw text, including title, legend, and axes labels
+* :save-as - save the generated image to file. Can be any format supported by the gfx2d module
+* :x-column - the name of the data frame column to use for the x axis
+* :y-column - a single column or array of column names to use for the chart
+* :x-ticks - manually set the tick marks on the X axis instead of auto-detecting them
+* :y-ticks - manually set the tick marks on the Y axis instead of auto-detecting them
+
+Axes Styling
+* :inner-padding - the number of pixels of white space between x-min and the x-axes as well as y-min and the y-axes.
+* :inner-padding-x - inner-padding for x-axis only
+* :inner-padding-y - inner-padding for y-axis only
+* :x-label - optional label for the x axis
+* :y-label - optional label for the y axis
+* :grid - how to draw grid lines. One of :none, :solid, or :stipple
+* :x-suffix - add a string suffix to each tick label on the x-axis
+* :y-suffix - add a string suffix to each tick label on the x-axis
+* :x-prefix - add a string prefix to each tick label on the y-axis
+* :y-prefix - add a string prefix to each tick label on the y-axis
+* :x-ticks - Array of labeled x-coordinate locations.
+* :y-ticks - Array of labeled y-coordinate locations.
+* :x-grid-ticks - Array of x-coordinates for grid lines.
+* :y-grid-ticks - Array of y-coordinates for grid lines.
+* :x-minor-ticks - how many, if any, small ticks to add between each large tick mark on the x axis
+* :y-minor-ticks - how many, if any, small ticks to add between each large tick mark on the y axis
+* :x-labels-vertical - Turn x labels vertical so more can fit on the axis
+* :tick-length - how long to make major tick marks
+* :grid-between-x - Put grid-lines between X-axis labels on the x-axis instead of on them.
+* :grid-between-y - Put grid-lines between X-axis labels on the y-axis instead of on them.
+
+Chart Styling
+* :padding - the number of pixels of white space around various elements of the chart
+* :background-color - color of background, defaults to white. Use :none to skip drawing a background.
+* :text-color - color of text, defaults to black
+* :color-map - a dictionary mapping columns to colors. By default will hash column name to pseudo-random colors
+* :scatter - set to true to disable lines connecting points
+* :legend - set to true to add a legend to the top of the chart
+* :legend-map - a dictionary mapping column names to pretty text for the chart
+* :legend-labels - optional list of y-column names to display in the legend
+* :legend-padding - extra padding around legend area
+* :point-radius - radius of points when drawing a scatter plot
+* :line-style - How to draw lines. Can be one of :stroke, :plot, :none, :bar, :area, or :stipple. Default is :plot.
+* :line-style-per-column - Optional dictionary to override line style by y-column name.
+* :super-sample - Super Sample anti-aliasing for chart lines. Is a bit slow, but makes smooth plots. Works best with :stroke and :bar
+* :stroke-thickness - thickness in pixels of the stroke of the graph when :line-type = :stroke
+* :annotate - an optional function to add annotations to a rendered chart. This function should take 3 arguments:
+ (fn callback [view to-pixel to-metric] ...)
+
+Axis Boundaries
+* :x-min - minimum x coordinate on chart
+* :x-max - maximum x coordinate on chart
+* :y-min - minimum y coordinate on chart
+* :y-max - maximum y coordinate on chart</pre></div><hr><div class="binding"><span id="charts/make-color-map" class="binding-sym">charts/make-color-map</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L279">source</a></span> <pre class="binding-text">(make-color-map &amp; colors)
+
+Create a function that linearly interpolates between colors for colormapping.</pre></div><hr><div class="binding"><span id="charts/plot-heat-map" class="binding-sym">charts/plot-heat-map</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L1323">source</a></span> <pre class="binding-text">(plot-heat-map &amp;named canvas width height color-fn cell-text-fn num-columns num-rows box-gap font cell-text-color)
+
+Render a heat map on a set of axis. Will nicely fill the passed in image, so use a subview to draw to a section of the chart.
+
+Basic Parameters
+* :canvas - A gfx2d/image to draw on
+* :width - (if no canvas provided) - make a new canvas with the given width in pixels
+* :height - (if no canvas provided) - make a new canvas with the given height in pixels
+* :color-fn - Function `(color-fn x y)` that returns a gfx2d color (32 bit integer) used to color each cell in the heat-map. If color-fn evaluates to a falsey value, that cell will be left blank.
+* :cell-text-fn - Function `(cell-text-fn x y)` that returns an optional string to render for each cell.
+* :num-columns - Number of columns to draw.
+* :num-rows - Number of rows to draw.
+* :box-gap - Number of pixels between boxes on the heat map
+* :font - font used to draw optional text in cells
+* :cell-text-color - color of text, defaults to black or white depending on the cell color
+
+Returns the modified original canvas.</pre></div><hr><div class="binding"><span id="charts/plot-line-graph" class="binding-sym">charts/plot-line-graph</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L866">source</a></span> <pre class="binding-text">(plot-line-graph &amp;named canvas width height data to-pixel-space line-style line-style-per-column x-column y-column circle-points point-radius x-colors bar-padding stroke-thickness super-sample color-map transpose)
+
+Plot a line graph or scatter graph on a canvas. This function does not add a set of axis, title, or chart legend, it will only plot the graph lines and points from data.
+
+* :canvas - a gfx2d/image to draw on
+* :width - (if no canvas provided) - make a new canvas with the given width in pixels
+* :height - (if no canvas provided) - make a new canvas with the given height in pixels
+* :to-pixel-space - optional function (f x y) -&gt; [pixel-x pixel-y]. Used to convert the metric space to pixel space when plotting points.
+* :data - a data frame to use for x and y data
+* :x-column - the name of the data frame column to use for the x axis
+* :y-column - a single column name or list of column names to use for the y coordinates and connected lines
+* :color-map - a dictionary mapping columns to colors. By default will hash column name to pseudo-random colors
+* :line-style - How to draw lines. Can be one of :stroke, :plot, :none, :bar, :area, or :stipple. Default is :plot.
+* :line-style-per-column - Optional dictionary to override line style by y-column name.
+* :circle-points - add circles around each point
+* :point-radius - how large to make the circles around each point in pixels
+* :super-sample - use super sampling to draw a larger image and then scale it down for anti-aliasing.
+* :bar-padding - space between bars in bar-charts
+* :stroke-thickness - thickness in pixels of the stroke of the graph when :line-type = :stroke
+* :x-colors - for bar and scatter plots, optionally set per-point/per-bar colors with an function (f x y index) called on each point.
+* :transpose - When transpose is enabled, draw bar and area charts from the y-axis instead of the x-axis (make horizontal bar charts). Should be used with a transposed axes.
+
+Returns the modified canvas image.</pre></div><hr><div class="binding"><span id="charts/plot-packing-chart" class="binding-sym">charts/plot-packing-chart</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L1641">source</a></span> <pre class="binding-text">(plot-packing-chart &amp;named canvas width height data-map data x-column y-column c-column group-column padding inner-padding background-color text-color font color-map omega no-text-resize sort-bins)
+
+Draw a packing chart (a.k.a relative area chart or treemap). Plot boxes for each value who sizes are proportional to the value
+they represent. A more versatile and compact alternative to pie charts, especially when there are many categories.
+Returns either a new gfx2d/image or the passed-in :canvas.
+
+Basic Parameters:
+* :canvas - A gfx2d/image to draw on
+* :width - (if no canvas provided) - make a new canvas with the given width in pixels
+* :height - (if no canvas provided) - make a new canvas with the given height in pixels
+* :color-map - a color map keyword or function used to map numbers in the range [0, 1] to a color.
+
+Data Table Input (quick and easy method):
+* :data-map - A table or struct that maps keys as categories to values as proportional rectangle areas.
+
+Data Frame Input:
+* :data - a data-frame table that contains a grid of cell
+* :x-column - a column name to use the category identifiers. Defaults to the first column.
+* :y-column - a column name to use for the area quantities. Defaults to the second column
+* :c-column - a column name to use for color grading. Defaults to the same as the y-column, but mapped to a range from 0 to 1, such that
+ the minimum value is a color parameter of 0 and the maximum has a color parameter of 1.
+* :group-column - a column name that contains a label for grouping areas. Optional.
+
+Layout Parameters:
+* :omega - a number between 0 and 1 used to decide how to split rectangular areas. The default is 0.5
+* :sort-bins - If true, will sort bins from largest to smallest before layout. This usually results in better-looking charts. Default is true.
+  For custom bin ordering before layout, use a data-frame input, set sort-bins to false, and order the rows as desired.
+
+Color and Theme:
+* :font - Font to use to draw text inside areas.
+* :no-text-resize - By default, text will be scaled to fill the space inside each area. Enabling this option keeps all text the same scale.
+* :text-color - Color to draw text inside areas. By default, will choose white or black to maximize contrast.
+* :padding - Number of pixels / 2 between areas.
+* :inner-padding - Minimum number of pixels between area text and the area border.
+* :background-color - Background color of canvas. Use :none to skip drawing a background.</pre></div><hr><div class="binding"><span id="charts/to-color-map" class="binding-sym">charts/to-color-map</span> <span class="binding-type">function</span> <span class="binding-type"><a href="https://github.com/janet-lang/spork/blob/3918802d6b79848a3dba113b1fe2ee1a8f7b667b//spork/charts.janet#L367">source</a></span> <pre class="binding-text">(to-color-map cmap)
+
+Map a keyword, function, array, or dictionary to a function that maps values to colors.</pre></div>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="channel.html"><span class="prevnext-text">channel</span></a></span>
+          <span class="next"><a href="cjanet.html"><span class="prevnext-text">cjanet</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2026
+  <div class="gentag">Generated on August 31, 2026 at 23:38:24 (UTC) with Janet 1.42.0-dev-7fd75f3</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
