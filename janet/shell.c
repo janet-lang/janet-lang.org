@@ -26,6 +26,7 @@
 
 #include <janet.h>
 #include <errno.h>
+#include <assert.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -362,33 +363,50 @@ static void clear(void) {
     }
 }
 
+static int getplen(void) {
+    int _plen = gbl_plen;
+    /* Ensure at least 16 characters of data entry; */
+    while (_plen && (_plen + 16 > gbl_cols)) {
+        _plen--;
+    }
+    return _plen;
+}
+
 static void refresh(void) {
     char seq[64];
     JanetBuffer b;
+
+    /* If prompt is too long, truncate */
+    int _plen = getplen();
 
     /* Keep cursor position on screen */
     char *_buf = gbl_buf;
     int _len = gbl_len;
     int _pos = gbl_pos;
-    while ((gbl_plen + _pos) >= gbl_cols) {
+
+    while ((_plen + _pos) >= gbl_cols) {
         _buf++;
         _len--;
         _pos--;
     }
-    while ((gbl_plen + _len) > gbl_cols) {
+
+    while ((_plen + _len) > gbl_cols) {
         _len--;
     }
+
 
     janet_buffer_init(&b, 0);
     /* Cursor to left edge, gbl_prompt and buffer */
     janet_buffer_push_u8(&b, '\r');
-    janet_buffer_push_cstring(&b, gbl_prompt);
-    janet_buffer_push_bytes(&b, (uint8_t *) _buf, _len);
+    janet_buffer_push_bytes(&b, (const uint8_t *) gbl_prompt, _plen);
+    if (_len > 0) {
+        janet_buffer_push_bytes(&b, (uint8_t *) _buf, _len);
+    }
     /* Erase to right */
     janet_buffer_push_cstring(&b, "\x1b[0K\r");
     /* Move cursor to original position. */
-    if (_pos + gbl_plen) {
-        snprintf(seq, 64, "\x1b[%dC", (int)(_pos + gbl_plen));
+    if (_pos + _plen) {
+        snprintf(seq, 64, "\x1b[%dC", (int)(_pos + _plen));
         janet_buffer_push_cstring(&b, seq);
     }
     if (write_console((char *) b.data, b.count) == -1) {
@@ -414,7 +432,8 @@ static int insert(char c, int draw) {
             gbl_buf[gbl_pos++] = c;
             gbl_buf[++gbl_len] = '\0';
             if (draw) {
-                if (gbl_plen + gbl_len < gbl_cols) {
+                int _plen = getplen();
+                if (_plen + gbl_len < gbl_cols) {
                     /* Avoid a full update of the line in the
                      * trivial case. */
                     if (write_console(&c, 1) == -1) return -1;
@@ -500,8 +519,13 @@ static void historymove(int delta) {
         } else if (gbl_historyi >= gbl_history_count) {
             gbl_historyi = gbl_history_count - 1;
         }
+        gbl_len = (int) strlen(gbl_history[gbl_historyi]);
+        /* If history element is longer the JANET_LINE_MAX - 1, truncate */
+        if (gbl_len > JANET_LINE_MAX - 1) {
+            gbl_len = JANET_LINE_MAX - 1;
+        }
+        gbl_pos = gbl_len;
         strncpy(gbl_buf, gbl_history[gbl_historyi], JANET_LINE_MAX - 1);
-        gbl_pos = gbl_len = (int) strlen(gbl_buf);
         gbl_buf[gbl_len] = '\0';
 
         refresh();
@@ -925,11 +949,12 @@ static int line() {
     gbl_len = 0;
     gbl_pos = 0;
     while (gbl_prompt[gbl_plen]) gbl_plen++;
+    int _plen = getplen();
     gbl_buf[0] = '\0';
 
     addhistory();
 
-    if (write_console((char *) gbl_prompt, gbl_plen) == -1) return -1;
+    if (write_console((char *) gbl_prompt, _plen) == -1) return -1;
     for (;;) {
         char c;
         char seq[5];
@@ -1212,7 +1237,7 @@ int main(int argc, char **argv) {
 #endif
 
 #if defined(JANET_PRF)
-    uint8_t hash_key[JANET_HASH_KEY_SIZE + 1];
+    uint8_t hash_key[JANET_HASH_KEY_SIZE + 1] = {0};
 #ifdef JANET_REDUCED_OS
     char *envvar = NULL;
 #else
@@ -1220,6 +1245,7 @@ int main(int argc, char **argv) {
 #endif
     if (NULL != envvar) {
         strncpy((char *) hash_key, envvar, sizeof(hash_key) - 1);
+        hash_key[JANET_HASH_KEY_SIZE] = '\0'; /* in case copy didn't get null byte */
     } else if (janet_cryptorand(hash_key, JANET_HASH_KEY_SIZE) != 0) {
         fputs("unable to initialize janet PRF hash function.\n", stderr);
         return 1;
