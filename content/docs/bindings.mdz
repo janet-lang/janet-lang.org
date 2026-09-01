@@ -39,15 +39,16 @@ also add documentation to a function by passing a string to the @code`def` or
 
 ### Scopes
 
-Defs and vars (collectively known as bindings) live inside what is called a
-scope. A scope is simply where the bindings are valid. If a binding is
-referenced outside of its scope, the compiler will throw an error. Scopes are
-useful for organizing your bindings and they can expand your programs.  There
-are two main ways to create a scope in Janet.
+Defs and vars (i.e. bindings) live inside what is called a scope.  A
+scope is simply where the bindings are valid.  If a binding is
+referenced outside of its scope, the compiler will throw an error.
+Scopes are useful for organizing your bindings and can provide
+flexibility in expressing your programs.  There are two main ways to
+create a scope in Janet.
 
-The first is to use the @code[do] special form. @code[do] executes a series of
-statements in a scope and evaluates to the last statement. Bindings created
-inside the form do not escape outside of its scope.
+The first is to use the @code[do] special form.  @code[do] executes a
+series of statements in a scope and evaluates to the last statement.
+Bindings created inside the form do not escape outside of its scope.
 
 @codeblock[janet](```
 (def a :outera)
@@ -55,34 +56,107 @@ inside the form do not escape outside of its scope.
 (do
   (def a 1)
   (def b 2)
-  (def c 3)
-  (+ a b c)) # -> 6
+  (+ a b)) # -> 3
 
 a # -> :outera
-b # -> compile error: "unknown symbol \"b\""
-c # -> compile error: "unknown symbol \"c\""
+
+# compile error: unknown symbol b
+b
 ```)
 
-Any attempt to reference the bindings from the @code`do` form after it has
-finished executing will fail. Also notice that defining @code[a] inside the
-@code`do` form did not overwrite the original definition of @code[a] for the
-global scope.
+Any attempt to reference the bindings created within the @code`do`
+form after it has finished executing will fail.
 
-The second way to create a scope is to create a closure.  The @code[fn] special
-form also introduces a scope just like the @code[do] special form.
+Note that in the example above, defining @code[a] inside the @code[do]
+form did not overwrite the original definition of @code[a] for the
+global scope.  As the code in the example demonstrates, the original
+definition of @code[a] was still accessible after the @code[do] form.
+We say that @code[a] or its binding was "shadowed" within the
+@code[do] form.
 
-There is another built in macro, @code[let], that does multiple @code`def`s at
-once, and then introduces a scope.  @code[let] is a wrapper around a combination
-of @code`def`s and @code`do`s, and is the most "functional" way of creating
-bindings.
+Another way to create a scope is to create a closure.  The @code[fn]
+special form does this by introducing a scope just like the @code[do]
+special form.
+
+@codeblock[janet](```
+(def a :first!)
+a # -> :first!
+
+(def f
+  (fn []
+    # a new scope has been introduced
+    (def b a)
+    # shadowing a's outer binding
+    (def a :inner!)
+    # after the following, the new scope "ends"
+    @[b a]))
+
+# binding created in f's scope are not valid here
+a # -> :first!
+# compile error: unknown symbol b
+b
+
+# f can access those bindings though
+(f) # -> @[:first! :inner!]
+
+# shadow a's original binding
+(def a :second!)
+a # -> :second!
+
+# f's bindings unaffected by immediately previous shadowing
+(f) # -> @[:first! :inner!]
+```)
+
+It also possible to create new scopes using the @code[if] and
+@code[while] special forms.  In both cases, bindings can be introduced
+in their respective "condition" portions and the bindings will be
+valid within the rest of each of the forms.
+
+@codeblock[janet](```
+# using def in if's condition
+(defn f [x]
+  (if (def n x)
+    n
+    (when (not n) :was-nil!)))
+
+(f :something) # -> :something
+
+(f nil) # -> :was-nil!
+
+# using def in while's condition
+(def arr @[2 1 0])
+(while (def n (length arr))
+  (array/pop arr)
+  (when (zero? n) (break)))
+
+arr # -> @[]
+```)
+
+There is also a built-in macro, @code[let], that does multiple
+@code`def`s at once, and then introduces a scope.  @code[let] is a
+wrapper around a combination of a @code[do] and @code[def]s, and is
+the most "functional" way of creating bindings.
 
 @codeblock[janet](```
 (let [a 1
-      b 2
-      c 3]
-  (+ a b c)) # -> 6
+      b 2]
+  (+ a b)) # -> 3
 ```)
 
-The above is equivalent to the example using @code[do] and @code[def].  This is
-the preferable form in most cases. That said, using @code`do` with multiple
-@code`def`s is fine as well.
+The above is equivalent to the earlier example using @code[do] and
+@code[def].
+
+Note that the special forms @code[def] and @code[var] do not introduce
+new scopes and the following sort of code is valid.
+
+@codeblock[janet](```
+(def a (def x 1))
+
+a # -> 1
+x # -> 1
+
+(var b (var y 2))
+
+b # -> 2
+y # -> 2
+```)
