@@ -3,38 +3,63 @@
  :order 5}
 ---
 
-Values can be bound to symbols for later use using the keyword @code[def]. Using
-undefined symbols will raise an error.
+The @code[def] special form binds a symbol for later use.  This kind
+of association between a symbol and a value is called a binding.
+Using (i.e. evaluating) an "unbound" symbol will raise an error.
 
 @codeblock[janet](```
+# bind some symbols to values (aka create some bindings)
 (def a 100)
-(def b (+ 1 a))
-(def c (+ b b))
-(def d (- c 100))
+(def b (+ 1 a)) # -> 101
+(def c (+ b b)) # -> 202
+(def d (- c 100)) # -> 102
+
+# compile error: unknown symbol x
+(def e (+ a x))
 ```)
 
-Bindings created with @code`def` have lexical scoping. Additionally, bindings
-created with @code`def` are immutable; they cannot be changed after definition.
-For mutable bindings, like variables in other programming languages, use the
-@code[var] keyword. The assignment special form @code[set] can then be used to
-update a var.
+Bindings created with @code`def` have lexical scoping and are
+constant; they cannot be changed after definition.  For bindings that
+can be altered, like variables in other programming languages, use the
+@code[var] special form.  The assignment special form @code[set] can
+then be used to update the binding.
+
+Note that the terms "def" and "var" will sometimes be used to refer to
+the created bindings themselves (i.e. the associations between symbols
+and values).
 
 @codeblock[janet](```
 (def a 100)
+a # -> 100
+
+# compile error: cannot set constant
+(set a 10)
+
+a # -> 100
+
 (var myvar 1)
-(print myvar)
+myvar # -> 1
+
 (set myvar 10)
-(print myvar)
+myvar # -> 10
 ```)
 
-In the global scope, you can use the @code[:private] option on a def or var to
-prevent it from being exported to code that imports your current module. You can
-also add documentation to a function by passing a string to the @code`def` or
-@code`var` command.
+In the global scope, you can use the @code[:private] keyword in a
+@code[def] or @code[var] form to prevent the corresponding binding
+from being exported to code that imports your current module.  You can
+also add documentation to a global function by passing a string to the
+@code`def` or @code`var` special forms.
+
+Private bindings can also be created using the @code[def-] and
+@code[var-] macros.  Use of the @code[:private] keyword may be more
+suited to the progammatic manipulation of code.
 
 @codeblock[janet](```
 (def mydef :private "This will have private scope. My doc here." 123)
 (var myvar "docstring here" 321)
+
+(def- mydef2 "Private, the sequel" 124)
+(var- myvar2 "We can do sequels too!" 322)
 ```)
 
 ### Scopes
