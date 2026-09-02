@@ -24,24 +24,28 @@ t2 # -> @{:a 1}
 
 # what isn't updating a table?
 
-(def arr @[:x])
-# tables are a collection of key-value pairs
-(def t1 @{:a arr})
+# a table is a collection of associated keys and values
+(def key :a)
+(def val @[:x])
+(def t1 @{key val})
 (def t2 (table/clone t1))
 
-# t1 and t2 have key-value pairs with values that are the same
-(= (get t1 :a) (get t2 :a)) # -> true
+# the value associated with key is the same in both tables
+(= (get t1 key) (get t2 key)) # -> true
 
-# the key-value pairs' values are all the same array
-(= (get t1 :a) (get t2 :a) arr) # -> true
+# in particular, the value is val, a specific array
+(= (get t1 key) (get t2 key) val) # -> true
 
-# this does not count as updating t1 or t2
-(array/push arr :y) # -> arr
+# adding an element, :y, to val does NOT count as updating the tables
+(array/push val :y) # -> val
 
-# the value of each table's key-value pair is still arr, i.e. the
+# the value associated with key in each table is still val, i.e. the
 # tables have not been updated.
-(= (get t1 :a) (get t2 :a) arr) # -> true
+(= (get t1 key) (get t2 key) val) # -> true
 
-# each table's key-value pair is arr, which now has another element
-(get t1 :a) # -> @[:x :y]
-(get t2 :a) # -> @[:x :y]
+# val has an additional element, :y
+val # -> @[:x :y]
+
+# accessing val from t1 and t2
+(get t1 key) # -> @[:x :y]
+(get t2 key) # -> @[:x :y]
