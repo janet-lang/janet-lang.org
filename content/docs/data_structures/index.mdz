@@ -118,6 +118,62 @@ Note that for arrays and buffers, putting an index that is outside the length of
 the data structure will extend the data structure and fill it with @code`nil`s
 in the case of the array, or @code`0`s in the case of the buffer.
 
-The last generic function for all data structures is the @code[length] function.
-This returns the number of values in a data structure (the number of keys in a
-dictionary type).
+## Copying
+
+Copying of indexed and dictionary types involves "shallow" copying by
+default.  This means that any references to contained indexed or
+dictionary types are copied instead of the content being recursively
+duplicated.  This is both for efficiency reasons and because it's not
+always obvious or well-defined as to how copying should occur.
+
+One way to copy arrays is via the @code[array/slice] function.
+
+@codeblock[janet]```
+(def arr @[:a :b])
+(def arr1 @[:x arr])
+(def arr2 (array/slice arr1))
+
+# change inner array content
+(array/push arr :c)
+
+arr # -> @[:a :b :c]
+
+# arr1 and arr2 both "contain" arr
+arr1 # -> @[:x @[:a :b :c]]
+arr2 # -> @[:x @[:a :b :c]]
+```
+
+Tables may be copied via the @code[table/clone] function.
+
+@codeblock[janet]```
+(def arr @[:a :b])
+(def tab1 @{:x arr})
+(def tab2 (table/clone tab1))
+
+# change array content
+(array/push arr :c)
+
+arr # -> @[:a :b :c]
+
+# tab1 and tab2 both "contain" arr
+tab1 # -> @{:x @[:a :b :c]}
+tab2 # -> @{:x @[:a :c :c]}
+```
+
+For simple cases, recursive or "deep" copies can be made by
+applying the @code`marshal` and @code`unmarshal` functions.
+
+@codeblock[janet]```
+(def arr @[:a :b])
+(def tab1 @{:x arr})
+(def tab2 (unmarshal (marshal tab1)))
+
+# change array content
+(array/push arr :c)
+
+arr # -> @[:a :b :c]
+
+# tab1 "contains" arr, tab2 has "replica" of old arr
+tab1 # -> @{:x @[:a :b :c]}
+tab2 # -> @{:x @[:b :c]}
+```
