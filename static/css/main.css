@@ -64,7 +64,7 @@ body {
 
 @media (max-width: 1000px) {
     .content-wrapper {
-        max-width: 600px;
+        max-width: 80ch;
     }
 }
 
