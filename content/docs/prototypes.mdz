@@ -3,46 +3,82 @@
  :order 17}
 ---
 
-To support basic generic programming, Janet tables support a prototype table. A
-prototype table contains default values for a table if certain keys are not
-found in the original table. This allows many similar tables to share contents
-without duplicating memory.
+To support basic generic programming, Janet tables support a prototype
+table.  A prototype table contains default values for a table that are
+looked up if certain keys are not found in the original table.  This
+allows many similar tables to share contents without duplicating
+memory.
 
 @codeblock[janet]```
-# Simple Object Oriented behavior in Janet
-(def proto1 @{:type :custom1
-              :behave (fn [self x] (print "behaving " x))})
-(def proto2 @{:type :custom2
-              :behave (fn [self x] (print "behaving 2 " x))})
+# simple object oriented behavior
+(def proto1
+  @{:type :custom1
+    :behave (fn [self x] (print "behaving " x))})
+(def proto2
+  @{:type :custom2
+    :behave (fn [self x] (print "behaving 2 " x))})
 
 (def thing1 (table/setproto @{} proto1))
 (def thing2 (table/setproto @{} proto2))
 
-(print (thing1 :type)) # prints :custom1
-(print (thing2 :type)) # prints :custom2
+(thing1 :type) # -> :custom1
+(thing2 :type) # -> :custom2
 
-(:behave thing1 :a) # prints "behaving :a"
-(:behave thing2 :b) # prints "behaving 2 :b"
+# prints "behaving :a"
+(:behave thing1 :a)
+# prints "behaving 2 :b"
+(:behave thing2 :b)
 ```
 
 Looking up a value in a table with a prototype can be summed up with the
 following algorithm.
 
 @ol{@li{@code`(get my-table my-key)` is called.}
-    @li{@code`my-table` is checked for the key @code`my-key`. If there is a value
-         for the key, it is returned.}
-    @li{If there is a prototype table for @code`my-table`, set @code`my-table` =
-        @code`my-table's prototype` and go to 2. Otherwise go to 4.}
-    @li{Return @code`nil` as the key was not found.}}
+    @li{@code`my-table` is checked for the key @code`my-key`.  If there
+         is a value for the key, it is returned.}
+    @li{Otherwise, if there is a prototype table for @code`my-table`,
+        set @code`my-table` = @code`my-table's prototype` and go to
+        2. Otherwise go to 4.}
+    @li{Return @code`nil` \(the key was not found).}}
 
-Janet will check up to about a 1000 prototypes recursively by default before
-giving up and returning @code`nil`. This is to prevent an infinite loop. This
-value can be changed by adjusting the @code`JANET_RECURSION_GUARD` value in
-@code`janet.h`.
+Janet will check up to about a 1000 prototypes recursively by default
+before giving up and returning @code`nil`.  This is to prevent an
+infinite loop.  This limit can be changed by adjusting the
+@code`JANET_RECURSION_GUARD` value in @code`janet.h`.
 
-Note that Janet prototypes are not as expressive as metatables in Lua and many
-other languages.  This is by design, as adding Lua- or Python-like capabilities
-would not be technically difficult.  Users should prefer plain data and
-functions that operate on them rather than mutable objects with methods.
-However, some object-oriented capabilities are useful in Janet for systems that
-require extra flexibility.
+If @code[table/clone] is used on a table, the resulting table will
+share the original's prototype.
+
+@codeblock[janet]```
+(def proto1 @{:type :custom1})
+
+(def tab1 @{})
+(get tab1 :type) # -> nil
+(table/setproto tab1 proto1)
+(get tab1 :type) # -> :custom1
+
+(def tab2 (table/clone tab1))
+(get tab2 :type) # -> :custom1
+
+(put proto1 :box :treasure)
+
+(get tab1 :box) # -> :treasure
+(get tab2 :box) # -> :treasure
+
+# tab1 and tab2 have the same prototype
+(= (table/getproto tab1) (table/getproto tab2)) # -> true
+```
+
+If using prototypes within nested data structures, see the
+@link[data_structures/index.html#Copying]{Copying section of the Data
+Structures chapter}.
+
+Note that structs also support prototype structs in a manner similar
+to that for tables.
+
+Janet prototypes are not as expressive as metatables in Lua and many
+other languages.  This is by design, as adding Lua- or Python-like
+capabilities would not be technically difficult.  Users should prefer
+plain data and functions that operate on them rather than mutable
+objects with methods.  However, some object-oriented capabilities are
+useful in Janet for systems that require extra flexibility.
