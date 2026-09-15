@@ -44,7 +44,7 @@ build: build/bin/janet
 clean: build/bin/janet
 	@$(JSETTINGS) build/bin/mdz clean
 
-.PHONY: watch
+.PHONY: watch 
 watch: build/bin/janet
 	@$(JSETTINGS) build/bin/mdz watch
 
