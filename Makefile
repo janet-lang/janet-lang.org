@@ -31,7 +31,7 @@ wasm: static/js/janet.js
 static/js/janet.js: janet/janet.c janet/janet.h janet/webrepl.c build/bin/janet
 	mkdir -p build
 	emcc $(CFLAGS) -o static/js/janet.js -Ijanet janet/janet.c janet/webrepl.c \
-		-s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]' \
+		-s EXPORTED_RUNTIME_METHODS='["cwrap"]' \
 		-s ALLOW_MEMORY_GROWTH=1 \
 		-s AGGRESSIVE_VARIABLE_ELIMINATION=1 \
 		-DJANET_BUILD=$$(build/bin/janet -e '(print `"` janet/build `"`)')
