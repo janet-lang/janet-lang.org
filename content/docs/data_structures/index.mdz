@@ -175,5 +175,5 @@ arr # -> @[:a :b :c]
 
 # tab1 "contains" arr, tab2 has "replica" of old arr
 tab1 # -> @{:x @[:a :b :c]}
-tab2 # -> @{:x @[:b :c]}
+tab2 # -> @{:x @[:a :b]}
 ```
