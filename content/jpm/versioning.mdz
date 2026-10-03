@@ -5,7 +5,7 @@
 
 ## Versioning and Library Bundling
 
-JPM does not do any semantic version resolution at the moment. Instead, it is recommended to make all changes
+JPM does not do any semantic version resolution. Instead, it is recommended to make all changes
 to libraries as backwards-compatible as possible, and release new libraries for breaking changes in almost all
 cases. For creators of executable programs (versus a library author), it is recommended to use a local tree
 and lockfiles to pin versions for consistent builds.

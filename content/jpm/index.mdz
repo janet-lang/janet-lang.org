@@ -4,6 +4,8 @@
  :order 5}
 ---
 
+JPM is deprecated! Prefer using @link[../spork/index.html]{Spork} for both a utility library, managing packages, and building C modules!
+
 JPM is a build tool that can be installed along with Janet to help build and install
 libraries for Janet. The main uses are installing dependencies, compiling C/C++ to native libraries, and
 other project management tasks. The source code for JPM

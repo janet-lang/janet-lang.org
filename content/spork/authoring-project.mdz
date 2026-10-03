@@ -1,0 +1,164 @@
+{:title "Authoring Projects with Spork"
+ :template "docpage.html"
+ :order 1}
+---
+
+Spork includes a program @code`janet-pm` that can be used to build software
+with C extensions, install packages, and install dependencies. The
+@code`janet-pm` program is compatible with older projects authored for JPM in
+most cases, and is able to read both @code`project.janet` files as well as the
+newer "bundle" spec built into the interpreter.
+
+## Using a template
+
+The @code`janet-pm` program comes with a few different project templates for getting started. This will streamline setup and help users choose reasonable, consistent project structure and defaults.
+
+@ul{
+    @li{@code`janet-pm new-simple-project` - create a project that has no dependencies at all and can be installed and used without Spork.}
+    @li{@code`janet-pm new-project` - create a project that depends on spork and uses it to setup several convenience features}
+    @li{@code`janet-pm new-c-project` - create a project that has a C component}
+    @li{@code`janet-pm new-exe-project` - create a project setup to build an executable}
+}
+
+## Simple Project
+
+Simple projects will by default have just an init.janet file, a basic test
+file, and a few other things like a CHANGELOG, README, and LICENSE file.
+For specifying build, test, and install hooks, there is the bundle/
+directory which is where both the interpreter and janet-pm will look for
+"hooks". A hook is a function that gets called to preform some generic step
+of the software development life-cycle, such as building, testing, or
+installing a bundle.
+
+Hooks can be as simple as an empty function or as complicated as using a
+dependency or external compiler to build C and C++ dependencies. The simple
+project template is very minimal, and so can be quite good for projects that
+don't require a complicated build step or have a dependence on C libraries.
+
+The trade-off for this lack of functionality is complete independence from
+Spork or other helper libraries. Dependencies written in this manner can be, in
+many cases, built and installed with just the interpreter. This is a reasonable
+starting place for libraries that either have only Janet source code or want to
+use alternative programming languages other than C for some of their
+implementation.
+
+
+@codeblock```
+
+$ janet-pm new-simple-project a-simple-project
+author? John Doe
+description? A project
+creating project directory for a-simple-project
+
+$ tree a-simple-project
+a-simple-project/
+├── a-simple-project
+│   └── init.janet
+├── bin
+├── bundle
+│   ├── info.jdn
+│   └── init.janet
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
+└── test
+    └── basic.janet
+```
+
+## Default new Project
+
+The default new-project template is similar to the simple project will create a
+project that has a "project.janet" in it instead of the bundle directory. This
+will depend on spork (or JPM!) for building, but will allow us to much more
+easily add dependencies on C libraries later or custom build steps. Both JPM
+and janet-pm have a rule-based build system that enables incremental builds.
+Janet is a scripting language that builds almost instantly even for relatively
+large projects, but C and C++ dependencies will often benefit from incremental
+builds.
+
+@codeblock```
+$ janet-pm new-project a-project
+author? John Doe
+description? A Project
+creating project directory for a-project
+
+$ tree a-project/
+a-project/
+├── a-project
+│   └── init.janet
+├── bin
+├── CHANGELOG.md
+├── LICENSE
+├── project.janet
+├── README.md
+└── test
+    └── basic.janet
+```
+
+## "C" Projects
+
+Janet is an extension language, meaning it is designed to both be embedded in
+larger programs as well as wrap libraries written in languages like C. Janet-pm
+includes a template for building projects that have both a C component and a
+Janet component.
+
+The default template for such projects includes both a Janet component of the
+source code, init.janet, and C component, module.c. Use this template if you
+are looking to create bindings for libraries written in C, or if you know that
+you would like to write a portion of the application in C or C++.
+
+@codeblock```
+
+$ janet-pm new-c-project a-c-project
+author? John Doe
+description? A Project
+creating project directory for a-c-project
+
+$ tree a-c-project
+a-c-project
+├── bin
+├── c
+│   └── module.c
+├── CHANGELOG.md
+├── LICENSE
+├── project.janet
+├── README.md
+├── a-c-project
+│   └── init.janet
+└── test
+    ├── basic.janet
+    └── native.janet
+```
+
+## Executable Projects
+
+Janet-pm also supports a template for building executable files. Janet-pm has
+the ability to link Janet bytecode with libjanet.so or janet.dll to create a
+standalone executable file. The details
+do depend on your host C compiler, linker, and Lib C version, but the end
+result can be a stand-alone program you can copy to other systems and use.
+
+@codeblock```
+$ janet-pm new-exe-project a-exe-project
+author? John Doe
+description?
+creating project directory for a-exe-project
+
+$ tree a-exe-project
+a-exe-project
+├── a-exe-project
+│   └── init.janet
+├── bin
+├── CHANGELOG.md
+├── LICENSE
+├── project.janet
+├── README.md
+└── test
+    └── basic.janet
+```
+
+### How it works
+
+Any native module imported by init.janet will be included in the final binary. The way this works is that during compilation, the build system tracks which which modules were imported to compile init.janet to bytecode. Next, we look for the corresponding static archives installed next to the shared objects we imported, and link them to both our generated bytecode as well as a C source file that contains a @code`main()` function.
+
+You can also use @code`janet-pm quickbin myscript.janet myprog` to similar effect without the overhead of a project directory.

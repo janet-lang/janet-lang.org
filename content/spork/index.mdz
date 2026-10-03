@@ -8,6 +8,10 @@ modules that should be useful for general programming in Janet but do
 not "make the cut" for inclusion in the standard library. You can
 think of spork as a sort of extended standard library for Janet.
 
+Spork also contains similar functionality to @code`jpm` for building
+projects, and is preferred for new users. A program @code`janet-pm` is distributed
+with spork that should be more flexible but easier to configure for new users.
+
 
 ## Source code
 
@@ -16,8 +20,23 @@ think of spork as a sort of extended standard library for Janet.
 
 ## Install
 
+Once you have a Janet interpreter, use that to build and install spork.
+
 @codeblock```
-$ [sudo] jpm install spork
+# Pick a place to install things if you don't want the default, global install.
+$ export JANET_PATH=./janet_modules; mkdir -p "$JANET_PATH"
+
+# Allow using installed scripts like janet-pm and janet-format
+$ export PATH="$PATH:$JANET_PATH/bin"
+
+# Download, build, and install
+$ git clone https://github.com/janet-lang/spork.git
+$ janet --install ./spork
+
+# Make sure it worked!
+$ janet -l spork -e '(os/exit)'
+$ janet-pm --help
+$ janet-format --help
 ```
 
 ## Usage
