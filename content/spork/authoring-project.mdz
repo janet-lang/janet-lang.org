@@ -20,6 +20,8 @@ The @code`janet-pm` program comes with a few different project templates for get
     @li{@code`janet-pm new-exe-project` - create a project setup to build an executable}
 }
 
+The templates can also be used programatically and further customized with @code`spork/pm` module.
+
 ## Simple Project
 
 Simple projects will by default have just an init.janet file, a basic test
@@ -42,14 +44,21 @@ starting place for libraries that either have only Janet source code or want to
 use alternative programming languages other than C for some of their
 implementation.
 
-
+From shell:
 @codeblock```
-
 $ janet-pm new-simple-project a-simple-project
 author? John Doe
 description? A project
 creating project directory for a-simple-project
+```
 
+From REPL:
+@codeblock[janet]```
+(import spork/pm)
+(pm/scaffold-project "a-simple-project" {:no-spork true})
+```
+
+@codeblock```
 $ tree a-simple-project
 a-simple-project/
 ├── a-simple-project
@@ -76,12 +85,21 @@ Janet is a scripting language that builds almost instantly even for relatively
 large projects, but C and C++ dependencies will often benefit from incremental
 builds.
 
+From shell:
 @codeblock```
 $ janet-pm new-project a-project
 author? John Doe
 description? A Project
 creating project directory for a-project
+```
 
+From REPL:
+@codeblock[janet]```
+(import spork/pm)
+(pm/scaffold-project "a-project" {:c false})
+```
+
+@codeblock```
 $ tree a-project/
 a-project/
 ├── a-project
@@ -107,13 +125,21 @@ source code, init.janet, and C component, module.c. Use this template if you
 are looking to create bindings for libraries written in C, or if you know that
 you would like to write a portion of the application in C or C++.
 
+From shell:
 @codeblock```
-
 $ janet-pm new-c-project a-c-project
 author? John Doe
 description? A Project
 creating project directory for a-c-project
+```
 
+From REPL:
+@codeblock[janet]```
+(import spork/pm)
+(pm/scaffold-project "a-c-project" {:c tree})
+```
+
+@codeblock```
 $ tree a-c-project
 a-c-project
 ├── bin
@@ -138,12 +164,21 @@ standalone executable file. The details
 do depend on your host C compiler, linker, and Lib C version, but the end
 result can be a stand-alone program you can copy to other systems and use.
 
+From shell:
 @codeblock```
 $ janet-pm new-exe-project a-exe-project
 author? John Doe
 description?
 creating project directory for a-exe-project
+```
 
+From REPL:
+@codeblock[janet]```
+(import spork/pm)
+(pm/scaffold-project "a-exe-project" {:c false :exe true})
+```
+
+@codeblock```
 $ tree a-exe-project
 a-exe-project
 ├── a-exe-project

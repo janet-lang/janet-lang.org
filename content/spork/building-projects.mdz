@@ -20,6 +20,7 @@ directories and setting both PATH and JANET_PATH such that everything in the
 environment is self contained and all dependent programs and libraries are
 available on on the Janet syspath.
 
+From shell:
 @codeblock```
 
 # Create a new virtual env
@@ -121,3 +122,28 @@ Unless you need really this, prefer virtual environments or local builds.
 Simply setting JANET_PATH to something in your home directory will likely avoid
 some of these issues.
 
+## Using the REPL
+
+The Spork PM module can also be used inside a REPL instead of the system shell.
+
+Building a project "my-project" from inside a REPL:
+@codeblock[janet]```
+(import spork/pm)
+(import spork/sh)
+
+# Create virtual environment
+(pm/scaffold-pm-shell "venv")
+(def deactivate (pm/switch-to-venv "venv"))
+
+# Build and test project in the virtual enivronment
+(os/cd "my-project")
+(pm/local-hook "deps")
+(pm/local-hook "build")
+(pm/pm-install "file::.")
+(pm/local-hook "test")
+
+# Clean up
+(deactivate)
+(os/cd "..")
+(sm/rm "venv")
+```
