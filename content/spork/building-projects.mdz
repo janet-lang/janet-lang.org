@@ -11,14 +11,15 @@ newer "bundle" spec built into the interpreter.
 
 ## Building Projects inside Virtual Environments
 
-Virtual environments are a convenient way to build software in Janet that is
-both broadly encompassing and will not pollute your system too much - A virtual
-environment can be removed simply by deleting it. It will also allow you to
-avoid accidentally including system versions of install libraries and scripts
-when building or using your programs. It is a wrapper around creating
-directories and setting both PATH and JANET_PATH such that everything in the
-environment is self contained and all dependent programs and libraries are
-available on on the Janet syspath.
+Virtual environments are a convenient way to build software in Janet
+that is both broadly encompassing and will not pollute your system too
+much - A virtual environment can be removed simply by deleting it. It
+will also allow you to avoid accidentally including system versions of
+install libraries and scripts when building or using your programs. It
+is a wrapper around creating directories and setting both @code`PATH`
+and @code`JANET_PATH` such that everything in the environment is self
+contained and all dependent programs and libraries are available on on
+the Janet syspath.
 
 From shell:
 @codeblock```
@@ -52,7 +53,12 @@ $ rm -rf venv
 
 ## "Full" Virtual Environments
 
-By default, a virtual environment will still reference and use the global installation of an interpreter. However, the "full-env" command to janet-pm will copy the interpreter, shared objects, headers, into the virtual environment and use that instead. This allows for multiple versions of Janet on a system and provides more isolation even than a default virtual env.
+By default, a virtual environment will still reference and use the
+global installation of an interpreter. However, the "full-env" command
+to @code`janet-pm` will copy the interpreter, shared objects, headers,
+into the virtual environment and use that instead. This allows for
+multiple versions of Janet on a system and provides more isolation
+even than a default virtual env.
 
 @codeblock```
 $ janet-pm full-env venv
@@ -63,9 +69,11 @@ $ janet-pm full-env venv
 While virtual environments are convenient, they are not completely needed for
 clean local builds that don't touch root-owned or system directories.
 
-The JANET_PATH environment variable is used to determine where @code`janet-pm`
-will install to, as it internally wraps the @code`bundle/` module inside
-Janet's core library. This means that by setting the @code`JANET_PATH` environment variable, you will be able to install
+The @code`JANET_PATH` environment variable is used to determine where
+@code`janet-pm` will install to, as it internally wraps the
+@code`bundle/` module inside Janet's core library. This means that by
+setting the @code`JANET_PATH` environment variable, you will be able
+to install
 
 @codeblock```
 # Set up a local syspath. Both janet and janet-pm will use this for dependencies.
@@ -94,17 +102,19 @@ Note that many projects will require running tests after installation. This make
 
 ## Global installation (requires sudo access!)
 
-If JANET_PATH is unset or explicitly set to root-owned directory like
-/usr/local/lib/janet then @code`janet-pm` will attempt to use the default
-syspath location for installing bundles, which is usally a global installation. You
-can check with @code`janet -e "(print (dyn *syspath*))"`.
+If @code`JANET_PATH` is unset or explicitly set to root-owned
+directory like @code`/usr/local/lib/janet` then @code`janet-pm` will
+attempt to use the default syspath location for installing bundles,
+which is usally a global installation. You can check with @code`janet
+-e "(print (dyn *syspath*))"`.
 
-If you are comfortable installing some piece of Janet software globally on your
-machine, or if your are working inside a container, janet-pm will handle global
-installation as well. The one caveat is that by default, executable programs
-and scripts will not be installed on your PATH but will be installed under
-"<syspath>/bin". This directory can then optionally be symlinked to or added
-to your PATH.
+If you are comfortable installing some piece of Janet software
+globally on your machine, or if your are working inside a container,
+@code`janet-pm` will handle global installation as well. The one
+caveat is that by default, executable programs and scripts will not be
+installed on your @code`PATH` but will be installed under
+@code`<syspath>/bin`. This directory can then optionally be symlinked
+to or added to your @code`PATH`.
 
 @codeblock```
 cd my-project
@@ -118,9 +128,9 @@ janet-pm test
 depends on whether you installed @code`janet` to a directory owned by the root
 user.)
 
-Unless you need really this, prefer virtual environments or local builds.
-Simply setting JANET_PATH to something in your home directory will likely avoid
-some of these issues.
+Unless you need really this, prefer virtual environments or local
+builds.  Simply setting @code`JANET_PATH` to something in your home
+directory will likely avoid some of these issues.
 
 ## Using the REPL
 
@@ -145,5 +155,5 @@ Building a project "my-project" from inside a REPL:
 # Clean up
 (deactivate)
 (os/cd "..")
-(sm/rm "venv")
+(sh/rm "venv")
 ```
