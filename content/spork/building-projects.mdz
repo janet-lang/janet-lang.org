@@ -13,13 +13,13 @@ newer "bundle" spec built into the interpreter.
 
 Virtual environments are a convenient way to build software in Janet
 that is both broadly encompassing and will not pollute your system too
-much - A virtual environment can be removed simply by deleting it. It
+much - a virtual environment can be removed simply by deleting it. It
 will also allow you to avoid accidentally including system versions of
 install libraries and scripts when building or using your programs. It
 is a wrapper around creating directories and setting both @code`PATH`
-and @code`JANET_PATH` such that everything in the environment is self
-contained and all dependent programs and libraries are available on on
-the Janet syspath.
+and @code`JANET_PATH` such that everything in the environment is
+self-contained and all dependent programs and libraries are available
+on the Janet syspath.
 
 From shell:
 @codeblock```
@@ -55,10 +55,10 @@ $ rm -rf venv
 
 By default, a virtual environment will still reference and use the
 global installation of an interpreter. However, the "full-env" command
-to @code`janet-pm` will copy the interpreter, shared objects, headers,
+of @code`janet-pm` will copy the interpreter, shared objects, headers,
 into the virtual environment and use that instead. This allows for
-multiple versions of Janet on a system and provides more isolation
-even than a default virtual env.
+multiple versions of Janet on a system and provides even more
+isolation than a default virtual env.
 
 @codeblock```
 $ janet-pm full-env venv
@@ -71,9 +71,7 @@ clean local builds that don't touch root-owned or system directories.
 
 The @code`JANET_PATH` environment variable is used to determine where
 @code`janet-pm` will install to, as it internally wraps the
-@code`bundle/` module inside Janet's core library. This means that by
-setting the @code`JANET_PATH` environment variable, you will be able
-to install
+@code`bundle/` module inside Janet's core library.
 
 @codeblock```
 # Set up a local syspath. Both janet and janet-pm will use this for dependencies.
@@ -102,11 +100,11 @@ Note that many projects will require running tests after installation. This make
 
 ## Global installation (requires sudo access!)
 
-If @code`JANET_PATH` is unset or explicitly set to root-owned
+If @code`JANET_PATH` is unset or explicitly set to a root-owned
 directory like @code`/usr/local/lib/janet` then @code`janet-pm` will
 attempt to use the default syspath location for installing bundles,
-which is usally a global installation. You can check with @code`janet
--e "(print (dyn *syspath*))"`.
+which is usally a global installation. You can verify that location
+with @code`janet -e "(print (dyn *syspath*))"`.
 
 If you are comfortable installing some piece of Janet software
 globally on your machine, or if your are working inside a container,
