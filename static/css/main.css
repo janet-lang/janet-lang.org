@@ -63,8 +63,8 @@ body {
 }
 
 @media (max-width: 1000px) {
-    .content-wrapper {
-        max-width: 600px;
+    .mendoza-codeblock {
+        max-width: 80ch;
     }
 }
 
