@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Authoring Projects with Spork</title>
+    <meta name="description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix.">
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="../css/docpage.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:description" content="Janet is a functional and imperative programming language. It runs on Windows, Linux, macOS, FreeBSD and *nix." />
+    <meta property="og:title" content="Authoring Projects with Spork" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+
+    <div id="toc-toggle" class="open">
+      <div class="bar topbar"></div>
+      <div class="bar"></div>
+      <div class="bar botbar"></div>
+    </div>
+    <iframe class="search-bar" src="https://duckduckgo.com/search.html?site=janet-lang.org&prefill=Search janet-lang.org" frameborder="0"></iframe>
+    <script charset="utf-8">
+      function toggleToc() {
+        var el = document.getElementById('toc-toggle');
+        document.querySelector('.toc').classList.toggle('toc-hidden');
+        el.classList.toggle('open');
+        if (window.innerWidth > 800 && window.localStorage) {
+          localStorage.setItem('show-toc', el.classList.contains('open'));
+        }
+      }
+      window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('toc-toggle').addEventListener('click', toggleToc);        
+        if (window.innerWidth <= 800 || (window.localStorage && localStorage.getItem('show-toc') === 'false')) {
+          toggleToc();
+        }
+      });
+    </script>
+
+    
+
+    <div class="twocol">
+      <div class="toc show-toc">
+        <ul>
+          <li><span><a href="../index.html">Home</a></span></li><li class="caret"><span><a href="../docs/index.html">Documentation</a></span><ul><li><span><a href="../docs/syntax.html">Syntax and the Parser</a></span></li><li><span><a href="../docs/specials.html">Special Forms</a></span></li><li><span><a href="../docs/numbers.html">Numbers and Arithmetic</a></span></li><li><span><a href="../docs/comparison.html">Comparison Operators</a></span></li><li><span><a href="../docs/bindings.html">Bindings (def and var)</a></span></li><li><span><a href="../docs/flow.html">Flow</a></span></li><li><span><a href="../docs/functions.html">Functions</a></span></li><li><span><a href="../docs/strings.html">Strings, Keywords, and Symbols</a></span></li><li><span><a href="../docs/loop.html">Looping</a></span></li><li><span><a href="../docs/macros.html">Macros</a></span></li><li class="caret"><span><a href="../docs/data_structures/index.html">Data Structures</a></span><ul><li><span><a href="../docs/data_structures/arrays.html">Arrays</a></span></li><li><span><a href="../docs/data_structures/buffers.html">Buffers</a></span></li><li><span><a href="../docs/data_structures/tables.html">Tables</a></span></li><li><span><a href="../docs/data_structures/structs.html">Structs</a></span></li><li><span><a href="../docs/data_structures/tuples.html">Tuples</a></span></li></ul></li><li><span><a href="../docs/destructuring.html">Destructuring</a></span></li><li class="caret"><span><a href="../docs/fibers/index.html">Fibers</a></span><ul><li><span><a href="../docs/fibers/dynamic_bindings.html">Dynamic Bindings</a></span></li><li><span><a href="../docs/fibers/error_handling.html">Errors</a></span></li></ul></li><li><span><a href="../docs/modules.html">Modules</a></span></li><li><span><a href="../docs/object_oriented.html">Object-Oriented Programming</a></span></li><li><span><a href="../docs/peg.html">Parsing Expression Grammars</a></span></li><li><span><a href="../docs/prototypes.html">Prototypes</a></span></li><li><span><a href="../docs/abstract_machine.html">The Janet Abstract Machine</a></span></li><li><span><a href="../docs/event_loop.html">The Event Loop</a></span></li><li><span><a href="../docs/threads.html">Multithreading</a></span></li><li><span><a href="../docs/networking.html">Networking</a></span></li><li class="caret"><span><a href="../docs/process_management/index.html">Process Management</a></span><ul><li><span><a href="../docs/process_management/execute.html">Executing</a></span></li><li><span><a href="../docs/process_management/spawn.html">Spawning</a></span></li></ul></li><li><span><a href="../docs/documentation.html">Documentation</a></span></li><li><span><a href="../docs/linting.html">Linting</a></span></li><li><span><a href="../docs/ffi.html">Foreign Function Interface</a></span></li></ul></li><li class="caret"><span><a href="../api/index.html">Core API</a></span><ul><li><span><a href="../api/array.html">array</a></span></li><li><span><a href="../api/buffer.html">buffer</a></span></li><li><span><a href="../api/bundle.html">bundle</a></span></li><li><span><a href="../api/debug.html">debug</a></span></li><li><span><a href="../api/ev.html">ev</a></span></li><li><span><a href="../api/ffi.html">ffi</a></span></li><li><span><a href="../api/fiber.html">fiber</a></span></li><li><span><a href="../api/file.html">file</a></span></li><li><span><a href="../api/filewatch.html">filewatch</a></span></li><li><span><a href="../api/int.html">int</a></span></li><li><span><a href="../api/janet.html">janet</a></span></li><li><span><a href="../api/math.html">math</a></span></li><li><span><a href="../api/module.html">module</a></span></li><li><span><a href="../api/net.html">net</a></span></li><li><span><a href="../api/os.html">os</a></span></li><li><span><a href="../api/peg.html">peg</a></span></li><li><span><a href="../api/parser.html">parser</a></span></li><li><span><a href="../api/string.html">string</a></span></li><li><span><a href="../api/table.html">table</a></span></li><li><span><a href="../api/tuple.html">tuple</a></span></li><li><span><a href="../api/misc.html">misc</a></span></li></ul></li><li class="caret"><span><a href="../capi/index.html">C API</a></span><ul><li><span><a href="../capi/wrapping.html">Wrapping Types</a></span></li><li><span><a href="../capi/embedding.html">Embedding</a></span></li><li><span><a href="../capi/configuration.html">Configuration</a></span></li><li><span><a href="../capi/array.html">Array C API</a></span></li><li><span><a href="../capi/tuple.html">Tuple C API</a></span></li><li><span><a href="../capi/buffer.html">Buffer C API</a></span></li><li><span><a href="../capi/table.html">Table C API</a></span></li><li><span><a href="../capi/fiber.html">Fiber C API</a></span></li><li><span><a href="../capi/memory-model.html">Memory Model</a></span></li><li><span><a href="../capi/writing-c-functions.html">Writing C Functions</a></span></li></ul></li><li class="caret"><span><a href="../jpm/index.html">JPM</a></span><ul><li><span><a href="../jpm/building-projects.html">Building Projects</a></span></li><li><span><a href="../jpm/project.janet.html">Project.janet</a></span></li><li><span><a href="../jpm/local-install.html">Local Install</a></span></li><li><span><a href="../jpm/versioning.html">Versioning and Bundling</a></span></li><li class="caret"><span><a href="../jpm/api/index.html">API</a></span><ul><li><span><a href="../jpm/api/rules.html">rules</a></span></li><li><span><a href="../jpm/api/cc.html">cc</a></span></li><li><span><a href="../jpm/api/cgen.html">cgen</a></span></li><li><span><a href="../jpm/api/cli.html">cli</a></span></li><li><span><a href="../jpm/api/commands.html">commands</a></span></li><li><span><a href="../jpm/api/config.html">config</a></span></li><li><span><a href="../jpm/api/make-config.html">make-config</a></span></li><li><span><a href="../jpm/api/dagbuild.html">dagbuild</a></span></li><li><span><a href="../jpm/api/pm.html">pm</a></span></li><li><span><a href="../jpm/api/scaffold.html">scaffold</a></span></li><li><span><a href="../jpm/api/shutil.html">shutil</a></span></li></ul></li></ul></li><li class="caret"><span><a href="index.html">Spork</a></span><ul><li><span class="selected"><a href="authoring-project.html">Authoring Projects with Spork</a></span></li><li><span><a href="building-projects.html">Building Projects with Spork</a></span></li><li class="caret"><span><a href="api/index.html">API</a></span><ul><li><span><a href="api/argparse.html">argparse</a></span></li><li><span><a href="api/base64.html">base64</a></span></li><li><span><a href="api/build-rules.html">build-rules</a></span></li><li><span><a href="api/cc.html">cc</a></span></li><li><span><a href="api/channel.html">channel</a></span></li><li><span><a href="api/charts.html">charts</a></span></li><li><span><a href="api/cjanet.html">cjanet</a></span></li><li><span><a href="api/cmath.html">cmath</a></span></li><li><span><a href="api/crc.html">crc</a></span></li><li><span><a href="api/cron.html">cron</a></span></li><li><span><a href="api/data.html">data</a></span></li><li><span><a href="api/date.html">date</a></span></li><li><span><a href="api/declare-cc.html">declare-cc</a></span></li><li><span><a href="api/ev-utils.html">ev-utils</a></span></li><li><span><a href="api/fmt.html">fmt</a></span></li><li><span><a href="api/generators.html">generators</a></span></li><li><span><a href="api/getline.html">getline</a></span></li><li><span><a href="api/gfx2d.html">gfx2d</a></span></li><li><span><a href="api/htmlgen.html">htmlgen</a></span></li><li><span><a href="api/http.html">http</a></span></li><li><span><a href="api/httpf.html">httpf</a></span></li><li><span><a href="api/infix.html">infix</a></span></li><li><span><a href="api/json.html">json</a></span></li><li><span><a href="api/math.html">math</a></span></li><li><span><a href="api/mdz.html">mdz</a></span></li><li><span><a href="api/misc.html">misc</a></span></li><li><span><a href="api/msg.html">msg</a></span></li><li><span><a href="api/netrepl.html">netrepl</a></span></li><li><span><a href="api/path.html">path</a></span></li><li><span><a href="api/pgp.html">pgp</a></span></li><li><span><a href="api/pm.html">pm</a></span></li><li><span><a href="api/pm-config.html">pm-config</a></span></li><li><span><a href="api/randgen.html">randgen</a></span></li><li><span><a href="api/rawterm.html">rawterm</a></span></li><li><span><a href="api/regex.html">regex</a></span></li><li><span><a href="api/rpc.html">rpc</a></span></li><li><span><a href="api/schema.html">schema</a></span></li><li><span><a href="api/services.html">services</a></span></li><li><span><a href="api/sh.html">sh</a></span></li><li><span><a href="api/sh-dsl.html">sh-dsl</a></span></li><li><span><a href="api/stream.html">stream</a></span></li><li><span><a href="api/tarray.html">tarray</a></span></li><li><span><a href="api/tasker.html">tasker</a></span></li><li><span><a href="api/temple.html">temple</a></span></li><li><span><a href="api/test.html">test</a></span></li><li><span><a href="api/utf8.html">utf8</a></span></li><li><span><a href="api/zip.html">zip</a></span></li></ul></li></ul></li>
+        </ul>
+      </div>
+      <div class="content-wrapper main-content">
+        <h4 class="subtitle">Janet 1.43.0-e4b5045 Documentation<br>(Other Versions:
+          
+          <a href="../../1.42.0/spork/authoring-project.html">1.42.0</a>
+          
+          <a href="../../1.41.2/spork/authoring-project.html">1.41.2</a>
+          
+          <a href="../../1.41.1/spork/authoring-project.html">1.41.1</a>
+          
+          <a href="../../1.40.1/spork/authoring-project.html">1.40.1</a>
+          
+          <a href="../../1.40.0/spork/authoring-project.html">1.40.0</a>
+          
+          <a href="../../1.39.1/spork/authoring-project.html">1.39.1</a>
+          
+          <a href="../../1.38.0/spork/authoring-project.html">1.38.0</a>
+          
+          <a href="../../1.37.1/spork/authoring-project.html">1.37.1</a>
+          
+          <a href="../../1.36.0/spork/authoring-project.html">1.36.0</a>
+          
+          <a href="../../1.35.0/spork/authoring-project.html">1.35.0</a>
+          
+          <a href="../../1.34.0/spork/authoring-project.html">1.34.0</a>
+          
+          <a href="../../1.31.0/spork/authoring-project.html">1.31.0</a>
+          
+          <a href="../../1.29.1/spork/authoring-project.html">1.29.1</a>
+          
+          <a href="../../1.28.0/spork/authoring-project.html">1.28.0</a>
+          
+          <a href="../../1.27.0/spork/authoring-project.html">1.27.0</a>
+          
+          <a href="../../1.26.0/spork/authoring-project.html">1.26.0</a>
+          
+          <a href="../../1.25.1/spork/authoring-project.html">1.25.1</a>
+          
+          <a href="../../1.24.0/spork/authoring-project.html">1.24.0</a>
+          
+          <a href="../../1.23.0/spork/authoring-project.html">1.23.0</a>
+          
+          <a href="../../1.22.0/spork/authoring-project.html">1.22.0</a>
+          
+          <a href="../../1.21.0/spork/authoring-project.html">1.21.0</a>
+          
+          <a href="../../1.20.0/spork/authoring-project.html">1.20.0</a>
+          
+          <a href="../../1.19.0/spork/authoring-project.html">1.19.0</a>
+          
+          <a href="../../1.18.1/spork/authoring-project.html">1.18.1</a>
+          
+          <a href="../../1.17.1/spork/authoring-project.html">1.17.1</a>
+          
+          <a href="../../1.16.1/spork/authoring-project.html">1.16.1</a>
+          
+          <a href="../../1.15.0/spork/authoring-project.html">1.15.0</a>
+          
+          <a href="../../1.13.1/spork/authoring-project.html">1.13.1</a>
+          
+          <a href="../../1.12.2/spork/authoring-project.html">1.12.2</a>
+          
+          <a href="../../1.11.1/spork/authoring-project.html">1.11.1</a>
+          
+          <a href="../../1.10.1/spork/authoring-project.html">1.10.1</a>
+          
+          <a href="../../1.9.1/spork/authoring-project.html">1.9.1</a>
+          
+          <a href="../../1.8.1/spork/authoring-project.html">1.8.1</a>
+          
+          <a href="../../1.7.0/spork/authoring-project.html">1.7.0</a>
+          
+          <a href="../../1.6.0/spork/authoring-project.html">1.6.0</a>
+          
+          <a href="../../1.5.1/spork/authoring-project.html">1.5.1</a>
+          
+          <a href="../../1.5.0/spork/authoring-project.html">1.5.0</a>
+          
+          <a href="../../1.4.0/spork/authoring-project.html">1.4.0</a>
+          
+          <a href="../../1.3.1/spork/authoring-project.html">1.3.1</a>
+          )</h4>
+        <h1 class="subtitle">Authoring Projects with Spork</h1>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Spork</span></a></span>
+
+          <span class="next"><a href="building-projects.html"><span class="prevnext-text">Building Projects with Spork</span></a></span>
+        </div>
+        
+
+<p>Spork includes a program <code class="mendoza-code">janet-pm</code> that can be used to build software
+with C extensions, install packages, and install dependencies. The
+<code class="mendoza-code">janet-pm</code> program is compatible with older projects authored for JPM in
+most cases, and is able to read both <code class="mendoza-code">project.janet</code> files as well as the
+newer "bundle" spec built into the interpreter.
+</p>
+<h2 id="Using-a-template">Using a template
+</h2>
+<p>The <code class="mendoza-code">janet-pm</code> program comes with a few different project templates for getting started. This will streamline setup and help users choose reasonable, consistent project structure and defaults.
+</p>
+<ul>
+    <li><code class="mendoza-code">janet-pm new-simple-project</code> - create a project that has no dependencies at all and can be installed and used without Spork.</li>
+    <li><code class="mendoza-code">janet-pm new-project</code> - create a project that depends on spork and uses it to setup several convenience features</li>
+    <li><code class="mendoza-code">janet-pm new-c-project</code> - create a project that has a C component</li>
+    <li><code class="mendoza-code">janet-pm new-exe-project</code> - create a project setup to build an executable</li>
+</ul><p>The templates can also be used programatically and further customized with <code class="mendoza-code">spork/pm</code> module.
+</p>
+<h2 id="Simple-Project">Simple Project
+</h2>
+<p>Simple projects will by default have just an init.janet file, a basic
+test file, and a few other things like a CHANGELOG, README, and
+LICENSE file.  For specifying build, test, and install hooks, there is
+the <code class="mendoza-code">bundle/</code> directory which is where both the interpreter and
+janet-pm will look for "hooks". A hook is a function that gets called
+to preform some generic step of the software development life-cycle,
+such as building, testing, or installing a bundle.
+</p>
+<p>Hooks can be as simple as an empty function or as complicated as using a
+dependency or external compiler to build C and C++ dependencies. The simple
+project template is very minimal, and so can be quite good for projects that
+don't require a complicated build step or have a dependence on C libraries.
+</p>
+<p>The trade-off for this lack of functionality is complete independence from
+Spork or other helper libraries. Dependencies written in this manner can be, in
+many cases, built and installed with just the interpreter. This is a reasonable
+starting place for libraries that either have only Janet source code or want to
+use alternative programming languages other than C for some of their
+implementation.
+</p>
+<p>From shell:
+<pre class="mendoza-codeblock"><code>$ janet-pm new-simple-project a-simple-project
+author? John Doe
+description? A project
+creating project directory for a-simple-project</code></pre>
+</p>
+<p>From REPL:
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">spork/pm</span>)
+(<span class="mdzsyn-symbol">pm/scaffold-project</span> <span class="mdzsyn-string">"a-simple-project"</span> {<span class="mdzsyn-keyword">:no-spork</span> <span class="mdzsyn-constant">true</span>})</code></pre>
+</p>
+<pre class="mendoza-codeblock"><code>$ tree a-simple-project
+a-simple-project/
+├── a-simple-project
+│   └── init.janet
+├── bin
+├── bundle
+│   ├── info.jdn
+│   └── init.janet
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
+└── test
+    └── basic.janet</code></pre><h2 id="Default-new-Project">Default new Project
+</h2>
+<p>The default new-project template is similar to the simple project will
+create a project that has a <code class="mendoza-code">project.janet</code> file in it instead of
+the <code class="mendoza-code">bundle</code> directory. This will depend on spork (or JPM!) for
+building, but will allow us to much more easily add dependencies on C
+libraries later or custom build steps. Both JPM and janet-pm have a
+rule-based build system that enables incremental builds.  Janet is a
+scripting language that builds almost instantly even for relatively
+large projects, but C and C++ dependencies will often benefit from
+incremental builds.
+</p>
+<p>From shell:
+<pre class="mendoza-codeblock"><code>$ janet-pm new-project a-project
+author? John Doe
+description? A Project
+creating project directory for a-project</code></pre>
+</p>
+<p>From REPL:
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">spork/pm</span>)
+(<span class="mdzsyn-symbol">pm/scaffold-project</span> <span class="mdzsyn-string">"a-project"</span> {<span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-constant">false</span>})</code></pre>
+</p>
+<pre class="mendoza-codeblock"><code>$ tree a-project/
+a-project/
+├── a-project
+│   └── init.janet
+├── bin
+├── CHANGELOG.md
+├── LICENSE
+├── project.janet
+├── README.md
+└── test
+    └── basic.janet</code></pre><h2 id="&quot;C&quot;-Projects">"C" Projects
+</h2>
+<p>Janet is an extension language, meaning it is designed to both be embedded in
+larger programs as well as wrap libraries written in languages like C. Janet-pm
+includes a template for building projects that have both a C component and a
+Janet component.
+</p>
+<p>The default template for such projects includes both a Janet component
+of the source code, <code class="mendoza-code">init.janet</code>, and C component,
+<code class="mendoza-code">module.c</code>. Use this template if you are looking to create
+bindings for libraries written in C, or if you know that you would
+like to write a portion of the application in C or C++.
+</p>
+<p>From shell:
+<pre class="mendoza-codeblock"><code>$ janet-pm new-c-project a-c-project
+author? John Doe
+description? A Project
+creating project directory for a-c-project</code></pre>
+</p>
+<p>From REPL:
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">spork/pm</span>)
+(<span class="mdzsyn-symbol">pm/scaffold-project</span> <span class="mdzsyn-string">"a-c-project"</span> {<span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-symbol">tree</span>})</code></pre>
+</p>
+<pre class="mendoza-codeblock"><code>$ tree a-c-project
+a-c-project
+├── bin
+├── c
+│   └── module.c
+├── CHANGELOG.md
+├── LICENSE
+├── project.janet
+├── README.md
+├── a-c-project
+│   └── init.janet
+└── test
+    ├── basic.janet
+    └── native.janet</code></pre><h2 id="Executable-Projects">Executable Projects
+</h2>
+<p>Janet-pm also supports a template for building executable
+files. Janet-pm has the ability to link Janet bytecode with
+<code class="mendoza-code">libjanet.so</code> or <code class="mendoza-code">janet.dll</code> to create a standalone
+executable file. The details do depend on your host C compiler,
+linker, and Lib C version, but the end result can be a standalone
+program you can copy to other systems and use.
+</p>
+<p>From shell:
+<pre class="mendoza-codeblock"><code>$ janet-pm new-exe-project a-exe-project
+author? John Doe
+description?
+creating project directory for a-exe-project</code></pre>
+</p>
+<p>From REPL:
+<pre class="mendoza-codeblock"><code data-language="janet">(<span class="mdzsyn-coresym">import</span> <span class="mdzsyn-symbol">spork/pm</span>)
+(<span class="mdzsyn-symbol">pm/scaffold-project</span> <span class="mdzsyn-string">"a-exe-project"</span> {<span class="mdzsyn-keyword">:c</span> <span class="mdzsyn-constant">false</span> <span class="mdzsyn-keyword">:exe</span> <span class="mdzsyn-constant">true</span>})</code></pre>
+</p>
+<pre class="mendoza-codeblock"><code>$ tree a-exe-project
+a-exe-project
+├── a-exe-project
+│   └── init.janet
+├── bin
+├── CHANGELOG.md
+├── LICENSE
+├── project.janet
+├── README.md
+└── test
+    └── basic.janet</code></pre><h3 id="How-it-works">How it works
+</h3>
+<p>Any native module imported by <code class="mendoza-code">init.janet</code> will be included in
+the final binary. The way this works is that during compilation, the
+build system tracks which modules were imported to compile
+<code class="mendoza-code">init.janet</code> to bytecode. Next, we look for the corresponding
+static archives installed next to the shared objects we imported, and
+link them to both our generated bytecode as well as a C source file
+that contains a <code class="mendoza-code">main()</code> function.
+</p>
+<p>You can also use <code class="mendoza-code">janet-pm quickbin myscript.janet myprog</code> to similar effect without the overhead of a project directory.
+</p>
+        <div class="prevnext-bar">
+          <span class="prev"><a href="index.html"><span class="prevnext-text">Spork</span></a></span>
+          <span class="next"><a href="building-projects.html"><span class="prevnext-text">Building Projects with Spork</span></a></span>
+        </div>
+      </div>
+    </div>
+
+    
+<footer>
+  &copy; Calvin Rose &amp; contributors 2026
+  <div class="gentag">Generated on November 7, 2026 at 17:44:15 (UTC) with Janet 1.43.0-e4b5045</div>
+  <div class="see-problem">See a problem? Source
+    <a href="https://github.com/janet-lang/janet-lang.org">on GitHub</a></div>
+</footer>
+
+
+
+  </body>
+</html>
